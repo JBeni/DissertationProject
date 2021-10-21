@@ -1,0 +1,50 @@
+<div>
+    <div>
+        <button mat-button (click)="openDialog()">Open dialog</button>
+    </div>
+
+    <mat-form-field>
+        <mat-label>Filter Companies</mat-label>
+        <input
+            matInput
+            (keyup)="applyFilterCompanys($event)"
+            placeholder="Ex. Company"
+            #inputCompany
+        />
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceCompanys">
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef>Id</th>
+                <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedCompanysColumns"></tr>
+            <tr
+                mat-row
+                *matRowDef="let row; columns: displayedCompanysColumns"
+            ></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">
+                    No data matching the filter "{{ inputCompany.value }}"
+                </td>
+            </tr>
+        </table>
+
+        <mat-paginator
+            [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+        ></mat-paginator>
+    </div>
+</div>
