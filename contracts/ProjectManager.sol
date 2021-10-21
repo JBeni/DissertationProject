@@ -5,13 +5,15 @@ import './Project.sol';
 
 contract ProjectManager {
 
+    mapping(uint => S_Project) public projects;
+    uint index;
+
+    enum ProjectStatus { Created, Approved, Rejected, OnGoing, Completed }
+
     struct S_Project {
         Project _project;
         bytes32 _identifier;
     }
-
-    mapping(uint => S_Project) public projects;
-    uint index;
 
     event CreateProject(uint _projectIndex, address _address);
 
@@ -34,7 +36,9 @@ contract ProjectManager {
         return keccak256(abi.encodePacked(_text, _addr));
     }
 
+    function requestApprovalToProjectSupervisor() public {
+    }
 
-
-
+    function requestStarProjectToCompanyBuilder() public {
+    }
 }

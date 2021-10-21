@@ -14,7 +14,7 @@ contract User {
         DefaultRole,
         ProjectInitiator,
         CompanyBuilder,
-        Supervisor
+        ProjectSupervisor
     }
 
     struct UserData {
