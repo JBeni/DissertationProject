@@ -1,1 +1,57 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
+
+:root {
+	--header-height: 3rem;
+	--nav-width: 68px;
+    --hue: 240;
+
+    --primary: #a29596;
+    --second-color: #33303d;
+
+	--first-color: #4723d9;
+	--first-color-light: #afa5d9;
+    --first-color-alt: hsl(var(--hue), 16%, 12%);
+    --title-color: hsl(var(--hue), 8%, 15%);
+    --text-color: hsl(var(--hue), 8%, 35%);
+    --body-color: hsl(var(--hue), 100%, 99%);
+    --white-color: #f7f6fb;
+
+    --dark-color: #272d40;
+    --dark-color-lighten: #f2f5ff;
+    --container-color: #FFF;
+
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: 0.875rem;
+
+	--body-font: 'Nunito', sans-serif;
+	--normal-font-size: 1rem;
+    --biggest-font-size: 1.5rem;
+    --big-font-size: 1.5rem;
+    --smaller-font-size: 0.75rem;
+
+    --z-back: -10;
+    --z-normal: 1;
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-modal: 1000;
+
+    --bg: #24aa94;
+    --bg-light: #24aa9444;
+    --text: white;
+    --hover: #ffff00;
+    --light: #ffff0031;
+}
+
+*, ::before, ::after {
+    -webkit-box-sizing: border-box;
+	box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
