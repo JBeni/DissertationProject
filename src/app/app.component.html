@@ -1,7 +1,7 @@
-<div class="body-container" id="body-pd" #body_pd>
-    <header class="header" id="header" #header>
+<div class="body-container body-pd" id="body-pd" #body_pd>
+    <header class="header body-pd" id="header" #header>
         <div class="header__toggle">
-            <i class="bx bx-menu" id="header-toggle" (click)="menuSlide()" #header_toggle></i>
+            <i class="bx bx-menu bx-x" id="header-toggle" (click)="menuSlide()" #header_toggle></i>
         </div>
 
         <div class="nav-middle flex-div">
@@ -17,7 +17,7 @@
         </div>
     </header>
 
-    <div class="l-navbar" id="nav-bar" #nav_bar>
+    <div class="l-navbar show" id="nav-bar" #nav_bar>
         <nav class="nav">
             <div>
                 <a [routerLink]="'/'" class="nav__logo">
@@ -53,6 +53,10 @@
 
                     <br><br>
 
+                    <a [routerLink]="'/projects'" routerLinkActive="active" class="nav__link">
+                        <i class="bx bx-user nav__icon"></i>
+                        <span class="nav__name">Projects</span>
+                    </a>
                     <a [routerLink]="'/user-profile'" routerLinkActive="active" class="nav__link">
                         <i class="bx bx-user nav__icon"></i>
                         <span class="nav__name">User Profile</span>

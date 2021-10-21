@@ -6,7 +6,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
     styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-    menuOpened: boolean = false;
+    menuOpened: boolean = true;
 
     @ViewChild("header_toggle", { read: ElementRef }) toggle!: ElementRef;
     @ViewChild("nav_bar", { read: ElementRef }) nav!: ElementRef;
