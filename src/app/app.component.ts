@@ -1,21 +1,24 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { ContractService } from './services/contract.service';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     menuOpened: boolean = true;
 
-    @ViewChild("header_toggle", { read: ElementRef }) toggle!: ElementRef;
-    @ViewChild("nav_bar", { read: ElementRef }) nav!: ElementRef;
-    @ViewChild("body_pd", { read: ElementRef }) bodypd!: ElementRef;
-    @ViewChild("header", { read: ElementRef }) headerpd!: ElementRef;
+    @ViewChild('header_toggle', { read: ElementRef }) toggle!: ElementRef;
+    @ViewChild('nav_bar', { read: ElementRef }) nav!: ElementRef;
+    @ViewChild('body_pd', { read: ElementRef }) bodypd!: ElementRef;
+    @ViewChild('header', { read: ElementRef }) headerpd!: ElementRef;
 
-    // @ViewChild("nav__link") navLinks!: ElementRef;
+    constructor(private contractService: ContractService) {}
 
-    constructor() {}
+    ngOnInit(): void {
+        this.contractService.openMetamask();
+    }
 
     menuSlide(): void {
         if (this.menuOpened === false) {
@@ -32,13 +35,4 @@ export class AppComponent {
             this.menuOpened = false;
         }
     }
-
-    // activeMenuOption(): void {
-    //     if(this.navLinks) {
-
-    //         this.navLinks.forEach(l => l.classList.remove('active'));
-    //         this.navLinks.nativeElement.classList.add('active');
-    //     }
-    // }
-
 }

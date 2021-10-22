@@ -1,0 +1,125 @@
+{
+  "contractName": "CompanyBuilder",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/CompanyBuilder.sol\":\"CompanyBuilder\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/CompanyBuilder.sol\":{\"keccak256\":\"0x177615e2773fcdbef7c9f43786c3cf73ec1d122d0f8dcb00d68227867bab202d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://baad624a87dcaf1ff3dbd52a8c5d609f011d94609187626ae4fe238a58153304\",\"dweb:/ipfs/QmY3HPgMiAoSuxVJRRijoWhvcejUqb22r4pVuYQeS3wYEG\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea264697066735822122011529ffafc347f2b816da381d1bd9867d72dbff9f63aa6d697910a758f5aad0c64736f6c63430008090033",
+  "deployedBytecode": "0x6080604052600080fdfea264697066735822122011529ffafc347f2b816da381d1bd9867d72dbff9f63aa6d697910a758f5aad0c64736f6c63430008090033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "68:36:0:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "68:36:0:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0 <0.9.0;\r\n\r\ncontract CompanyBuilder {\r\n\r\n\r\n\r\n\r\n}\r\n",
+  "sourcePath": "/mnt/c/users/beniamin/source/repos/dissertationproject/contracts/CompanyBuilder.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/CompanyBuilder.sol",
+    "exportedSymbols": {
+      "CompanyBuilder": [
+        2
+      ]
+    },
+    "id": 3,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CompanyBuilder",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 2,
+        "linearizedBaseContracts": [
+          2
+        ],
+        "name": "CompanyBuilder",
+        "nameLocation": "77:14:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 3,
+        "src": "68:36:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:73:0"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/CompanyBuilder.sol",
+    "exportedSymbols": {
+      "CompanyBuilder": [
+        2
+      ]
+    },
+    "id": 3,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:0"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "CompanyBuilder",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 2,
+        "linearizedBaseContracts": [
+          2
+        ],
+        "name": "CompanyBuilder",
+        "nameLocation": "77:14:0",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 3,
+        "src": "68:36:0",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:73:0"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-22T05:55:10.230Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

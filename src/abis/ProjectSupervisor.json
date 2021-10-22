@@ -1,0 +1,125 @@
+{
+  "contractName": "ProjectSupervisor",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/ProjectSupervisor.sol\":\"ProjectSupervisor\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/ProjectSupervisor.sol\":{\"keccak256\":\"0x85386b7b604b841840c58bdeb9617c100ef8c407cf132cc8308b5c3a1ea7fdf1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://fe3916a20be09b1a84cf91a163d8035284ba4b33105ed3042a254f51248888e9\",\"dweb:/ipfs/QmXoT4EQvni3oFvMqo7VCcKJ1Q96iCTb2oGoSP3HsJsPnk\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220f7f6e64cdf77211d33c976a1080ebc448bc8b0d718feb473ae05708bbb16165e64736f6c63430008090033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220f7f6e64cdf77211d33c976a1080ebc448bc8b0d718feb473ae05708bbb16165e64736f6c63430008090033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "68:45:4:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "68:45:4:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0 <0.9.0;\r\n\r\ncontract ProjectSupervisor {\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n",
+  "sourcePath": "/mnt/c/users/beniamin/source/repos/dissertationproject/contracts/ProjectSupervisor.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/ProjectSupervisor.sol",
+    "exportedSymbols": {
+      "ProjectSupervisor": [
+        201
+      ]
+    },
+    "id": 202,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 200,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ProjectSupervisor",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 201,
+        "linearizedBaseContracts": [
+          201
+        ],
+        "name": "ProjectSupervisor",
+        "nameLocation": "77:17:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 202,
+        "src": "68:45:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:82:4"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/ProjectSupervisor.sol",
+    "exportedSymbols": {
+      "ProjectSupervisor": [
+        201
+      ]
+    },
+    "id": 202,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 200,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "ProjectSupervisor",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 201,
+        "linearizedBaseContracts": [
+          201
+        ],
+        "name": "ProjectSupervisor",
+        "nameLocation": "77:17:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 202,
+        "src": "68:45:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:82:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-22T05:55:10.269Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
