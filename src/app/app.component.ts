@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ContractService } from './services/contract.service';
 
 @Component({
     selector: 'app-root',
@@ -14,10 +13,9 @@ export class AppComponent implements OnInit {
     @ViewChild('body_pd', { read: ElementRef }) bodypd!: ElementRef;
     @ViewChild('header', { read: ElementRef }) headerpd!: ElementRef;
 
-    constructor(private contractService: ContractService) {}
+    constructor() {}
 
     ngOnInit(): void {
-        this.contractService.openMetamask();
     }
 
     menuSlide(): void {
