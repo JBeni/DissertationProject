@@ -23,7 +23,6 @@
         "rxjs": "~6.6.0",
         "tslib": "^2.3.0",
         "web3": "^1.6.0",
-        "web3modal": "^1.9.4",
         "zone.js": "~0.11.4"
     },
     "devDependencies": {
