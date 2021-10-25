@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './Navbar.css';
 
-import { Switch, Route, Link, useLocation, Redirect } from 'react-router-dom';
+import { Switch, Route, Link, useLocation } from 'react-router-dom';
 import DefaultPage from './DefaultPage';
 import Projects from './Projects';
 import Users from './Users';
 import Dashboard from './Dashboard';
+import MTable from './MTable';
 
 function Navbar() {
 
@@ -90,14 +91,14 @@ function Navbar() {
             </div>
 
             <div className="main-section-container">
-            <Switch>
+            {/* <Switch>
                 <Route exact path="/" component={Dashboard} />
-                {/* <Redirect path="/" to="/dashboard" /> */}
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/users" component={Users} />
                 <Route path="/projects" component={Projects} />
                 <Route component={DefaultPage} />
-            </Switch>
+            </Switch> */}
+                <MTable />
             </div>
         </div>
     );
