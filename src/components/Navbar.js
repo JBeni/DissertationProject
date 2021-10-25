@@ -6,7 +6,6 @@ import DefaultPage from './DefaultPage';
 import Projects from './Projects';
 import Users from './Users';
 import Dashboard from './Dashboard';
-import MTable from './MTable';
 
 function Navbar() {
 
@@ -98,7 +97,6 @@ function Navbar() {
                 <Route path="/projects" component={Projects} />
                 <Route component={DefaultPage} />
             </Switch> */}
-                <MTable />
             </div>
         </div>
     );
