@@ -1,0 +1,1 @@
+async function loadWeb3(){window.ethereum?(window.web3=new Web3(window.ethereum),await window.ethereum.enable()):window.web3?window.web3=new Web3(window.web3.currentProvider):window.alert("Non-Ethereum browser detected. You should consider trying MetaMask!")}

@@ -3,11 +3,13 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract User {
 
+    mapping(address => S_UserData) public userInfo;
     address public owner;
-    mapping(address => UserData) public userInfo;
 
-    constructor() {
-        owner = msg.sender;
+    struct S_UserData {
+        bytes32 username;
+        Roles role;
+        address userAddress;
     }
 
     enum Roles {
@@ -17,14 +19,14 @@ contract User {
         ProjectSupervisor
     }
 
-    struct UserData {
-        bytes32 _username;
-        Roles _role;
-        address _userAddress;
+    event UserRegistered(address indexed _address, bytes32 _username);
+
+    constructor() {
+        owner = msg.sender;
     }
 
     modifier onlyOwner() {
-        require(owner == msg.sender, "Address");
+        require(owner == msg.sender, "You are not an owner");
         _;
     }
 
@@ -33,21 +35,19 @@ contract User {
         _;
     }
 
-    event UserRegistered(address indexed _address, bytes32 username);
-
     function registerUser(bytes32 _username, uint _role, address _userAddress) public onlyOwner {
-        userInfo[_userAddress]._username = _username;
-        userInfo[_userAddress]._role = Roles(_role);
-        userInfo[_userAddress]._userAddress = _userAddress;
+        userInfo[_userAddress].username = _username;
+        userInfo[_userAddress].role = Roles(_role);
+        userInfo[_userAddress].userAddress = _userAddress;
         emit UserRegistered(_userAddress, _username);
     }
 
     function changeUserRole(uint _role, address _userAddress) public onlyOwner returns(string memory) {
-        userInfo[_userAddress]._role = Roles(_role);
+        userInfo[_userAddress].role = Roles(_role);
         return "Role Updated!";
     }
 
-    function getUserInfo(address _userAddress) public view onlyOwner returns(UserData memory) {
+    function getUserInfo(address _userAddress) public view onlyOwner returns(S_UserData memory) {
         return userInfo[_userAddress];
     }
 }

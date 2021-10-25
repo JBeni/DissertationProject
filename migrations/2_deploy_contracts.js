@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-undef
-var ProjectUsageFlow = artifacts.require('ProjectUsageFlow');
+var Project = artifacts.require('Project');
 
 module.exports = function (deployer) {
-	deployer.deploy(ProjectUsageFlow);
+	deployer.deploy(Project);
 };
