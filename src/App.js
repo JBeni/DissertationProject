@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import Navbar from './components/Navbar';
-import CustomPaginationActionsTable from './components/TableViewRowModal/TabelExample';
-import { StyledEngineProvider } from '@mui/material/styles';
+import Navbar from './components/Navbar/Navbar';
 
 class App extends Component {
-	render() {
+
+    render() {
 		return (
 			<React.Fragment>
-                <StyledEngineProvider injectFirst>
-                    <CustomPaginationActionsTable />
-                </StyledEngineProvider>
+				<Navbar />
 			</React.Fragment>
 		);
 	}
