@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Routes from './Routes';
+import Table from '.././Table';
 
 function Navbar() {
 
@@ -22,6 +23,7 @@ function Navbar() {
 
             <div className="main-section-container">
                 <Routes />
+                <Table />
             </div>
         </div>
     );
