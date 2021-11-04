@@ -73,8 +73,8 @@ class App extends Component {
             networkData.address
         );
         
-        let data = await this.state.project.methods.getUserInfo(accounts[0]).call();
-        console.log(data);
+        // let data = await this.state.project.methods.getUserInfo(accounts[0]).call();
+        // console.log(data);
     }
 
 
