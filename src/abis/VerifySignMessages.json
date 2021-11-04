@@ -1,0 +1,125 @@
+{
+  "contractName": "VerifySignMessages",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/others/VerifySignMessages.sol\":\"VerifySignMessages\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/others/VerifySignMessages.sol\":{\"keccak256\":\"0x9cf4e2c959e27a85f8084ee3a87b6390f2a35ad7c072a367f86b498507c5ca87\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b2f7ac11d36b3190f96e5884e0d5d903fe1db5007a3069710ad9818f4c06c602\",\"dweb:/ipfs/QmNataRZT8H8Er9bFJ2NPEyUGZxBvFXMMvuiEYcd16beom\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212209b8d585442de8406eb2ea21f136453d117ed67582b9d890f4dda9c4fe98d40cf64736f6c63430008090033",
+  "deployedBytecode": "0x6080604052600080fdfea26469706673582212209b8d585442de8406eb2ea21f136453d117ed67582b9d890f4dda9c4fe98d40cf64736f6c63430008090033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "68:32:5:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "68:32:5:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0 <0.9.0;\r\n\r\ncontract VerifySignMessages {\r\n}\r\n",
+  "sourcePath": "/mnt/c/users/beniamin/source/repos/dissertationproject/contracts/others/VerifySignMessages.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/others/VerifySignMessages.sol",
+    "exportedSymbols": {
+      "VerifySignMessages": [
+        831
+      ]
+    },
+    "id": 832,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 830,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:5"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "VerifySignMessages",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 831,
+        "linearizedBaseContracts": [
+          831
+        ],
+        "name": "VerifySignMessages",
+        "nameLocation": "77:18:5",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 832,
+        "src": "68:32:5",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:69:5"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/others/VerifySignMessages.sol",
+    "exportedSymbols": {
+      "VerifySignMessages": [
+        831
+      ]
+    },
+    "id": 832,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 830,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:5"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "VerifySignMessages",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 831,
+        "linearizedBaseContracts": [
+          831
+        ],
+        "name": "VerifySignMessages",
+        "nameLocation": "77:18:5",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 832,
+        "src": "68:32:5",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:69:5"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-27T09:19:04.603Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

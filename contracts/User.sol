@@ -47,7 +47,11 @@ contract User {
         return "Role Updated!";
     }
 
-    function getUserInfo(address _userAddress) public view onlyOwner returns(S_UserData memory) {
+    function getUserInfo(address _userAddress) external view onlyOwner returns(S_UserData memory) {
         return userInfo[_userAddress];
+    }
+
+    function getUser() public view onlyOwner returns(string memory) {
+        return "Beniamin";
     }
 }

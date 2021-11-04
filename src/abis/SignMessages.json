@@ -1,0 +1,125 @@
+{
+  "contractName": "SignMessages",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.9+commit.e5eed63a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/others/SignMessages.sol\":\"SignMessages\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/others/SignMessages.sol\":{\"keccak256\":\"0xd974ac09b02118384d07ff4509b52031528b81316301cf19d4feafddf4b79326\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b77583c67c9f0c8e11990b648ce090f312c864a0442bf6e830182fc42ffe96b0\",\"dweb:/ipfs/QmbnqtPQ9wm3v3ieoQETCRUgsQm6LDmErUsZXKKQVvB11u\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220ff55c9dcd06fa2553d09ff0db2fc2e870210b983421e3939019af680ec25b36864736f6c63430008090033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220ff55c9dcd06fa2553d09ff0db2fc2e870210b983421e3939019af680ec25b36864736f6c63430008090033",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "68:48:4:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "68:48:4:-:0;;;;;",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0 <0.9.0;\r\n\r\ncontract SignMessages {\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n",
+  "sourcePath": "/mnt/c/users/beniamin/source/repos/dissertationproject/contracts/others/SignMessages.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/others/SignMessages.sol",
+    "exportedSymbols": {
+      "SignMessages": [
+        828
+      ]
+    },
+    "id": 829,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 827,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "SignMessages",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 828,
+        "linearizedBaseContracts": [
+          828
+        ],
+        "name": "SignMessages",
+        "nameLocation": "77:12:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 829,
+        "src": "68:48:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:85:4"
+  },
+  "legacyAST": {
+    "absolutePath": "project:/contracts/others/SignMessages.sol",
+    "exportedSymbols": {
+      "SignMessages": [
+        828
+      ]
+    },
+    "id": 829,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 827,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.8",
+          ".0",
+          "<",
+          "0.9",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:31:4"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "SignMessages",
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 828,
+        "linearizedBaseContracts": [
+          828
+        ],
+        "name": "SignMessages",
+        "nameLocation": "77:12:4",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 829,
+        "src": "68:48:4",
+        "usedErrors": []
+      }
+    ],
+    "src": "33:85:4"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.9+commit.e5eed63a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.3",
+  "updatedAt": "2021-10-27T09:19:04.594Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
