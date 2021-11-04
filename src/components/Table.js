@@ -22,6 +22,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import Refresh from '@material-ui/icons/Refresh';
 import Delete from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import TransitionsModal from './Modal';
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -111,9 +112,10 @@ class Table extends Component {
 				/>
 
                 <br /><br />
-                <div>
+                {/* <div>
                     <TableViewRow />
-                </div>
+                </div> */}
+                <TransitionsModal />
 			</div>
 		);
 	}
