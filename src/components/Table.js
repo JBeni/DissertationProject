@@ -83,7 +83,7 @@ class Table extends Component {
 					icons={tableIcons}
 					columns={columns}
 					data={data}
-                    options={{ exportButton: true, filtering: true, actionsColumnIndex: -1 }}
+                    options={{ exportButton: true, actionsColumnIndex: -1 }}
                     actions={[
                         {
                             icon: Refresh,

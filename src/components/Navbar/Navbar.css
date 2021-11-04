@@ -33,16 +33,16 @@ a {
 	cursor: pointer;
 }
 
-.header__img {
+.header__p {
 	width: 35px;
 	height: 35px;
 	display: flex;
 	justify-content: center;
-	border-radius: 50%;
 	overflow: hidden;
 }
 
-.header__img img {
+.header__p p {
+    margin-top: 9px;
 	width: 40px;
 }
 
@@ -141,12 +141,12 @@ a {
 		padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
 	}
 
-	.header__img {
+	.header__p {
 		width: 40px;
 		height: 40px;
 	}
 
-	.header__img img {
+	.header__p p {
 		width: 45px;
 	}
 

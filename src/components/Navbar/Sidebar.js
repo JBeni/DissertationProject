@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Sidebar({ isActive, currentLocation }) {
+function Sidebar(props) {
 	return (
-		<div className={isActive ? 'l-navbar show' : 'l-navbar'} id="nav-bar">
+		<div className={props.isActive ? 'l-navbar show' : 'l-navbar'} id="nav-bar">
 			<nav className="nav">
 				<div>
 					<p className="nav__logo">
@@ -15,7 +15,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/dashboard"
 							className={
-								currentLocation[1] === 'dashboard' || currentLocation[1] === ''
+								props.currentLocation[1] === 'dashboard' || props.currentLocation[1] === ''
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -27,7 +27,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/admin"
 							className={
-								currentLocation[1] === 'admin'
+								props.currentLocation[1] === 'admin'
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -39,7 +39,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/project-initiator"
 							className={
-								currentLocation[1] === 'project-initiator'
+								props.currentLocation[1] === 'project-initiator'
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -51,7 +51,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/company-builder"
 							className={
-								currentLocation[1] === 'company-builder'
+								props.currentLocation[1] === 'company-builder'
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -63,7 +63,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/project-supervisor"
 							className={
-								currentLocation[1] === 'project-supervisor'
+								props.currentLocation[1] === 'project-supervisor'
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -78,7 +78,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/projects"
 							className={
-								currentLocation[1] === 'projects'
+								props.currentLocation[1] === 'projects'
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -89,7 +89,7 @@ function Sidebar({ isActive, currentLocation }) {
 						<Link
 							to="/user-profile"
 							className={
-								currentLocation[1] === 'user-profile'
+								props.currentLocation[1] === 'user-profile'
 									? 'nav__link active'
 									: 'nav__link'
 							}
