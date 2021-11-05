@@ -7,7 +7,7 @@ contract User {
     address public owner;
 
     struct S_UserData {
-        bytes32 username;
+        string username;
         Roles role;
         address userAddress;
     }
@@ -19,7 +19,7 @@ contract User {
         ProjectSupervisor
     }
 
-    event UserRegistered(address indexed _address, bytes32 _username);
+    event UserRegistered(address indexed _address, string _username);
 
     constructor() {
         owner = msg.sender;
@@ -35,7 +35,7 @@ contract User {
         _;
     }
 
-    function registerUser(bytes32 _username, uint _role, address _userAddress) public onlyOwner {
+    function registerUser(string memory _username, uint _role, address _userAddress) public onlyOwner {
         userInfo[_userAddress].username = _username;
         userInfo[_userAddress].role = Roles(_role);
         userInfo[_userAddress].userAddress = _userAddress;
