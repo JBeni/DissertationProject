@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import MaterialTable from '@material-table/core';
-import TableViewRow from './TableViewRow';
 
-// Import Material Icons
 import { forwardRef } from 'react';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -22,7 +20,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import Refresh from '@material-ui/icons/Refresh';
 import Delete from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import TransitionsModal from './Modal';
+import { AddUser } from './Admin/AddUser';
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -48,7 +46,33 @@ const tableIcons = {
 	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-class Table extends Component {
+export default class Table extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			show: false,
+		};
+
+		this.showModal = this.showModal.bind(this);
+		this.hideModal = this.hideModal.bind(this);
+	}
+
+	showModal = () => {
+		this.setState({ show: true });
+	};
+
+	hideModal = () => {
+		this.setState({ show: false });
+	};
+
+    getUsers = () => {
+        // let users = this.props.project.methods.getUserInfo('0x686d54a3b6B30db5AC94f97563d061dD09b8A2B2').call();
+        // console.log(users);
+
+        let events = this.props.project.getPastEvents('UserRegistered', {fromBlock: 0, toBlock: 'latest'});
+        console.log(events);
+    }
+
 	render() {
 		// Material Table Columns
 		const columns = [
@@ -56,6 +80,10 @@ class Table extends Component {
 			{ title: 'First Name', field: 'first_name' },
 			{ title: 'Last Name', field: 'last_name' },
 		];
+
+        //let users = this.props.project.methods.getUsers().call();
+
+        // this.getUsers();
 
 		// Material Table Columns Rows
 		const data = (query) =>
@@ -84,41 +112,36 @@ class Table extends Component {
 					icons={tableIcons}
 					columns={columns}
 					data={data}
-                    options={{ exportButton: true, actionsColumnIndex: -1 }}
-                    actions={[
-                        {
-                            icon: Refresh,
-                            tooltip: 'Refresh Data',
-                            isFreeAction: true,
-                            onClick: () => tableRef.current && tableRef.current.onQueryChange(),
-                            position: 'auto'
-                        },
-                        {
-                            icon: SaveAlt,
-                            tooltip: 'Save User',
-                            onClick: (event, rowData) => console.log("You saved ",rowData)
-                        },
-                        {
-                            icon: Delete,
-                            tooltip: 'Delete User',
-                            onClick: (event, rowData) => console.log("You want to delete ",rowData)
-                        },
-                        {
-                            icon: VisibilityIcon,
-                            tooltip: 'View User',
-                            onClick: (event, rowData) => console.log("You want to view ",rowData)
-                        }
-                    ]}
+					options={{ exportButton: true, actionsColumnIndex: -1 }}
+					actions={[
+						{
+							icon: Refresh,
+							tooltip: 'Refresh Data',
+							isFreeAction: true,
+							onClick: () =>
+								tableRef.current && tableRef.current.onQueryChange(),
+							position: 'auto',
+						},
+						{
+							icon: SaveAlt,
+							tooltip: 'Save User',
+							onClick: (event, rowData) => console.log('You saved ', rowData),
+						},
+						{
+							icon: Delete,
+							tooltip: 'Delete User',
+							onClick: (event, rowData) =>
+								console.log('You want to delete ', rowData),
+						},
+						{
+							icon: VisibilityIcon,
+							tooltip: 'View User',
+							onClick: (event, rowData) =>
+								console.log('You want to view ', rowData),
+						},
+					]}
 				/>
-
-                <br /><br />
-                {/* <div>
-                    <TableViewRow />
-                </div> */}
-                <TransitionsModal />
 			</div>
 		);
 	}
 }
-
-export default Table;
