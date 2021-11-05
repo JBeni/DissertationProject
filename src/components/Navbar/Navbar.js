@@ -9,6 +9,9 @@ import Table from '.././Table';
 import CustomStepper from './../CustomStepper';
 import User from '../../abis/User.json';
 import Button from '@material-ui/core/Button';
+import { AddUser } from '../Admin/AddUser';
+import ModalComponent from './../Modal';
+import DialogModal from './../DialogModal';
 
 function Navbar(props) {
     const [isActive, setIsActive] = useState(true);
@@ -18,27 +21,9 @@ function Navbar(props) {
     const { pathname } = location;
     const currentLocation = pathname.split("/");
 
-
-
-    const [address, setAddress] = useState("");
-    const handleInputChange = (e) => {
-        setAddress(e.target.value);
-    }
-
     const [account] = useState(props.account);
     const [project] = useState(props.project);
     const [web3] = useState(props.web3);
-
-    // console.log("Account Address : " + account);
-
-    // async function getUsername() {
-    //     let data = await project.methods.getUserInfo(account).call();
-    //     console.log(data);
-    // }
-
-
-
-
 
     return (
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
@@ -47,19 +32,12 @@ function Navbar(props) {
 
             <div className="main-section-container">
                 <Routes />
-                <Table />
+                <Table account={account} project={project} web3={web3} />
 
-                {/* <br /><br />
-                <CustomStepper
-                    getSteps={getSupplyChainSteps}
-                    activeStep={activeStep}
-                    getStepContent={getSupplyChainStepContent}
-                /> */}
+                <br /><br />
 
+                <DialogModal account={account} project={project} web3={web3} />
 
-                {/* <Button variant="contained" color="primary" onClick={ getUsername } >
-                    Submit
-                </Button>  */}
             </div>
         </div>
     );
