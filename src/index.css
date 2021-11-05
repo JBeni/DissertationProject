@@ -1,6 +1,7 @@
 @import url("https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css");
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600');
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css");
 
 :root {
 	--header-height: 3rem;
