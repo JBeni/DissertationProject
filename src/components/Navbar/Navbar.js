@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import './Navbar.css';
-
 import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Routes from './Routes';
 import Table from '.././Table';
-import CustomStepper from './../CustomStepper';
-import User from '../../abis/User.json';
-import Button from '@material-ui/core/Button';
-import { AddUser } from '../Admin/AddUser';
-import ModalComponent from './../Modal';
 import DialogModal from './../DialogModal';
 
 function Navbar(props) {
