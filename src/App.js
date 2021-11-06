@@ -65,23 +65,7 @@ class App extends Component {
 	render() {
 		if (this.state.loading === false) {
 
-            // this.state.project.methods
-			// 	.registerUser(
-			// 		'userName',
-			// 		Number(1),
-			// 		'0x686d54a3b6B30db5AC94f97563d061dD09b8A2B2'
-			// 	)
-			// 	.send({ from: this.state.account });
-
-            this.state.project.events.UserRegistered({fromBlock: 0, toBlock: 'latest'}).on('data', event => {
-                console.log(event);
-            });
-
-            // let events = this.state.project.getPastEvents('UserRegistered', {fromBlock: 0, toBlock: 'latest'});
-            // console.log('from the events');
-            // console.log(events);
-
-			return (
+            return (
 				<React.Fragment>
 					<Navbar
 						account={this.state.account}
