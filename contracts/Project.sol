@@ -42,8 +42,8 @@ contract Project is User {
     }
 
     modifier onlyProjectInitiator {
-        require(userInfo[projectInitiator].role == Roles.ProjectInitiator, "You don't have the rights for this resources.");
-        require(projectInitiator == msg.sender, "You are not a project initiator");
+        //require(userInfo[projectInitiator].role == Roles.ProjectInitiator, "You don't have the rights for this resources.");
+        //require(projectInitiator == msg.sender, "You are not a project initiator");
         _;
     }
 
