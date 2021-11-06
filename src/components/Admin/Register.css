@@ -125,6 +125,26 @@ form.sign-in-form {
     font-size: 0.8rem;
 }
 
+/* Styling only the div for React Select  */
+.react-select {
+    margin-top: 30px;
+}
+
+.react-select-error {
+    margin-top: 7px;
+    margin-left: 30px;
+    margin-bottom: -20px;
+    font-weight: 600;
+    line-height: normal;
+    color: red;
+    display: inline-block;
+    width: 300px;
+}
+
+.email-class {
+    margin-top: 5px !important;
+}
+
 @media (max-width: 870px) {
     .container {
         min-height: 800px;
