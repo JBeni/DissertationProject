@@ -2,14 +2,16 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 contract User {
-
     mapping(address => S_UserData) public userInfo;
     address public owner;
 
     struct S_UserData {
-        string username;
+        bytes32 username;
+        bytes32 email;
+        bytes32 firstname;
+        bytes32 lastname;
         Roles role;
-        address userAddress;
+        address walletAddress;
     }
 
     enum Roles {
@@ -19,7 +21,7 @@ contract User {
         ProjectSupervisor
     }
 
-    event UserRegistered(address indexed _address, string _username);
+    event UserRegistered(address indexed _walletAddress, bytes32 _username, bytes32 _email, bytes32 _firstname, bytes32 _lastname, Roles _role);
 
     constructor() {
         owner = msg.sender;
@@ -35,23 +37,29 @@ contract User {
         _;
     }
 
-    function registerUser(string memory _username, uint _role, address _userAddress) public onlyOwner {
-        userInfo[_userAddress].username = _username;
-        userInfo[_userAddress].role = Roles(_role);
-        userInfo[_userAddress].userAddress = _userAddress;
-        emit UserRegistered(_userAddress, _username);
+    function registerUser(
+        bytes32 _username, bytes32 _email, bytes32 _firstname,
+        bytes32 _lastname, uint _role, address _walletAddress
+    ) public onlyOwner {
+        userInfo[_walletAddress].username = _username;
+        userInfo[_walletAddress].email = _email;
+        userInfo[_walletAddress].firstname = _firstname;
+        userInfo[_walletAddress].lastname = _lastname;
+        userInfo[_walletAddress].role = Roles(_role);
+        userInfo[_walletAddress].walletAddress = _walletAddress;
+        emit UserRegistered(_walletAddress, _username, _email, _firstname, _lastname, Roles(_role));
     }
 
-    function changeUserRole(uint _role, address _userAddress) public onlyOwner returns(string memory) {
-        userInfo[_userAddress].role = Roles(_role);
+    function changeUserRole(uint _role, address _walletAddress) public onlyOwner returns(bytes32) {
+        userInfo[_walletAddress].role = Roles(_role);
         return "Role Updated!";
     }
 
-    function getUserInfo(address _userAddress) external view onlyOwner returns(S_UserData memory) {
-        return userInfo[_userAddress];
+    function getUserInfo(address _walletAddress) external view onlyOwner returns(S_UserData memory) {
+        return userInfo[_walletAddress];
     }
 
-    function getUser() public view onlyOwner returns(string memory) {
+    function getUser() public view onlyOwner returns(bytes32) {
         return "Beniamin";
     }
 }
