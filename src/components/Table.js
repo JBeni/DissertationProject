@@ -20,7 +20,6 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import Refresh from '@material-ui/icons/Refresh';
 import Delete from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import { AddUser } from './Admin/AddUser';
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -51,10 +50,31 @@ export default class Table extends Component {
 		super(props);
 		this.state = {
 			show: false,
+			users: [],
 		};
 
 		this.showModal = this.showModal.bind(this);
 		this.hideModal = this.hideModal.bind(this);
+	}
+
+	componentDidMount() {
+		this.props.project.methods.getUserIds().call().then((result) => {
+            result.map((userId) => {
+				this.props.project.methods.getUserInfo(Number(userId)).call()
+					.then((result) => {
+						const user = {
+                            username: this.props.web3.utils.hexToUtf8(result['username']),
+                            email: this.props.web3.utils.hexToUtf8(result['email']),
+                            firstname: this.props.web3.utils.hexToUtf8(result['firstname']),
+                            lastname: this.props.web3.utils.hexToUtf8(result['lastname']),
+                            role: result['role'],
+                            walletAddress: result['walletAddress'],
+                        };
+						this.setState({ users: [...this.state.users, user] });
+					});
+				return false;
+			});
+		});
 	}
 
 	showModal = () => {
@@ -65,53 +85,26 @@ export default class Table extends Component {
 		this.setState({ show: false });
 	};
 
-    getUsers = () => {
-        // let users = this.props.project.methods.getUserInfo('0x686d54a3b6B30db5AC94f97563d061dD09b8A2B2').call();
-        // console.log(users);
-
-        let events = this.props.project.getPastEvents('UserRegistered', {fromBlock: 0, toBlock: 'latest'});
-        console.log(events);
-    }
-
 	render() {
-		// Material Table Columns
-		const columns = [
-			{ title: 'Id', field: 'id' },
-			{ title: 'First Name', field: 'first_name' },
-			{ title: 'Last Name', field: 'last_name' },
-		];
-
-        //let users = this.props.project.methods.getUsers().call();
-
-        // this.getUsers();
-
-		// Material Table Columns Rows
-		const data = (query) =>
-			new Promise((resolve, reject) => {
-				let url = 'https://reqres.in/api/users?';
-				url += 'per_page=' + query.pageSize;
-				url += '&page=' + (query.page + 1);
-				fetch(url)
-					.then((response) => response.json())
-					.then((result) => {
-						resolve({
-							data: result.data,
-							page: result.page - 1,
-							totalCount: result.total,
-						});
-					});
-			});
-
 		const tableRef = React.createRef();
+		const columns = [
+			{ title: 'Username', field: 'username' },
+			{ title: 'First Name', field: 'firstname' },
+			{ title: 'Last Name', field: 'lastname' },
+			{ title: 'Email', field: 'email' },
+			{ title: 'Role', field: 'role' },
+			{ title: 'Wallet Address', field: 'walletAddress' },
+		];
 
 		return (
 			<div>
+				<br />
 				<MaterialTable
-					title="Remote Server Data Example"
+					title="Users ProjectChain"
 					tableRef={tableRef}
 					icons={tableIcons}
 					columns={columns}
-					data={data}
+					data={this.state.users}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
 						{
