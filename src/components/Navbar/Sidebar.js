@@ -25,15 +25,15 @@ function Sidebar(props) {
 						</Link>
 
 						<Link
-							to="/admin"
+							to="/users"
 							className={
-								props.currentLocation[1] === 'admin'
+								props.currentLocation[1] === 'users'
 									? 'nav__link active'
 									: 'nav__link'
 							}
 						>
 							<i className="bx bx-grid-alt nav__icon"></i>
-							<span className="nav__name">Admin</span>
+							<span className="nav__name">Users</span>
 						</Link>
 
 						<Link
