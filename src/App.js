@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from './components/Navbar/Navbar';
+import Navbar from './components/Navbar';
 import Web3 from 'web3';
 import Project from './abis/Project.json';
 import Loader from './components/Views/Loader';
