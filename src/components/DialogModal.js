@@ -5,14 +5,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Slide from '@mui/material/Slide';
 
-import './Admin/Register.css';
+import './Styles/Register.css';
 import Select from 'react-select';
 
-const options = [
-	{ id: 1, value: 'DefaultRole', label: 'DefaultRole' },
-	{ id: 2, value: 'ProjectInitiator', label: 'ProjectInitiator' },
-	{ id: 3, value: 'CompanyBuilder', label: 'CompanyBuilder' },
-	{ id: 4, value: 'ProjectSupervisor', label: 'ProjectSupervisor' },
+export const roleDropdownOptions = [
+	{ id: "1", value: 'DefaultRole', label: 'DefaultRole' },
+	{ id: "2", value: 'ProjectInitiator', label: 'ProjectInitiator' },
+	{ id: "3", value: 'CompanyBuilder', label: 'CompanyBuilder' },
+	{ id: "4", value: 'ProjectSupervisor', label: 'ProjectSupervisor' },
 ];
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -93,14 +93,14 @@ export default class DialogModal extends React.Component {
 		const fieldValidationErrors = this.state.formErrors;
 		const validity = this.state.formValidity;
 
-		const isFirstName = name === 'FirstName';
-		const isLastName = name === 'LastName';
-		const isEmail = name === 'Email';
-		const isRole = name === 'Role';
-		const isWalletAddress = name === 'WalletAddress';
+		// const isFirstName = name === 'FirstName';
+		// const isLastName = name === 'LastName';
+		// const isEmail = name === 'Email';
+		// const isRole = name === 'Role';
+		// const isWalletAddress = name === 'WalletAddress';
 
-		const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-		const walletTest = /^(0x)?[0-9a-f]{40}$/i;
+		// const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+		// const walletTest = /^(0x)?[0-9a-f]{40}$/i;
 
 		validity[name] = value.length > 0;
 		fieldValidationErrors[name] = validity[name]
@@ -237,7 +237,7 @@ export default class DialogModal extends React.Component {
                                                 name="RoleDropdown"
 												className="react-select"
 												onChange={this.handleChangeDropdown}
-												options={options}
+												options={roleDropdownOptions}
 												value={selectedOption}
 											/>
 											<div className="react-select-error">
