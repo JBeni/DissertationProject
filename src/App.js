@@ -41,9 +41,8 @@ class App extends Component {
 	async loadBlockChain() {
 		const web3 = window.web3;
 		const accounts = await web3.eth.getAccounts();
-		//console.log(accounts);
 
-		this.setState({ account: accounts[0] });
+        this.setState({ account: accounts[0] });
 		const networkId = await web3.eth.net.getId();
 		const networkData = Project.networks[networkId];
 		if (networkData) {
@@ -56,7 +55,6 @@ class App extends Component {
 				loading: false,
 				web3: web3,
 			});
-			//console.log(this.state.project);
 		} else {
 			window.alert('Project contract not deployed to detected network.');
 		}
@@ -64,7 +62,6 @@ class App extends Component {
 
 	render() {
 		if (this.state.loading === false) {
-
             return (
 				<React.Fragment>
 					<Navbar

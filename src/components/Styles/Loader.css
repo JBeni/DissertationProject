@@ -1,0 +1,14 @@
+.center-container {
+    margin-top: 250px;
+    margin-left: 500px;
+}
+
+.text-loader {
+    width: 230px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    margin-top: 330px;
+    margin-left: 600px;
+}
