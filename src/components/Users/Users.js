@@ -20,7 +20,7 @@ import ViewColumn from '@material-ui/icons/ViewColumn';
 import Refresh from '@material-ui/icons/Refresh';
 import Delete from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import DialogModal, { roleDropdownOptions } from './DialogModal';
+import AddUserModal, { roleDropdownOptions } from './AddUserModal';
 
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -56,10 +56,8 @@ export default class Users extends Component {
 
 		this.showModal = this.showModal.bind(this);
 		this.hideModal = this.hideModal.bind(this);
-	}
 
-	componentDidMount() {
-		this.props.project.methods.getUserIds().call().then((result) => {
+        this.props.project.methods.getUserIds().call().then((result) => {
             result.map((userId) => {
 				this.props.project.methods.getUserInfo(Number(userId)).call()
 					.then((result) => {
@@ -81,6 +79,31 @@ export default class Users extends Component {
 		});
 	}
 
+/*
+	componentDidMount() {
+        this.props.project.methods.getUserIds().call().then((result) => {
+            result.map((userId) => {
+				this.props.project.methods.getUserInfo(Number(userId)).call()
+					.then((result) => {
+                        let role = roleDropdownOptions.find((element) => {
+                            return Number(element.id) === Number(result['role']);
+                        });
+						const user = {
+                            username: this.props.web3.utils.hexToUtf8(result['username']),
+                            email: this.props.web3.utils.hexToUtf8(result['email']),
+                            firstname: this.props.web3.utils.hexToUtf8(result['firstname']),
+                            lastname: this.props.web3.utils.hexToUtf8(result['lastname']),
+                            role: role.value,
+                            walletAddress: result['walletAddress'],
+                        };
+						this.setState({ users: [...this.state.users, user] });
+					});
+				return false;
+			});
+		});
+	}
+*/
+
 	showModal = () => {
 		this.setState({ show: true });
 	};
@@ -93,19 +116,17 @@ export default class Users extends Component {
 		const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Username', field: 'username' },
-			{ title: 'First Name', field: 'firstname' },
-			{ title: 'Last Name', field: 'lastname' },
+			//{ title: 'First Name', field: 'firstname' },
+			//{ title: 'Last Name', field: 'lastname' },
 			{ title: 'Email', field: 'email' },
 			{ title: 'Role', field: 'role' },
-			{ title: 'Wallet Address', field: 'walletAddress' },
+			//{ title: 'Wallet Address', field: 'walletAddress' },
 		];
 
 		return (
 			<div>
-                <DialogModal />
-
+                <AddUserModal />
 				<br />
-
 				<MaterialTable
 					title="Users ProjectChain"
 					tableRef={tableRef}

@@ -13,11 +13,10 @@ class App extends Component {
 			loading: true,
 			web3: null,
 		};
-	}
-	async componentWillMount() {
+
 		this.loadWeb3();
 		this.loadBlockChain();
-	}
+    }
 
 	async loadWeb3() {
 		if (window.ethereum) {

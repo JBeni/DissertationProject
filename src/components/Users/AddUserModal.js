@@ -19,7 +19,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 	return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default class DialogModal extends React.Component {
+export default class AddUserModal extends React.Component {
 	constructor(props) {
 		super(props);
 

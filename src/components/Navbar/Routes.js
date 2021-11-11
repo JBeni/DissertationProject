@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DefaultPage from '../DefaultPage';
-import Projects from '../Projects';
+import Projects from '../Projects/Projects';
 import Users from '../Users/Users';
 import Dashboard from '../Dashboard';
 

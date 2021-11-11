@@ -35,6 +35,17 @@ function Sidebar(props) {
 							<i className="bx bx-grid-alt nav__icon"></i>
 							<span className="nav__name">Users</span>
 						</Link>
+						<Link
+							to="/projects"
+							className={
+								props.currentLocation[1] === 'projects'
+									? 'nav__link active'
+									: 'nav__link'
+							}
+						>
+							<i className="bx bx-user nav__icon"></i>
+							<span className="nav__name">Projects</span>
+						</Link>
 
 						<Link
 							to="/project-initiator"
@@ -70,32 +81,6 @@ function Sidebar(props) {
 						>
 							<i className="bx bx-bookmark nav__icon"></i>
 							<span className="nav__name">Project Supervisor</span>
-						</Link>
-
-						<br />
-						<br />
-
-						<Link
-							to="/projects"
-							className={
-								props.currentLocation[1] === 'projects'
-									? 'nav__link active'
-									: 'nav__link'
-							}
-						>
-							<i className="bx bx-user nav__icon"></i>
-							<span className="nav__name">Projects</span>
-						</Link>
-						<Link
-							to="/user-profile"
-							className={
-								props.currentLocation[1] === 'user-profile'
-									? 'nav__link active'
-									: 'nav__link'
-							}
-						>
-							<i className="bx bx-user nav__icon"></i>
-							<span className="nav__name">User Profile</span>
 						</Link>
 					</div>
 				</div>
