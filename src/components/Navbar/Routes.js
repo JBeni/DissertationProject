@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DefaultPage from '../DefaultPage';
 import Projects from '../Projects';
-import Users from '../Users';
+import Users from '../Users/Users';
 import Dashboard from '../Dashboard';
 
 function Routes(props) {

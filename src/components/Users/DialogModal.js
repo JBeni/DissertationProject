@@ -5,7 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import Slide from '@mui/material/Slide';
 
-import './Styles/Register.css';
+import '../Styles/Register.css';
 import Select from 'react-select';
 
 export const roleDropdownOptions = [
