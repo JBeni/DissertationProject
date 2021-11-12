@@ -14,14 +14,20 @@ class App extends Component {
 			web3: null,
 		};
 
-		this.loadWeb3();
-		this.loadBlockChain();
+        this.initializeConnection();
     }
 
-	async loadWeb3() {
+    async initializeConnection() {
+        await this.loadWeb3();
+		await this.loadBlockChain();
+    }
+
+    async loadWeb3() {
 		if (window.ethereum) {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+            this.setState({ account: accounts[0] });
 			window.web3 = new Web3(window.ethereum);
-			await window.ethereum.enable();
+			//await window.ethereum.enable();
 		} else if (window.web3) {
 			window.web3 = new Web3(window.web3.currentProvider);
 		} else {
@@ -31,18 +37,13 @@ class App extends Component {
 		}
 	}
 
-	handleInputChange = (e) => {
-		this.setState({
-			[e.target.id]: e.target.value,
-		});
-	};
-
 	async loadBlockChain() {
 		const web3 = window.web3;
-		const accounts = await web3.eth.getAccounts();
 
-        this.setState({ account: accounts[0] });
-		const networkId = await web3.eth.net.getId();
+        //const accounts = await web3.eth.getAccounts();
+        //this.setState({ account: accounts[0] });
+		
+        const networkId = await web3.eth.net.getId();
 		const networkData = Project.networks[networkId];
 		if (networkData) {
 			const project = new web3.eth.Contract(
@@ -58,6 +59,12 @@ class App extends Component {
 			window.alert('Project contract not deployed to detected network.');
 		}
 	}
+
+    handleInputChange = (e) => {
+		this.setState({
+			[e.target.id]: e.target.value,
+		});
+	};
 
 	render() {
 		if (this.state.loading === false) {
