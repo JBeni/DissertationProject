@@ -12,6 +12,9 @@
 		"@testing-library/jest-dom": "^5.14.1",
 		"@testing-library/react": "^11.2.7",
 		"@testing-library/user-event": "^12.8.3",
+		"axios": "^0.24.0",
+		"ethers": "^5.5.1",
+		"formik": "^2.2.9",
 		"material-table": "^1.69.3",
 		"react": "^17.0.2",
 		"react-bootstrap": "^2.0.2",
@@ -21,7 +24,8 @@
 		"react-select": "^5.2.1",
 		"styled-components": "^5.3.3",
 		"web-vitals": "^1.1.2",
-		"web3": "^1.6.0"
+		"web3": "^1.6.0",
+		"yup": "^0.32.11"
 	},
 	"scripts": {
 		"start": "react-scripts start",
