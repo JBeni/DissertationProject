@@ -28,7 +28,6 @@ export default class AddUserModal extends React.Component {
 				FirstName: '',
 				LastName: '',
 				Email: '',
-				Role: '',
 				WalletAddress: '',
 				RoleDropdown: '',
 			},
@@ -36,7 +35,6 @@ export default class AddUserModal extends React.Component {
 				FirstName: '',
 				LastName: '',
 				Email: '',
-				Role: '',
 				WalletAddress: '',
 				RoleDropdown: '',
 			},
@@ -44,7 +42,6 @@ export default class AddUserModal extends React.Component {
 				FirstName: false,
 				LastName: false,
 				Email: false,
-				Role: true,
 				WalletAddress: false,
 				RoleDropdown: false,
 			},
@@ -142,7 +139,8 @@ export default class AddUserModal extends React.Component {
 
 	handleSubmit = (event) => {
 		event.preventDefault();
-		this.setState({ isSubmitting: true });
+
+        this.setState({ isSubmitting: true });
 		const { formValues, formValidity } = this.state;
 		if (Object.values(formValidity).every(Boolean)) {
 			// alert('Form is validated! Submitting the form...');
@@ -169,17 +167,17 @@ export default class AddUserModal extends React.Component {
 	};
 
 	registerUser = async (_username, _email, _firstname, _lastname, role, walletAddress) => {
-        const username = this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_username), 64);
-        const email = this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_email), 64);
-        const firstname = this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_firstname), 64);
-        const lastname = this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_lastname), 64);
+        const username = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_username), 64);
+        const email = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_email), 64);
+        const firstname = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_firstname), 64);
+        const lastname = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_lastname), 64);
 
         await this.props.project.methods
 			.registerUser(
-                username,
-                email,
-                firstname,
-                lastname,
+                _username,
+                _email,
+                _firstname,
+                _lastname,
                 Number(role),
                 walletAddress
 			)
@@ -257,19 +255,6 @@ export default class AddUserModal extends React.Component {
 											/>
 											<div className="error">{formErrors.Email}</div>
 										</div>
-
-										{/* <div className="input-field">
-											<i className="fas fa-envelope"></i>
-											<input
-												type="text"
-												name="Role"
-												placeholder="Role"
-												onChange={this.handleChange}
-												value={formValues.Role}
-												//required
-											/>
-											<div className="error">{formErrors.Role}</div>
-										</div> */}
 
 										<div className="input-field">
 											<i className="fas fa-lock"></i>

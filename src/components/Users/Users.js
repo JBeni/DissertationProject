@@ -57,18 +57,18 @@ export default class Users extends Component {
 		this.showModal = this.showModal.bind(this);
 		this.hideModal = this.hideModal.bind(this);
 
-        this.props.project.methods.getUserIds().call().then((result) => {
-            result.map((userId) => {
-				this.props.project.methods.getUserInfo(Number(userId)).call()
+        this.props.project.methods.getUserAddresses().call().then((result) => {
+            result.map((userAddress) => {
+				this.props.project.methods.getUserInfo(userAddress).call()
 					.then((result) => {
                         let role = roleDropdownOptions.find((element) => {
                             return Number(element.id) === Number(result['role']);
                         });
 						const user = {
-                            username: this.props.web3.utils.hexToUtf8(result['username']),
-                            email: this.props.web3.utils.hexToUtf8(result['email']),
-                            firstname: this.props.web3.utils.hexToUtf8(result['firstname']),
-                            lastname: this.props.web3.utils.hexToUtf8(result['lastname']),
+                            username: result['username'],
+                            email: result['email'],
+                            firstname: result['firstname'],
+                            lastname: result['lastname'],
                             role: role.value,
                             walletAddress: result['walletAddress'],
                         };
@@ -125,7 +125,7 @@ export default class Users extends Component {
 
 		return (
 			<div>
-                <AddUserModal />
+                <AddUserModal account={this.props.account} project={this.props.project} web3={this.props.web3} />
 				<br />
 				<MaterialTable
 					title="Users ProjectChain"

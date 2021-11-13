@@ -2,17 +2,16 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 contract User {
-    mapping(uint256 => S_UserData) public userInfo;
+    mapping(address => S_UserData) public userInfo;
     address public owner;
     uint256 public usersCount = 0;
-    uint256[] public userIds;
+    address[] public userAddresses;
 
     struct S_UserData {
-        uint256 index;
-        bytes32 username;
-        bytes32 email;
-        bytes32 firstname;
-        bytes32 lastname;
+        string username;
+        string email;
+        string firstname;
+        string lastname;
         Roles role;
         address walletAddress;
     }
@@ -26,11 +25,11 @@ contract User {
 
     event UserRegistered(
         address indexed _walletAddress,
-        bytes32 _username,
-        bytes32 _email,
-        bytes32 _firstname,
-        bytes32 _lastname,
-        Roles _role
+        string indexed _username,
+        string _email,
+        string _firstname,
+        string _lastname,
+        Roles indexed _role
     );
 
     constructor() {
@@ -43,26 +42,25 @@ contract User {
     }
 
     modifier checkUser(address _address) {
-        //require(_address == msg.sender, "Address");
+        require(_address == msg.sender, "Address");
         _;
     }
 
     function registerUser(
-        bytes32 _username,
-        bytes32 _email,
-        bytes32 _firstname,
-        bytes32 _lastname,
+        string memory _username,
+        string memory _email,
+        string memory _firstname,
+        string memory _lastname,
         uint256 _role,
         address _walletAddress
     ) public onlyOwner {
-        userInfo[usersCount].index = usersCount;
-        userInfo[usersCount].username = _username;
-        userInfo[usersCount].username = _username;
-        userInfo[usersCount].email = _email;
-        userInfo[usersCount].firstname = _firstname;
-        userInfo[usersCount].lastname = _lastname;
-        userInfo[usersCount].role = Roles(_role);
-        userInfo[usersCount].walletAddress = _walletAddress;
+        userInfo[_walletAddress].username = _username;
+        userInfo[_walletAddress].username = _username;
+        userInfo[_walletAddress].email = _email;
+        userInfo[_walletAddress].firstname = _firstname;
+        userInfo[_walletAddress].lastname = _lastname;
+        userInfo[_walletAddress].role = Roles(_role);
+        userInfo[_walletAddress].walletAddress = _walletAddress;
         emit UserRegistered(
             _walletAddress,
             _username,
@@ -71,24 +69,24 @@ contract User {
             _lastname,
             Roles(_role)
         );
-        userIds.push(usersCount);
+        userAddresses.push(_walletAddress);
         usersCount++;
     }
 
-    // function changeUserRole(uint _role, address _walletAddress) public onlyOwner returns(string memory) {
-    //     userInfo[_walletAddress].role = Roles(_role);
-    //     return "Role Updated!";
-    // }
-
-    function getUserIds() external view returns (uint256[] memory) {
-        return userIds;
+    function changeUserRole(uint _role, address _walletAddress) public onlyOwner returns(string memory) {
+        userInfo[_walletAddress].role = Roles(_role);
+        return "Role Updated!";
     }
 
-    function getUserInfo(uint256 _index)
+    function getUserAddresses() external view returns (address[] memory) {
+        return userAddresses;
+    }
+
+    function getUserInfo(address _address)
         external
         view
         returns (S_UserData memory)
     {
-        return userInfo[_index];
+        return userInfo[_address];
     }
 }
