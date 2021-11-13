@@ -1,11 +1,9 @@
 import React from 'react';
+import '../Styles/Register.css';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import Slide from '@mui/material/Slide';
-
-import '../Styles/Register.css';
 import Select from 'react-select';
 
 export const roleDropdownOptions = [
@@ -14,10 +12,6 @@ export const roleDropdownOptions = [
 	{ id: "3", value: 'CompanyBuilder', label: 'CompanyBuilder' },
 	{ id: "4", value: 'ProjectSupervisor', label: 'ProjectSupervisor' },
 ];
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-	return <Slide direction="up" ref={ref} {...props} />;
-});
 
 export default class AddUserModal extends React.Component {
 	constructor(props) {
@@ -195,8 +189,6 @@ export default class AddUserModal extends React.Component {
 
 				<Dialog
 					open={open}
-					TransitionComponent={Transition}
-					keepMounted
 					onClose={this.handleClose}
 				>
 					<DialogContent>

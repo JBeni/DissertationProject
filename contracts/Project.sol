@@ -18,6 +18,7 @@ contract Project is User {
     struct S_Project {
         uint index;
         bytes32 identifier;
+        string name;
         string description;
         ProjectStatus projectStatus;
     }
@@ -47,10 +48,10 @@ contract Project is User {
         _;
     }
 
-    function createProject(uint _index, string memory _description, ProjectStatus _status, string memory _hashStringValue) public onlyProjectInitiator {
+    function createProject(string memory _description, ProjectStatus _status, string memory _hashStringValue) public onlyProjectInitiator {
         bytes32 _identifier = createUniqueIdentifier(_hashStringValue, address(0));
 
-        projects[indexProject].index = _index;
+        projects[indexProject].index = 0;
         projects[indexProject].identifier = _identifier;
         projects[indexProject].description = _description;
         projects[indexProject].projectStatus = _status;

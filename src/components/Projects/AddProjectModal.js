@@ -1,265 +1,198 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import {
-	Grid,
-	TextField,
-	withStyles,
-	FormControl,
-	InputLabel,
-	Select,
-	MenuItem,
-	Button,
-	FormHelperText,
-} from '@material-ui/core';
-import { useSpring, animated } from 'react-spring';
-import styled from 'styled-components';
-import { MdClose } from 'react-icons/md';
-import useForm from './useForm';
+import React from 'react';
+import '../Styles/AddProjectModal.css';
+import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
 
-const Background = styled.div`
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: relative;
-	margin-top: 150px;
-`;
+export default class AddProjectModal extends React.Component {
+	constructor(props) {
+		super(props);
 
-const ModalWrapper = styled.div`
-	width: 800px;
-	height: 500px;
-	box-shadow: 0 5px 16px rgba(0, 0, 0, 0.2);
-	background: #fff;
-	color: #000;
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	position: relative;
-	z-index: 10;
-	border-radius: 10px;
-`;
-
-const ModalImg = styled.img`
-	width: 100%;
-	height: 100%;
-	border-radius: 10px 0 0 10px;
-	background: #000;
-`;
-
-const ModalContent = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	line-height: 1.8;
-	color: #141414;
-
-	p {
-		margin-bottom: 1rem;
+		this.state = {
+			formValues: {
+				Name: '',
+				Description: '',
+			},
+			formErrors: {
+				Name: '',
+				Description: '',
+			},
+			formValidity: {
+				Name: false,
+				Description: false,
+			},
+			isSubmitting: false,
+			open: false,
+		};
 	}
 
-	button {
-		padding: 10px 24px;
-		background: #141414;
-		color: #fff;
-		border: none;
-	}
-`;
+	handleClickOpen = () => {
+        this.setState({
+            formValues: {
+                Name: '',
+                Description: '',
+            },
+            formErrors: {
+                Name: '',
+                Description: '',
+            },
+            formValidity: {
+                Name: false,
+                Description: false,
+            }
+        });
+		this.setState({ open: true });
+	};
 
-const CloseModalButton = styled(MdClose)`
-	cursor: pointer;
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	width: 32px;
-	height: 32px;
-	padding: 0;
-	z-index: 10;
-`;
+	handleClose = (event, reason) => {
+		if (reason === 'backdropClick') {
+			return false;
+		}
+		this.setState({ open: false });
+	};
 
-/********************************************/
+	handleChange = ({ target }) => {
+		const { formValues } = this.state;
+		formValues[target.name] = target.value;
+		this.setState({ formValues });
+		this.handleValidation(target);
+	};
 
- const initialFieldValues = {
-	fullName: '',
-	mobile: '',
-	email: '',
-	age: '',
-	bloodGroup: '',
-	address: '',
-};
+	handleValidation = (target) => {
+		const { name, value } = target;
+		const fieldValidationErrors = this.state.formErrors;
+		const validity = this.state.formValidity;
 
-export const AddProjectModal = ({ showModal, setShowModal }) => {
-	const validate = (fieldValues = values) => {
-		let temp = { ...errors };
-		if ('fullName' in fieldValues)
-			temp.fullName = fieldValues.fullName ? '' : 'This field is required.';
-		if ('mobile' in fieldValues)
-			temp.mobile = fieldValues.mobile ? '' : 'This field is required.';
-		if ('bloodGroup' in fieldValues)
-			temp.bloodGroup = fieldValues.bloodGroup ? '' : 'This field is required.';
-		if ('email' in fieldValues)
-			temp.email = /^$|.+@.+..+/.test(fieldValues.email)
-				? ''
-				: 'Email is not valid.';
-		setErrors({
-			...temp,
+		// const isName = name === 'Name';
+		// const isDescription = name === 'Description';
+
+		validity[name] = value.length > 0;
+		fieldValidationErrors[name] = validity[name]
+			? ''
+			: `This field is required.`;
+
+		this.setState({
+			formErrors: fieldValidationErrors,
+			formValidity: validity,
 		});
-
-		if (fieldValues == values) return Object.values(temp).every((x) => x == '');
 	};
 
-	const { values, setValues, errors, setErrors, handleInputChange, resetForm } =
-		useForm(initialFieldValues, validate);
+	handleSubmit = (event) => {
+		event.preventDefault();
+		this.setState({ isSubmitting: true });
+		const { formValues, formValidity } = this.state;
+		if (Object.values(formValidity).every(Boolean)) {
+			// alert('Form is validated! Submitting the form...');
+			this.setState({ isSubmitting: false });
 
-	//material-ui select
-	const inputLabel = React.useRef(null);
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (validate()) {
-			const onSuccess = () => {
-				resetForm();
-			};
-		}
-	};
-
-	const modalRef = useRef();
-	const animation = useSpring({
-		config: {
-			duration: 250,
-		},
-		opacity: showModal ? 1 : 0,
-		transform: showModal ? `translateY(0%)` : `translateY(-100%)`,
-	});
-
-	const closeModal = (e) => {
-		if (modalRef.current === e.target) {
-			setShowModal(false);
-		}
-	};
-
-	const keyPress = useCallback(
-		(e) => {
-			if (e.key === 'Escape' && showModal) {
-				setShowModal(false);
-				console.log('I pressed');
+			this.createProject(
+				formValues['Name'],
+				formValues['Description']
+			);
+		} else {
+			for (let key in formValues) {
+				let target = {
+					name: key,
+					value: formValues[key],
+				};
+				this.handleValidation(target);
 			}
-		},
-		[setShowModal, showModal]
-	);
+			this.setState({ isSubmitting: false });
+		}
+	};
 
-	useEffect(() => {
-		document.addEventListener('keydown', keyPress);
-		return () => document.removeEventListener('keydown', keyPress);
-	}, [keyPress]);
+	createProject = async (_name, _description) => {
+		await this.props.project.methods
+			.createProject(_name, _description)
+			.send({ from: this.props.account });
+	};
 
-	return (
-		<>
-			{showModal ? (
-				<Background onClick={closeModal} ref={modalRef}>
-					<animated.div style={animation}>
-						<ModalWrapper showModal={showModal}>
-							<ModalContent>
-								<form autoComplete="off" noValidate onSubmit={handleSubmit}>
-									<Grid container>
-										<Grid item xs={6}>
-											<TextField
-												name="fullName"
-												variant="outlined"
-												label="Full Name"
-												value={values.fullName}
-												onChange={handleInputChange}
-												{...(errors.fullName && {
-													error: true,
-													helperText: errors.fullName,
-												})}
-											/>
-											<TextField
-												name="email"
-												variant="outlined"
-												label="Email"
-												value={values.email}
-												onChange={handleInputChange}
-												{...(errors.email && {
-													error: true,
-													helperText: errors.email,
-												})}
-											/>
-											<FormControl
-												variant="outlined"
-												{...(errors.bloodGroup && { error: true })}
-											>
-												<InputLabel ref={inputLabel}>Blood Group</InputLabel>
-												<Select
-													name="bloodGroup"
-													value={values.bloodGroup}
-													onChange={handleInputChange}
-												>
-													<MenuItem value="">Select Blood Group</MenuItem>
-													<MenuItem value="A+">A +ve</MenuItem>
-													<MenuItem value="A-">A -ve</MenuItem>
-													<MenuItem value="B+">B +ve</MenuItem>
-													<MenuItem value="B-">B -ve</MenuItem>
-													<MenuItem value="AB+">AB +ve</MenuItem>
-													<MenuItem value="AB-">AB -ve</MenuItem>
-													<MenuItem value="O+">O +ve</MenuItem>
-													<MenuItem value="O-">O -ve</MenuItem>
-												</Select>
-												{errors.bloodGroup && (
-													<FormHelperText>{errors.bloodGroup}</FormHelperText>
-												)}
-											</FormControl>
-										</Grid>
-										<Grid item xs={6}>
-											<TextField
-												name="mobile"
-												variant="outlined"
-												label="Mobile"
-												value={values.mobile}
-												onChange={handleInputChange}
-												{...(errors.mobile && {
-													error: true,
-													helperText: errors.mobile,
-												})}
-											/>
-											<TextField
-												name="age"
-												variant="outlined"
-												label="Age"
-												value={values.age}
-												onChange={handleInputChange}
-											/>
-											<TextField
-												name="address"
-												variant="outlined"
-												label="Address"
-												value={values.address}
-												onChange={handleInputChange}
-											/>
-											<div>
-												<Button
-													variant="contained"
-													color="primary"
-													type="submit"
-												>
-													Submit
-												</Button>
-												<Button variant="contained" onClick={resetForm}>
-													Reset
-												</Button>
-											</div>
-										</Grid>
-									</Grid>
-								</form>
-							</ModalContent>
-							<CloseModalButton
-								aria-label="Close modal"
-								onClick={() => setShowModal((prev) => !prev)}
-							/>
-						</ModalWrapper>
-					</animated.div>
-				</Background>
-			) : null}
-		</>
-	);
-};
+	render() {
+		const { formValues, formErrors, isSubmitting, open } = this.state;
+
+        return (
+			<div className="container">
+				<Button variant="outlined" onClick={this.handleClickOpen}>
+					Add New Project
+				</Button>
+
+				<Dialog open={open} onClose={this.handleClose}>
+					<div className="wrapper">
+						<div className="title">Registration Form</div>
+						<DialogContent>
+							<div className="form">
+								<div className="inputfield">
+									<label>Name</label>
+									<input
+										type="text"
+										className="input"
+										name="Name"
+										placeholder="Project Name"
+										onChange={this.handleChange}
+										value={formValues.Name}
+										// required
+									/>
+								</div>
+								<div className="error">{formErrors.Name}</div>
+
+								<div className="inputfield">
+									<label>Last Name</label>
+									<textarea className="textarea"
+                                        name="Description"
+										placeholder="Project Description"
+										onChange={this.handleChange}
+										value={formValues.Description}
+										// required
+                                    ></textarea>
+								</div>
+								<div className="error">{formErrors.Description}</div>
+
+								<div className="inputfield">
+									<label>Password</label>
+									<input type="password" className="input" />
+								</div>
+								<div className="inputfield">
+									<label>Confirm Password</label>
+									<input type="password" className="input" />
+								</div>
+								<div className="inputfield">
+									<label>Gender</label>
+									<div className="custom_select">
+										<select>
+											<option value="">Select</option>
+											<option value="male">Male</option>
+											<option value="female">Female</option>
+										</select>
+									</div>
+								</div>
+								<div className="inputfield">
+									<label>Email Address</label>
+									<input type="text" className="input" />
+								</div>
+								<div className="inputfield">
+									<label>Phone Number</label>
+									<input type="text" className="input" />
+								</div>
+								<div className="inputfield">
+									<label>Address</label>
+									<textarea className="textarea"></textarea>
+								</div>
+								<div className="inputfield">
+									<label>Postal Code</label>
+									<input type="text" className="input" />
+								</div>
+							</div>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={this.handleClose}>Close</Button>
+							<Button type="submit" onClick={this.handleSubmit}>
+								{isSubmitting ? 'Please wait...' : 'Submit'}
+							</Button>
+						</DialogActions>
+					</div>
+				</Dialog>
+			</div>
+		);
+	}
+}
