@@ -1,11 +1,10 @@
+import React from 'react';
 import styled from 'styled-components';
 import { NFTCard } from './NFTCard';
 import { useState, useEffect } from 'react';
 import { NFTModal } from './NFTModal';
 import { ethers } from 'ethers';
-import { Signup } from './Signup';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
+import { AddProjectModal } from './AddProjectModal';
 const axios = require('axios');
 
 function Projects() {
@@ -60,23 +59,27 @@ function Projects() {
 		},
 	];
 
-    const [open, setOpen] = useState(false);
+	const [open, setOpen] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedNft, setSelectedNft] = useState();
 	const [nfts, setNfts] = useState(initialNfts);
 
-    function handleClickOpen() {
+	const openModal = () => {
+		setShowModal((prev) => !prev);
+	};
+
+	function handleClickOpen() {
 		setOpen({ open: true });
 	}
 
-    const handleClose = (event, reason) => {
+	const handleClose = (event, reason) => {
 		if (reason === 'backdropClick') {
 			return false;
 		}
 		setOpen({ open: false });
 	};
 
-    useEffect(() => {
+	useEffect(() => {
 		(async () => {
 			// const address = await connect();
 			// if (address) {
@@ -142,36 +145,68 @@ function Projects() {
 		setNfts(tempArray);
 	}
 
+	const inputRefs = React.useRef([React.createRef(), React.createRef()]);
+
+	const [data, setData] = React.useState({});
+
+	const handleChange = (name, value) => {
+		setData((prev) => ({ ...prev, [name]: value }));
+	};
+
+	const submitForm = (e) => {
+		e.preventDefault();
+		let isValid = true;
+		for (let i = 0; i < inputRefs.current.length; i++) {
+			const valid = inputRefs.current[i].current.validate();
+			console.log(valid);
+			if (!valid) {
+				isValid = false;
+			}
+		}
+
+		if (!isValid) {
+			return;
+		}
+	};
+
 	return (
 		<div className="App">
-            <Button variant="outlined" onClick={handleClickOpen}>
-				Add Project User
-			</Button>
+			<Container>
+				<Button onClick={openModal}>I'm a modal</Button>
+				<AddProjectModal showModal={showModal} setShowModal={setShowModal} />
+			</Container>
 
-            {
-                open
-                    ?   <Dialog open={open} onClose={handleClose}>
-                            <Signup open={open} onClose={handleClose} />
-                        </Dialog>
-                    : <br />
-            }
+			<br />
+			<br />
+			<br />
+			<br />
 
-            <br /><br />
 			<Container>
 				<Title> Super Mario World Collection </Title>
 				<Subtitle> The rarest and best of Super Mario World </Subtitle>
-				<Grid>
+				{/* <Grid>
 					{nfts.map((nft, i) => (
 						<NFTCard nft={nft} key={i} toggleModal={() => toggleModal(i)} />
 					))}
-				</Grid>
+				</Grid> */}
 			</Container>
-			{showModal && (
+			{/* {showModal && (
 				<NFTModal nft={selectedNft} toggleModal={() => toggleModal()} />
-			)}
+			)} */}
 		</div>
 	);
 }
+
+const Button = styled.button`
+	min-width: 100px;
+	padding: 16px 32px;
+	border-radius: 4px;
+	border: none;
+	background: #141414;
+	color: #fff;
+	font-size: 24px;
+	cursor: pointer;
+`;
 
 const Title = styled.h1`
 	margin: 0;
@@ -185,6 +220,9 @@ const Subtitle = styled.h4`
 `;
 
 const Container = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	width: 70%;
 	max-width: 1200px;
 	margin: auto;
