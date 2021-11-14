@@ -11,7 +11,10 @@ contract Project is User {
     mapping(uint => S_Request) public companyRequests;
     mapping(uint => S_Request) public supervisorRequests;
 
-    uint indexProject;
+    uint public projectsCount = 0;
+    uint[] public projectIds;
+
+
     uint indexCompanyRequest;
     uint indexSupervisorRequest;
 
@@ -34,7 +37,10 @@ contract Project is User {
     enum RequestStatus { Unverified, Verified }
     enum ProjectStatus { Created, Approved, Rejected, OnGoing, BeforeFinalizationCheck, Completed }
 
-    event CreateProject(uint _indexProject, Project.ProjectStatus _projectStatus, address _address);
+    //event CreateProject(uint _indexProject, Project.ProjectStatus _projectStatus, address _address);
+
+    event CreateProject(string _name, string _description, ProjectStatus _status, bytes32 _identifier);
+
     event UpdateSupervisorRequestStatus(uint _indexRequest, RequestStatus _status, S_Project _project, ProjectStatus _projectStatus, address _subjectAddress);
     event UpdateCompanyRequestStatus(uint _indexRequest, RequestStatus _status, S_Project _project, ProjectStatus _projectStatus, address _subjectAddress);
 
@@ -48,22 +54,37 @@ contract Project is User {
         _;
     }
 
-    function createProject(string memory _description, ProjectStatus _status, string memory _hashStringValue) public onlyProjectInitiator {
-        bytes32 _identifier = createUniqueIdentifier(_hashStringValue, address(0));
+    function createProject(string memory _name, string memory _description, uint _status, string memory _hashStringValue) public  {
+        bytes32 _identifier = createUniqueIdentifier(_hashStringValue, msg.sender);
 
-        projects[indexProject].index = 0;
-        projects[indexProject].identifier = _identifier;
-        projects[indexProject].description = _description;
-        projects[indexProject].projectStatus = _status;
-        emit CreateProject(indexProject, ProjectStatus.Created, address(0));
-        indexProject++;
+        projects[projectsCount].index = projectsCount;
+        projects[projectsCount].identifier = _identifier;
+        projects[projectsCount].name = _name;
+        projects[projectsCount].description = _description;
+        projects[projectsCount].projectStatus = ProjectStatus(_status);
+
+        emit CreateProject(_name, _description, ProjectStatus(_status), _identifier);
+        projectIds.push(projectsCount);
+        projectsCount++;
+    }
+
+    function getProjectInfo(uint _index)
+        external
+        view
+        returns (S_Project memory)
+    {
+        return projects[_index];
+    }
+
+    function getProjectIds() external view returns (uint[] memory) {
+        return projectIds;
     }
 
     function createUniqueIdentifier(string memory _text, address _addr) public pure returns (bytes32)  {
         return keccak256(abi.encodePacked(_text, _addr));
     }
 
-    function requestProjectApprovalFromSupervisor(string memory _description, S_Project memory _project, address _subjectAddress) public onlyProjectInitiator {
+    function requestProjectApprovalFromSupervisor(string memory _description, S_Project memory _project, address _subjectAddress) public {
         require(_project.projectStatus == ProjectStatus.Created, "The project is not created, the operation cannot be done.");
 
         S_Request storage request = supervisorRequests[indexSupervisorRequest];
@@ -76,7 +97,7 @@ contract Project is User {
         indexSupervisorRequest++;
     }
 
-    function requestProjectCompleteFromSupervisor(string memory _description, S_Project memory _project, address _subjectAddress) public onlyProjectInitiator {
+    function requestProjectCompleteFromSupervisor(string memory _description, S_Project memory _project, address _subjectAddress) public {
         require(
             _project.projectStatus == ProjectStatus.BeforeFinalizationCheck,
             "The project is not in the 'BeforeFinalizationCheck' status, the operation cannot be done."
@@ -92,7 +113,7 @@ contract Project is User {
         indexSupervisorRequest++;
     }
 
-    function requestStartProjectToCompanyBuilder(string memory _description, S_Project memory _project, address _subjectAddress) public onlyProjectInitiator {
+    function requestStartProjectToCompanyBuilder(string memory _description, S_Project memory _project, address _subjectAddress) public {
         require(_project.projectStatus == ProjectStatus.Approved, "The project is not approved, the operation cannot be done.");
 
         S_Request storage request = companyRequests[indexCompanyRequest];
