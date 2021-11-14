@@ -60,9 +60,9 @@ function Sidebar(props) {
 						</Link>
 
 						<Link
-							to="/company-builder"
+							to="/company"
 							className={
-								props.currentLocation[1] === 'company-builder'
+								props.currentLocation[1] === 'company'
 									? 'nav__link active'
 									: 'nav__link'
 							}
@@ -72,9 +72,9 @@ function Sidebar(props) {
 						</Link>
 
 						<Link
-							to="/project-supervisor"
+							to="/supervisor"
 							className={
-								props.currentLocation[1] === 'project-supervisor'
+								props.currentLocation[1] === 'supervisor'
 									? 'nav__link active'
 									: 'nav__link'
 							}

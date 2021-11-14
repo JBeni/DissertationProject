@@ -4,6 +4,8 @@ import DefaultPage from '../DefaultPage';
 import Projects from '../Projects/Projects';
 import Users from '../Users/Users';
 import Dashboard from '../Dashboard';
+import CompanyBuilder from './../CompanyBuilder/CompanyBuilder';
+import Supervisor from './../Supervisor/Supervisor';
 
 function Routes(props) {
 	return (
@@ -38,6 +40,27 @@ function Routes(props) {
 					/>
 				)}
 			/>
+			<Route
+				path="/company"
+				render={() => (
+					<CompanyBuilder
+						account={props.account}
+						project={props.project}
+						web3={props.web3}
+					/>
+				)}
+			/>
+			<Route
+				path="/supervisor"
+				render={() => (
+					<Supervisor
+						account={props.account}
+						project={props.project}
+						web3={props.web3}
+					/>
+				)}
+			/>
+
 			<Route
 				render={() => (
 					<DefaultPage
