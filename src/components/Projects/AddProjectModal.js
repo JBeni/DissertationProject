@@ -5,6 +5,18 @@ import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 
+export const projectStatusDropdown = [
+	{ id: "1", value: 'Created', label: 'Created' },
+	{ id: "2", value: 'Approved', label: 'Approved' },
+	{ id: "3", value: 'Rejected', label: 'Rejected' },
+	{ id: "4", value: 'OnGoing', label: 'OnGoing' },
+	{ id: "5", value: 'BeforeFinalizationCheck', label: 'BeforeFinalizationCheck' },
+	{ id: "6", value: 'Completed', label: 'Completed' },
+];
+
+// const hashStringValue = process.env.HASH_STRING_VALUE;
+const hashStringValue = "beniamin";
+
 export default class AddProjectModal extends React.Component {
 	constructor(props) {
 		super(props);
@@ -13,17 +25,21 @@ export default class AddProjectModal extends React.Component {
 			formValues: {
 				Name: '',
 				Description: '',
+                Status: '',
 			},
 			formErrors: {
 				Name: '',
 				Description: '',
+                Status: '',
 			},
 			formValidity: {
 				Name: false,
 				Description: false,
+                Status: false,
 			},
 			isSubmitting: false,
 			open: false,
+            selectedStatus: '',
 		};
 	}
 
@@ -32,15 +48,18 @@ export default class AddProjectModal extends React.Component {
             formValues: {
                 Name: '',
                 Description: '',
+                Status: '',
             },
             formErrors: {
                 Name: '',
                 Description: '',
+                Status: '',
             },
             formValidity: {
                 Name: false,
                 Description: false,
-            }
+                Status: '',
+            },
         });
 		this.setState({ open: true });
 	};
@@ -53,7 +72,7 @@ export default class AddProjectModal extends React.Component {
 	};
 
 	handleChange = ({ target }) => {
-		const { formValues } = this.state;
+        const { formValues } = this.state;
 		formValues[target.name] = target.value;
 		this.setState({ formValues });
 		this.handleValidation(target);
@@ -66,6 +85,7 @@ export default class AddProjectModal extends React.Component {
 
 		// const isName = name === 'Name';
 		// const isDescription = name === 'Description';
+		// const isStatus = name === 'Status';
 
 		validity[name] = value.length > 0;
 		fieldValidationErrors[name] = validity[name]
@@ -88,7 +108,8 @@ export default class AddProjectModal extends React.Component {
 
 			this.createProject(
 				formValues['Name'],
-				formValues['Description']
+				formValues['Description'],
+                formValues['Status']
 			);
 		} else {
 			for (let key in formValues) {
@@ -102,9 +123,9 @@ export default class AddProjectModal extends React.Component {
 		}
 	};
 
-	createProject = async (_name, _description) => {
-		await this.props.project.methods
-			.createProject(_name, _description)
+	createProject = async (_name, _description, _status) => {
+        await this.props.project.methods
+			.createProject(_name, _description, Number(_status), hashStringValue)
 			.send({ from: this.props.account });
 	};
 
@@ -112,7 +133,7 @@ export default class AddProjectModal extends React.Component {
 		const { formValues, formErrors, isSubmitting, open } = this.state;
 
         return (
-			<div className="container">
+			<div>
 				<Button variant="outlined" onClick={this.handleClickOpen}>
 					Add New Project
 				</Button>
@@ -149,23 +170,22 @@ export default class AddProjectModal extends React.Component {
 								<div className="error">{formErrors.Description}</div>
 
 								<div className="inputfield">
-									<label>Password</label>
-									<input type="password" className="input" />
-								</div>
-								<div className="inputfield">
-									<label>Confirm Password</label>
-									<input type="password" className="input" />
-								</div>
-								<div className="inputfield">
-									<label>Gender</label>
+									<label>Status</label>
 									<div className="custom_select">
-										<select>
-											<option value="">Select</option>
-											<option value="male">Male</option>
-											<option value="female">Female</option>
+										<select name="Status"
+                                            onChange={this.handleChange}
+											value={formValues.Status}>
+                                                <option key={0} value="">Select</option>
+                                        {
+                                            projectStatusDropdown.map((item) => (
+                                                <option key={item.id} value={item.id}> {item.value} </option>
+                                            ))
+                                        }
 										</select>
 									</div>
 								</div>
+								<div className="error">{formErrors.Status}</div>
+
 								<div className="inputfield">
 									<label>Email Address</label>
 									<input type="text" className="input" />
