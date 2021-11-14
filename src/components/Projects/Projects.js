@@ -1,62 +1,95 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import styled from 'styled-components';
 import AddProjectModal from './AddProjectModal';
+import FileUploadPage from './FileUploadPage';
+import { ProjectCard } from './ProjectCard';
 
-export default function Projects(props) {
-	const [open, setOpen] = useState(false);
+export default class Projects extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			open: false,
+			projects: [],
+		};
 
-	function handleClickOpen() {
-		setOpen({ open: true });
+        this.props.project.methods.getProjectIds().call().then((result) => {
+            console.log(result);
+            result.map((projectId) => {
+				this.props.project.methods.getProjectInfo(projectId).call()
+					.then((result) => {
+                        const project = {
+                            index: result['index'],
+                            name: result['name'],
+                            description: result['description'],
+                            status: result['projectStatus'],
+                            //identifier: props.web3.utils.hexToAscii(result['identifier'])
+                        };
+						this.setState({ projects: [...this.state.projects, project] });
+                    });
+				return false;
+			});
+		});
 	}
 
-	const handleClose = (event, reason) => {
+	handleClickOpen() {
+		this.seState({ open: true });
+	}
+
+	handleClose = (event, reason) => {
 		if (reason === 'backdropClick') {
 			return false;
 		}
-		setOpen({ open: false });
+		this.seState({ open: false });
 	};
 
-	return (
-		<div className="App">
-			{/* <Container>
-				<Button onClick={openModal}>I'm a modal</Button>
-				<AddProjectModal showModal={showModal} setShowModal={setShowModal} />
-			</Container> */}
+	getProject = async () => {
+		await this.props.project.methods
+			.getProjectInfo(0)
+			.call()
+			.then((result) => {
+				const project = {
+					index: result['index'],
+					name: result['name'],
+					description: result['description'],
+					status: result['projectStatus'],
+					//identifier: props.web3.utils.hexToAscii(result['identifier'])
+				};
+			});
+	}
 
-			<br />
-			<br />
+	render() {
+		return (
+			<div className="App">
+				<FileUploadPage />
 
-            <AddProjectModal account={props.account} project={props.project} web3={props.web3} />
+				<br />
+				<br />
 
-			<br />
-			<br />
+				<AddProjectModal
+					account={this.props.account}
+					project={this.props.project}
+					web3={this.props.web3}
+				/>
 
-			<Container>
-				<Title> Super Mario World Collection </Title>
-				<Subtitle> The rarest and best of Super Mario World </Subtitle>
-				{/* <Grid>
-					{nfts.map((nft, i) => (
-						<NFTCard nft={nft} key={i} toggleModal={() => toggleModal(i)} />
-					))}
-				</Grid> */}
-			</Container>
-			{/* {showModal && (
-				<NFTModal nft={selectedNft} toggleModal={() => toggleModal()} />
-			)} */}
-		</div>
-	);
+				<br />
+				<br />
+
+				<Container>
+					<Title> Super Mario World Collection </Title>
+					<Subtitle> The rarest and best of Super Mario World </Subtitle>
+					<Grid>
+						{this.state.projects.map((project, key) => (
+							<ProjectCard nft={project} key={key} />
+						))}
+					</Grid>
+				</Container>
+				{/* {showModal && (
+                        <NFTModal nft={selectedNft} toggleModal={() => toggleModal()} />
+                    )} */}
+			</div>
+		);
+	}
 }
-
-const Button = styled.button`
-	min-width: 100px;
-	padding: 16px 32px;
-	border-radius: 4px;
-	border: none;
-	background: #141414;
-	color: #fff;
-	font-size: 24px;
-	cursor: pointer;
-`;
 
 const Title = styled.h1`
 	margin: 0;
@@ -70,9 +103,6 @@ const Subtitle = styled.h4`
 `;
 
 const Container = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	width: 70%;
 	max-width: 1200px;
 	margin: auto;

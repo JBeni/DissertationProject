@@ -22,6 +22,8 @@ import Delete from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import AddUserModal, { roleDropdownOptions } from './AddUserModal';
 
+const axios = require('axios');
+
 const tableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
 	Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -52,10 +54,51 @@ export default class Users extends Component {
 		this.state = {
 			show: false,
 			users: [],
+            projects: [],
 		};
 
 		this.showModal = this.showModal.bind(this);
 		this.hideModal = this.hideModal.bind(this);
+
+
+        let queryString = '?';
+        //queryString = queryString + `hashContains=QmZvoi8DB5M4HuLjRrhmbDhDQkF3TTFnM4mrgADJRrTCXu&`;
+        queryString = queryString + `status=pinned&`;
+        // queryString = queryString + `metadata[name]=${queryParams.nameContains}&`;
+        // const stringKeyValues = JSON.stringify(queryParams.keyvalues);
+        // queryString = queryString + `metadata[keyvalues]=${stringKeyValues}`;
+
+        const url = `https://api.pinata.cloud/data/pinList${queryString}`;
+        axios
+            .get(url, {
+                headers: {
+                    pinata_api_key: '1faa0621e9811fe94cc5',
+                    pinata_secret_api_key: '67d8757af6298b4feb8fedcb943efdd93a41450b2061427b4c1d1506386c5455'
+                }
+            }).then(function (response) {
+            }).catch(function (error) {});
+
+        // const url = `https://api.pinata.cloud/data/userPinnedDataTotal`;
+        // axios
+        //     .get(url, {
+        //         headers: {
+        //             pinata_api_key: '1faa0621e9811fe94cc5',
+        //             pinata_secret_api_key: '67d8757af6298b4feb8fedcb943efdd93a41450b2061427b4c1d1506386c5455'
+        //         }
+        //     }).then(function (response) {
+        //         console.log(response);
+        //     }).catch(function (error) {});
+
+        this.props.project.methods.getProjectInfo(0).call()
+        .then((result) => {
+            const project = {
+                index: result['index'],
+                name: result['name'],
+                description: result['description'],
+                status: result['projectStatus'],
+                identifier: this.props.web3.utils.hexToAscii(result['identifier'])
+            };
+        });
 
         this.props.project.methods.getUserAddresses().call().then((result) => {
             result.map((userAddress) => {
@@ -77,32 +120,26 @@ export default class Users extends Component {
 				return false;
 			});
 		});
-	}
 
-/*
-	componentDidMount() {
-        this.props.project.methods.getUserIds().call().then((result) => {
-            result.map((userId) => {
-				this.props.project.methods.getUserInfo(Number(userId)).call()
+
+        this.props.project.methods.getProjectIds().call().then((result) => {
+            result.map((userAddress) => {
+				this.props.project.methods.getProjectInfo(userAddress).call()
 					.then((result) => {
-                        let role = roleDropdownOptions.find((element) => {
-                            return Number(element.id) === Number(result['role']);
-                        });
-						const user = {
-                            username: this.props.web3.utils.hexToUtf8(result['username']),
-                            email: this.props.web3.utils.hexToUtf8(result['email']),
-                            firstname: this.props.web3.utils.hexToUtf8(result['firstname']),
-                            lastname: this.props.web3.utils.hexToUtf8(result['lastname']),
-                            role: role.value,
-                            walletAddress: result['walletAddress'],
+                        const project = {
+                            index: result['index'],
+                            name: result['name'],
+                            description: result['description'],
+                            status: result['projectStatus'],
+                            //identifier: props.web3.utils.hexToAscii(result['identifier'])
                         };
-						this.setState({ users: [...this.state.users, user] });
-					});
+						this.setState({ projects: [...this.state.projects, project] });
+                        console.log(this.state.projects);
+                    });
 				return false;
 			});
 		});
-	}
-*/
+    }
 
 	showModal = () => {
 		this.setState({ show: true });
@@ -162,6 +199,14 @@ export default class Users extends Component {
 						},
 					]}
 				/>
+
+
+                <br /><br /><br /><br />
+
+                {this.state.projects.map((project, key) => (
+					<p> {project.name} </p>
+                ))}
+
 			</div>
 		);
 	}
