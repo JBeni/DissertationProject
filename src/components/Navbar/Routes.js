@@ -41,6 +41,16 @@ function Routes(props) {
 				)}
 			/>
 			<Route
+				path="/project-initiator"
+				render={() => (
+					<DefaultPage
+						account={props.account}
+						project={props.project}
+						web3={props.web3}
+					/>
+				)}
+			/>
+			<Route
 				path="/company"
 				render={() => (
 					<CompanyBuilder
