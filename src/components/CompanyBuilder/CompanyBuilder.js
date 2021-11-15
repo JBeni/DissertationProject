@@ -3,7 +3,28 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 const CompanyBuilder = () => {
-	const [users, setUser] = useState([]);
+	const [users, setUser] = useState([
+        {
+            name: 'asd',
+            username: 'asdsad',
+            email: 'asdasdasd',
+        },
+        {
+            name: 'asd',
+            username: 'asdsad',
+            email: 'asdasdasd',
+        },
+        {
+            name: 'asd',
+            username: 'asdsad',
+            email: 'asdasdasd',
+        },
+        {
+            name: 'asd',
+            username: 'asdsad',
+            email: 'asdasdasd',
+        },
+    ]);
 
 	useEffect(() => {
 		loadUsers();
