@@ -1,7 +1,7 @@
 .wrapper {
     width: 600px;
     max-width: 700px;
-    height: 690px;
+    height: 490px;
 	background: #fff;
 	margin: 50px auto;
 	padding: 30px;
@@ -175,4 +175,14 @@
     color: red;
     font-size: 15px;
     font-weight: 600;
+}
+
+/*****  FILE UPLOAD  ***************/
+
+.file {
+    width: 472px;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    height: 2.5rem;
 }
