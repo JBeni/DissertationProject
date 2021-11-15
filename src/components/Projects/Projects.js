@@ -1,8 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import AddProjectModal from './AddProjectModal';
-import FileUploadPage from './FileUploadPage';
 import { ProjectCard } from './ProjectCard';
+const axios = require('axios');
 
 export default class Projects extends Component {
 	constructor(props) {
@@ -13,7 +13,6 @@ export default class Projects extends Component {
 		};
 
         this.props.project.methods.getProjectIds().call().then((result) => {
-            console.log(result);
             result.map((projectId) => {
 				this.props.project.methods.getProjectInfo(projectId).call()
 					.then((result) => {
@@ -22,6 +21,7 @@ export default class Projects extends Component {
                             name: result['name'],
                             description: result['description'],
                             status: result['projectStatus'],
+                            ipfsFileCID: result['ipfsFileCID'],
                             //identifier: props.web3.utils.hexToAscii(result['identifier'])
                         };
 						this.setState({ projects: [...this.state.projects, project] });
@@ -42,6 +42,22 @@ export default class Projects extends Component {
 		this.seState({ open: false });
 	};
 
+    filterFilesFromPinataIpfs = () => {
+        let queryString = '?';
+        // queryString = queryString + `hashContains=${queryParams.hashContains}&`;
+        // queryString = queryString + `status=pinned&`;
+        // queryString = queryString + `metadata[name]=${queryParams.nameContains}&`;
+        const url = `https://api.pinata.cloud/data/pinList${queryString}`;
+        axios
+            .get(url, {
+                headers: {
+                    pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+                    pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
+                }
+            }).then(function (response) { console.log(response); })
+            .catch(function (error) { console.log(error); });
+    }
+
 	getProject = async () => {
 		await this.props.project.methods
 			.getProjectInfo(0)
@@ -60,11 +76,6 @@ export default class Projects extends Component {
 	render() {
 		return (
 			<div className="App">
-				<FileUploadPage />
-
-				<br />
-				<br />
-
 				<AddProjectModal
 					account={this.props.account}
 					project={this.props.project}
