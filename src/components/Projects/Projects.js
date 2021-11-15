@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AddProjectModal from './AddProjectModal';
 import MTable from './MTable';
-
 const axios = require('axios');
 
 export default class Projects extends Component {
@@ -11,11 +10,12 @@ export default class Projects extends Component {
 			open: false,
 			projects: [],
 		};
+        this.getProjects();
+	}
 
-		this.props.project.methods
-			.getProjectIds()
-			.call()
-			.then((result) => {
+    getProjects = async () => {
+        await Promise.resolve(
+            this.props.project.methods.getProjectIds().call().then((result) => {
 				result.map((projectId) => {
 					this.props.project.methods
 						.getProjectInfo(projectId)
@@ -29,11 +29,13 @@ export default class Projects extends Component {
 								ipfsFileCID: result['ipfsFileCID'],
 							};
 							this.setState({ projects: [...this.state.projects, project] });
-						});
-					return false;
-				});
-			});
-	}
+                            console.log(this.state.projects);
+                        });
+                    return true;
+                });
+			})
+        );
+    }
 
 	handleClickOpen() {
 		this.seState({ open: true });
@@ -65,7 +67,7 @@ export default class Projects extends Component {
 			.catch(function (error) {
 				console.log(error);
 			});
-	};
+	}
 
 	getProject = async () => {
 		await this.props.project.methods
@@ -79,7 +81,7 @@ export default class Projects extends Component {
 					status: result['projectStatus'],
 				};
 			});
-	};
+	}
 
 	render() {
 		return (
@@ -91,7 +93,11 @@ export default class Projects extends Component {
 				/>
 
 
-            <MTable />
+                <MTable
+					account={this.props.account}
+					project={this.props.project}
+					web3={this.props.web3}
+                />
 
 
 			</div>

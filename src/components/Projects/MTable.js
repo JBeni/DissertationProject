@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Paper,
 	Table,
@@ -18,7 +18,6 @@ import { Search } from '@material-ui/icons';
 import PopupForm from './PopupForm';
 import AddProjectForm from './AddProjectForm';
 import AddIcon from '@material-ui/icons/Add';
-import useTable from '../Controls/useTable';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -69,14 +68,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const headCells = [
-	{ id: 'fullName', label: 'Employee Name' },
-	{ id: 'email', label: 'Email Address (Personal)' },
-	{ id: 'mobile', label: 'Mobile Number' },
-	{ id: 'department', label: 'Department' },
+	{ id: 'index', label: 'Index' },
+	{ id: 'name', label: 'Name' },
+	{ id: 'description', label: 'Description' },
+	{ id: 'projectStatus', label: 'Status' },
+	{ id: 'ipfsFileCID', label: 'IPFS CID' },
 	{ id: 'actions', label: 'Actions', disableSorting: true },
 ];
 
-export default function MTable() {
+export default function MTable(props) {
 	const classes = useStyles();
 
 	const pages = [5, 10, 25];
@@ -93,7 +93,36 @@ export default function MTable() {
 		},
 	});
 	const [openPopup, setOpenPopup] = useState(false);
-    const { recordsAfterPagingAndSorting } = useTable(records, headCells, filterFn);
+    //const { recordsAfterPagingAndSorting } = useTable(records, headCells, filterFn);
+
+	useEffect(() => {
+        (async () => {
+            await getProjects();
+        })();
+	}, []);
+
+    const getProjects = async () => {
+        await Promise.resolve(
+            props.project.methods.getProjectIds().call().then((result) => {
+				result.map((projectId) => {
+					props.project.methods
+						.getProjectInfo(projectId)
+						.call()
+						.then((result) => {
+							const project = {
+								index: result['index'],
+								name: result['name'],
+								description: result['description'],
+								status: result['projectStatus'],
+								ipfsFileCID: result['ipfsFileCID'],
+							};
+							setRecords([...records, project]);
+                        });
+                    return true;
+                });
+			})
+        );
+    }
 
 	const handleSortRequest = (cellId) => {
 		const isAsc = orderBy === cellId && order === 'asc';
@@ -140,6 +169,39 @@ export default function MTable() {
 	const openInPopup = (item) => {
 		setRecordForEdit(item);
 		setOpenPopup(true);
+	};
+
+    function stableSort(array, comparator) {
+		const stabilizedThis = array.map((el, index) => [el, index]);
+		stabilizedThis.sort((a, b) => {
+			const order = comparator(a[0], b[0]);
+			if (order !== 0) return order;
+			return a[1] - b[1];
+		});
+		return stabilizedThis.map((el) => el[0]);
+	}
+
+	function getComparator(order, orderBy) {
+		return order === 'desc'
+			? (a, b) => descendingComparator(a, b, orderBy)
+			: (a, b) => -descendingComparator(a, b, orderBy);
+	}
+
+	function descendingComparator(a, b, orderBy) {
+		if (b[orderBy] < a[orderBy]) {
+			return -1;
+		}
+		if (b[orderBy] > a[orderBy]) {
+			return 1;
+		}
+		return 0;
+	}
+
+	const recordsAfterPagingAndSorting = () => {
+		return stableSort(
+			filterFn.fn(records),
+			getComparator(order, orderBy)
+		).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 	};
 
 	return (
@@ -202,11 +264,12 @@ export default function MTable() {
 					</TableHead>
 					<TableBody>
 						{recordsAfterPagingAndSorting().map((item) => (
-							<TableRow key={item.id}>
-								<TableCell>{item.fullName}</TableCell>
-								<TableCell>{item.email}</TableCell>
-								<TableCell>{item.mobile}</TableCell>
-								<TableCell>{item.department}</TableCell>
+							<TableRow key={Number(item.index)}>
+								<TableCell>{item.index}</TableCell>
+								<TableCell>{item.name}</TableCell>
+								<TableCell>{item.description}</TableCell>
+								<TableCell>{item.projectStatus}</TableCell>
+								<TableCell>{item.ipfsFileCID}</TableCell>
 								<TableCell>
                                     <Button color="primary" className={`${classes.root}`} onClick={() => {openInPopup(item)}}>
                                         <EditOutlinedIcon fontSize="small" />

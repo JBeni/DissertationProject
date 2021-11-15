@@ -88,7 +88,7 @@ export default class Users extends Component {
                             name: result['name'],
                             description: result['description'],
                             status: result['projectStatus'],
-                            //identifier: props.web3.utils.hexToAscii(result['identifier'])
+                            ipfsFileCID: result['ipfsFileCID'],
                         };
 						this.setState({ projects: [...this.state.projects, project] });
                         console.log(this.state.projects);
