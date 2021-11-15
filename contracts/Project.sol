@@ -24,6 +24,7 @@ contract Project is User {
         string name;
         string description;
         ProjectStatus projectStatus;
+        string ipfsFileCID;
     }
 
     struct S_Request {
@@ -54,7 +55,7 @@ contract Project is User {
         _;
     }
 
-    function createProject(string memory _name, string memory _description, uint _status, string memory _hashStringValue) public  {
+    function createProject(string memory _name, string memory _description, uint _status, string memory _hashStringValue, string memory _ipfsFileCID) public  {
         bytes32 _identifier = createUniqueIdentifier(_hashStringValue, msg.sender);
 
         projects[projectsCount].index = projectsCount;
@@ -62,6 +63,7 @@ contract Project is User {
         projects[projectsCount].name = _name;
         projects[projectsCount].description = _description;
         projects[projectsCount].projectStatus = ProjectStatus(_status);
+        projects[projectsCount].ipfsFileCID = _ipfsFileCID;
 
         emit CreateProject(_name, _description, ProjectStatus(_status), _identifier);
         projectIds.push(projectsCount);
