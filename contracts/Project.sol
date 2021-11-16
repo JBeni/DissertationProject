@@ -13,14 +13,13 @@ contract Project is User {
 
     uint public projectsCount = 0;
     uint[] public projectIds;
-
+    S_Project[] public allProjects;
 
     uint indexCompanyRequest;
     uint indexSupervisorRequest;
 
     struct S_Project {
         uint index;
-        bytes32 identifier;
         string name;
         string description;
         ProjectStatus projectStatus;
@@ -39,8 +38,7 @@ contract Project is User {
     enum ProjectStatus { Created, Approved, Rejected, OnGoing, BeforeFinalizationCheck, Completed }
 
     //event CreateProject(uint _indexProject, Project.ProjectStatus _projectStatus, address _address);
-
-    event CreateProject(string _name, string _description, ProjectStatus _status, bytes32 _identifier);
+    event CreateProject(string _name, string _description, ProjectStatus _status);
 
     event UpdateSupervisorRequestStatus(uint _indexRequest, RequestStatus _status, S_Project _project, ProjectStatus _projectStatus, address _subjectAddress);
     event UpdateCompanyRequestStatus(uint _indexRequest, RequestStatus _status, S_Project _project, ProjectStatus _projectStatus, address _subjectAddress);
@@ -55,18 +53,19 @@ contract Project is User {
         _;
     }
 
-    function createProject(string memory _name, string memory _description, uint _status, string memory _hashStringValue, string memory _ipfsFileCID) public  {
-        bytes32 _identifier = createUniqueIdentifier(_hashStringValue, msg.sender);
+    function createProject(string memory _name, string memory _description, uint _status, string memory _ipfsFileCID) public  {
+        //bytes32 _identifier = createUniqueIdentifier(_hashStringValue, msg.sender);
 
         projects[projectsCount].index = projectsCount;
-        projects[projectsCount].identifier = _identifier;
+        //projects[projectsCount].identifier = _identifier;
         projects[projectsCount].name = _name;
         projects[projectsCount].description = _description;
         projects[projectsCount].projectStatus = ProjectStatus(_status);
         projects[projectsCount].ipfsFileCID = _ipfsFileCID;
 
-        emit CreateProject(_name, _description, ProjectStatus(_status), _identifier);
+        emit CreateProject(_name, _description, ProjectStatus(_status));
         projectIds.push(projectsCount);
+        allProjects.push(S_Project(projectsCount, _name, _description, ProjectStatus(_status), _ipfsFileCID));
         projectsCount++;
     }
 
@@ -76,6 +75,10 @@ contract Project is User {
         returns (S_Project memory)
     {
         return projects[_index];
+    }
+
+    function getAllProjects() public view returns(S_Project[] memory) {
+        return allProjects;
     }
 
     function getProjectIds() external view returns (uint[] memory) {
