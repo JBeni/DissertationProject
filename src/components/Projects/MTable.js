@@ -16,10 +16,11 @@ import {
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import PopupForm from './PopupForm';
-import AddProjectForm from './AddProjectForm';
+import AddProjectForm from './AddProjectModalForm';
 import AddIcon from '@material-ui/icons/Add';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
+import * as projectService from './projectService';
 
 const useStyles = makeStyles((theme) => ({
 	pageContent: {
@@ -97,7 +98,9 @@ export default function MTable(props) {
 
 	useEffect(() => {
         (async () => {
-            await getProjects();
+            let data = await Promise.resolve(projectService.getAllProjects(props));
+            console.log(data);
+            setRecords(data);
         })();
 	}, []);
 
@@ -262,7 +265,7 @@ export default function MTable(props) {
 							))}
 						</TableRow>
 					</TableHead>
-					<TableBody>
+					{/* <TableBody>
 						{recordsAfterPagingAndSorting().map((item) => (
 							<TableRow key={Number(item.index)}>
 								<TableCell>{item.index}</TableCell>
@@ -280,7 +283,25 @@ export default function MTable(props) {
 								</TableCell>
 							</TableRow>
 						))}
-					</TableBody>
+					</TableBody> */}
+
+                    <TableBody>
+                        {records.map((row) => (
+                            <TableRow
+                            key={row.name}
+                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                            <TableCell component="th" scope="row">
+                                {row.name}
+                            </TableCell>
+                            <TableCell align="right">{row.calories}</TableCell>
+                            <TableCell align="right">{row.fat}</TableCell>
+                            <TableCell align="right">{row.carbs}</TableCell>
+                            <TableCell align="right">{row.protein}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+
 				</Table>
 				<TablePagination
 					component="div"

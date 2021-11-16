@@ -176,7 +176,7 @@ export default class AddUserModal extends React.Component {
 
 		return (
 			<div>
-  				<Button variant="outlined" onClick={this.handleClickOpen}>
+                <Button variant="outlined" onClick={this.handleClickOpen}>
 					Add New User
 				</Button>
 

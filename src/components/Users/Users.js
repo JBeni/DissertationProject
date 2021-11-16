@@ -17,14 +17,14 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-import Refresh from '@material-ui/icons/Refresh';
-import Delete from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import AddUserModal, { roleDropdownOptions } from './AddUserModal';
+import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
+import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@material-ui/core';
+import Form from './Form';
 
-const axios = require('axios');
-
-const tableIcons = {
+export const materialTableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
 	Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
 	Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
@@ -52,99 +52,154 @@ export default class Users extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			show: false,
+			open: false,
+
+			openPopup: false,
+			recordForEdit: null,
+
 			users: [],
-            projects: [],
+			projects: [],
 		};
 
-        this.props.project.methods.getUserAddresses().call().then((result) => {
-            result.map((userAddress) => {
-				this.props.project.methods.getUserInfo(userAddress).call()
-					.then((result) => {
-                        let role = roleDropdownOptions.find((element) => {
-                            return Number(element.id) === Number(result['role']);
-                        });
-						const user = {
-                            username: result['username'],
-                            email: result['email'],
-                            firstname: result['firstname'],
-                            lastname: result['lastname'],
-                            role: role.value,
-                            walletAddress: result['walletAddress'],
-                        };
-						this.setState({ users: [...this.state.users, user] });
-					});
-				return false;
+		//#region
+		this.props.project.methods
+			.getUserAddresses()
+			.call()
+			.then((result) => {
+				result.map((userAddress) => {
+					this.props.project.methods
+						.getUserInfo(userAddress)
+						.call()
+						.then((result) => {
+							let role = roleDropdownOptions.find((element) => {
+								return Number(element.id) === Number(result['role']);
+							});
+							const user = {
+								username: result['username'],
+								email: result['email'],
+								firstname: result['firstname'],
+								lastname: result['lastname'],
+								role: role.value,
+								walletAddress: result['walletAddress'],
+							};
+							this.setState({ users: [...this.state.users, user] });
+						});
+					return false;
+				});
 			});
-		});
 
-
-        this.props.project.methods.getProjectIds().call().then((result) => {
-            result.map((userAddress) => {
-				this.props.project.methods.getProjectInfo(userAddress).call()
-					.then((result) => {
-                        const project = {
-                            index: result['index'],
-                            name: result['name'],
-                            description: result['description'],
-                            status: result['projectStatus'],
-                            ipfsFileCID: result['ipfsFileCID'],
-                        };
-						this.setState({ projects: [...this.state.projects, project] });
-                        console.log(this.state.projects);
-                    });
-				return false;
+		this.props.project.methods
+			.getProjectIds()
+			.call()
+			.then((result) => {
+				result.map((userAddress) => {
+					this.props.project.methods
+						.getProjectInfo(userAddress)
+						.call()
+						.then((result) => {
+							const project = {
+								index: result['index'],
+								name: result['name'],
+								description: result['description'],
+								status: result['projectStatus'],
+								ipfsFileCID: result['ipfsFileCID'],
+							};
+							this.setState({ projects: [...this.state.projects, project] });
+							//console.log(this.state.projects);
+						});
+					return false;
+				});
 			});
-		});
+		//#endregion
+	}
+
+	setOpenPopup = (value) => {
+		this.setState({ openPopup: value });
+	};
+
+	setRecordForEdit = () => {
+		this.setState({ recordForEdit: null });
+	};
+
+	handleClickOpen = () => {
+		//console.log(this.props.userData);
+		// if (this.props.userData === undefined) {
+		// } else {
+		//     this.setState({ isEdit: true });
+		// }
+		this.setState({ open: true });
+	};
+
+    addOrEdit = (employee, resetForm) => {
+        // if (employee.id == 0)
+        //     employeeService.insertEmployee(employee)
+        // else
+        //     employeeService.updateEmployee(employee)
+        // resetForm()
+        // setRecordForEdit(null)
+        // setOpenPopup(false)
+        // setRecords(employeeService.getAllEmployees())
     }
 
 	render() {
 		const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Username', field: 'username' },
-			//{ title: 'First Name', field: 'firstname' },
-			//{ title: 'Last Name', field: 'lastname' },
 			{ title: 'Email', field: 'email' },
 			{ title: 'Role', field: 'role' },
-			//{ title: 'Wallet Address', field: 'walletAddress' },
 		];
 
 		return (
 			<div>
-                <AddUserModal account={this.props.account} project={this.props.project} web3={this.props.web3} />
+				<Button
+					variant="outlined"
+					startIcon={<AddIcon />}
+					onClick={() => {
+						this.setOpenPopup(true);
+						this.setRecordForEdit(null);
+					}}
+				>Add New</Button>
+
+				<Dialog open={this.state.openPopup} maxWidth="md">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								Project Form
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenPopup(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers>
+                        <Form recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+                    </DialogContent>
+				</Dialog>
+
 				<br />
 				<MaterialTable
-					title="Users ProjectChain"
+					title="Users"
 					tableRef={tableRef}
-					icons={tableIcons}
+					icons={materialTableIcons}
 					columns={columns}
 					data={this.state.users}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
 						{
-							icon: Refresh,
-							tooltip: 'Refresh Data',
-							isFreeAction: true,
-							onClick: () =>
-								tableRef.current && tableRef.current.onQueryChange(),
-							position: 'auto',
-						},
-						{
-							icon: SaveAlt,
-							tooltip: 'Save User',
-							onClick: (event, rowData) => console.log('You saved ', rowData),
-						},
-						{
-							icon: Delete,
-							tooltip: 'Delete User',
-							onClick: (event, rowData) =>
-								console.log('You want to delete ', rowData),
+							icon: Edit,
+							tooltip: 'Edit User',
+							onClick: (event, rowData) => {
+                                this.setOpenPopup(true);
+                                this.setRecordForEdit(null);
+							},
 						},
 						{
 							icon: VisibilityIcon,
 							tooltip: 'View User',
-							onClick: (event, rowData) =>
-								console.log('You want to view ', rowData),
+							onClick: (event, rowData) => {
+								console.log('You want to view ', rowData);
+							},
 						},
 					]}
 				/>

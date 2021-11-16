@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
+import { projectStatusDropdown } from './DefaultModal';
+import ProjectPopup from './ProjectPopup';
+import { materialTableIcons } from './../Users/Users';
+import MaterialTable from '@material-table/core';
+import Edit from '@material-ui/icons/Edit';
+import * as projectService from './projectService';
+import AddIcon from '@material-ui/icons/Add';
+import { Button } from '@material-ui/core';
 import AddProjectModal from './AddProjectModal';
-import MTable from './MTable';
+import DefaultModal from './DefaultModal';
+import NewModal from './NewModal';
+
 const axios = require('axios');
 
 export default class Projects extends Component {
@@ -8,33 +18,46 @@ export default class Projects extends Component {
 		super(props);
 		this.state = {
 			open: false,
+            openPopup: false,
+            recordForEdit: null,
+
+            records: [],
 			projects: [],
 		};
         this.getProjects();
 	}
 
+    addOrEdit = (employee, resetForm) => {
+        if (employee.id === 0){
+            ;//employeeService.insertEmployee(employee)
+        } else {
+            ;//employeeService.updateEmployee(employee)
+        }
+        resetForm()
+        this.setState({ recordForEdit: null });
+        this.setState({ openPopup: false });
+        this.setState({ records: projectService.getAllProjects() });
+    }
+
     getProjects = async () => {
-        await Promise.resolve(
-            this.props.project.methods.getProjectIds().call().then((result) => {
-				result.map((projectId) => {
-					this.props.project.methods
-						.getProjectInfo(projectId)
-						.call()
-						.then((result) => {
-							const project = {
-								index: result['index'],
-								name: result['name'],
-								description: result['description'],
-								status: result['projectStatus'],
-								ipfsFileCID: result['ipfsFileCID'],
-							};
-							this.setState({ projects: [...this.state.projects, project] });
-                            console.log(this.state.projects);
-                        });
-                    return true;
+        await this.props.project.methods.getAllProjects().call().then((result) => {
+            result.map((result) => {
+                let status = projectStatusDropdown.find((element) => {
+                    return Number(element.id) === Number(result['projectStatus']);
                 });
-			})
-        );
+                let project = {
+                    index: result['index'],
+                    name: result['name'],
+                    description: result['description'],
+                    projectStatus: status.value,
+                    ipfsFileCID: result['ipfsFileCID']
+                };
+                this.setState({ projects: [...this.state.projects, project] });
+                return false;
+            });
+        }).catch(function (error) {
+            console.log(error);
+        });
     }
 
 	handleClickOpen() {
@@ -84,22 +107,71 @@ export default class Projects extends Component {
 	}
 
 	render() {
-		return (
+		const tableRef = React.createRef();
+		const columns = [
+			{ title: 'Name', field: 'name' },
+			{ title: 'Description', field: 'description' },
+			{ title: 'Status', field: 'projectStatus' },
+			{ title: 'IPFS CID', field: 'ipfsFileCID' },
+		];
+
+        return (
 			<div className="min-h-screen bg-gray-100 text-gray-900">
-				<AddProjectModal
+				{/* <DefaultModal
 					account={this.props.account}
 					project={this.props.project}
 					web3={this.props.web3}
-				/>
+				/> */}
+
+                <NewModal />
 
 
-                <MTable
-					account={this.props.account}
-					project={this.props.project}
-					web3={this.props.web3}
+                {/* <input
+                    accept="image/*"
+                    style={{ display: 'none' }}
+                    id="raised-button-file"
+                    multiple
+                    type="file"
                 />
+                <label htmlFor="raised-button-file">
+                <Button variant="raised" component="span">
+                    Upload
+                </Button>
+                </label> 
+                <br /><br /><br />
+                <Button
+                    text="Add New"
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={() => { this.setState({ openPopup: true }); this.setState({ recordForEdit: null })}}
+                >Add New Project</Button>
+                <ProjectPopup
+                    title="Project Form"
+                    openPopup={this.state.openPopup}
+                    setOpenPopup={this.setState}
+                >
+                    <AddProjectModal recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+                </ProjectPopup> */}
 
-
+                <MaterialTable
+					title="Projects"
+					tableRef={tableRef}
+					icons={materialTableIcons}
+					columns={columns}
+					data={this.state.projects}
+					options={{ exportButton: true, actionsColumnIndex: -1 }}
+					actions={[
+						{
+							icon: Edit,
+							tooltip: 'Edit',
+							isFreeAction: true,
+							onClick: (event, rowData) => {
+								console.log('You want to delete ', rowData)
+                            },
+							position: 'auto',
+						},
+                    ]}
+				/>
 			</div>
 		);
 	}
