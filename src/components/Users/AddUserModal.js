@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import Select from 'react-select';
 
 export const roleDropdownOptions = [
 	{ id: "1", value: 'DefaultRole', label: 'DefaultRole' },
@@ -22,33 +21,63 @@ export default class AddUserModal extends React.Component {
 				FirstName: '',
 				LastName: '',
 				Email: '',
+				Role: '',
 				WalletAddress: '',
-				RoleDropdown: '',
 			},
 			formErrors: {
 				FirstName: '',
 				LastName: '',
 				Email: '',
+				Role: '',
 				WalletAddress: '',
-				RoleDropdown: '',
 			},
 			formValidity: {
 				FirstName: false,
 				LastName: false,
 				Email: false,
+				Role: false,
 				WalletAddress: false,
-				RoleDropdown: false,
 			},
 			isSubmitting: false,
 			open: false,
-			category: '',
 			selectedOption: '',
+            isEdit: false,
 		};
 	}
 
 	handleClickOpen = () => {
-		this.setState({ open: true });
-	};
+        console.log(this.props.userData);
+        if (this.props.userData === undefined) {
+            this.setState({
+                formValues: {
+                    FirstName: '',
+                    LastName: '',
+                    Email: '',
+                    Role: '',
+                    WalletAddress: '',
+                },
+                formErrors: {
+                    FirstName: '',
+                    LastName: '',
+                    Email: '',
+                    Role: '',
+                    WalletAddress: '',
+                },
+                formValidity: {
+                    FirstName: false,
+                    LastName: false,
+                    Email: false,
+                    Role: false,
+                    WalletAddress: false,
+                },
+                selectedOption: '',
+                isEdit: false,
+            });
+        } else {
+            this.setState({ isEdit: true });
+        }
+        this.setState({ open: true });
+    };
 
 	handleClose = (event, reason) => {
 		if (reason === 'backdropClick') {
@@ -64,34 +93,15 @@ export default class AddUserModal extends React.Component {
 		this.handleValidation(target);
 	};
 
-	handleChangeDropdown = (selectedOption) => {
-        const { formValues } = this.state;
-        let roleValue = selectedOption.id;
-		formValues['RoleDropdown'] = roleValue;
-        this.setState({ formValues });
-        this.setState({ selectedOption });
-
-        const fieldValidationErrors = this.state.formErrors;
-		const validity = this.state.formValidity;
-        validity['RoleDropdown'] = roleValue > 0;
-		fieldValidationErrors['RoleDropdown'] = validity['RoleDropdown']
-			? ''
-			: `This field is required.`;
-	};
-
 	handleValidation = (target) => {
 		const { name, value } = target;
 		const fieldValidationErrors = this.state.formErrors;
 		const validity = this.state.formValidity;
 
-		// const isFirstName = name === 'FirstName';
-		// const isLastName = name === 'LastName';
-		// const isEmail = name === 'Email';
-		// const isRole = name === 'Role';
-		// const isWalletAddress = name === 'WalletAddress';
-
-		// const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-		// const walletTest = /^(0x)?[0-9a-f]{40}$/i;
+		const isEmail = name === 'Email';
+		const isWalletAddress = name === 'WalletAddress';
+		const emailTest = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+		const walletTest = /^(0x)?[0-9a-f]{40}$/i;
 
 		validity[name] = value.length > 0;
 		fieldValidationErrors[name] = validity[name]
@@ -99,30 +109,18 @@ export default class AddUserModal extends React.Component {
 			: `This field is required.`;
 
 		if (validity[name]) {
-			// if (isFirstName) {
-			// 	validity[name] = value.length >= 3;
-			// 	fieldValidationErrors[name] = validity[name]
-			// 		? ''
-			// 		: `This field should be 3 characters minimum`;
-			// }
-			// if (isLastName) {
-			// 	validity[name] = value.length >= 3;
-			// 	fieldValidationErrors[name] = validity[name]
-			// 		? ''
-			// 		: `This field should be 3 characters minimum`;
-			// }
-			// if (isEmail) {
-			// 	validity[name] = emailTest.test(value);
-			// 	fieldValidationErrors[name] = validity[name]
-			// 		? ''
-			// 		: `This field should be a valid email address`;
-			// }
-			// if (isWalletAddress) {
-			// 	validity[name] = walletTest.test(value);
-			// 	fieldValidationErrors[name] = validity[name]
-			// 		? ''
-			// 		: `This field should be a valid wallet address`;
-			// }
+			if (isEmail) {
+				validity[name] = emailTest.test(value);
+				fieldValidationErrors[name] = validity[name]
+					? ''
+					: `This field should be a valid email address`;
+			}
+			if (isWalletAddress) {
+				validity[name] = walletTest.test(value);
+				fieldValidationErrors[name] = validity[name]
+					? ''
+					: `This field should be a valid wallet address`;
+			}
 		}
 
 		this.setState({
@@ -145,7 +143,7 @@ export default class AddUserModal extends React.Component {
 				formValues['Email'],
 				formValues['FirstName'],
 				formValues['LastName'],
-				formValues['RoleDropdown'],
+				formValues['Role'],
 				formValues['WalletAddress']
 			);
 		} else {
@@ -161,11 +159,6 @@ export default class AddUserModal extends React.Component {
 	};
 
 	registerUser = async (_username, _email, _firstname, _lastname, role, walletAddress) => {
-        const username = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_username), 64);
-        const email = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_email), 64);
-        const firstname = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_firstname), 64);
-        const lastname = this.props.web3.utils.padLeft(this.props.web3.utils.asciiToHex(_lastname), 64);
-
         await this.props.project.methods
 			.registerUser(
                 _username,
@@ -179,11 +172,11 @@ export default class AddUserModal extends React.Component {
 	};
 
 	render() {
-		const { formValues, formErrors, isSubmitting, open, selectedOption } = this.state;
+		const { formValues, formErrors, isSubmitting, open } = this.state;
 
 		return (
 			<div>
-				<Button variant="outlined" onClick={this.handleClickOpen}>
+  				<Button variant="outlined" onClick={this.handleClickOpen}>
 					Add New User
 				</Button>
 
@@ -205,7 +198,8 @@ export default class AddUserModal extends React.Component {
 												placeholder="First Name"
 												onChange={this.handleChange}
 												value={formValues.FirstName}
-												// required
+												required
+                                                disabled = {(this.state.isEdit) ? "disabled" : ""}
 											/>
 											<div className="error">{formErrors.FirstName}</div>
 										</div>
@@ -217,21 +211,30 @@ export default class AddUserModal extends React.Component {
 												placeholder="Last Name"
 												onChange={this.handleChange}
 												value={formValues.LastName}
-												//required
+												required
+                                                disabled = {(this.state.isEdit) ? "disabled" : ""}
 											/>
 											<div className="error">{formErrors.LastName}</div>
 										</div>
 
 										<div>
-											<Select
-                                                name="RoleDropdown"
-												className="react-select"
-												onChange={this.handleChangeDropdown}
-												options={roleDropdownOptions}
-												value={selectedOption}
-											/>
+											<select
+                                                name="Role"
+												className="input-field react-select"
+												onChange={this.handleChange}
+												value={formValues.Role}
+											>
+                                                <option key={0} value="">
+                                                    Select an option...
+                                                </option>
+                                                {roleDropdownOptions.map((item) => (
+                                                    <option key={item.id} value={item.id}>
+                                                        {item.value}
+                                                    </option>
+                                                ))}
+                                                </select>
 											<div className="react-select-error">
-												{formErrors.RoleDropdown}
+												{formErrors.Role}
 											</div>
 										</div>
 
@@ -243,7 +246,8 @@ export default class AddUserModal extends React.Component {
 												placeholder="Email"
 												onChange={this.handleChange}
 												value={formValues.Email}
-												//required
+												required
+                                                disabled = {(this.state.isEdit) ? "disabled" : ""}
 											/>
 											<div className="error">{formErrors.Email}</div>
 										</div>
@@ -256,7 +260,8 @@ export default class AddUserModal extends React.Component {
 												placeholder="Wallet Address"
 												onChange={this.handleChange}
 												value={formValues.WalletAddress}
-												// required
+												required
+                                                disabled = {(this.state.isEdit) ? "disabled" : ""}
 											/>
 											<div className="error">{formErrors.WalletAddress}</div>
 										</div>
