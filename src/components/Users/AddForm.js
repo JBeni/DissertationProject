@@ -171,19 +171,6 @@ export default function AddForm(props) {
 							{errors && <FormHelperText className="Mui-error">{errors.email}</FormHelperText>}
 						</FormControl>
 
-						{/* <TextField
-							style={{ width: '400px' }}
-							label="City"
-							name="city"
-							variant="outlined"
-							placeholder="MultiLine with min rows: 5"
-							multiline
-							minRows={5}
-							value={values.city}
-							onChange={handleInputChange}
-							error={errors.email}
-						/> */}
-
 						<FormControl style={{ width: '400px' }}>
 							<InputLabel>Role</InputLabel>
 							<Select
