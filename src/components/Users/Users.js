@@ -16,7 +16,6 @@ export default class Users extends Component {
 			openPopup: false,
             openViewForm: false,
 			recordForEdit: null,
-
 			users: [],
 		};
 
@@ -40,7 +39,6 @@ export default class Users extends Component {
 		this.setState({ recordForEdit: data });
 	};
 
-    
 	createUser = async (_username, _email, _firstname, _lastname, role, walletAddress) => {
         await this.props.project.methods
 			.registerUser(
