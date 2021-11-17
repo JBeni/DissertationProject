@@ -5,6 +5,17 @@ import "./User.sol";
 
 contract Project is User {
 
+    uint256 public statusChangedIndex = 0;
+    struct S_ProjectStatusChanged {
+        uint256 _index;
+        ProjectStatus _status;
+        address _address;
+    }
+    mapping(uint256 => S_ProjectStatusChanged) public projectsStatus;
+    event ProjectStatusChanged(uint256 index, ProjectStatus indexed status, address indexed projectAddress);
+
+
+
     address projectInitiator;
 
     mapping(uint => S_Project) public projects;
@@ -92,6 +103,20 @@ contract Project is User {
     function createUniqueHexAddress(string memory _text, address _addr) public pure returns (address)  {
         return address(uint160(uint256(keccak256(abi.encodePacked(_text, _addr)))));
     }
+
+
+    function changeProjectStatus(uint _status, address _address) public {
+        projectsStatus[statusChangedIndex]._index = statusChangedIndex;
+        projectsStatus[statusChangedIndex]._status = ProjectStatus(_status);
+        projectsStatus[statusChangedIndex]._address = _address;
+        emit ProjectStatusChanged(statusChangedIndex, ProjectStatus(_status), _address);
+        statusChangedIndex++;
+    }
+
+
+
+
+
 
     function requestProjectApprovalFromSupervisor(string memory _description, S_Project memory _project, address _subjectAddress) public {
         require(_project.projectStatus == ProjectStatus.Created, "The project is not created, the operation cannot be done.");
