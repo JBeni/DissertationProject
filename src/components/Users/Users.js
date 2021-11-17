@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import MaterialTable from '@material-table/core';
-
 import { forwardRef } from 'react';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -18,11 +17,12 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import AddUserModal, { roleDropdownOptions } from './AddUserModal';
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@material-ui/core';
-import Form from './Form';
+import AddForm from './AddForm';
+import * as applicationService from '../applicationService';
+import ViewForm from './ViewForm';
 
 export const materialTableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -52,93 +52,83 @@ export default class Users extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: false,
-
 			openPopup: false,
+            openViewForm: false,
 			recordForEdit: null,
 
 			users: [],
-			projects: [],
 		};
 
-		//#region
-		this.props.project.methods
-			.getUserAddresses()
-			.call()
-			.then((result) => {
-				result.map((userAddress) => {
-					this.props.project.methods
-						.getUserInfo(userAddress)
-						.call()
-						.then((result) => {
-							let role = roleDropdownOptions.find((element) => {
-								return Number(element.id) === Number(result['role']);
-							});
-							const user = {
-								username: result['username'],
-								email: result['email'],
-								firstname: result['firstname'],
-								lastname: result['lastname'],
-								role: role.value,
-								walletAddress: result['walletAddress'],
-							};
-							this.setState({ users: [...this.state.users, user] });
-						});
-					return false;
-				});
-			});
+        this.getUsers();
+    }
 
-		this.props.project.methods
-			.getProjectIds()
-			.call()
-			.then((result) => {
-				result.map((userAddress) => {
-					this.props.project.methods
-						.getProjectInfo(userAddress)
-						.call()
-						.then((result) => {
-							const project = {
-								index: result['index'],
-								name: result['name'],
-								description: result['description'],
-								status: result['projectStatus'],
-								ipfsFileCID: result['ipfsFileCID'],
-							};
-							this.setState({ projects: [...this.state.projects, project] });
-							//console.log(this.state.projects);
-						});
-					return false;
-				});
-			});
-		//#endregion
-	}
+    getUsers = async () => {
+        let allUsers = await applicationService.getAllUsers(this.props);
+        this.setState({ users: allUsers });
+    }
 
-	setOpenPopup = (value) => {
+    setOpenPopup = (value) => {
 		this.setState({ openPopup: value });
 	};
 
-	setRecordForEdit = () => {
-		this.setState({ recordForEdit: null });
+    setOpenViewForm = (value) => {
+        this.setState({ openViewForm: value });
+    }
+
+	setRecordForEdit = (data) => {
+		this.setState({ recordForEdit: data });
 	};
 
-	handleClickOpen = () => {
-		//console.log(this.props.userData);
-		// if (this.props.userData === undefined) {
-		// } else {
-		//     this.setState({ isEdit: true });
-		// }
-		this.setState({ open: true });
-	};
+    
+	createUser = async (_username, _email, _firstname, _lastname, role, walletAddress) => {
+        await this.props.project.methods
+			.registerUser(
+                _username,
+                _email,
+                _firstname,
+                _lastname,
+                Number(role),
+                walletAddress
+			)
+			.send({ from: this.props.account })
+            .then(function(receipt) {
+                //console.log(receipt);
+            });
+	}
 
-    addOrEdit = (employee, resetForm) => {
-        // if (employee.id == 0)
-        //     employeeService.insertEmployee(employee)
-        // else
-        //     employeeService.updateEmployee(employee)
-        // resetForm()
-        // setRecordForEdit(null)
-        // setOpenPopup(false)
-        // setRecords(employeeService.getAllEmployees())
+    changeUserRole = async (_role, _walletAddress) => {
+        await this.props.project.methods.changeUserRole(
+            Number(_role),
+            _walletAddress
+        ).send({ from: this.props.account })
+        .then(function(receipt) {
+            //console.log(receipt);
+        });
+        //this.getUsers();
+	}
+
+    addOrEdit = (userData, resetForm) => {
+        if (userData.isEditForm === false) {
+   			// alert('Form is validated! Submitting the form...');
+			this.createUser(
+				userData['firstname'] + ' ' + userData['lastname'],
+				userData['email'],
+				userData['firstname'],
+				userData['lastname'],
+				userData['role'],
+				userData['walletAddress']
+			);
+        } else {
+            console.log(userData);
+            this.changeUserRole(userData['role'], userData['walletAddress']);
+        }
+        resetForm();
+        this.setRecordForEdit(null);
+        this.setState({ users: applicationService.getAllUsers(this.props) });
+    }
+
+    handleNewDataFromPopup(data) {
+        this.setState({ openPopup: data });
     }
 
 	render() {
@@ -164,7 +154,7 @@ export default class Users extends Component {
 					<DialogTitle>
 						<div style={{ display: 'flex' }}>
 							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-								Project Form
+								Add User Form
 							</Typography>
 							<Button color="secondary" onClick={() => {
 									this.setOpenPopup(false);
@@ -172,8 +162,25 @@ export default class Users extends Component {
 							</Button>
 						</div>
 					</DialogTitle>
-					<DialogContent dividers>
-                        <Form recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+					<DialogContent dividers style={{ width: '700px' }}>
+                        <AddForm handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+                    </DialogContent>
+				</Dialog>
+
+				<Dialog open={this.state.openViewForm} maxWidth="md">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								View User Form
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenViewForm(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers style={{ width: '700px' }}>
+                        <ViewForm recordForEdit={this.state.recordForEdit} />
                     </DialogContent>
 				</Dialog>
 
@@ -186,19 +193,21 @@ export default class Users extends Component {
 					data={this.state.users}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						{
-							icon: Edit,
-							tooltip: 'Edit User',
-							onClick: (event, rowData) => {
-                                this.setOpenPopup(true);
-                                this.setRecordForEdit(null);
-							},
-						},
+						// {
+						// 	icon: Edit,
+						// 	tooltip: 'Edit User',
+						// 	onClick: (event, rowData) => {
+                        //         this.setOpenPopup(true);
+                        //         this.setRecordForEdit(rowData);
+						// 	},
+						// },
 						{
 							icon: VisibilityIcon,
 							tooltip: 'View User',
 							onClick: (event, rowData) => {
-								console.log('You want to view ', rowData);
+                                console.log(rowData);
+                                this.setOpenViewForm(true);
+                                this.setRecordForEdit(rowData);
 							},
 						},
 					]}
