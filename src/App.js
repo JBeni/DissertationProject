@@ -25,6 +25,14 @@ class App extends Component {
     async loadWeb3() {
 		if (window.ethereum) {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
+            // window.ethereum.on('accountsChanged', function (accounts) {
+            //     console.log(accounts);
+            // });
+
+            // console.log('accounts: ' + accounts);
+            // console.log('changed_account: ' + changed_account);
+
             this.setState({ account: accounts[0] });
 			window.web3 = new Web3(window.ethereum);
 			//await window.ethereum.enable();
