@@ -89,6 +89,10 @@ contract Project is User {
         return keccak256(abi.encodePacked(_text, _addr));
     }
 
+    function createUniqueHexAddress(string memory _text, address _addr) public pure returns (address)  {
+        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _addr)))));
+    }
+
     function requestProjectApprovalFromSupervisor(string memory _description, S_Project memory _project, address _subjectAddress) public {
         require(_project.projectStatus == ProjectStatus.Created, "The project is not created, the operation cannot be done.");
 
