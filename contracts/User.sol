@@ -34,6 +34,15 @@ contract User {
         Roles indexed _role
     );
 
+    event UserChanges(
+        string username,
+        string firstname,
+        string lastname,
+        string email,
+        Roles role,
+        address walletAddress
+    );
+
     constructor() {
         owner = msg.sender;
     }
@@ -75,8 +84,16 @@ contract User {
         usersCount++;
     }
 
-    function changeUserRole(uint _role, address _walletAddress) public onlyOwner returns(string memory) {
+    function changeUserRole(uint _role, address _walletAddress) public returns(string memory) {
         userInfo[_walletAddress].role = Roles(_role);
+        emit UserChanges(
+            userInfo[_walletAddress].username,
+            userInfo[_walletAddress].firstname,
+            userInfo[_walletAddress].lastname,
+            userInfo[_walletAddress].email,
+            userInfo[_walletAddress].role,
+            userInfo[_walletAddress].walletAddress
+        );
         return "Role Updated!";
     }
 
