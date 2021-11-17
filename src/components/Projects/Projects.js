@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import MaterialTable from '@material-table/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import * as applicationService from './../applicationService';
-import { DialogContent, Typography, DialogTitle, Dialog, Button } from '@material-ui/core';
+import { DialogContent, Typography, DialogTitle, Dialog, Button, Hidden } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import ViewProjectForm from './ViewProjectForm';
 import AddProjectForm from './AddProjectForm';
+import { Link } from 'react-router-dom';
 const axios = require('axios');
 const FormData = require('form-data');
 
@@ -22,7 +23,62 @@ export default class Projects extends Component {
 			projects: [],
 		};
         this.getProjects();
-	}
+
+
+
+        this.test();
+
+        //props.project.methods.changeProjectStatus("1", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
+        //props.project.methods.changeProjectStatus("2", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
+        //props.project.methods.changeProjectStatus("3", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
+        //props.project.methods.changeProjectStatus("4", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
+
+        //props.project.methods.changeProjectStatus("1", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788").send({ from: this.props.account });
+        //props.project.methods.changeProjectStatus("2", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788").send({ from: this.props.account });
+    }
+
+    test = async () => {
+        // let events = await this.props.project.getPastEvents('ProjectStatusChanged', {
+        //     filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },
+        //     fromBlock: 0,
+        //     toBlock: 'latest'
+        // }, function(error, events) { console.log(events); })
+        // .then(function(events) {
+        //     console.log(events);
+        // });
+
+        let events = await this.props.project.getPastEvents('ProjectStatusChanged', {
+            filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },
+            fromBlock: 0,
+            toBlock: 'latest'
+        });
+
+        let data = [];
+        events.map((result) => {
+            let status = applicationService.projectStatusDropdown.find((element) => {
+                return Number(element.id) === Number(result.returnValues.status)
+            });
+            const project = {
+                index: result.returnValues.index,
+                projectAddress: result.returnValues.projectAddress,
+                status: status.value,
+            };
+            data.push(project);
+            return false;
+        });
+
+        // events = events.filter((event) => {
+        //     return event.returnValues.projectAddress === "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0";
+        // });
+        console.log(data);
+    }
+
+
+    create = async () => {
+        await this.props.project.methods
+            .changeProjectStatus("2", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788")
+            .send({ from: this.props.account });
+    }
 
     getProjects = async () => {
         let allProjects = await applicationService.getAllProjects(this.props);
@@ -137,6 +193,16 @@ export default class Projects extends Component {
 
 		return (
 			<div>
+
+                <Button
+					variant="outlined"
+					startIcon={<AddIcon />}
+					onClick={() => {
+						this.create();
+					}}>TEsting New</Button>
+
+
+
 				<Button
 					variant="outlined"
 					startIcon={<AddIcon />}
@@ -198,6 +264,51 @@ export default class Projects extends Component {
 						},
 					]}
 				/>
+
+                <div className="container">
+                    <div className="py-4">
+                        <h1>Project Requests</h1>
+                        <table className="table border shadow">
+                            <thead className="thead-dark">
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
+                                    <th scope="col">Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.projects.map((project, index) => (
+                                    <tr>
+                                        <th scope="row">{index + 1}</th>
+                                        <td>{project.name}</td>
+                                        <td>{project.description}</td>
+                                        <td>{project.projectStatus}</td>
+                                        <td>
+                                            <Link className="btn btn-primary mr-2" to='/'>
+                                                View
+                                            </Link>
+                                            <Link
+                                                className="btn btn-outline-primary mr-2"
+                                                to='/'
+                                            >
+                                                Edit
+                                            </Link>
+                                            <Link to='/'
+                                                className="btn btn-danger"
+                                                onClick={() => console.log(project)}
+                                            >
+                                                Delete
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
 			</div>
 		);
 	}
