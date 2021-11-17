@@ -1,62 +1,118 @@
 import React, { Component } from 'react';
-import { projectStatusDropdown } from './DefaultModal';
 import MaterialTable from '@material-table/core';
-import { VisibilityIcon } from '@material-ui/icons/Visibility';
-import { materialTableIcons } from './../applicationService';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import * as applicationService from './../applicationService';
+import { DialogContent, Typography, DialogTitle, Dialog, Button } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import AddIcon from '@material-ui/icons/Add';
+import ViewProjectForm from './ViewProjectForm';
+import AddProjectForm from './AddProjectForm';
 const axios = require('axios');
+const FormData = require('form-data');
+
+//const _hashStringValue = process.env.REACT_APP_HASH_STRING_VALUE;
 
 export default class Projects extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			open: false,
-            openPopup: false,
-            recordForEdit: null,
-
-            records: [],
+			openPopup: false,
+            openViewForm: false,
+			recordForEdit: null,
 			projects: [],
 		};
         this.getProjects();
 	}
 
-
     getProjects = async () => {
-        await this.props.project.methods.getAllProjects().call().then((result) => {
-            result.map((result) => {
-                let status = projectStatusDropdown.find((element) => {
-                    return Number(element.id) === Number(result['projectStatus']);
-                });
-                let project = {
-                    index: result['index'],
-                    name: result['name'],
-                    description: result['description'],
-                    projectStatus: status.value,
-                    ipfsFileCID: result['ipfsFileCID']
-                };
-                this.setState({ projects: [...this.state.projects, project] });
-                return false;
-            });
-        }).catch(function (error) { console.log(error); });
+        let allProjects = await applicationService.getAllProjects(this.props);
+        this.setState({ projects: allProjects });
     }
 
-	handleClickOpen() {
-		this.seState({ open: true });
+    setOpenPopup = (value) => {
+		this.setState({ openPopup: value });
+	};
+
+    setOpenViewForm = (value) => {
+        this.setState({ openViewForm: value });
+    }
+
+	setRecordForEdit = (data) => {
+		this.setState({ recordForEdit: data });
 	}
 
-	handleClose = (event, reason) => {
-		if (reason === 'backdropClick') {
-			return false;
-		}
-		this.seState({ open: false });
+    uploadFileToPinata = (fileData) => {
+        if (fileData.file.name?.length > 0) {
+            const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
+            let data = new FormData();
+
+            let file= new Blob([fileData.file], {
+                type: 'application/json',
+            });
+
+            data.append('file',  file, fileData.file.name);
+            const metadata = JSON.stringify({
+                name: fileData.file.name,
+                type: fileData.file.type,
+                sizeBytes: fileData.file.size,
+                lastModifiedDate: fileData.file.lastModifiedDate
+            });
+            data.append('pinataMetadata', metadata);
+
+            return axios.post(url, data, {
+                maxBodyLength: 'Infinity',
+                headers: {
+                    'Content-Type': `multipart/form-data`,
+                    pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+                    pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
+                }
+            }).then(function (response) {
+                return response.data.IpfsHash;
+            }).catch(function (error) {
+                console.error(error);
+            });
+        }
+    }
+
+    getFileCIDAfterUpload = async (userData) => {
+        let ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(userData));
+        return ipfsFileCID;
+    }
+
+    addOrEdit = (userData, resetForm) => {
+        if (userData.isEditForm === false) {
+   			// alert('Form is validated! Submitting the form...');
+            let ipfsFileCID = this.getFileCIDAfterUpload(userData);
+            this.createProject(
+				userData['name'],
+                userData['description'],
+				userData['status'],
+                ipfsFileCID
+			);
+        } else {
+            ;//this.changeUserRole(userData['role'], userData['walletAddress']);
+        }
+        resetForm();
+        this.setRecordForEdit(null);
+        this.getProjects();
+    }
+
+    createProject = async (_name, _description, _status, _ipfsFileCID) => {
+		await this.props.project.methods
+			.createProject(_name, _description, Number(_status), _ipfsFileCID)
+			.send({ from: this.props.account });
 	};
+
+    handleNewDataFromPopup(value) {
+        this.setState({ openPopup: value });
+    }
 
 	filterFilesFromPinataIpfs = () => {
 		let queryString = '?';
-		// queryString = queryString + `hashContains=${queryParams.hashContains}&`;
-		// queryString = queryString + `status=pinned&`;
+		//queryString = queryString + `hashContains=${queryParams.hashContains}&`;
+		//queryString = queryString + `status=pinned&`;
 		const url = `https://api.pinata.cloud/data/pinList${queryString}`;
-		axios
-			.get(url, {
+		axios.get(url, {
 				headers: {
 					pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
 					pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
@@ -66,7 +122,7 @@ export default class Projects extends Component {
 				console.log(response);
 			})
 			.catch(function (error) {
-				console.log(error);
+				console.error(error);
 			});
 	}
 
@@ -79,12 +135,55 @@ export default class Projects extends Component {
 			{ title: 'IPFS CID', field: 'ipfsFileCID' },
 		];
 
-        return (
+		return (
 			<div>
-                <MaterialTable
+				<Button
+					variant="outlined"
+					startIcon={<AddIcon />}
+					onClick={() => {
+						this.setOpenPopup(true);
+						this.setRecordForEdit(null);
+					}}>Add New</Button>
+
+				<Dialog open={this.state.openPopup} maxWidth="md">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								Add Project Form
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenPopup(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers style={{ width: '700px' }}>
+                        <AddProjectForm handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+                    </DialogContent>
+				</Dialog>
+
+				<Dialog open={this.state.openViewForm} maxWidth="md">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								View Project Form
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenViewForm(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers style={{ width: '700px' }}>
+                        <ViewProjectForm recordForEdit={this.state.recordForEdit} />
+                    </DialogContent>
+				</Dialog>
+
+				<br /><br />
+				<MaterialTable
 					title="Projects"
 					tableRef={tableRef}
-					icons={materialTableIcons}
+					icons={applicationService.materialTableIcons}
 					columns={columns}
 					data={this.state.projects}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
@@ -93,12 +192,11 @@ export default class Projects extends Component {
 							icon: VisibilityIcon,
 							tooltip: 'View Project',
 							onClick: (event, rowData) => {
-                                console.log(rowData);
                                 this.setOpenViewForm(true);
                                 this.setRecordForEdit(rowData);
 							},
 						},
-                    ]}
+					]}
 				/>
 			</div>
 		);
