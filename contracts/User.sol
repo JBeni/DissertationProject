@@ -7,6 +7,8 @@ contract User {
     uint256 public usersCount = 0;
     address[] public userAddresses;
 
+    S_UserData[] public allUsers;
+
     struct S_UserData {
         string username;
         string email;
@@ -55,7 +57,6 @@ contract User {
         address _walletAddress
     ) public onlyOwner {
         userInfo[_walletAddress].username = _username;
-        userInfo[_walletAddress].username = _username;
         userInfo[_walletAddress].email = _email;
         userInfo[_walletAddress].firstname = _firstname;
         userInfo[_walletAddress].lastname = _lastname;
@@ -70,6 +71,7 @@ contract User {
             Roles(_role)
         );
         userAddresses.push(_walletAddress);
+        allUsers.push(S_UserData(_username, _email, _firstname, _lastname, Roles(_role), _walletAddress));
         usersCount++;
     }
 
@@ -80,6 +82,10 @@ contract User {
 
     function getUserAddresses() external view returns (address[] memory) {
         return userAddresses;
+    }
+
+    function getAllUsers() external view returns (S_UserData[] memory) {
+        return allUsers;
     }
 
     function getUserInfo(address _address)
