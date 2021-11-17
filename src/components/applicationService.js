@@ -1,4 +1,3 @@
-import { projectStatusDropdown } from './Projects/DefaultModal';
 import { forwardRef } from 'react';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
@@ -57,12 +56,46 @@ export const initialUserFormValidity = {
 	walletAddress: false,
 };
 
+export const initialProjectFormValues = {
+	isEditForm: false,
+	name: '',
+	description: '',
+	status: '',
+    file: {
+        name: '',
+        type: '',
+        sizeBytes: '',
+        lastModifiedDate: ''
+    },
+};
+
+export const initialProjectFormValidity = {
+	name: false,
+	description: false,
+	status: false,
+    file: false,
+};
+
 export const roleDropdownOptions = [
 	{ id: "1", value: 'DefaultRole' },
 	{ id: "2", value: 'ProjectInitiator' },
 	{ id: "3", value: 'CompanyBuilder' },
 	{ id: "4", value: 'ProjectSupervisor' },
 ];
+
+export const projectStatusDropdown = [
+	{ id: '1', value: 'Created', label: 'Created' },
+	{ id: '2', value: 'Approved', label: 'Approved' },
+	{ id: '3', value: 'Rejected', label: 'Rejected' },
+	{ id: '4', value: 'OnGoing', label: 'OnGoing' },
+	{
+		id: '5',
+		value: 'BeforeFinalizationCheck',
+		label: 'BeforeFinalizationCheck',
+	},
+	{ id: '6', value: 'Completed', label: 'Completed' },
+];
+
 
 export async function getAllUsers(props) {
     let data = [];
@@ -90,20 +123,19 @@ export async function getAllUsers(props) {
 
 export async function getAllProjects(props) {
     let data = [];
-
-    await this.props.project.methods.getAllProjects().call().then((result) => {
+    await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
             let status = projectStatusDropdown.find((element) => {
                 return Number(element.id) === Number(result['projectStatus']);
             });
-            let project = {
+            const project = {
                 index: result['index'],
                 name: result['name'],
                 description: result['description'],
                 projectStatus: status.value,
                 ipfsFileCID: result['ipfsFileCID']
             };
-            this.setState({ projects: [...this.state.projects, project] });
+            data.push(project);
             return false;
         });
     }).catch(function (error) {
