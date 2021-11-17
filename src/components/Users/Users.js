@@ -147,8 +147,7 @@ export default class Users extends Component {
 					onClick={() => {
 						this.setOpenPopup(true);
 						this.setRecordForEdit(null);
-					}}
-				>Add New</Button>
+					}}>Add New</Button>
 
 				<Dialog open={this.state.openPopup} maxWidth="md">
 					<DialogTitle>
@@ -184,7 +183,7 @@ export default class Users extends Component {
                     </DialogContent>
 				</Dialog>
 
-				<br />
+				<br /><br />
 				<MaterialTable
 					title="Users"
 					tableRef={tableRef}
