@@ -7,7 +7,8 @@ import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@materia
 import AddForm from './AddForm';
 import * as applicationService from '../applicationService';
 import ViewForm from './ViewForm';
-import { materialTableIcons } from './../applicationService';
+import { materialTableIcons } from './../sharedResources';
+import Edit from '@material-ui/icons/Edit';
 
 export default class Users extends Component {
 	constructor(props) {
@@ -25,6 +26,24 @@ export default class Users extends Component {
     getUsers = async () => {
         let allUsers = await applicationService.getAllUsers(this.props);
         this.setState({ users: allUsers });
+
+/*
+        this.props.project.methods.create(
+            "Somethign Nerws asdasd"
+        ).send({ from: this.props.account });
+*/
+
+
+
+        // this.props.project.methods.update(
+        //     0, " matcaaaaa "
+        // ).send({ from: this.props.account });
+
+
+
+        this.props.project.methods.getUserInfo("0xdB96A5a2F356d4257927c4bC245D6a37550e0371")
+        .call().then((result) => console.log(result));
+
     }
 
     setOpenPopup = (value) => {
@@ -59,11 +78,7 @@ export default class Users extends Component {
         await this.props.project.methods.changeUserRole(
             Number(_role),
             _walletAddress
-        ).send({ from: this.props.account })
-        .then(function(receipt) {
-            //console.log(receipt);
-        });
-        //this.getUsers();
+        ).send({ from: this.props.account });
 	}
 
     addOrEdit = (userData, resetForm) => {
@@ -83,7 +98,7 @@ export default class Users extends Component {
         }
         resetForm();
         this.setRecordForEdit(null);
-        this.setState({ users: applicationService.getAllUsers(this.props) });
+        this.getUsers();
     }
 
     handleNewDataFromPopup(data) {
@@ -151,14 +166,14 @@ export default class Users extends Component {
 					data={this.state.users}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						// {
-						// 	icon: Edit,
-						// 	tooltip: 'Edit User',
-						// 	onClick: (event, rowData) => {
-                        //         this.setOpenPopup(true);
-                        //         this.setRecordForEdit(rowData);
-						// 	},
-						// },
+						{
+							icon: Edit,
+							tooltip: 'Edit User',
+							onClick: (event, rowData) => {
+                                this.setOpenPopup(true);
+                                this.setRecordForEdit(rowData);
+							},
+						},
 						{
 							icon: VisibilityIcon,
 							tooltip: 'View User',
