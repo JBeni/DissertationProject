@@ -84,17 +84,14 @@ contract User {
         usersCount++;
     }
 
-    function changeUserRole(uint _role, address _walletAddress) public returns(string memory) {
+    function changeUserRole(uint _role, address _walletAddress) external {
         userInfo[_walletAddress].role = Roles(_role);
-        emit UserChanges(
-            userInfo[_walletAddress].username,
-            userInfo[_walletAddress].firstname,
-            userInfo[_walletAddress].lastname,
-            userInfo[_walletAddress].email,
-            userInfo[_walletAddress].role,
-            userInfo[_walletAddress].walletAddress
-        );
-        return "Role Updated!";
+
+        for (uint index = 0; index < allUsers.length; index++) {
+            if (allUsers[index].walletAddress == _walletAddress) {
+                allUsers[index].role = Roles(_role);
+            }
+        }
     }
 
     function getUserAddresses() external view returns (address[] memory) {
