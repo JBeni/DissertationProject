@@ -9,6 +9,7 @@ import AddProjectForm from './AddProjectForm';
 import ProjectTable from './ProjectTable';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
+import CreateRequest from './CreateRequest';
 const axios = require('axios');
 const FormData = require('form-data');
 
@@ -20,6 +21,7 @@ export default class Projects extends Component {
 		this.state = {
 			openPopup: false,
             openViewForm: false,
+            openCreateRequestForm: false,
             showTable: false,
 			recordForEdit: null,
 			projects: [],
@@ -54,7 +56,6 @@ export default class Projects extends Component {
             data.push(project);
             return false;
         });
-        console.log(data);
     }
 
     getProjects = async () => {
@@ -65,6 +66,10 @@ export default class Projects extends Component {
     setOpenPopup = (value) => {
 		this.setState({ openPopup: value });
 	};
+
+    setCreateRequestForm = (value) => {
+        this.setState({ openCreateRequestForm: value });
+    }
 
     setOpenViewForm = (value) => {
         this.setState({ openViewForm: value });
@@ -117,6 +122,7 @@ export default class Projects extends Component {
     }
 
     addOrEdit = (userData, resetForm) => {
+        console.log(userData);
         if (userData.isEditForm === false) {
    			// alert('Form is validated! Submitting the form...');
             let ipfsFileCID = this.getFileCIDAfterUpload(userData);
@@ -142,6 +148,7 @@ export default class Projects extends Component {
 
     handleNewDataFromPopup(value) {
         this.setState({ openPopup: value });
+        this.setState({ openCreateRequestForm: value });
     }
 
 	filterFilesFromPinataIpfs = () => {
@@ -156,7 +163,6 @@ export default class Projects extends Component {
 				},
 			})
 			.then(function (response) {
-				console.log(response);
 			})
 			.catch(function (error) {
 				console.error(error);
@@ -174,14 +180,6 @@ export default class Projects extends Component {
 
 		return (
 			<div>
-
-                <Button
-					variant="outlined"
-					startIcon={<AddIcon />}
-					onClick={() => {
-						this.setShowTable();
-					}}>TEsting New</Button>
-
 				<Button
 					variant="outlined"
 					startIcon={<AddIcon />}
@@ -224,6 +222,23 @@ export default class Projects extends Component {
                     </DialogContent>
 				</Dialog>
 
+				<Dialog open={this.state.openCreateRequestForm} maxWidth="md">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								Create Project Request Form
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setCreateRequestForm(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers style={{ width: '700px' }}>
+                        <CreateRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} />
+                    </DialogContent>
+				</Dialog>
+
 				<br /><br />
 				<MaterialTable
 					title="Projects"
@@ -233,6 +248,14 @@ export default class Projects extends Component {
 					data={this.state.projects}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
+						{
+							icon: AddIcon,
+							tooltip: 'Create Request',
+							onClick: (event, rowData) => {
+                                this.setCreateRequestForm(true);
+                                this.setRecordForEdit(rowData);
+							},
+						},
 						{
 							icon: Visibility,
 							tooltip: 'View Project',
