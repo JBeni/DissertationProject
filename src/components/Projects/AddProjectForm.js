@@ -128,6 +128,11 @@ export default function AddProjectForm(props) {
 				...newData,
 			});
             setIsEdit(true);
+        } else {
+            setValues({
+                ...values,
+                'status': '0',
+            })
         }
 	}, [recordForEdit]);
 
@@ -174,6 +179,7 @@ export default function AddProjectForm(props) {
 								value={values.status}
 								onChange={handleInputChange}
                                 error={validity.status}
+                                disabled={true}
 							>
 								{projectStatusDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
