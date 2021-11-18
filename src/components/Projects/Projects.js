@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import MaterialTable from '@material-table/core';
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import * as applicationService from './../applicationService';
-import { DialogContent, Typography, DialogTitle, Dialog, Button, Hidden } from '@material-ui/core';
+import { DialogContent, Typography, DialogTitle, Dialog, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import ViewProjectForm from './ViewProjectForm';
 import AddProjectForm from './AddProjectForm';
-import { Link } from 'react-router-dom';
+import ProjectTable from './ProjectTable';
+import Visibility from '@material-ui/icons/Visibility';
+import { materialTableIcons } from './../sharedResources';
 const axios = require('axios');
 const FormData = require('form-data');
 
@@ -19,6 +20,7 @@ export default class Projects extends Component {
 		this.state = {
 			openPopup: false,
             openViewForm: false,
+            showTable: false,
 			recordForEdit: null,
 			projects: [],
 		};
@@ -29,24 +31,10 @@ export default class Projects extends Component {
         this.test();
 
         //props.project.methods.changeProjectStatus("1", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
-        //props.project.methods.changeProjectStatus("2", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
-        //props.project.methods.changeProjectStatus("3", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
-        //props.project.methods.changeProjectStatus("4", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
-
-        //props.project.methods.changeProjectStatus("1", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788").send({ from: this.props.account });
         //props.project.methods.changeProjectStatus("2", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788").send({ from: this.props.account });
     }
 
     test = async () => {
-        // let events = await this.props.project.getPastEvents('ProjectStatusChanged', {
-        //     filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },
-        //     fromBlock: 0,
-        //     toBlock: 'latest'
-        // }, function(error, events) { console.log(events); })
-        // .then(function(events) {
-        //     console.log(events);
-        // });
-
         let events = await this.props.project.getPastEvents('ProjectStatusChanged', {
             filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },
             fromBlock: 0,
@@ -66,18 +54,7 @@ export default class Projects extends Component {
             data.push(project);
             return false;
         });
-
-        // events = events.filter((event) => {
-        //     return event.returnValues.projectAddress === "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0";
-        // });
         console.log(data);
-    }
-
-
-    create = async () => {
-        await this.props.project.methods
-            .changeProjectStatus("2", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788")
-            .send({ from: this.props.account });
     }
 
     getProjects = async () => {
@@ -91,6 +68,10 @@ export default class Projects extends Component {
 
     setOpenViewForm = (value) => {
         this.setState({ openViewForm: value });
+    }
+
+    setShowTable = (value) => {
+        this.setState({ showTable: value });
     }
 
 	setRecordForEdit = (data) => {
@@ -198,10 +179,8 @@ export default class Projects extends Component {
 					variant="outlined"
 					startIcon={<AddIcon />}
 					onClick={() => {
-						this.create();
+						this.setShowTable();
 					}}>TEsting New</Button>
-
-
 
 				<Button
 					variant="outlined"
@@ -249,13 +228,13 @@ export default class Projects extends Component {
 				<MaterialTable
 					title="Projects"
 					tableRef={tableRef}
-					icons={applicationService.materialTableIcons}
+					icons={materialTableIcons}
 					columns={columns}
 					data={this.state.projects}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
 						{
-							icon: VisibilityIcon,
+							icon: Visibility,
 							tooltip: 'View Project',
 							onClick: (event, rowData) => {
                                 this.setOpenViewForm(true);
@@ -265,49 +244,8 @@ export default class Projects extends Component {
 					]}
 				/>
 
-                <div className="container">
-                    <div className="py-4">
-                        <h1>Project Requests</h1>
-                        <table className="table border shadow">
-                            <thead className="thead-dark">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Description</th>
-                                    <th scope="col">Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {this.state.projects.map((project, index) => (
-                                    <tr>
-                                        <th scope="row">{index + 1}</th>
-                                        <td>{project.name}</td>
-                                        <td>{project.description}</td>
-                                        <td>{project.projectStatus}</td>
-                                        <td>
-                                            <Link className="btn btn-primary mr-2" to='/'>
-                                                View
-                                            </Link>
-                                            <Link
-                                                className="btn btn-outline-primary mr-2"
-                                                to='/'
-                                            >
-                                                Edit
-                                            </Link>
-                                            <Link to='/'
-                                                className="btn btn-danger"
-                                                onClick={() => console.log(project)}
-                                            >
-                                                Delete
-                                            </Link>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <br /><br />
+                <ProjectTable showTable={this.state.showTable} projects={this.state.projects} />
 
 			</div>
 		);
