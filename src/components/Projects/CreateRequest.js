@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, Fab, FormHelperText, Button } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Button } from '@material-ui/core';
 import { useStyles } from './../sharedResources';
 import { initialProjectRequestFormValues, initialProjectRequestFormValidity, projectStatusDropdown } from './../applicationService';
 
 export default function CreateRequest(props) {
 	const classes = useStyles();
 	const {addOrEdit, recordForEdit} = props;
-    const [isEdit, setIsEdit] = useState(false);
 	const [values, setValues] = useState(initialProjectRequestFormValues);
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialProjectRequestFormValidity);
@@ -21,29 +19,10 @@ export default function CreateRequest(props) {
         validate({ [name]: value });
 	};
 
-    const fileChangeHandler = (event) => {
-		setValues({
-			...values,
-			'file': {
-                name: event.target.files[0].name,
-                type: event.target.files[0].type,
-                sizeBytes: event.target.files[0].size,
-                lastModifiedDate: event.target.files[0].lastModifiedDate
-            }
-		});
-        validate({ 'file': {
-            name: event.target.files[0].name,
-            type: event.target.files[0].type,
-            sizeBytes: event.target.files[0].sizeBytes,
-            lastModifiedDate: event.target.files[0].lastModifiedDate
-        }});
-    }
-
 	const resetForm = () => {
 		setValues(initialProjectRequestFormValues);
 		setValues({
 			...values,
-			'file': { name: '', type: '', sizeBytes: '', lastModifiedDate: '' }
 		});
 		setErrors({});
         setValidity(initialProjectRequestFormValidity);
@@ -52,21 +31,21 @@ export default function CreateRequest(props) {
 	const validate = (fieldValues = values) => {
 		let temp = { ...errors };
         let tempValidity = { ...validity };
-		if ('name' in fieldValues) {
-			temp.name = fieldValues.name ? '' : 'This field is required.';
-            tempValidity.name = fieldValues.name?.length <= 0;
+		if ('title' in fieldValues) {
+			temp.title = fieldValues.title ? '' : 'This field is required.';
+            tempValidity.title = fieldValues.title?.length <= 0;
         }
 		if ('description' in fieldValues) {
 			temp.description = fieldValues.description ? '' : 'This field is required.';
             tempValidity.description = fieldValues.description?.length <= 0;
 		}
-		if ('status' in fieldValues) {
-			temp.status = fieldValues.status.length > 0 ? '' : 'This field is required.';
-            tempValidity.status = fieldValues.status?.length <= 0;
+		if ('projectStatus' in fieldValues) {
+			temp.projectStatus = fieldValues.projectStatus.length > 0 ? '' : 'This field is required.';
+            tempValidity.projectStatus = fieldValues.projectStatus?.length <= 0;
 		}
-		if ('file' in fieldValues) {
-			temp.file = fieldValues.file.name?.length > 0 ? '' : 'This field is required.';
-            tempValidity.file = fieldValues.file.name?.length <= 0;
+		if ('requestStatus' in fieldValues) {
+			temp.requestStatus = fieldValues.requestStatus.name?.length > 0 ? '' : 'This field is required.';
+            tempValidity.requestStatus = fieldValues.requestStatus.name?.length <= 0;
 		}
         setErrors({ ...temp });
         setValidity({ ...tempValidity });
@@ -85,21 +64,17 @@ export default function CreateRequest(props) {
 	};
 
 	useEffect(() => {
-		if (recordForEdit != null) {
+        if (recordForEdit != null) {
             let status = projectStatusDropdown.find((element) => {
-                return element.value === recordForEdit['status']
+                return element.value === recordForEdit['projectStatus']
             });
-            let newData = {
-                name: recordForEdit['name'],
-                description: recordForEdit['description'],
-                status: status.id,
-            };
+            let nextStatus = status.id < 5 ? Number(status.id) + 1 : Number(status.id);
             setValues({
-				...newData,
-			});
-            setIsEdit(true);
+                ...values,
+                projectStatus: nextStatus.toString()
+            });
         }
-	}, [recordForEdit]);
+	}, []);
 
 	return (
 		<>
@@ -109,14 +84,13 @@ export default function CreateRequest(props) {
                         <FormControl style={{ width: '400px' }} {...(errors && { error: true })}>
                             <TextField
                                 style={{ marginLeft: '3px', width: '400px' }}
-                                name="name"
-                                label="Name"
-                                value={values.name}
+                                name="title"
+                                label="Title"
+                                value={values.title}
                                 onChange={handleInputChange}
-                                error={validity.name}
-                                disabled = {(isEdit === true) ? true : false}
+                                error={validity.title}
                             />
-							{errors && <FormHelperText className="Mui-error">{errors.name}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.title}</FormHelperText>}
 						</FormControl>
 
                         <FormControl style={{ width: '400px' }}>
@@ -131,19 +105,18 @@ export default function CreateRequest(props) {
                                 value={values.description}
                                 onChange={handleInputChange}
                                 error={validity.description}
-                                disabled = {(isEdit === true) ? true : false}
                             />
 							{errors && <FormHelperText className="Mui-error">{errors.description}</FormHelperText>}
 						</FormControl>
 
 						<FormControl style={{ width: '400px' }}>
-							<InputLabel>Status</InputLabel>
+							<InputLabel>Request Status</InputLabel>
 							<Select
-								name="status"
-								label="Status"
-								value={values.status}
+								name="requestStatus"
+								label="RequestStatus"
+								value={values.requestStatus}
 								onChange={handleInputChange}
-                                error={validity.status}
+                                error={validity.requestStatus}
 							>
 								{projectStatusDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
@@ -151,28 +124,27 @@ export default function CreateRequest(props) {
 									</MenuItem>
 								))}
 							</Select>
-							{errors && <FormHelperText className="Mui-error">{errors.status}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.requestStatus}</FormHelperText>}
 						</FormControl>
 
-                        <FormControl style={{ width: '400px' }}>
-                            <label htmlFor="file">
-                                <input
-                                    style={{ display: "none" }}
-                                    id="file" type="file"
-                                    name="file"
-                                    onChange={fileChangeHandler}
-                                />
-                                <Fab color="secondary" size="small" component="span" aria-label="add" variant="extended">
-                                    <AddIcon /> Upload File
-                                </Fab>
-                                <TextField
-                                    style={{ marginLeft: '3px', width: '400px' }}
-                                    value={values.file.name}
-                                    disabled={true}
-                                />
-                            </label>
-                            {errors && <FormHelperText className="Mui-error">{errors.file}</FormHelperText>}
-                        </FormControl>
+						<FormControl style={{ width: '400px' }}>
+							<InputLabel>Project Status</InputLabel>
+							<Select
+								name="projectStatus"
+								label="ProjectStatus"
+								value={values.projectStatus}
+								onChange={handleInputChange}
+                                error={validity.projectStatus}
+                                disabled={true}
+							>
+								{projectStatusDropdown.map((item) => (
+									<MenuItem key={item.id} value={item.id}>
+										{item.value}
+									</MenuItem>
+								))}
+							</Select>
+							{errors && <FormHelperText className="Mui-error">{errors.projectStatus}</FormHelperText>}
+						</FormControl>
 
 						<div>
 							<Button
@@ -190,7 +162,6 @@ export default function CreateRequest(props) {
 								size="large"
 								color="default"
 								onClick={resetForm}
-                                disabled = {(isEdit === true) ? true : false}
 							>
 								Reset
 							</Button>
