@@ -5,7 +5,7 @@ contract User {
     mapping(address => S_UserData) public userInfo;
     address public owner;
     uint256 public usersCount = 0;
-    address[] public userAddresses;
+    //address[] public userAddresses;
 
     S_UserData[] public allUsers;
 
@@ -79,7 +79,7 @@ contract User {
             _lastname,
             Roles(_role)
         );
-        userAddresses.push(_walletAddress);
+        //userAddresses.push(_walletAddress);
         allUsers.push(S_UserData(_username, _email, _firstname, _lastname, Roles(_role), _walletAddress));
         usersCount++;
     }
@@ -94,9 +94,9 @@ contract User {
         }
     }
 
-    function getUserAddresses() external view returns (address[] memory) {
-        return userAddresses;
-    }
+    // function getUserAddresses() external view returns (address[] memory) {
+    //     return userAddresses;
+    // }
 
     function getAllUsers() external view returns (S_UserData[] memory) {
         return allUsers;
