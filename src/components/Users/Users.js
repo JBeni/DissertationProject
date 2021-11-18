@@ -41,8 +41,8 @@ export default class Users extends Component {
 
 
 
-        this.props.project.methods.getUserInfo("0xdB96A5a2F356d4257927c4bC245D6a37550e0371")
-        .call().then((result) => console.log(result));
+        // this.props.project.methods.getUserInfo("0xdB96A5a2F356d4257927c4bC245D6a37550e0371")
+        // .call().then((result) => console.log(result));
 
     }
 
