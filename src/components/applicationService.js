@@ -1,19 +1,16 @@
 
 export const initialProjectRequestFormValues = {
-	isEditForm: false,
-	firstname: '',
-	lastname: '',
-	email: '',
-	role: '',
-	walletAddress: '',
+	title: '',
+	description: '',
+	projectStatus: '',
+	requestStatus: '',
 };
 
 export const initialProjectRequestFormValidity = {
-	firstname: false,
-	lastname: false,
-	email: false,
-	role: false,
-	walletAddress: false,
+	title: false,
+	description: false,
+	requestStatus: false,
+	projectStatus: false,
 };
 
 export const initialUserFormValues = {
