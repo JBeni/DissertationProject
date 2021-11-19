@@ -46,7 +46,6 @@ function Sidebar(props) {
 							<i className="bx bx-user nav__icon"></i>
 							<span className="nav__name">Projects</span>
 						</Link>
-
 						<Link
 							to="/project-initiator"
 							className={
