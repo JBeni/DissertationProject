@@ -2,15 +2,15 @@
 export const initialProjectRequestFormValues = {
 	title: '',
 	description: '',
-	projectStatus: '',
+	status: '',
 	requestStatus: '',
 };
 
 export const initialProjectRequestFormValidity = {
 	title: false,
 	description: false,
+	status: false,
 	requestStatus: false,
-	projectStatus: false,
 };
 
 export const initialUserFormValues = {
@@ -118,12 +118,12 @@ export async function getAllProjects(props) {
     await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
             console.log(result);
-            let status = getProjectStatusById(result['projectStatus']);
+            let status = getProjectStatusById(result['status']);
             const project = {
                 index: result['index'],
                 name: result['name'],
                 description: result['description'],
-                projectStatus: status.value,
+                status: status.value,
                 ipfsFileCID: result['ipfsFileCID']
             };
             data.push(project);
