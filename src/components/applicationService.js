@@ -50,7 +50,7 @@ export const initialProjectFormValidity = {
     file: false,
 };
 
-export const roleDropdownOptions = [
+export const userRoleDropdown = [
 	{ id: '0', value: 'DefaultRole' },
 	{ id: '1', value: 'ProjectInitiator' },
 	{ id: '2', value: 'CompanyBuilder' },
@@ -70,14 +70,36 @@ export const projectStatusDropdown = [
 	{ id: '5', value: 'Completed', label: 'Completed' },
 ];
 
+export function getProjectStatusById(requestStatus) {
+    return projectStatusDropdown.find((element) => {
+        return Number(element.id) === Number(requestStatus);
+    });
+}
+
+export function getProjectStatusByValue(requestStatus) {
+    return projectStatusDropdown.find((element) => {
+        return element.value === requestStatus;
+    });
+}
+
+export function getUserRoleById(role) {
+    return userRoleDropdown.find((element) => {
+        return Number(element.id) === Number(role);
+    });
+}
+
+export function getUserRoleByValue(role) {
+    return userRoleDropdown.find((element) => {
+        return element.value === role;
+    });
+}
 
 export async function getAllUsers(props) {
     let data = [];
     await props.project.methods.getAllUsers().call().then((result) => {
         result.map((result) => {
-            let role = roleDropdownOptions.find((element) => {
-                return Number(element.id) === Number(result['role']);
-            });
+            console.log(result);
+            let role = getUserRoleById(result['role']);
             const user = {
                 username: result['username'],
                 email: result['email'],
@@ -99,9 +121,8 @@ export async function getAllProjects(props) {
     let data = [];
     await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
-            let status = projectStatusDropdown.find((element) => {
-                return Number(element.id) === Number(result['projectStatus']);
-            });
+            console.log(result);
+            let status = getProjectStatusById(result['projectStatus']);
             const project = {
                 index: result['index'],
                 name: result['name'],
