@@ -6,12 +6,13 @@ import Users from '../Users/Users';
 import Dashboard from '../Dashboard';
 import CompanyBuilder from './../CompanyBuilder/CompanyBuilder';
 import Supervisor from './../Supervisor/Supervisor';
+import ProjectInfo from '../Projects/Project';
 
 function Routes(props) {
 	return (
 		<Switch>
 			<Route
-				exact path="/"
+				path="/" exact
 				render={() => (
 					<Dashboard
 						account={props.account}
@@ -31,7 +32,7 @@ function Routes(props) {
 				)}
 			/>
 			<Route
-				path="/projects"
+				path="/projects" exact
 				render={() => (
 					<Projects
 						account={props.account}
@@ -40,6 +41,17 @@ function Routes(props) {
 					/>
 				)}
 			/>
+			<Route
+				path="/projects/:id"
+				render={() => (
+					<ProjectInfo
+						account={props.account}
+						project={props.project}
+						web3={props.web3}
+					/>
+				)}
+			/>
+
 			<Route
 				path="/project-initiator"
 				render={() => (
