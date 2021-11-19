@@ -50,7 +50,7 @@ export default class Project extends Component {
 		const columns = [
 			{ title: 'Title', field: 'title' },
 			{ title: 'Description', field: 'description' },
-			{ title: 'Project Status', field: 'projectStatus' },
+			{ title: 'Project Status', field: 'status' },
 			{ title: 'Request Status', field: 'requestStatus' },
 		];
 

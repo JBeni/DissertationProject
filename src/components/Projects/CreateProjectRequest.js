@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Button } from '@material-ui/core';
 import { useStyles } from '../sharedResources';
-import { initialProjectRequestFormValues, initialProjectRequestFormValidity, projectStatusDropdown } from '../applicationService';
+import { initialProjectRequestFormValues, initialProjectRequestFormValidity, projectStatusDropdown, getProjectStatusByValue } from '../applicationService';
 
 export default function CreateProjectRequest(props) {
 	const classes = useStyles();
@@ -39,9 +39,9 @@ export default function CreateProjectRequest(props) {
 			temp.description = fieldValues.description ? '' : 'This field is required.';
             tempValidity.description = fieldValues.description?.length <= 0;
 		}
-		if ('projectStatus' in fieldValues) {
-			temp.projectStatus = fieldValues.projectStatus.length > 0 ? '' : 'This field is required.';
-            tempValidity.projectStatus = fieldValues.projectStatus?.length <= 0;
+		if ('status' in fieldValues) {
+			temp.status = fieldValues.status.length > 0 ? '' : 'This field is required.';
+            tempValidity.status = fieldValues.status?.length <= 0;
 		}
 		if ('requestStatus' in fieldValues) {
 			temp.requestStatus = fieldValues.requestStatus.name?.length > 0 ? '' : 'This field is required.';
@@ -65,13 +65,12 @@ export default function CreateProjectRequest(props) {
 
 	useEffect(() => {
         if (recordForEdit != null) {
-            let status = projectStatusDropdown.find((element) => {
-                return element.value === recordForEdit['projectStatus']
-            });
+            let status = getProjectStatusByValue(recordForEdit['status']);
             let nextStatus = status.id < 5 ? Number(status.id) + 1 : Number(status.id);
             setValues({
                 ...values,
-                projectStatus: nextStatus.toString()
+                status: nextStatus.toString(),
+                requestStatus: '',
             });
         }
 	}, []);
@@ -130,11 +129,11 @@ export default function CreateProjectRequest(props) {
 						<FormControl style={{ width: '400px' }}>
 							<InputLabel>Project Status</InputLabel>
 							<Select
-								name="projectStatus"
+								name="status"
 								label="ProjectStatus"
-								value={values.projectStatus}
+								value={values.status}
 								onChange={handleInputChange}
-                                error={validity.projectStatus}
+                                error={validity.status}
                                 disabled={true}
 							>
 								{projectStatusDropdown.map((item) => (
@@ -143,7 +142,7 @@ export default function CreateProjectRequest(props) {
 									</MenuItem>
 								))}
 							</Select>
-							{errors && <FormHelperText className="Mui-error">{errors.projectStatus}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.status}</FormHelperText>}
 						</FormControl>
 
 						<div>

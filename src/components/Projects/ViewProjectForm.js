@@ -8,7 +8,7 @@ export default function ViewProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit['projectStatus']);
+            let status = getProjectStatusByValue(recordForEdit['status']);
 			const newData = {
 				name: recordForEdit['name'],
 				description: recordForEdit['description'],

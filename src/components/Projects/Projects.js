@@ -10,6 +10,9 @@ import ProjectTable from './ProjectTable';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
+import AllPages from './AllPages';
+import SinglePage from './SinglePage';
+
 const axios = require('axios');
 const FormData = require('form-data');
 
@@ -22,7 +25,7 @@ class Projects extends Component {
             showTable: false,
 			recordForEdit: null,
 			projects: [],
-		};
+        };
         this.getProjects();
     }
 
@@ -155,7 +158,7 @@ class Projects extends Component {
 		const columns = [
 			{ title: 'Name', field: 'name' },
 			{ title: 'Description', field: 'description' },
-			{ title: 'Status', field: 'projectStatus' },
+			{ title: 'Status', field: 'status' },
 			{ title: 'IPFS CID', field: 'ipfsFileCID' },
 		];
 
@@ -232,6 +235,20 @@ class Projects extends Component {
 
                 <br /><br />
                 <ProjectTable showTable={this.state.showTable} projects={this.state.projects} />
+
+                {/* <LoaderCircle /> */}
+
+                <br /><br />
+                {/* <h4>Single Page</h4>
+                <div>
+                    <SinglePage pdf={'https://gateway.pinata.cloud/ipfs/QmZvoi8DB5M4HuLjRrhmbDhDQkF3TTFnM4mrgADJRrTCXu'} />
+                </div> */}
+
+                {/* <h4>All Pages</h4>
+                <div className="all-page-container">
+                    <AllPages pdf={'Files/comp-1801-w08-2021-22.pdf'} />
+                </div> */}
+
 
 			</div>
 		);
