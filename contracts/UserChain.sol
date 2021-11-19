@@ -8,6 +8,13 @@ contract UserChain {
     User[] public allUsers;
     uint256 public usersCounter = 0;
 
+    enum Roles {
+        DefaultRole,
+        ProjectInitiator,
+        CompanyBuilder,
+        ProjectSupervisor
+    }
+
     struct User {
         uint _index;
         string _username;
@@ -16,13 +23,6 @@ contract UserChain {
         string _lastname;
         Roles _role;
         address _walletAddress;
-    }
-
-    enum Roles {
-        DefaultRole,
-        ProjectInitiator,
-        CompanyBuilder,
-        ProjectSupervisor
     }
 
     event UserRegistered(
@@ -35,12 +35,12 @@ contract UserChain {
     );
 
     event UserChanges(
-        string username,
-        string firstname,
-        string lastname,
-        string email,
-        Roles role,
-        address walletAddress
+        string _username,
+        string _firstname,
+        string _lastname,
+        string _email,
+        Roles _role,
+        address _walletAddress
     );
 
     constructor() {

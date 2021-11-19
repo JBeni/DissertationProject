@@ -35,7 +35,18 @@ contract ProjectChain is UserChain {
         address _projectInitiator;
     }
 
-    event ProjectStatusEvent();
+    event ProjectStatusEvent(
+        uint _index,
+        string _name,
+        string _description,
+        string _comments,
+        ProjectStatus _status,
+        ProjectRequestStatus _requestStatus,
+        string _ipfsFileCID,
+        address _projectAddress,
+        address _projectInitiator,
+        string signature
+    );
     struct ProjectRequest {
         uint _index;
         string _name;
@@ -50,11 +61,7 @@ contract ProjectChain is UserChain {
     }
 
     enum ProjectRequestStatus { UnApproved, Rejected, Approved }
-    enum RequestStatus { Unverified, Verified }
     enum ProjectStatus { Created, Approved, Rejected, OnGoing, FinalizationCheck, Completed }
-
-    //event ProjectStatusChanged(uint256 index, ProjectStatus indexed status, address indexed projectAddress);
-    //event CreateProject(uint _indexProject, Project.ProjectStatus _projectStatus, address _address);
 
     modifier onlyProjectInitiator {
         require(users[_projectInitiator]._role == Roles.ProjectInitiator, "You don't have the rights for this resources.");
@@ -91,7 +98,6 @@ contract ProjectChain is UserChain {
     }
 
 
-
     // function changeProjectStatus(uint _status, address _address) public {
     //     projectsStatus[statusChangedIndex]._index = statusChangedIndex;
     //     projectsStatus[statusChangedIndex]._status = ProjectStatus(_status);
@@ -101,6 +107,12 @@ contract ProjectChain is UserChain {
     // }
 
 
+
+
+
+
+
+    enum RequestStatus { Unverified, Verified }
     struct Request {
         uint index;
         string description;
