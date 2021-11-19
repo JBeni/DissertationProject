@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
-import { initialProjectFormValues, projectStatusDropdown } from '../applicationService';
+import { getProjectStatusByValue, initialProjectFormValues } from '../applicationService';
 
 export default function ViewProjectForm(props) {
 	const { recordForEdit } = props;
@@ -8,9 +8,7 @@ export default function ViewProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-			let status = projectStatusDropdown.find((element) => {
-				return element.value === recordForEdit['projectStatus'];
-			});
+            let status = getProjectStatusByValue(recordForEdit['projectStatus']);
 			const newData = {
 				name: recordForEdit['name'],
 				description: recordForEdit['description'],

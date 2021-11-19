@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
-import { roleDropdownOptions, initialUserFormValues } from './../applicationService';
+import { initialUserFormValues, getUserRoleByValue } from './../applicationService';
 
 export default function ViewForm(props) {
 	const { recordForEdit } = props;
@@ -8,10 +8,8 @@ export default function ViewForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-			let role = roleDropdownOptions.find((element) => {
-				return element.value === recordForEdit['role'];
-			});
-			let newData = {
+            let role = getUserRoleByValue(recordForEdit['role']);
+            let newData = {
 				username: recordForEdit['username'],
 				firstname: recordForEdit['firstname'],
 				lastname: recordForEdit['lastname'],

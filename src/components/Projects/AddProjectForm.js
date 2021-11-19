@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { makeStyles } from '@material-ui/core/styles';
-import { initialProjectFormValidity, initialProjectFormValues, projectStatusDropdown } from '../applicationService';
+import { initialProjectFormValidity, initialProjectFormValues, projectStatusDropdown, getProjectStatusByValue } from '../applicationService';
 
 const useStyles = makeStyles((theme) => ({
 	primary: {
@@ -116,9 +116,7 @@ export default function AddProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = projectStatusDropdown.find((element) => {
-                return element.value === recordForEdit['status']
-            });
+            let status = getProjectStatusByValue(recordForEdit['status']);
             let newData = {
                 name: recordForEdit['name'],
                 description: recordForEdit['description'],
@@ -132,7 +130,7 @@ export default function AddProjectForm(props) {
             setValues({
                 ...values,
                 'status': '0',
-            })
+            });
         }
 	}, [recordForEdit]);
 

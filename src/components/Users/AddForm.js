@@ -10,7 +10,7 @@ import {
 	Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { roleDropdownOptions, initialUserFormValidity, initialUserFormValues } from './../applicationService';
+import { userRoleDropdown, getUserRoleByValue, initialUserFormValidity, initialUserFormValues } from './../applicationService';
 
 const useStyles = makeStyles((theme) => ({
 	primary: {
@@ -110,9 +110,7 @@ export default function AddForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let role = roleDropdownOptions.find((element) => {
-                return element.value === recordForEdit['role']
-            });
+            let role = getUserRoleByValue(recordForEdit['role']);
             let newData = {
                 firstname: recordForEdit['firstname'],
                 lastname: recordForEdit['lastname'],
@@ -180,7 +178,7 @@ export default function AddForm(props) {
 								onChange={handleInputChange}
                                 error={validity.role}
 							>
-								{roleDropdownOptions.map((item) => (
+								{userRoleDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
 										{item.value}
 									</MenuItem>
