@@ -4,9 +4,9 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./User.sol";
 
 contract Project is User {
-    address projectInitiator;
+    string constant HASH_STRING_VALUE = "csd?S@salas;dlA234_D.;s_as";
 
-    event ProjectStatusChanged(uint256 index, ProjectStatus indexed status, address indexed projectAddress);
+    address projectInitiator;
 
     mapping(uint => S_Project) public projects;
     mapping(uint => S_Request) public companyRequests;
@@ -37,6 +37,7 @@ contract Project is User {
 
     enum RequestStatus { Unverified, Verified }
     enum ProjectStatus { Created, Approved, Rejected, OnGoing, BeforeFinalizationCheck, Completed }
+    event ProjectStatusChanged(uint256 index, ProjectStatus indexed status, address indexed projectAddress);
 
     //event CreateProject(uint _indexProject, Project.ProjectStatus _projectStatus, address _address);
     event CreateProject(string _name, string _description, ProjectStatus _status);
