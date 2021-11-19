@@ -9,31 +9,21 @@ import AddProjectForm from './AddProjectForm';
 import ProjectTable from './ProjectTable';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
-import CreateRequest from './CreateRequest';
+import { withRouter } from 'react-router-dom';
 const axios = require('axios');
 const FormData = require('form-data');
 
-//const _hashStringValue = process.env.REACT_APP_HASH_STRING_VALUE;
-
-export default class Projects extends Component {
+class Projects extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			openPopup: false,
+			openAddForm: false,
             openViewForm: false,
-            openCreateRequestForm: false,
             showTable: false,
 			recordForEdit: null,
 			projects: [],
 		};
         this.getProjects();
-
-
-
-        this.test();
-
-        //props.project.methods.changeProjectStatus("1", "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0").send({ from: this.props.account });
-        //props.project.methods.changeProjectStatus("2", "0x57fF50619cf09c8e89E048d92813a6B5f1edF788").send({ from: this.props.account });
     }
 
     test = async () => {
@@ -45,9 +35,7 @@ export default class Projects extends Component {
 
         let data = [];
         events.map((result) => {
-            let status = applicationService.projectStatusDropdown.find((element) => {
-                return Number(element.id) === Number(result.returnValues.status)
-            });
+            let status = applicationService.getProjectStatusById(result.returnValues.status);
             const project = {
                 index: result.returnValues.index,
                 projectAddress: result.returnValues.projectAddress,
@@ -61,15 +49,12 @@ export default class Projects extends Component {
     getProjects = async () => {
         let allProjects = await applicationService.getAllProjects(this.props);
         this.setState({ projects: allProjects });
+        console.log(this.state.projects);
     }
 
-    setOpenPopup = (value) => {
-		this.setState({ openPopup: value });
+    setOpenAddForm = (value) => {
+		this.setState({ openAddForm: value });
 	};
-
-    setCreateRequestForm = (value) => {
-        this.setState({ openCreateRequestForm: value });
-    }
 
     setOpenViewForm = (value) => {
         this.setState({ openViewForm: value });
@@ -147,8 +132,7 @@ export default class Projects extends Component {
 	};
 
     handleNewDataFromPopup(value) {
-        this.setState({ openPopup: value });
-        this.setState({ openCreateRequestForm: value });
+        this.setState({ openAddForm: value });
     }
 
 	filterFilesFromPinataIpfs = () => {
@@ -162,11 +146,8 @@ export default class Projects extends Component {
 					pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
 				},
 			})
-			.then(function (response) {
-			})
-			.catch(function (error) {
-				console.error(error);
-			});
+			.then(function (response) {})
+			.catch(function (error) {console.error(error);});
 	}
 
 	render() {
@@ -184,18 +165,18 @@ export default class Projects extends Component {
 					variant="outlined"
 					startIcon={<AddIcon />}
 					onClick={() => {
-						this.setOpenPopup(true);
+						this.setOpenAddForm(true);
 						this.setRecordForEdit(null);
 					}}>Add New</Button>
 
-				<Dialog open={this.state.openPopup} maxWidth="md">
+				<Dialog open={this.state.openAddForm} maxWidth="md">
 					<DialogTitle>
 						<div style={{ display: 'flex' }}>
 							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
 								Add Project Form
 							</Typography>
 							<Button color="secondary" onClick={() => {
-									this.setOpenPopup(false);
+									this.setOpenAddForm(false);
 								}}><CloseIcon />
 							</Button>
 						</div>
@@ -222,23 +203,6 @@ export default class Projects extends Component {
                     </DialogContent>
 				</Dialog>
 
-				<Dialog open={this.state.openCreateRequestForm} maxWidth="md">
-					<DialogTitle>
-						<div style={{ display: 'flex' }}>
-							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-								Create Project Request Form
-							</Typography>
-							<Button color="secondary" onClick={() => {
-									this.setCreateRequestForm(false);
-								}}><CloseIcon />
-							</Button>
-						</div>
-					</DialogTitle>
-					<DialogContent dividers style={{ width: '700px' }}>
-                        <CreateRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} />
-                    </DialogContent>
-				</Dialog>
-
 				<br /><br />
 				<MaterialTable
 					title="Projects"
@@ -250,13 +214,12 @@ export default class Projects extends Component {
 					actions={[
 						{
 							icon: AddIcon,
-							tooltip: 'Create Request',
+							tooltip: 'Add Project Requests',
 							onClick: (event, rowData) => {
-                                this.setCreateRequestForm(true);
-                                this.setRecordForEdit(rowData);
+                                this.props.history.push(`/projects/${Number(rowData.index)}`);
 							},
 						},
-						{
+                        {
 							icon: Visibility,
 							tooltip: 'View Project',
 							onClick: (event, rowData) => {
@@ -274,3 +237,5 @@ export default class Projects extends Component {
 		);
 	}
 }
+
+export default withRouter(Projects);
