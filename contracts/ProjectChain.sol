@@ -16,19 +16,40 @@ contract ProjectChain is UserChain {
     uint public projectsCounter = 0;
     Project[] public allProjects;
 
+    event ProjectEvent(
+        uint _index,
+        string _name,
+        string _description,
+        ProjectStatus _status,
+        string _ipfsFileCID,
+        address _projectAddress,
+        address _projectInitiator
+    );
     struct Project {
         uint _index;
         string _name;
         string _description;
         ProjectStatus _status;
         string _ipfsFileCID;
-        address _address;
+        address _projectAddress;
+        address _projectInitiator;
     }
 
-    event CreateProject(uint _index, string _name, string _description, ProjectStatus _status, string _ipfsFileCID, address _address);
+    event ProjectStatusEvent();
+    struct ProjectRequest {
+        uint _index;
+        string _name;
+        string _description;
+        string _comments;
+        ProjectStatus _status;
+        ProjectRequestStatus _requestStatus;
+        string _ipfsFileCID;
+        address _projectAddress;
+        address _projectInitiator;
+        string signature;
+    }
 
-
-    enum ProjectRequestStatus { Unverified, Verified }
+    enum ProjectRequestStatus { UnApproved, Rejected, Approved }
     enum RequestStatus { Unverified, Verified }
     enum ProjectStatus { Created, Approved, Rejected, OnGoing, FinalizationCheck, Completed }
 
@@ -36,23 +57,24 @@ contract ProjectChain is UserChain {
     //event CreateProject(uint _indexProject, Project.ProjectStatus _projectStatus, address _address);
 
     modifier onlyProjectInitiator {
-        require(userInfo[_projectInitiator].role == Roles.ProjectInitiator, "You don't have the rights for this resources.");
+        require(users[_projectInitiator]._role == Roles.ProjectInitiator, "You don't have the rights for this resources.");
         require(_projectInitiator == msg.sender, "You are not a project initiator");
         _;
     }
 
     function createProject(string memory _name, string memory _description, uint _status, string memory _ipfsFileCID) public  {
-        address _projectAddress = createUniqueHexAddress(HASH_STRING_VALUE, _projectInitiator);
+        address _projectAddress = createUniqueHexAddress(HASH_STRING_VALUE);
 
         projects[_projectAddress]._index = projectsCounter;
         projects[_projectAddress]._name = _name;
         projects[_projectAddress]._description = _description;
         projects[_projectAddress]._status = ProjectStatus(_status);
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
-        projects[_projectAddress]._address = _projectAddress;
+        projects[_projectAddress]._projectAddress = _projectAddress;
+        projects[_projectAddress]._projectInitiator = _projectInitiator;
 
-        emit CreateProject(projectsCounter, _name, _description, ProjectStatus(_status), _ipfsFileCID, _projectAddress);
-        allProjects.push(Project(projectsCounter, _name, _description, ProjectStatus(_status), _ipfsFileCID, _projectAddress));
+        emit ProjectEvent(projectsCounter, _name, _description, ProjectStatus(_status), _ipfsFileCID, _projectAddress, _projectInitiator);
+        allProjects.push(Project(projectsCounter, _name, _description, ProjectStatus(_status), _ipfsFileCID, _projectAddress, _projectInitiator));
         projectsCounter++;
     }
 
@@ -64,12 +86,8 @@ contract ProjectChain is UserChain {
         return allProjects;
     }
 
-    function createUniqueIdentifier(string memory _text, address _addr) public pure returns (bytes32)  {
-        return keccak256(abi.encodePacked(_text, _addr));
-    }
-
-    function createUniqueHexAddress(string memory _text, address _addr) public view returns (address)  {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _addr, block.timestamp)))));
+    function createUniqueHexAddress(string memory _text) public view returns (address) {
+        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, block.timestamp)))));
     }
 
 
