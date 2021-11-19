@@ -58,16 +58,12 @@ export const userRoleDropdown = [
 ];
 
 export const projectStatusDropdown = [
-	{ id: '0', value: 'Created', label: 'Created' },
-	{ id: '1', value: 'Approved', label: 'Approved' },
-	{ id: '2', value: 'Rejected', label: 'Rejected' },
-	{ id: '3', value: 'OnGoing', label: 'OnGoing' },
-	{
-		id: '4',
-		value: 'BeforeFinalizationCheck',
-		label: 'BeforeFinalizationCheck',
-	},
-	{ id: '5', value: 'Completed', label: 'Completed' },
+	{ id: '0', value: 'Created' },
+	{ id: '1', value: 'Approved' },
+	{ id: '2', value: 'Rejected' },
+	{ id: '3', value: 'OnGoing' },
+	{ id: '4', value: 'FinalizationCheck' },
+	{ id: '5', value: 'Completed' },
 ];
 
 export function getProjectStatusById(requestStatus) {
