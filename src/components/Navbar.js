@@ -25,6 +25,7 @@ function Navbar(props) {
             //return;
         }
 
+        return;
         (async () => {
             let data = await props.project.methods.getUserInfo(props.account).call().then((result) => {
                 return result;
