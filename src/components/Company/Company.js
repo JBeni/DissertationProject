@@ -5,7 +5,7 @@ import MaterialTable from '@material-table/core';
 const tableIcons = {
 };
 
-const CompanyBuilder = () => {
+const Company = () => {
 	const [users, setUser] = useState([
         {
             name: 'asd',
@@ -55,7 +55,7 @@ const CompanyBuilder = () => {
 
 	return (
         <MaterialTable
-        title="Users ProjectChain"
+        title="Company ProjectChain"
         tableRef={tableRef}
         icons={tableIcons}
         columns={columns}
@@ -64,4 +64,4 @@ const CompanyBuilder = () => {
 );
 };
 
-export default CompanyBuilder;
+export default Company;
