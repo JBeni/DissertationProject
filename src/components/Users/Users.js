@@ -26,24 +26,6 @@ export default class Users extends Component {
     getUsers = async () => {
         let allUsers = await applicationService.getAllUsers(this.props);
         this.setState({ users: allUsers });
-
-/*
-        this.props.project.methods.create(
-            "Somethign Nerws asdasd"
-        ).send({ from: this.props.account });
-*/
-
-
-
-        // this.props.project.methods.update(
-        //     0, " matcaaaaa "
-        // ).send({ from: this.props.account });
-
-
-
-        // this.props.project.methods.getUserInfo("0xdB96A5a2F356d4257927c4bC245D6a37550e0371")
-        // .call().then((result) => console.log(result));
-
     }
 
     setOpenPopup = (value) => {
