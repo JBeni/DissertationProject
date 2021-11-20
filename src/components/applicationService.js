@@ -1,4 +1,23 @@
-import { ContactSupportOutlined } from '@material-ui/icons';
+
+export const initialRequestFormValues = {
+    index: '',
+	title: '',
+	description: '',
+	projectStatus: '',
+	requestStatus: '',
+    projectAddress: '',
+    userAddress: '',
+};
+
+export const initialRequestFormValidity = {
+    index: false,
+	title: false,
+	description: false,
+	projectStatus: false,
+	requestStatus: false,
+    projectAddress: false,
+    userAddress: false,
+};
 
 export const initialProjectRequestFormValues = {
 	title: '',
