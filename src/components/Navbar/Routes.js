@@ -6,7 +6,7 @@ import Users from '../Users/Users';
 import Dashboard from '../Dashboard';
 import CompanyBuilder from './../CompanyBuilder/CompanyBuilder';
 import Supervisor from './../Supervisor/Supervisor';
-import ProjectInfo from '../Projects/Project';
+import ProjectRequests from '../ProjectRequests/ProjectRequests';
 
 function Routes(props) {
 	return (
@@ -44,7 +44,7 @@ function Routes(props) {
 			<Route
 				path="/projects/:id"
 				render={() => (
-					<ProjectInfo
+					<ProjectRequests
 						account={props.account}
 						project={props.project}
 						web3={props.web3}

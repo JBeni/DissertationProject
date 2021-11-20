@@ -8,11 +8,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from '../sharedResources';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
-import CreateProjectRequest from './CreateProjectRequest';
-import ViewProjectRequestForm from './ViewProjectRequest';
-import { getDefaultRequestStatus } from './../applicationService';
+import AddProjectRequest from './AddProjectRequest';
+import ViewProjectRequest from './ViewProjectRequest';
+import { getDefaultRequestStatus } from '../applicationService';
 
-class Project extends Component {
+class ProjectRequests extends Component {
 	constructor(props) {
 		super(props);
         this.state = {
@@ -125,7 +125,7 @@ class Project extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <CreateProjectRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} addOrEdit={this.addOrEdit} />
+                        <AddProjectRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} addOrEdit={this.addOrEdit} />
                     </DialogContent>
 				</Dialog>
 
@@ -142,7 +142,7 @@ class Project extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <ViewProjectRequestForm recordForEdit={this.state.recordForEdit} />
+                        <ViewProjectRequest recordForEdit={this.state.recordForEdit} />
                     </DialogContent>
 				</Dialog>
 
@@ -170,4 +170,4 @@ class Project extends Component {
 	}
 }
 
-export default withRouter(Project);
+export default withRouter(ProjectRequests);

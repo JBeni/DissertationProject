@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
 import { getProjectStatusByValue, initialProjectFormValues } from '../applicationService';
 
-export default function ViewProjectRequestForm(props) {
+export default function ViewProjectRequest(props) {
 	const { recordForEdit } = props;
 	const [values, setValues] = useState(initialProjectFormValues);
 
