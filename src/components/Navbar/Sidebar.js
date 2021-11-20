@@ -12,17 +12,20 @@ function Sidebar(props) {
 					</p>
 
 					<div className="nav__list">
-						<Link
-							to="/dashboard"
-							className={
-								props.currentLocation[1] === 'dashboard' || props.currentLocation[1] === ''
-									? 'nav__link active'
-									: 'nav__link'
-							}
-						>
-							<i className="bx bxs-dashboard nav__icon"></i>
-							<span className="nav__name">Dashboard</span>
-						</Link>
+                        {
+                            props.userRole &&
+                                <Link
+                                    to="/dashboard"
+                                    className={
+                                        props.currentLocation[1] === 'dashboard' || props.currentLocation[1] === ''
+                                            ? 'nav__link active'
+                                            : 'nav__link'
+                                    }
+                                >
+                                    <i className="bx bxs-dashboard nav__icon"></i>
+                                    <span className="nav__name">Dashboard</span>
+                                </Link>
+                        }
 
 						<Link
 							to="/users"
