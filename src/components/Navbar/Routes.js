@@ -12,16 +12,16 @@ function Routes(props) {
 	return (
 		<Switch>
             {
-                    <Route
-                        path="/" exact
-                        render={() => (
-                            <Dashboard
-                                account={props.account}
-                                project={props.project}
-                                web3={props.web3}
-                            />
-                        )}
-                    />
+                <Route
+                    path="/" exact
+                    render={() => (
+                        <Dashboard
+                            account={props.account}
+                            project={props.project}
+                            web3={props.web3}
+                        />
+                    )}
+                />
             }
             <Route
                 path="/dashboard" exact
