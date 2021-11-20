@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Button } from '@material-ui/core';
-import { useStyles } from '../sharedResources';
+import { useStylesForm } from '../sharedResources';
 import { initialProjectRequestFormValues, initialProjectRequestFormValidity, projectStatusDropdown, getProjectStatusByValue } from '../applicationService';
 
 export default function CreateProjectRequest(props) {
-	const classes = useStyles();
+	const classes = useStylesForm();
 	const {addOrEdit, recordForEdit} = props;
 	const [values, setValues] = useState(initialProjectRequestFormValues);
 	const [errors, setErrors] = useState({});

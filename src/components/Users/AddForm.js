@@ -9,31 +9,11 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { userRoleDropdown, getUserRoleByValue, initialUserFormValidity, initialUserFormValues } from './../applicationService';
-
-const useStyles = makeStyles((theme) => ({
-	primary: {
-		backgroundColor: theme.palette.primary.light,
-		'& .MuiButton-label': {
-			color: theme.palette.primary.main,
-		},
-	},
-	root: {
-		'& .MuiFormControl-root': {
-			width: '80%',
-			margin: theme.spacing(1),
-		},
-		minWidth: 0,
-		margin: theme.spacing(0.5),
-	},
-	label: {
-		textTransform: 'none',
-	},
-}));
+import { useStylesForm } from './../sharedResources';
 
 export default function AddForm(props) {
-	const classes = useStyles();
+	const classes = useStylesForm();
 	const {addOrEdit, recordForEdit} = props;
     const [isEdit, setIsEdit] = useState(false);
 	const [values, setValues] = useState(initialUserFormValues);

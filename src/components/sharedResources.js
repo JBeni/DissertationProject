@@ -41,7 +41,20 @@ export const materialTableIcons = {
 	ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-export const useStyles = makeStyles((theme) => ({
+export const useStylesCustomStepper = makeStyles((theme) => ({
+    root: {
+        width: '100%',
+    },
+    backButton: {
+        marginRight: theme.spacing(1),
+    },
+    instructions: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+}));
+
+export const useStylesForm = makeStyles((theme) => ({
 	primary: {
 		backgroundColor: theme.palette.primary.light,
 		'& .MuiButton-label': {
