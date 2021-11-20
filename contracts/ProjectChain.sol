@@ -142,7 +142,7 @@ contract ProjectChain is UserChain {
         uint _index;
         string _title;
         string _description;
-        RequestStatus _status;
+        RequestStatus _requestStatus;
         ProjectStatus _projectStatus;
         address _projectAddress;
         address _userAddress;
@@ -166,28 +166,28 @@ contract ProjectChain is UserChain {
     function createRequestSupervisor(
         string memory _title,
         string memory _description,
-        uint _status,
+        uint _requestStatus,
         uint _projectStatus,
         address _projectAddress
     ) public {
         requestsSupervisor[requestsSupervisorCounter]._index = requestsSupervisorCounter;
         requestsSupervisor[requestsSupervisorCounter]._title = _title;
         requestsSupervisor[requestsSupervisorCounter]._description = _description;
-        requestsSupervisor[requestsSupervisorCounter]._status = RequestStatus(_status);
+        requestsSupervisor[requestsSupervisorCounter]._requestStatus = RequestStatus(_requestStatus);
         requestsSupervisor[requestsSupervisorCounter]._projectStatus = ProjectStatus(_projectStatus);
         requestsSupervisor[requestsSupervisorCounter]._projectAddress = _projectAddress;
         // change to supervisorAddress
         requestsSupervisor[requestsSupervisorCounter]._userAddress = _projectInitiator;
 
-        emit RequestEvent(requestsSupervisorCounter, _title, _description, RequestStatus(_status), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator);
-        allSupervisorRequests.push(Request(requestsSupervisorCounter, _title, _description,  RequestStatus(_status), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
+        emit RequestEvent(requestsSupervisorCounter, _title, _description, RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator);
+        allSupervisorRequests.push(Request(requestsSupervisorCounter, _title, _description,  RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
         requestsSupervisorCounter++;
     }
 
-    function updateRequestSupervisor(uint _status, uint _index) public {
-        requestsSupervisor[_index]._status = RequestStatus(_status);
+    function updateRequestSupervisor(uint _requestStatus, uint _index) public {
+        requestsSupervisor[_index]._requestStatus = RequestStatus(_requestStatus);
         uint index = requestsSupervisor[_index]._index;
-        allSupervisorRequests[index]._status = RequestStatus(_status);
+        allSupervisorRequests[index]._requestStatus = RequestStatus(_requestStatus);
     }
 
     function getAllRequestsSupervisor() public view returns(Request[] memory) {
@@ -202,28 +202,28 @@ contract ProjectChain is UserChain {
     function createRequestCompany(
         string memory _title,
         string memory _description,
-        uint _status,
+        uint _requestStatus,
         uint _projectStatus,
         address _projectAddress
     ) public {
         requestsCompany[requestsCompanyCounter]._index = requestsCompanyCounter;
         requestsCompany[requestsCompanyCounter]._title = _title;
         requestsCompany[requestsCompanyCounter]._description = _description;
-        requestsCompany[requestsCompanyCounter]._status = RequestStatus(_status);
+        requestsCompany[requestsCompanyCounter]._requestStatus = RequestStatus(_requestStatus);
         requestsCompany[requestsCompanyCounter]._projectStatus = ProjectStatus(_projectStatus);
         requestsCompany[requestsCompanyCounter]._projectAddress = _projectAddress;
         // change to companyAddress
         requestsCompany[requestsCompanyCounter]._userAddress = _projectInitiator;
 
-        emit RequestEvent(requestsCompanyCounter, _title, _description, RequestStatus(_status), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator);
-        allCompanyRequests.push(Request(requestsCompanyCounter, _title, _description,  RequestStatus(_status), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
+        emit RequestEvent(requestsCompanyCounter, _title, _description, RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator);
+        allCompanyRequests.push(Request(requestsCompanyCounter, _title, _description,  RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
         requestsCompanyCounter++;
     }
 
-    function updateRequestCompany(uint _status, uint _index) public {
-        requestsCompany[_index]._status = RequestStatus(_status);
+    function updateRequestCompany(uint _requestStatus, uint _index) public {
+        requestsCompany[_index]._requestStatus = RequestStatus(_requestStatus);
         uint index = requestsCompany[_index]._index;
-        allCompanyRequests[index]._status = RequestStatus(_status);
+        allCompanyRequests[index]._requestStatus = RequestStatus(_requestStatus);
     }
 
     function getAllRequestsCompany() public view returns(Request[] memory) {
