@@ -4,27 +4,56 @@ import * as applicationService from '../applicationService';
 import { DialogContent, Typography, DialogTitle, Dialog, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
-import ViewProjectForm from './ViewProjectForm';
-import AddProjectForm from './AddProjectForm';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from '../sharedResources';
 import { Link } from 'react-router-dom';
+import { withRouter } from "react-router";
+import CreateProjectRequest from './CreateProjectRequest';
+import ViewProjectRequestForm from './ViewProjectRequest';
+import { getDefaultRequestStatus } from './../applicationService';
 
-export default class Project extends Component {
+class Project extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
+        this.state = {
 			createRequestForm: false,
             viewRequestForm: false,
 			recordForEdit: null,
-			projects: [],
+            currentRequestStatus: true,
+
+            project: {},
+            projectRequests: [],
 		};
-        this.getProjectRequests();
     }
 
-    getProjectRequests = async () => {
-        let allProjects = await applicationService.getAllProjects(this.props);
-        this.setState({ projects: allProjects });
+    componentDidMount() {
+        this.getProjectInfo();
+        this.getAllProjectRequests();
+    }
+
+    // shouldComponentUpdate() {
+    // }
+
+    getProjectInfo = async () => {
+        let data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
+        this.setState({ project: data });
+    }
+
+    getAllProjectRequests = async () => {
+        let data = await applicationService.getAllProjectRequests(this.props, this.props.match.params.id);
+        this.setState({ projectRequests: data });
+
+        if (this.state.projectRequests.length > 0) {
+            let index = this.state.projectRequests.length - 1;
+            let requestStatus = getDefaultRequestStatus();
+            if (this.state.projectRequests[index].requestStatus === requestStatus.value) {
+                this.setState({ currentRequestStatus: false });
+            }    
+        }
+    }
+
+    handleNewDataFromPopup(value) {
+        this.setState({ createRequestForm: value });
     }
 
     setCreateRequestForm = (value) => {
@@ -39,9 +68,22 @@ export default class Project extends Component {
 		this.setState({ recordForEdit: data });
 	}
 
-    createProject = async (_name, _description, _status, _ipfsFileCID) => {
-		await this.props.project.methods
-			.createProject(_name, _description, Number(_status), _ipfsFileCID)
+    addOrEdit = async (data, resetForm) => {
+        this.createProjectRequest(
+            data['title'],
+            data['description'],
+            data['status'],
+            data['requestStatus'],
+            this.state.project.projectAddress
+        );
+        resetForm();
+        this.setRecordForEdit(null);
+        this.getAllProjectRequests();
+    }
+
+    createProjectRequest = async (_title, _description, _status, _requestStatus, _projectAddress) => {
+        await this.props.project.methods
+			.createProjectRequest(_title, _description, Number(_status), Number(_requestStatus), _projectAddress)
 			.send({ from: this.props.account });
 	}
 
@@ -59,19 +101,22 @@ export default class Project extends Component {
                 <Link to={`/projects`}>Go back</Link>
                 <br/><br/>
 
-				<Button
-					variant="outlined"
-					startIcon={<AddIcon />}
-					onClick={() => {
-						this.setCreateRequestForm(true);
-						this.setRecordForEdit(null);
-					}}>Add New Request</Button>
+                {
+                    this.state.currentRequestStatus === true ?
+                        <Button
+                        variant="outlined"
+                        startIcon={<AddIcon />}
+                        onClick={() => {
+                            this.setCreateRequestForm(true);
+                        }}>Add Project Request</Button>
+                        : <div>The Current Request must be approved or rejected to add another request</div>
+                }
 
 				<Dialog open={this.state.createRequestForm} maxWidth="md">
 					<DialogTitle>
 						<div style={{ display: 'flex' }}>
 							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-								Add Request Form
+								Add Project Request Form
 							</Typography>
 							<Button color="secondary" onClick={() => {
 									this.setCreateRequestForm(false);
@@ -80,7 +125,7 @@ export default class Project extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <AddProjectForm />
+                        <CreateProjectRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} addOrEdit={this.addOrEdit} />
                     </DialogContent>
 				</Dialog>
 
@@ -88,16 +133,16 @@ export default class Project extends Component {
 					<DialogTitle>
 						<div style={{ display: 'flex' }}>
 							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-								View Request Form
+								View Project Request Form
 							</Typography>
 							<Button color="secondary" onClick={() => {
-									this.setOpenViewForm(false);
+									this.setViewRequestForm(false);
 								}}><CloseIcon />
 							</Button>
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <ViewProjectForm recordForEdit={this.state.recordForEdit} />
+                        <ViewProjectRequestForm recordForEdit={this.state.recordForEdit} />
                     </DialogContent>
 				</Dialog>
 
@@ -107,7 +152,7 @@ export default class Project extends Component {
 					tableRef={tableRef}
 					icons={materialTableIcons}
 					columns={columns}
-					data={this.state.projects}
+					data={this.state.projectRequests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
 						{
@@ -124,3 +169,5 @@ export default class Project extends Component {
 		);
 	}
 }
+
+export default withRouter(Project);

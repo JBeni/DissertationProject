@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-undef
-var Project = artifacts.require('Project');
+var ProjectChain = artifacts.require('ProjectChain');
 
 module.exports = function (deployer) {
-	deployer.deploy(Project);
+	deployer.deploy(ProjectChain);
 };

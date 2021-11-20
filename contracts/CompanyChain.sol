@@ -22,6 +22,7 @@ contract CompanyChain is ProjectChain {
 
     // Add some contrainst / verification TOOO DOOO -> LATER
 
+/*
     function setProjectRequestToOnGoingStatus(Project memory _project) public onlyCompany {
         _project._status = ProjectStatus.OnGoing;
         emit ApproveProjectRequestByCompany(ProjectStatus.OnGoing, _project, _companyAddress);
@@ -36,4 +37,6 @@ contract CompanyChain is ProjectChain {
         _project._status = ProjectStatus.FinalizationCheck;
         emit BeforeFinalizationProjectRequestByCompany(ProjectStatus.FinalizationCheck, _project, _companyAddress);
     }
+*/
+
 }

@@ -16,6 +16,10 @@ contract ProjectChain is UserChain {
     uint public projectsCounter = 0;
     Project[] public allProjects;
 
+    mapping(address => ProjectRequest) public projectRequests;
+    uint public projectRequestsCounter = 0;
+    ProjectRequest[] public allProjectRequests;
+
     event ProjectEvent(
         uint _index,
         string _name,
@@ -23,7 +27,7 @@ contract ProjectChain is UserChain {
         ProjectStatus _status,
         string _ipfsFileCID,
         address _projectAddress,
-        address _projectInitiator
+        address _userAddress
     );
     struct Project {
         uint _index;
@@ -32,36 +36,32 @@ contract ProjectChain is UserChain {
         ProjectStatus _status;
         string _ipfsFileCID;
         address _projectAddress;
-        address _projectInitiator;
+        address _userAddress;
     }
 
     event ProjectStatusEvent(
         uint _index,
-        string _name,
+        string _title,
         string _description,
         string _comments,
         ProjectStatus _status,
-        ProjectRequestStatus _requestStatus,
-        string _ipfsFileCID,
+        RequestStatus _requestStatus,
         address _projectAddress,
-        address _projectInitiator,
-        string signature
+        address _userAddress
     );
     struct ProjectRequest {
         uint _index;
-        string _name;
+        string _title;
         string _description;
         string _comments;
         ProjectStatus _status;
-        ProjectRequestStatus _requestStatus;
-        string _ipfsFileCID;
+        RequestStatus _requestStatus;
         address _projectAddress;
-        address _projectInitiator;
-        string signature;
+        address _userAddress;
     }
 
-    enum ProjectRequestStatus { UnApproved, Rejected, Approved }
-    enum ProjectStatus { Created, Approved, Rejected, OnGoing, FinalizationCheck, Completed }
+    enum RequestStatus { UnApproved, Rejected, Approved }
+    enum ProjectStatus { Created, Approved, StartProject, FinalizationCheck, Completed }
 
     modifier onlyProjectInitiator {
         require(users[_projectInitiator]._role == Roles.ProjectInitiator, "You don't have the rights for this resources.");
@@ -69,8 +69,12 @@ contract ProjectChain is UserChain {
         _;
     }
 
-    function createProject(string memory _name, string memory _description, uint _status, string memory _ipfsFileCID) public  {
-        address _projectAddress = createUniqueHexAddress(HASH_STRING_VALUE);
+    function createUniqueHexAddress(string memory _text, uint _index) public view returns (address) {
+        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
+    }
+
+    function createProject(string memory _name, string memory _description, uint _status, string memory _ipfsFileCID) public {
+        address _projectAddress = createUniqueHexAddress(HASH_STRING_VALUE, projectsCounter);
 
         projects[_projectAddress]._index = projectsCounter;
         projects[_projectAddress]._name = _name;
@@ -78,7 +82,7 @@ contract ProjectChain is UserChain {
         projects[_projectAddress]._status = ProjectStatus(_status);
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._projectAddress = _projectAddress;
-        projects[_projectAddress]._projectInitiator = _projectInitiator;
+        projects[_projectAddress]._userAddress = _projectInitiator;
 
         emit ProjectEvent(projectsCounter, _name, _description, ProjectStatus(_status), _ipfsFileCID, _projectAddress, _projectInitiator);
         allProjects.push(Project(projectsCounter, _name, _description, ProjectStatus(_status), _ipfsFileCID, _projectAddress, _projectInitiator));
@@ -93,41 +97,62 @@ contract ProjectChain is UserChain {
         return allProjects;
     }
 
-    function createUniqueHexAddress(string memory _text) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, block.timestamp)))));
+    function createProjectRequest(
+        string memory _title, string memory _description, ProjectStatus _status,
+        RequestStatus _requestStatus, address _projectAddress
+    ) public {
+        projectRequests[_projectAddress]._index = projectRequestsCounter;
+        projectRequests[_projectAddress]._title = _title;
+        projectRequests[_projectAddress]._description = _description;
+        projectRequests[_projectAddress]._comments = '';
+        projectRequests[_projectAddress]._status = ProjectStatus(_status);
+        projectRequests[_projectAddress]._requestStatus = RequestStatus(_requestStatus);
+        projectRequests[_projectAddress]._projectAddress = _projectAddress;
+        projectRequests[_projectAddress]._userAddress = _projectInitiator;
+
+        emit ProjectStatusEvent(projectRequestsCounter, _title, _description, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator);
+        allProjectRequests.push(ProjectRequest(projectRequestsCounter, _title, _description, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator));
+        projectRequestsCounter++;
+    }
+
+    function getAllProjectRequests() external view returns(ProjectRequest[] memory) {
+        return allProjectRequests;
     }
 
 
-    // function changeProjectStatus(uint _status, address _address) public {
-    //     projectsStatus[statusChangedIndex]._index = statusChangedIndex;
-    //     projectsStatus[statusChangedIndex]._status = ProjectStatus(_status);
-    //     projectsStatus[statusChangedIndex]._address = _address;
-    //     emit ProjectStatusChanged(statusChangedIndex, ProjectStatus(_status), _address);
-    //     statusChangedIndex++;
-    // }
+    // Supervisor Contract Data
+    // They will be filter after the status of the requests
+    mapping(address => Request) public requestsForSupervisor;
+    uint public requestsSupervisorCounter = 0;
+    Request[] public allSupervisorRequests;
 
 
 
 
 
 
+    // Company Contract Data
+    mapping(address => Request) public requestsForCompany;
+    uint public requestsCompanyCounter = 0;
+    Request[] public allCompanyRequests;
 
-    enum RequestStatus { Unverified, Verified }
     struct Request {
         uint index;
         string description;
         RequestStatus status;
-        Project project;
-        address subjectAddress;
+        ProjectStatus projectStatus;
+        address projectAddress;
+        address _userAddress;
     }
+
+
+
+
 
     mapping(uint => Request) public companyRequests;
     mapping(uint => Request) public supervisorRequests;
 
-    //uint public projectsCount = 0;
-    //uint[] public projectIds;
-
-
+/*
     uint indexCompanyRequest;
     uint indexSupervisorRequest;
 
@@ -176,4 +201,6 @@ contract ProjectChain is UserChain {
         emit UpdateCompanyRequestStatus(indexCompanyRequest, RequestStatus.Unverified, _project, _project._status, _subjectAddress);
         indexCompanyRequest++;
     }
+*/
+
 }

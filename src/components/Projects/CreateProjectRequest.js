@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Button } from '@material-ui/core';
 import { useStylesForm } from '../sharedResources';
-import { initialProjectRequestFormValues, initialProjectRequestFormValidity, projectStatusDropdown, getProjectStatusByValue } from '../applicationService';
+import { initialProjectRequestFormValues, initialProjectRequestFormValidity, projectStatusDropdown, getProjectStatusByValue, requestStatusDropdown } from '../applicationService';
+import { getDefaultRequestStatus } from './../applicationService';
 
 export default function CreateProjectRequest(props) {
 	const classes = useStylesForm();
-	const {addOrEdit, recordForEdit} = props;
+	const {addOrEdit, projectData} = props;
 	const [values, setValues] = useState(initialProjectRequestFormValues);
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialProjectRequestFormValidity);
@@ -44,8 +45,8 @@ export default function CreateProjectRequest(props) {
             tempValidity.status = fieldValues.status?.length <= 0;
 		}
 		if ('requestStatus' in fieldValues) {
-			temp.requestStatus = fieldValues.requestStatus.name?.length > 0 ? '' : 'This field is required.';
-            tempValidity.requestStatus = fieldValues.requestStatus.name?.length <= 0;
+			temp.requestStatus = fieldValues.requestStatus?.length > 0 ? '' : 'This field is required.';
+            tempValidity.requestStatus = fieldValues.requestStatus?.length <= 0;
 		}
         setErrors({ ...temp });
         setValidity({ ...tempValidity });
@@ -58,19 +59,21 @@ export default function CreateProjectRequest(props) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
         if (validate()) {
-			addOrEdit(values, resetForm);
+            addOrEdit(values, resetForm);
             props.handleNewDataFromPopup(false);
 		}
 	};
 
 	useEffect(() => {
-        if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit['status']);
-            let nextStatus = status.id < 5 ? Number(status.id) + 1 : Number(status.id);
+        console.log(projectData);
+        if (projectData != null) {
+            let projectStatus = getProjectStatusByValue(projectData['status']);
+            let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
+            let requestStatus = getDefaultRequestStatus();
             setValues({
                 ...values,
                 status: nextStatus.toString(),
-                requestStatus: '',
+                requestStatus: requestStatus.id,
             });
         }
 	}, []);
@@ -116,8 +119,9 @@ export default function CreateProjectRequest(props) {
 								value={values.requestStatus}
 								onChange={handleInputChange}
                                 error={validity.requestStatus}
+                                disabled={true}
 							>
-								{projectStatusDropdown.map((item) => (
+								{requestStatusDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
 										{item.value}
 									</MenuItem>

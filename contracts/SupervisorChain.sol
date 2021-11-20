@@ -22,6 +22,7 @@ contract Supervisor is ProjectChain {
 
     // Add some contrainst / verification TOOO DOOO -> LATER
 
+/*
     function setProjectRequestToApprovedStatus(Project memory _project) public onlySupervisor {
         _project._status = ProjectStatus.Approved;
         emit ApproveProjectRequestBySupervisor(ProjectStatus.Approved, _project, _supervisorAddress);
@@ -36,4 +37,5 @@ contract Supervisor is ProjectChain {
         _project._status = ProjectStatus.Completed;
         emit CompleteProjectRequestBySupervisor(ProjectStatus.Completed, _project, _supervisorAddress);
     }
+*/
 }

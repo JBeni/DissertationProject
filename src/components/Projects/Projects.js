@@ -10,8 +10,6 @@ import ProjectTable from './ProjectTable';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
-import AllPages from './AllPages';
-import SinglePage from './SinglePage';
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -24,9 +22,17 @@ class Projects extends Component {
             openViewForm: false,
             showTable: false,
 			recordForEdit: null,
+            selecteProjectAddress: '',
 			projects: [],
         };
+    }
+
+    componentDidMount() {
         this.getProjects();
+    }
+
+    componentDidUpdate() {
+        //this.getProjects();
     }
 
     test = async () => {
@@ -52,7 +58,6 @@ class Projects extends Component {
     getProjects = async () => {
         let allProjects = await applicationService.getAllProjects(this.props);
         this.setState({ projects: allProjects });
-        console.log(this.state.projects);
     }
 
     setOpenAddForm = (value) => {
@@ -70,6 +75,10 @@ class Projects extends Component {
 	setRecordForEdit = (data) => {
 		this.setState({ recordForEdit: data });
 	}
+
+    setSelectedProjectAddress = (value) => {
+        this.setState({ selecteProjectAddress: value });
+    }
 
     uploadFileToPinata = (fileData) => {
         if (fileData.file.name?.length > 0) {
@@ -104,16 +113,10 @@ class Projects extends Component {
         }
     }
 
-    getFileCIDAfterUpload = async (userData) => {
-        let ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(userData));
-        return ipfsFileCID;
-    }
-
-    addOrEdit = (userData, resetForm) => {
-        console.log(userData);
+    addOrEdit = async (userData, resetForm) => {
         if (userData.isEditForm === false) {
    			// alert('Form is validated! Submitting the form...');
-            let ipfsFileCID = this.getFileCIDAfterUpload(userData);
+            let ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(userData));
             this.createProject(
 				userData['name'],
                 userData['description'],
@@ -219,7 +222,8 @@ class Projects extends Component {
 							icon: AddIcon,
 							tooltip: 'Add Project Requests',
 							onClick: (event, rowData) => {
-                                this.props.history.push(`/projects/${Number(rowData.index)}`);
+                                this.setSelectedProjectAddress(rowData.projectAddress);
+                                this.props.history.push(`/projects/${rowData.projectAddress}`);
 							},
 						},
                         {

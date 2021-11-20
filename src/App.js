@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Navbar from './components/Navbar';
 import Web3 from 'web3';
-import Project from './abis/Project.json';
+import ProjectChain from './abis/ProjectChain.json';
 import Loader from './components/Views/Loader';
 
 class App extends Component {
@@ -47,15 +47,11 @@ class App extends Component {
 
 	async loadBlockChain() {
 		const web3 = window.web3;
-
-        //const accounts = await web3.eth.getAccounts();
-        //this.setState({ account: accounts[0] });
-		
         const networkId = await web3.eth.net.getId();
-		const networkData = Project.networks[networkId];
+		const networkData = ProjectChain.networks[networkId];
 		if (networkData) {
 			const project = new web3.eth.Contract(
-				Project.abi,
+				ProjectChain.abi,
 				networkData.address
 			);
 			this.setState({
@@ -67,12 +63,6 @@ class App extends Component {
 			window.alert('Project contract not deployed to detected network.');
 		}
 	}
-
-    handleInputChange = (e) => {
-		this.setState({
-			[e.target.id]: e.target.value,
-		});
-	};
 
 	render() {
 		if (this.state.loading === false) {
