@@ -31,7 +31,7 @@ const Company = () => {
 
 	useEffect(() => {
 		loadUsers();
-	}, []);
+	});
 
 	const loadUsers = async () => {
 		const result = await axios.get('http://localhost:3003/users');

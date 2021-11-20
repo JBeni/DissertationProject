@@ -112,7 +112,7 @@ export default function AddProjectForm(props) {
                 'status': '0',
             });
         }
-	}, [recordForEdit]);
+	});
 
 	return (
 		<>

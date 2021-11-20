@@ -20,7 +20,7 @@ const EditCompany = () => {
 
 	useEffect(() => {
 		loadUser();
-	}, []);
+	});
 
 	const onSubmit = async (e) => {
 		e.preventDefault();

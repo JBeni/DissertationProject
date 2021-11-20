@@ -20,7 +20,7 @@ const EditSupervisor = () => {
 
 	useEffect(() => {
 		loadUser();
-	}, []);
+	});
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
