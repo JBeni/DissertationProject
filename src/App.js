@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Navbar from './components/Navbar';
+import Navbar from './Components/Navbar';
 import Web3 from 'web3';
 import ProjectChain from './abis/ProjectChain.json';
-import Loader from './components/Views/Loader';
+import Loader from './Components/Views/Loader';
 
 class App extends Component {
 	constructor() {
