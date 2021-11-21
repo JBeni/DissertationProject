@@ -230,8 +230,8 @@ export async function getAllProjectRequests(props, projectAddress) {
 
 /********  Methods for Supervisor and Company  ***********/
 
-export async function getAllRequestsSupervisor(props) {
-    let allRequests = await props.project.methods.getAllRequestsSupervisor().call().then((result) => {
+export async function getAllRequests(props) {
+    let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
     }).catch(function (error) {
         console.log(error);

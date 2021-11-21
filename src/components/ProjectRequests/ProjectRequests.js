@@ -104,6 +104,7 @@ class ProjectRequests extends Component {
                         variant="outlined"
                         startIcon={<AddIcon />}
                         onClick={() => {
+                            this.setRecordForEdit(this.state.project);
                             this.setCreateRequestForm(true);
                         }}>Add Project Request</Button>
                         : <div>The Current Request must be approved or rejected to add another request</div>
@@ -122,7 +123,7 @@ class ProjectRequests extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <AddProjectRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} addOrEdit={this.addOrEdit} />
+                        <AddProjectRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
                     </DialogContent>
 				</Dialog>
 

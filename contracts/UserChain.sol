@@ -84,7 +84,7 @@ contract UserChain {
         usersCounter++;
     }
 
-    function changeUserRole(uint _role, address _walletAddress) external {
+    function changeUserRole(uint _role, address _walletAddress) public {
         users[_walletAddress]._role = Roles(_role);
         uint index = users[_walletAddress]._index;
         allUsers[index]._role = Roles(_role);
@@ -97,11 +97,11 @@ contract UserChain {
         */
     }
 
-    function getAllUsers() external view returns (User[] memory) {
+    function getAllUsers() public view returns (User[] memory) {
         return allUsers;
     }
 
-    function getUserInfo(address _walletAddress) external view returns (User memory) {
+    function getUserInfo(address _walletAddress) public view returns (User memory) {
         return users[_walletAddress];
     }
 }

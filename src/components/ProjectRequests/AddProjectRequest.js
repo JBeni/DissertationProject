@@ -6,7 +6,7 @@ import { getDefaultRequestStatus } from '../applicationService';
 
 export default function AddProjectRequest(props) {
 	const classes = useStylesForm();
-	const {addOrEdit, projectData} = props;
+	const {addOrEdit, recordForEdit} = props;
 	const [values, setValues] = useState(initialProjectRequestFormValues);
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialProjectRequestFormValidity);
@@ -65,9 +65,9 @@ export default function AddProjectRequest(props) {
 	};
 
 	useEffect(() => {
-        console.log(projectData);
-        if (projectData != null) {
-            let projectStatus = getProjectStatusByValue(projectData['status']);
+        console.log(recordForEdit);
+        if (recordForEdit != null) {
+            let projectStatus = getProjectStatusByValue(recordForEdit['status']);
             let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
             let requestStatus = getDefaultRequestStatus();
             setValues({

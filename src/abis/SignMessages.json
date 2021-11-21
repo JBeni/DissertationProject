@@ -7,23 +7,23 @@
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "68:48:5:-:0;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "68:48:5:-:0;;;;;",
+  "sourceMap": "68:48:6:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "68:48:6:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0 <0.9.0;\r\n\r\ncontract SignMessages {\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n",
   "sourcePath": "/mnt/c/users/beniamin/source/repos/dissertationproject/contracts/others/SignMessages.sol",
   "ast": {
     "absolutePath": "project:/contracts/others/SignMessages.sol",
     "exportedSymbols": {
       "SignMessages": [
-        1172
+        1119
       ]
     },
-    "id": 1173,
+    "id": 1120,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1171,
+        "id": 1118,
         "literals": [
           "solidity",
           ">=",
@@ -34,7 +34,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:31:5"
+        "src": "33:31:6"
       },
       {
         "abstract": false,
@@ -43,34 +43,34 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1172,
+        "id": 1119,
         "linearizedBaseContracts": [
-          1172
+          1119
         ],
         "name": "SignMessages",
-        "nameLocation": "77:12:5",
+        "nameLocation": "77:12:6",
         "nodeType": "ContractDefinition",
         "nodes": [],
-        "scope": 1173,
-        "src": "68:48:5",
+        "scope": 1120,
+        "src": "68:48:6",
         "usedErrors": []
       }
     ],
-    "src": "33:85:5"
+    "src": "33:85:6"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/others/SignMessages.sol",
     "exportedSymbols": {
       "SignMessages": [
-        1172
+        1119
       ]
     },
-    "id": 1173,
+    "id": 1120,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1171,
+        "id": 1118,
         "literals": [
           "solidity",
           ">=",
@@ -81,7 +81,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:31:5"
+        "src": "33:31:6"
       },
       {
         "abstract": false,
@@ -90,20 +90,20 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1172,
+        "id": 1119,
         "linearizedBaseContracts": [
-          1172
+          1119
         ],
         "name": "SignMessages",
-        "nameLocation": "77:12:5",
+        "nameLocation": "77:12:6",
         "nodeType": "ContractDefinition",
         "nodes": [],
-        "scope": 1173,
-        "src": "68:48:5",
+        "scope": 1120,
+        "src": "68:48:6",
         "usedErrors": []
       }
     ],
-    "src": "33:85:5"
+    "src": "33:85:6"
   },
   "compiler": {
     "name": "solc",
@@ -111,7 +111,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-21T06:40:16.819Z",
+  "updatedAt": "2021-11-21T07:20:59.526Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},

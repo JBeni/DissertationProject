@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getAllRequestsSupervisor } from '../applicationService';
+import { getAllRequests } from '../applicationService';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -23,7 +23,7 @@ class Supervisor extends Component {
     }
 
     componentDidMount() {
-        let data = getAllRequestsSupervisor(this.props);
+        let data = getAllRequests(this.props);
     }
 
     handleNewDataFromPopup(value) {

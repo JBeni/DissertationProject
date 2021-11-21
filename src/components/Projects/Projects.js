@@ -28,27 +28,32 @@ class Projects extends Component {
     }
 
     componentDidMount() {
-        this.getProjects();
+        //this.getProjects();
+
+        this.test();
     }
 
     test = async () => {
-        let events = await this.props.project.getPastEvents('ProjectStatusChanged', {
+        let events = await this.props.project.getPastEvents('ProjectEvent', {
             filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },
             fromBlock: 0,
             toBlock: 'latest'
         });
+        console.log(events);
 
-        let data = [];
-        events.map((result) => {
-            let status = applicationService.getProjectStatusById(result.returnValues.status);
-            const project = {
-                index: result.returnValues.index,
-                projectAddress: result.returnValues.projectAddress,
-                status: status.value,
-            };
-            data.push(project);
-            return false;
-        });
+        console.log(events[0].transactionHash);
+
+        // let data = [];
+        // events.map((result) => {
+        //     let status = applicationService.getProjectStatusById(result.returnValues.status);
+        //     const project = {
+        //         index: result.returnValues.index,
+        //         projectAddress: result.returnValues.projectAddress,
+        //         status: status.value,
+        //     };
+        //     data.push(project);
+        //     return false;
+        // });
     }
 
     getProjects = async () => {
@@ -109,15 +114,14 @@ class Projects extends Component {
         }
     }
 
-    addOrEdit = async (userData, resetForm) => {
+    addOrEdit = (userData, resetForm) => {
         if (userData.isEditForm === false) {
    			// alert('Form is validated! Submitting the form...');
-            let ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(userData));
             this.createProject(
 				userData['name'],
                 userData['description'],
 				userData['status'],
-                ipfsFileCID
+                userData
 			);
         } else {
             ;//this.changeUserRole(userData['role'], userData['walletAddress']);
@@ -127,8 +131,9 @@ class Projects extends Component {
         this.getProjects();
     }
 
-    createProject = async (_name, _description, _status, _ipfsFileCID) => {
-		await this.props.project.methods
+    createProject = async (_name, _description, _status, _fileData) => {
+        let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+        await this.props.project.methods
 			.createProject(_name, _description, Number(_status), _ipfsFileCID)
 			.send({ from: this.props.account });
 	};
