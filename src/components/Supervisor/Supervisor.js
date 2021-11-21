@@ -15,7 +15,7 @@ class Supervisor extends Component {
         super(props);
         this.state = {
             editRequest: false,
-            showTable: false,
+            showPdf: false,
             viewRequest: false,
 			recordForEdit: null,
             requests: [],
@@ -35,8 +35,8 @@ class Supervisor extends Component {
         this.setState({ editRequest: value });
     }
 
-    setShowTable = (value) => {
-        this.setState({ showTable: value });
+    setShowPdf = (value) => {
+        this.setState({ showPdf: value });
     }
 
     setEditRequest = (value) => {
@@ -125,14 +125,6 @@ class Supervisor extends Component {
 					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-                        {
-                            icon: Edit,
-                            tooltip: 'Edit Request',
-                            onClick: (event, rowData) => {
-                                this.setEditRequest(true);
-                                this.setRecordForEdit(rowData);
-                            }
-						},
 						{
 							icon: Visibility,
 							tooltip: 'View Request',
@@ -145,7 +137,7 @@ class Supervisor extends Component {
 				/>
 
                 <br/><br/>
-                <AllPagesPdf showTable={this.state.showTable} />
+                <AllPagesPdf showPdf={this.state.showPdf} />
             </>
         );
     }
