@@ -26,15 +26,12 @@ class App extends Component {
 		if (window.ethereum) {
             const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-            // window.ethereum.on('accountsChanged', function (accounts) {
-            //     console.log(accounts);
-            // });
-
-            // console.log('accounts: ' + accounts);
-            // console.log('changed_account: ' + changed_account);
+            window.ethereum.on('accountsChanged', function (accounts) {
+                window.location.reload();
+            });
 
             this.setState({ account: accounts[0] });
-			window.web3 = new Web3(window.ethereum);
+            window.web3 = new Web3(window.ethereum);
 			//await window.ethereum.enable();
 		} else if (window.web3) {
 			window.web3 = new Web3(window.web3.currentProvider);
