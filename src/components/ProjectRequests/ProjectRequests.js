@@ -31,9 +31,6 @@ class ProjectRequests extends Component {
         this.getAllProjectRequests();
     }
 
-    // shouldComponentUpdate() {
-    // }
-
     getProjectInfo = async () => {
         let data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
         this.setState({ project: data });

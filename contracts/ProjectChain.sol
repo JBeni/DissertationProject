@@ -114,7 +114,7 @@ contract ProjectChain is UserChain {
         projectRequests[_projectAddress]._projectAddress = _projectAddress;
         projectRequests[_projectAddress]._userAddress = _projectInitiator;
 
-        filterProjectRequests(_title, _description, _status, _requestStatus, _projectAddress);
+        //filterProjectRequests(_title, _description, _status, _requestStatus, _projectAddress);
 
         emit ProjectStatusEvent(projectRequestsCounter, _title, _description, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator);
         allProjectRequests.push(ProjectRequest(projectRequestsCounter, _title, _description, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator));
@@ -129,12 +129,13 @@ contract ProjectChain is UserChain {
         string memory _title, string memory _description, uint _projectStatus,
         uint _requestStatus, address _projectAddress
     ) internal {
-        if (_projectStatus == 1 || _projectStatus == 3 || _projectStatus == 4) {
-            createRequestSupervisor(_title, _description, _projectStatus, _requestStatus, _projectAddress);
-        } else if (_projectStatus == 2) {
-            createRequestCompany(_title, _description, _projectStatus, _requestStatus, _projectAddress);
-        }
+        // if (_projectStatus == 1 || _projectStatus == 3 || _projectStatus == 4) {
+        //     createRequestSupervisor(_title, _description, _projectStatus, _requestStatus, _projectAddress);
+        // } else if (_projectStatus == 2) {
+        //     createRequestCompany(_title, _description, _projectStatus, _requestStatus, _projectAddress);
+        // }
     }
+
 
     /**************** ------------------------- *********************/
 
@@ -190,10 +191,11 @@ contract ProjectChain is UserChain {
         allSupervisorRequests[index]._requestStatus = RequestStatus(_requestStatus);
     }
 
-    function getAllRequestsSupervisor() public view returns(Request[] memory) {
+    function getAllRequestsSupervisor() external view returns(Request[] memory) {
         return allSupervisorRequests;
     }
 
+/*
     // Company Contract Data
     mapping(uint => Request) public requestsCompany;
     uint public requestsCompanyCounter = 0;
@@ -226,62 +228,10 @@ contract ProjectChain is UserChain {
         allCompanyRequests[index]._requestStatus = RequestStatus(_requestStatus);
     }
 
-    function getAllRequestsCompany() public view returns(Request[] memory) {
+    function getAllRequestsCompany() external view returns(Request[] memory) {
         return allCompanyRequests;
     }
 
-
-
-
-/*
-    uint indexCompanyRequest;
-    uint indexSupervisorRequest;
-
-    event UpdateSupervisorRequestStatus(uint _indexRequest, RequestStatus _status, Project _project, ProjectStatus _projectStatus, address _subjectAddress);
-    event UpdateCompanyRequestStatus(uint _indexRequest, RequestStatus _status, Project _project, ProjectStatus _projectStatus, address _subjectAddress);
-
-
-    function requestProjectApprovalFromSupervisor(string memory _description, Project memory _project, address _subjectAddress) public {
-        require(_project._status == ProjectStatus.Created, "The project is not created, the operation cannot be done.");
-
-        Request storage request = supervisorRequests[indexSupervisorRequest];
-        request.description = _description;
-        request.status = RequestStatus.Unverified;
-        request.project = _project;
-        request.subjectAddress = _subjectAddress;
-
-        emit UpdateSupervisorRequestStatus(indexSupervisorRequest, RequestStatus.Unverified, _project, _project._status, _subjectAddress);
-        indexSupervisorRequest++;
-    }
-
-    function requestProjectCompleteFromSupervisor(string memory _description, Project memory _project, address _subjectAddress) public {
-        require(
-            _project._status == ProjectStatus.FinalizationCheck,
-            "The project is not in the 'BeforeFinalizationCheck' status, the operation cannot be done."
-        );
-
-        Request storage request = supervisorRequests[indexSupervisorRequest];
-        request.description = _description;
-        request.status = RequestStatus.Unverified;
-        request.project = _project;
-        request.subjectAddress = _subjectAddress;
-
-        emit UpdateSupervisorRequestStatus(indexSupervisorRequest, RequestStatus.Unverified, _project, _project._status, _subjectAddress);
-        indexSupervisorRequest++;
-    }
-
-    function requestStartProjectToCompanyBuilder(string memory _description, Project memory _project, address _subjectAddress) public {
-        require(_project._status == ProjectStatus.Approved, "The project is not approved, the operation cannot be done.");
-
-        Request storage request = companyRequests[indexCompanyRequest];
-        request.description = _description;
-        request.status = RequestStatus.Unverified;
-        request.project = _project;
-        request.subjectAddress = _subjectAddress;
-
-        emit UpdateCompanyRequestStatus(indexCompanyRequest, RequestStatus.Unverified, _project, _project._status, _subjectAddress);
-        indexCompanyRequest++;
-    }
 */
 
 }

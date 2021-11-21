@@ -226,3 +226,41 @@ export async function getAllProjectRequests(props, projectAddress) {
     });
     return data;
 }
+
+
+/********  Methods for Supervisor and Company  ***********/
+
+export async function getAllRequestsSupervisor(props) {
+    let allRequests = await props.project.methods.getAllRequestsSupervisor().call().then((result) => {
+        return result;
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    console.log(allRequests);
+
+    let data = [];
+    // allRequests.map((result) => {
+    //     if (projectAddress === result['_projectAddress']) {
+    //         let status = getProjectStatusById(result['_status']);
+    //         let requestStatus = getRequestStatusById(result['_requestStatus']);
+    //         const project = {
+    //             index: result['_index'],
+    //             title: result['_title'],
+    //             description: result['_description'],
+    //             comments: result['_comments'],
+    //             status: status.value,
+    //             requestStatus: requestStatus.value,
+    //             projectAddress: result['_projectAddress'],
+    //             userAddress: result['_userAddress'],
+    //         };
+    //         data.push(project);
+    //     }
+    //     return false;
+    // });
+    return data;
+}
+
+
+
+

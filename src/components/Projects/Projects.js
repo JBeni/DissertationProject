@@ -31,10 +31,6 @@ class Projects extends Component {
         this.getProjects();
     }
 
-    componentDidUpdate() {
-        //this.getProjects();
-    }
-
     test = async () => {
         let events = await this.props.project.getPastEvents('ProjectStatusChanged', {
             filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },

@@ -11,7 +11,8 @@ import {
 	Button,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { initialProjectFormValidity, initialProjectFormValues, projectStatusDropdown, getProjectStatusByValue } from '../applicationService';
+import { initialProjectFormValidity, initialProjectFormValues, projectStatusDropdown,
+    getProjectStatusByValue } from '../applicationService';
 import { useStylesForm } from './../sharedResources';
 
 export default function AddProjectForm(props) {
@@ -112,7 +113,7 @@ export default function AddProjectForm(props) {
                 'status': '0',
             });
         }
-	});
+	}, []);
 
 	return (
 		<>

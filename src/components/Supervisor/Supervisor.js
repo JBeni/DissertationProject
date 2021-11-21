@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
+import { getAllRequestsSupervisor } from '../applicationService';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -15,12 +16,14 @@ class Supervisor extends Component {
             editRequest: false,
             viewRequest: false,
 			recordForEdit: null,
+
             project: {},
-            projectRequests: [],
+            requests: [],
         };
     }
 
     componentDidMount() {
+        let data = getAllRequestsSupervisor(this.props);
     }
 
     handleNewDataFromPopup(value) {
@@ -111,7 +114,7 @@ class Supervisor extends Component {
 					tableRef={tableRef}
 					icons={materialTableIcons}
 					columns={columns}
-					data={this.state.projectRequests}
+					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {

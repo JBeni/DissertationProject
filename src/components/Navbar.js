@@ -33,7 +33,7 @@ function Navbar(props) {
             let role = getUserRoleById(data._role);
             setCurrentUserRole(role.value);
         })();
-	});
+	}, []);
 
     return (
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
