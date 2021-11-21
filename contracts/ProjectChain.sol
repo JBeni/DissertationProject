@@ -10,7 +10,7 @@ import "./SharedChain.sol";
 // Put constraints on the app based on role not address......
 
 contract ProjectChain is UserChain, SharedChain {
-    string constant HASH_STRING_VALUE = "csd?S@salas;dlA234_D.;s_as";
+    string constant HASH_bytes32_VALUE = "csd?S@salas;dlA234_D.;s_as";
     address _projectInitiator;
 
     // Project Contract Data
@@ -36,8 +36,8 @@ contract ProjectChain is UserChain, SharedChain {
         return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
     }
 
-    function createProject(string memory _name, uint _status, string memory _ipfsFileCID) public {
-        address _projectAddress = createUniqueHexAddress(HASH_STRING_VALUE, projectsCounter);
+    function createProject(bytes32 _name, uint _status, bytes32 _ipfsFileCID) public {
+        address _projectAddress = createUniqueHexAddress(HASH_bytes32_VALUE, projectsCounter);
 
         projects[_projectAddress]._index = projectsCounter;
         projects[_projectAddress]._name = _name;
@@ -60,7 +60,7 @@ contract ProjectChain is UserChain, SharedChain {
     }
 
     function createProjectRequest(
-        string memory _title, uint _status,
+        bytes32 _title, uint _status,
         uint _requestStatus, address _projectAddress
     ) public {
         projectRequests[_projectAddress]._index = projectRequestsCounter;
@@ -88,7 +88,7 @@ contract ProjectChain is UserChain, SharedChain {
     Request[] public allRequests;
 
     function createRequest(
-        string memory _title,
+        bytes32 _title,
         uint _requestStatus,
         uint _projectStatus,
         address _projectAddress

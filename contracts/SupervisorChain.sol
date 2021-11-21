@@ -21,8 +21,7 @@ contract SupervisorChain is SharedChain {
     }
 
     function createRequestSupervisor(
-        string memory _title,
-        string memory _description,
+        bytes32 _title,
         uint _requestStatus,
         uint _projectStatus,
         address _projectAddress

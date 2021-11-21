@@ -17,28 +17,28 @@ contract UserChain {
 
     struct User {
         uint _index;
-        string _username;
-        string _email;
-        string _firstname;
-        string _lastname;
+        bytes32 _username;
+        bytes32 _email;
+        bytes32 _firstname;
+        bytes32 _lastname;
         Roles _role;
         address _walletAddress;
     }
 
     event UserRegistered(
         address indexed _walletAddress,
-        string indexed _username,
-        string _email,
-        string _firstname,
-        string _lastname,
+        bytes32 indexed _username,
+        bytes32 _email,
+        bytes32 _firstname,
+        bytes32 _lastname,
         Roles indexed _role
     );
 
     event UserChanges(
-        string _username,
-        string _firstname,
-        string _lastname,
-        string _email,
+        bytes32 _username,
+        bytes32 _firstname,
+        bytes32 _lastname,
+        bytes32 _email,
         Roles _role,
         address _walletAddress
     );
@@ -58,10 +58,10 @@ contract UserChain {
     }
 
     function registerUser(
-        string memory _username,
-        string memory _email,
-        string memory _firstname,
-        string memory _lastname,
+        bytes32 _username,
+        bytes32 _email,
+        bytes32 _firstname,
+        bytes32 _lastname,
         uint256 _role,
         address _walletAddress
     ) public onlyOwner {

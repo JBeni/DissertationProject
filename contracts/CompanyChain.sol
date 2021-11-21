@@ -20,7 +20,7 @@ contract CompanyChain is SharedChain {
     }
 
     function createRequestCompany(
-        string memory _title,
+        bytes32 _title,
         uint _requestStatus,
         uint _projectStatus,
         address _projectAddress
