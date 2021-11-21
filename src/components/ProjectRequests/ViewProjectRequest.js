@@ -34,7 +34,7 @@ export default function ViewProjectRequest(props) {
 					</p>
                     {
                         values.comments?.length > 0 &&
-                        <p style={{ width: '670px' }}>
+                        <p style={{ width: '670px', border: '2px solid red' }}>
                             <FormLabel>Comments: {values.comments}</FormLabel>
                         </p>
                     }

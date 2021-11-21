@@ -82,6 +82,34 @@ contract ProjectChain is UserChain, SharedChain {
         return allProjectRequests;
     }
 
+    function getLastProjectRequest(address _projectAddress) external view returns(ProjectRequest memory) {
+        ProjectRequest memory request;
+        if (allProjectRequests.length > 0) {
+            for (uint index = allProjectRequests.length - 1; index >= 0; index--) {
+                if (_projectAddress == allProjectRequests[index]._projectAddress) {
+                    request._index = allProjectRequests[index]._index;
+                    request._title = allProjectRequests[index]._title;
+                    request._comments = allProjectRequests[index]._comments;
+                    request._status = allProjectRequests[index]._status;
+                    request._requestStatus = allProjectRequests[index]._requestStatus;
+                    request._projectAddress = allProjectRequests[index]._projectAddress;
+                    request._userAddress = allProjectRequests[index]._userAddress;
+                    return request;
+                }
+            }
+        }
+        return request;
+    }
+
+    function getLastProjectRequestWorked() external view returns(ProjectRequest memory) {
+        //ProjectRequest memory request = allProjectRequests[0];
+        //for (uint index = allProjectRequests.length - 1; index > 0; index--) {
+        //}
+        return allProjectRequests[0];
+    }
+
+
+
     // They will be filter after the status of the requests
     mapping(uint => Request) public requests;
     uint public requestsCounter = 0;

@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
-import { getDefaultRequestStatus } from '../formService';
+import { getRequestStatusById } from '../formService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -19,8 +19,7 @@ class ProjectRequests extends Component {
 			createRequestForm: false,
             viewRequestForm: false,
 			recordForEdit: null,
-            
-            //currentRequestStatus: true,
+            requestNextStep: true,
 
             project: {},
             projectRequests: [],
@@ -30,6 +29,20 @@ class ProjectRequests extends Component {
     componentDidMount() {
         this.getProjectInfo();
         this.getAllProjectRequests();
+
+        this.getLastProjectRequest(this.props.match.params.id);
+    }
+
+    getLastProjectRequest = async (projectAddress) => {
+        let data = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
+            .then((result) => { return result; });
+        if ("0x0000000000000000000000000000000000000000" === data._projectAddress) {
+            return;
+        }
+        let requestStatus = getRequestStatusById(data._requestStatus);
+        if (requestStatus.value === "UnApproved") {
+            this.setState({ requestNextStep: false });
+        }
     }
 
     getProjectInfo = async () => {
@@ -40,14 +53,6 @@ class ProjectRequests extends Component {
     getAllProjectRequests = async () => {
         let data = await applicationService.getAllProjectRequests(this.props, this.props.match.params.id);
         this.setState({ projectRequests: data });
-
-        // if (this.state.projectRequests.length > 0) {
-        //     let index = this.state.projectRequests.length - 1;
-        //     let requestStatus = getDefaultRequestStatus();
-        //     if (this.state.projectRequests[index].requestStatus === requestStatus.value) {
-        //         this.setState({ currentRequestStatus: false });
-        //     }    
-        // }
     }
 
     handleNewDataFromPopup(value) {
@@ -84,6 +89,7 @@ class ProjectRequests extends Component {
                 Number(_status), Number(_requestStatus), _projectAddress)
 			.send({ from: this.props.account }).then((receipt) => {
                 this.getAllProjectRequests();
+                this.getLastProjectRequest(this.props.match.params.id);
             });
 	}
 
@@ -101,7 +107,7 @@ class ProjectRequests extends Component {
                 <br/><br/>
 
                 {
-                    //this.state.currentRequestStatus === false ?
+                    this.state.requestNextStep === true ?
                         <Button
                         variant="outlined"
                         startIcon={<AddIcon />}
@@ -109,7 +115,7 @@ class ProjectRequests extends Component {
                             this.setRecordForEdit(this.state.project);
                             this.setCreateRequestForm(true);
                         }}>Add Project Request</Button>
-                        //: <div>The Current Request must be approved or rejected to add another request</div>
+                        : <div>The Current Request must be approved or rejected to add another request</div>
                 }
 
 				<Dialog open={this.state.createRequestForm} maxWidth="md">
