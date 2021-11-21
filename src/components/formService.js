@@ -2,6 +2,7 @@
 export const initialRequestFormValues = {
     index: '',
 	title: '',
+    comments: '',
 	projectStatus: '',
 	requestStatus: '',
     projectAddress: '',
@@ -11,6 +12,7 @@ export const initialRequestFormValues = {
 export const initialRequestFormValidity = {
     index: false,
 	title: false,
+    comments: false,
 	projectStatus: false,
 	requestStatus: false,
     projectAddress: false,
@@ -76,6 +78,11 @@ export const getDefaultProjectStatus = () => {
 export const getDefaultRequestStatus = () => {
     return { id: '0', value: 'UnApproved' };
 };
+
+export const requestStatusTwoDropdown = [
+    { id: '1', value: 'Rejected' },
+	{ id: '2', value: 'Approved' },
+];
 
 export const requestStatusDropdown = [
     { id: '0', value: 'UnApproved' },

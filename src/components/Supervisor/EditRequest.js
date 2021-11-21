@@ -9,7 +9,7 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { initialProjectFormValidity, initialRequestFormValues, initialRequestFormValidity, initialProjectFormValues, projectStatusDropdown, getProjectStatusByValue } from '../formService';
+import { initialRequestFormValues, initialRequestFormValidity, projectStatusDropdown, getProjectStatusByValue, requestStatusTwoDropdown } from '../formService';
 import { useStylesForm } from './../sharedResources';
 
 export default function EditRequest(props) {
@@ -30,12 +30,12 @@ export default function EditRequest(props) {
 	};
 
 	const resetForm = () => {
-		setValues(initialProjectFormValues);
+		setValues(initialRequestFormValues);
 		setValues({
 			...values
 		});
 		setErrors({});
-        setValidity(initialProjectFormValidity);
+        setValidity(initialRequestFormValidity);
 	};
 
 	const validate = (fieldValues = values) => {
@@ -70,14 +70,18 @@ export default function EditRequest(props) {
 	};
 
 	useEffect(() => {
+        console.log(recordForEdit);
+
 		if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit['status']);
+            let projectStatus = getProjectStatusByValue(recordForEdit['projectStatus']);
             let newData = {
-                name: recordForEdit['name'],
-                status: projectStatus.id,
+                title: recordForEdit['title'],
+                projectStatus: projectStatus.id,
             };
             setValues({
-				...newData,
+				...values,
+                title: recordForEdit['title'],
+                projectStatus: projectStatus.id,
 			});
             setIsEdit(true);
         } else {
@@ -95,14 +99,14 @@ export default function EditRequest(props) {
                         <FormControl style={{ width: '400px' }} {...(errors && { error: true })}>
                             <TextField
                                 style={{ marginLeft: '3px', width: '400px' }}
-                                name="name"
-                                label="Name"
-                                value={values.name}
+                                name="title"
+                                label="Title"
+                                value={values.title}
                                 onChange={handleInputChange}
-                                error={validity.name}
+                                error={validity.title}
                                 disabled = {(isEdit === true) ? true : false}
                             />
-							{errors && <FormHelperText className="Mui-error">{errors.name}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.title}</FormHelperText>}
 						</FormControl>
 
                         <FormControl style={{ width: '400px' }}>
@@ -117,19 +121,18 @@ export default function EditRequest(props) {
                                 value={values.comments}
                                 onChange={handleInputChange}
                                 error={validity.comments}
-                                disabled = {(isEdit === true) ? true : false}
                             />
 							{errors && <FormHelperText className="Mui-error">{errors.comments}</FormHelperText>}
 						</FormControl>
 
 						<FormControl style={{ width: '400px' }}>
-							<InputLabel>Status</InputLabel>
+							<InputLabel>Project Status</InputLabel>
 							<Select
-								name="status"
-								label="Status"
-								value={values.status}
+								name="projectStatus"
+								label="ProjectStatus"
+								value={values.projectStatus}
 								onChange={handleInputChange}
-                                error={validity.status}
+                                error={validity.projectStatus}
                                 disabled={true}
 							>
 								{projectStatusDropdown.map((item) => (
@@ -138,7 +141,25 @@ export default function EditRequest(props) {
 									</MenuItem>
 								))}
 							</Select>
-							{errors && <FormHelperText className="Mui-error">{errors.status}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.projectStatus}</FormHelperText>}
+						</FormControl>
+
+						<FormControl style={{ width: '400px' }}>
+							<InputLabel>Request Status</InputLabel>
+							<Select
+								name="requestStatus"
+								label="RequestStatus"
+								value={values.requestStatus}
+								onChange={handleInputChange}
+                                error={validity.requestStatus}
+							>
+								{requestStatusTwoDropdown.map((item) => (
+                                    <MenuItem key={item.id} value={item.id}>
+                                        {item.value}
+                                    </MenuItem>
+								))}
+							</Select>
+							{errors && <FormHelperText className="Mui-error">{errors.requestStatus}</FormHelperText>}
 						</FormControl>
 
 						<div>
