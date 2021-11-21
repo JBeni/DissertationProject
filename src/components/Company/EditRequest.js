@@ -46,10 +46,6 @@ export default function EditRequest(props) {
 			temp.title = fieldValues.title ? '' : 'This field is required.';
             tempValidity.title = fieldValues.title?.length <= 0;
         }
-		if ('description' in fieldValues) {
-			temp.description = fieldValues.description ? '' : 'This field is required.';
-            tempValidity.description = fieldValues.description?.length <= 0;
-		}
 		if ('projectStatus' in fieldValues) {
 			temp.projectStatus = fieldValues.projectStatus.length > 0 ? '' : 'This field is required.';
             tempValidity.projectStatus = fieldValues.projectStatus?.length <= 0;
@@ -79,7 +75,6 @@ export default function EditRequest(props) {
             let status = getProjectStatusByValue(recordForEdit['status']);
             let newData = {
                 name: recordForEdit['name'],
-                description: recordForEdit['description'],
                 status: status.id,
             };
             setValues({
@@ -114,18 +109,18 @@ export default function EditRequest(props) {
                         <FormControl style={{ width: '400px' }}>
                             <TextField
                                 style={{ marginLeft: '3px', width: '400px' }}
-                                name="description"
-                                label="Description"
+                                name="comments"
+                                label="Comments"
                                 variant="outlined"
                                 placeholder="MultiLine with min rows: 5"
                                 multiline
                                 minRows={5}
-                                value={values.description}
+                                value={values.comments}
                                 onChange={handleInputChange}
-                                error={validity.description}
+                                error={validity.comments}
                                 disabled = {(isEdit === true) ? true : false}
                             />
-							{errors && <FormHelperText className="Mui-error">{errors.description}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.comments}</FormHelperText>}
 						</FormControl>
 
 						<FormControl style={{ width: '400px' }}>

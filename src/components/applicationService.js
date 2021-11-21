@@ -110,7 +110,6 @@ export async function getAllRequests(props) {
     //         const project = {
     //             index: result['_index'],
     //             title: result['_title'],
-    //             description: result['_description'],
     //             comments: result['_comments'],
     //             status: status.value,
     //             requestStatus: requestStatus.value,

@@ -42,7 +42,6 @@ class Company extends Component {
     addOrEdit = async (data, resetForm) => {
         this.createProjectRequest(
             data['title'],
-            data['description'],
             data['status'],
             data['requestStatus'],
             this.state.project.projectAddress
@@ -52,9 +51,9 @@ class Company extends Component {
         this.getAllProjectRequests();
     }
 
-    createProjectRequest = async (_title, _description, _status, _requestStatus, _projectAddress) => {
+    createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
         await this.props.project.methods
-			.createProjectRequest(_title, _description, Number(_status), Number(_requestStatus), _projectAddress)
+			.createProjectRequest(_title, Number(_status), Number(_requestStatus), _projectAddress)
 			.send({ from: this.props.account });
 	}
 
