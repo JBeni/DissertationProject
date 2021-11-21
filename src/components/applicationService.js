@@ -161,7 +161,6 @@ export async function getAllProjects(props) {
     let data = [];
     await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
-            console.log(result);
             let status = getProjectStatusById(result['_status']);
             const project = {
                 index: result['_index'],
@@ -225,6 +224,5 @@ export async function getAllProjectRequests(props, projectAddress) {
         }
         return false;
     });
-    console.log(data);
     return data;
 }

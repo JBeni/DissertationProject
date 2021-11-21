@@ -57,20 +57,6 @@ function Sidebar(props) {
                         {
                             props.userRole &&
                                 <Link
-                                    to="/project-initiator"
-                                    className={
-                                        props.currentLocation[1] === 'project-initiator'
-                                            ? 'nav__link active'
-                                            : 'nav__link'
-                                    }
-                                >
-                                    <i className="bx bx-user nav__icon"></i>
-                                    <span className="nav__name">Project Initiator</span>
-                                </Link>
-                        }
-                        {
-                            props.userRole &&
-                                <Link
                                     to="/company"
                                     className={
                                         props.currentLocation[1] === 'company'
