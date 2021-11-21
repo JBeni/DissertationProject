@@ -124,7 +124,6 @@ class Projects extends Component {
         }
         resetForm();
         this.setRecordForEdit(null);
-        this.getProjects();
     }
 
     createProject = async (_name, _status, _fileData) => {
@@ -134,7 +133,9 @@ class Projects extends Component {
                 this.props.web3.utils.utf8ToHex(_name),
                 Number(_status),
                 _ipfsFileCID)
-			.send({ from: this.props.account });
+			.send({ from: this.props.account }).then((receipt) => {
+                this.getProjects();
+            });
 	}
 
     handleNewDataFromPopup(value) {

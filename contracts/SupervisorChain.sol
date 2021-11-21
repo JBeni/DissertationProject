@@ -19,7 +19,7 @@ contract SupervisorChain is SharedChain {
         require(_supervisorAddress == msg.sender, "You are not a supervisor");
         _;
     }
-
+/*
     function createRequestSupervisor(
         bytes32 _title,
         uint _requestStatus,
@@ -48,4 +48,5 @@ contract SupervisorChain is SharedChain {
     function getAllRequestsSupervisor() public view returns(Request[] memory) {
         return allSupervisorRequests;
     }
+*/
 }

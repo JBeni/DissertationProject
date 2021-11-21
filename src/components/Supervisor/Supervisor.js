@@ -8,16 +8,16 @@ import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import { getAllRequests } from '../applicationService';
+import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 
 class Supervisor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             editRequest: false,
+            showTable: false,
             viewRequest: false,
 			recordForEdit: null,
-
-            project: {},
             requests: [],
         };
     }
@@ -29,11 +29,14 @@ class Supervisor extends Component {
     async getAllRequests() {
         let data = await Promise.resolve(getAllRequests(this.props));
         this.setState({ requests: data });
-        console.log(data);
     }
 
     handleNewDataFromPopup(value) {
         this.setState({ editRequest: value });
+    }
+
+    setShowTable = (value) => {
+        this.setState({ showTable: value });
     }
 
     setEditRequest = (value) => {
@@ -49,21 +52,22 @@ class Supervisor extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.createProjectRequest(
-            data['title'],
-            data['status'],
+        this.updateProjectRequest(
+            data['index'],
+            data['comments'],
             data['requestStatus'],
-            this.state.project.projectAddress
+            data['indexProjectRequest']
         );
         resetForm();
         this.setRecordForEdit(null);
-        this.getAllProjectRequests();
     }
 
-    updateProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
+    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest) => {
         await this.props.project.methods
-			.updateProjectRequest(_title, Number(_status), Number(_requestStatus), _projectAddress)
-			.send({ from: this.props.account });
+			.updateRequest(Number(_index), _comments, Number(_requestStatus), Number(_indexProjectRequest))
+			.send({ from: this.props.account }).then((receipt) => {
+                this.getAllRequests();
+            });
 	}
 
     render() {
@@ -122,12 +126,12 @@ class Supervisor extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-							icon: Edit,
-							tooltip: 'Edit Request',
-							onClick: (event, rowData) => {
+                            icon: Edit,
+                            tooltip: 'Edit Request',
+                            onClick: (event, rowData) => {
                                 this.setEditRequest(true);
                                 this.setRecordForEdit(rowData);
-							},
+                            }
 						},
 						{
 							icon: Visibility,
@@ -139,6 +143,9 @@ class Supervisor extends Component {
 						},
 					]}
 				/>
+
+                <br/><br/>
+                <AllPagesPdf showTable={this.state.showTable} />
             </>
         );
     }

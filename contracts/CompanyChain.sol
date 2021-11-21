@@ -18,7 +18,7 @@ contract CompanyChain is SharedChain {
         require(_companyAddress == msg.sender, "You are not a company builder");
         _;
     }
-
+/*
     function createRequestCompany(
         bytes32 _title,
         uint _requestStatus,
@@ -47,4 +47,5 @@ contract CompanyChain is SharedChain {
     function getAllRequestsCompany() public view returns(Request[] memory) {
         return allCompanyRequests;
     }
+*/
 }

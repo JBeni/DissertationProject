@@ -48,6 +48,7 @@ contract SharedChain {
 
     struct Request {
         uint _index;
+        uint _indexProjectRequest;
         bytes32 _title;
         RequestStatus _requestStatus;
         ProjectStatus _projectStatus;
@@ -56,6 +57,7 @@ contract SharedChain {
     }
     event RequestEvent(
         uint _index,
+        uint _indexProjectRequest,
         bytes32 _title,
         RequestStatus _status,
         ProjectStatus _projectStatus,
@@ -63,5 +65,4 @@ contract SharedChain {
         address _userAddress,
         uint _timestamp
     );
-
 }

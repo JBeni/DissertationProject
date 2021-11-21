@@ -83,7 +83,6 @@ class ProjectRequests extends Component {
                 this.props.web3.utils.utf8ToHex(_title),
                 Number(_status), Number(_requestStatus), _projectAddress)
 			.send({ from: this.props.account }).then((receipt) => {
-                console.log(receipt);
                 this.getAllProjectRequests();
             });
 	}

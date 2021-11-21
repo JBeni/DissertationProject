@@ -6,6 +6,7 @@ export const initialRequestFormValues = {
 	projectStatus: '',
 	requestStatus: '',
     projectAddress: '',
+    indexProjectRequest: '',
     userAddress: '',
 };
 
@@ -16,6 +17,7 @@ export const initialRequestFormValidity = {
 	projectStatus: false,
 	requestStatus: false,
     projectAddress: false,
+    indexProjectRequest: false,
     userAddress: false,
 };
 

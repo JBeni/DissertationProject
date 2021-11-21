@@ -102,19 +102,22 @@ export async function getAllRequests(props) {
 
     let data = [];
     allRequests.map((result) => {
-        if (Number(result['_projectStatus']) === Number(1)) {
-            let projectStatus = getProjectStatusById(result['_projectStatus']);
-            let requestStatus = getRequestStatusById(result['_requestStatus']);
-            const project = {
-                index: result['_index'],
-                title: props.web3.utils.hexToUtf8(result['_title']),
-                comments: result['_comments'],
-                projectStatus: projectStatus.value,
-                requestStatus: requestStatus.value,
-                projectAddress: result['_projectAddress'],
-                userAddress: result['_userAddress'],
-            };
-            data.push(project);
+        let requestStatus = getRequestStatusById(result['_requestStatus']);
+        if (requestStatus.value === 'UnApproved') {
+            if (Number(result['_projectStatus']) === Number(1) || Number(result['_projectStatus']) === Number(3) || Number(result['_projectStatus']) === Number(4)) {
+                let projectStatus = getProjectStatusById(result['_projectStatus']);
+                const project = {
+                    index: result['_index'],
+                    title: props.web3.utils.hexToUtf8(result['_title']),
+                    comments: result['_comments'],
+                    projectStatus: projectStatus.value,
+                    requestStatus: requestStatus.value,
+                    projectAddress: result['_projectAddress'],
+                    indexProjectRequest: result['_indexProjectRequest'],
+                    userAddress: result['_userAddress'],
+                };
+                data.push(project);
+            }
         }
         return false;
     });

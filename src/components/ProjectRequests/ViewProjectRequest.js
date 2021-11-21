@@ -33,7 +33,7 @@ export default function ViewProjectRequest(props) {
 						<FormLabel>Title: {values.title}</FormLabel>
 					</p>
                     {
-                        values.comments.length > 0 &&
+                        values.comments?.length > 0 &&
                         <p style={{ width: '670px' }}>
                             <FormLabel>Comments: {values.comments}</FormLabel>
                         </p>

@@ -18,7 +18,7 @@ contract ProjectChain is UserChain, SharedChain {
     uint public projectsCounter = 0;
     Project[] public allProjects;
 
-    mapping(address => ProjectRequest) public projectRequests;
+    mapping(uint => ProjectRequest) public projectRequests;
     uint public projectRequestsCounter = 0;
     ProjectRequest[] public allProjectRequests;
 
@@ -63,15 +63,15 @@ contract ProjectChain is UserChain, SharedChain {
         bytes32 _title, uint _status,
         uint _requestStatus, address _projectAddress
     ) public {
-        projectRequests[_projectAddress]._index = projectRequestsCounter;
-        projectRequests[_projectAddress]._title = _title;
-        projectRequests[_projectAddress]._comments = '';
-        projectRequests[_projectAddress]._status = ProjectStatus(_status);
-        projectRequests[_projectAddress]._requestStatus = RequestStatus(_requestStatus);
-        projectRequests[_projectAddress]._projectAddress = _projectAddress;
-        projectRequests[_projectAddress]._userAddress = _projectInitiator;
+        projectRequests[projectRequestsCounter]._index = projectRequestsCounter;
+        projectRequests[projectRequestsCounter]._title = _title;
+        projectRequests[projectRequestsCounter]._comments = '';
+        projectRequests[projectRequestsCounter]._status = ProjectStatus(_status);
+        projectRequests[projectRequestsCounter]._requestStatus = RequestStatus(_requestStatus);
+        projectRequests[projectRequestsCounter]._projectAddress = _projectAddress;
+        projectRequests[projectRequestsCounter]._userAddress = _projectInitiator;
 
-        createRequest(_title, _status, _requestStatus, _projectAddress);
+        createRequest(projectRequestsCounter, _title, _status, _requestStatus, _projectAddress);
 
         emit ProjectRequestEvent(projectRequestsCounter, _title, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator, block.timestamp);
         allProjectRequests.push(ProjectRequest(projectRequestsCounter, _title, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator));
@@ -88,12 +88,14 @@ contract ProjectChain is UserChain, SharedChain {
     Request[] public allRequests;
 
     function createRequest(
+        uint _indexProjectRequest,
         bytes32 _title,
         uint _projectStatus,
         uint _requestStatus,
         address _projectAddress
-    ) public {
+    ) internal {
         requests[requestsCounter]._index = requestsCounter;
+        requests[requestsCounter]._indexProjectRequest = _indexProjectRequest;
         requests[requestsCounter]._title = _title;
         requests[requestsCounter]._requestStatus = RequestStatus(_requestStatus);
         requests[requestsCounter]._projectStatus = ProjectStatus(_projectStatus);
@@ -101,15 +103,21 @@ contract ProjectChain is UserChain, SharedChain {
         // change to supervisorAddress
         requests[requestsCounter]._userAddress = _projectInitiator;
 
-        emit RequestEvent(requestsCounter, _title, RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator, block.timestamp);
-        allRequests.push(Request(requestsCounter, _title,  RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
+        emit RequestEvent(requestsCounter, _indexProjectRequest, _title, RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator, block.timestamp);
+        allRequests.push(Request(requestsCounter, _indexProjectRequest, _title,  RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
         requestsCounter++;
     }
 
-    function updateRequest(uint _requestStatus, uint _index) public {
+    function updateRequest(uint _index, string memory _comments, uint _requestStatus, uint _indexProjectRequest) public {
         requests[_index]._requestStatus = RequestStatus(_requestStatus);
         uint index = requests[_index]._index;
         allRequests[index]._requestStatus = RequestStatus(_requestStatus);
+
+        projectRequests[_indexProjectRequest]._comments = _comments;
+        projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
+        uint indexProject = projectRequests[_indexProjectRequest]._index;
+        allProjectRequests[indexProject]._comments = _comments;
+        allProjectRequests[indexProject]._requestStatus = RequestStatus(_requestStatus);
     }
 
     function getAllRequests() public view returns(Request[] memory) {

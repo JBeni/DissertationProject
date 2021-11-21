@@ -54,14 +54,18 @@ export default class Users extends Component {
                 _walletAddress
 			)
 			.send({ from: this.props.account })
-            .then(function(receipt) {});
+            .then(function(receipt) {}).then((receipt) => {
+                this.getProjects();
+            });
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
         await this.props.project.methods.changeUserRole(
             Number(_role),
             _walletAddress
-        ).send({ from: this.props.account });
+        ).send({ from: this.props.account }).then((receipt) => {
+            this.getProjects();
+        });
 	}
 
     addOrEdit = (userData, resetForm) => {
@@ -80,7 +84,6 @@ export default class Users extends Component {
         }
         resetForm();
         this.setRecordForEdit(null);
-        this.getUsers();
     }
 
     handleNewDataFromPopup(data) {
