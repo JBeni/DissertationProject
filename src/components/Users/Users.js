@@ -9,6 +9,7 @@ import * as applicationService from '../applicationService';
 import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
+import toast, { Toaster } from 'react-hot-toast';
 
 export default class Users extends Component {
 	constructor(props) {
@@ -19,16 +20,15 @@ export default class Users extends Component {
 			recordForEdit: null,
 			users: [],
 		};
-
-        this.getUsers();
     }
 
     componentDidMount() {
+        this.getUsers();
     }
 
     getUsers = async () => {
-        let allUsers = await applicationService.getAllUsers(this.props);
-        this.setState({ users: allUsers });
+        let data = await applicationService.getAllUsers(this.props);
+        this.setState({ users: data });
     }
 
     setOpenPopup = (value) => {
@@ -41,7 +41,7 @@ export default class Users extends Component {
 
 	setRecordForEdit = (data) => {
 		this.setState({ recordForEdit: data });
-	};
+	}
 
     createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
         await this.props.project.methods
@@ -55,7 +55,8 @@ export default class Users extends Component {
 			)
 			.send({ from: this.props.account })
             .then(function(receipt) {}).then((receipt) => {
-                this.getProjects();
+                this.notifyToast();
+                this.getUsers();
             });
 	}
 
@@ -64,7 +65,7 @@ export default class Users extends Component {
             Number(_role),
             _walletAddress
         ).send({ from: this.props.account }).then((receipt) => {
-            this.getProjects();
+            this.getUsers();
         });
 	}
 
@@ -88,6 +89,20 @@ export default class Users extends Component {
 
     handleNewDataFromPopup(data) {
         this.setState({ openPopup: data });
+    }
+
+    notifyToastSuccess = () => {
+        toast.success('User was stored successfully into the blockchain', {
+            position: 'bottom-center',
+            duration: 4000,
+        });    
+    }
+
+    notifyToastSuccess = () => {
+        toast.error('The user couldnt be saved into the blockchain', {
+            position: 'bottom-center',
+            duration: 5000,
+        });    
     }
 
 	render() {
@@ -170,6 +185,8 @@ export default class Users extends Component {
 						},
 					]}
 				/>
+
+                <Toaster position="bottom-center" reverseOrder={false} />
 			</div>
 		);
 	}
