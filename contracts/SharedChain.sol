@@ -10,7 +10,7 @@ contract SharedChain {
         uint _index,
         bytes32 _name,
         ProjectStatus _status,
-        bytes32 _ipfsFileCID,
+        string _ipfsFileCID,
         address _projectAddress,
         address _userAddress,
         uint _timestamp
@@ -19,7 +19,7 @@ contract SharedChain {
         uint _index;
         bytes32 _name;
         ProjectStatus _status;
-        bytes32 _ipfsFileCID;
+        string _ipfsFileCID;
         address _projectAddress;
         address _userAddress;
     }
@@ -27,7 +27,7 @@ contract SharedChain {
     event ProjectRequestEvent(
         uint _index,
         bytes32 _title,
-        bytes32 _comments,
+        string _comments,
         ProjectStatus _status,
         RequestStatus _requestStatus,
         address _projectAddress,
@@ -37,7 +37,7 @@ contract SharedChain {
     struct ProjectRequest {
         uint _index;
         bytes32 _title;
-        bytes32 _comments;
+        string _comments;
         ProjectStatus _status;
         RequestStatus _requestStatus;
         address _projectAddress;

@@ -36,7 +36,7 @@ contract ProjectChain is UserChain, SharedChain {
         return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
     }
 
-    function createProject(bytes32 _name, uint _status, bytes32 _ipfsFileCID) public {
+    function createProject(bytes32 _name, uint _status, string memory _ipfsFileCID) public {
         address _projectAddress = createUniqueHexAddress(HASH_bytes32_VALUE, projectsCounter);
 
         projects[_projectAddress]._index = projectsCounter;

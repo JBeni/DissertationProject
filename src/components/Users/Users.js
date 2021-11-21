@@ -23,6 +23,11 @@ export default class Users extends Component {
         this.getUsers();
     }
 
+    componentDidMount() {
+        //let _username = "Matematica Matematica Matematica"; // 32
+        //this.props.project.methods.getBytes(this.props.web3.utils.utf8ToHex(_username)).send({ from: this.props.account });
+    }
+
     getUsers = async () => {
         let allUsers = await applicationService.getAllUsers(this.props);
         this.setState({ users: allUsers });
@@ -40,20 +45,31 @@ export default class Users extends Component {
 		this.setState({ recordForEdit: data });
 	};
 
-	createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
-        await this.props.project.methods
-			.registerUser(
-                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_username), 64),
-                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_email), 64),
-                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_firstname), 64),
-                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_lastname), 64),
-                Number(_role),
-                _walletAddress
-			)
-			.send({ from: this.props.account })
-            .then(function(receipt) {
-                //console.log(receipt);
-            });
+    ascii_to_hex = (str) => {
+        var arr1 = [];
+        for (var n = 0, l = str.length; n < l; n ++) 
+        {
+            var hex = Number(str.charCodeAt(n)).toString(16);
+            arr1.push(hex);
+        }
+        return arr1.join('');
+    }
+
+    createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
+        let username = this.ascii_to_hex(_username);
+
+        // await this.props.project.methods
+		// 	.registerUser(
+        //         this.props.web3.utils.hexToBytes(this.props.web3.utils.toHex(_username)),
+        //         //this.props.web3.utils.asciiToHex(this.props.web3.utils.utf8ToHex(this.props.web3.utils.hexToBytes(_username))),
+        //         this.props.web3.utils.utf8ToHex(_email),
+        //         this.props.web3.utils.utf8ToHex(_firstname),
+        //         this.props.web3.utils.utf8ToHex(_lastname),
+        //         Number(_role),
+        //         _walletAddress
+		// 	)
+		// 	.send({ from: this.props.account })
+        //     .then(function(receipt) {});
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
@@ -75,7 +91,6 @@ export default class Users extends Component {
 				userData['walletAddress']
 			);
         } else {
-            console.log(userData);
             this.changeUserRole(userData['role'], userData['walletAddress']);
         }
         resetForm();

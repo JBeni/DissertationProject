@@ -7,7 +7,7 @@ export async function getAllUsers(props) {
         result.map((result) => {
             let role = getUserRoleById(result['_role']);
             const user = {
-                username: props.web3.utils.hexToUtf8(result['_username']),
+                username: result['_username'],
                 email: props.web3.utils.hexToUtf8(result['_email']),
                 firstname: props.web3.utils.hexToUtf8(result['_firstname']),
                 lastname: props.web3.utils.hexToUtf8(result['_lastname']),
@@ -31,9 +31,8 @@ export async function getAllProjects(props) {
             const project = {
                 index: result['_index'],
                 name: props.web3.utils.hexToUtf8(result['_name']),
-                description: props.web3.utils.hexToUtf8(result['_description']),
                 status: status.value,
-                ipfsFileCID: props.web3.utils.hexToUtf8(result['_ipfsFileCID']),
+                ipfsFileCID: result['_ipfsFileCID'],
                 projectAddress: result['_projectAddress'],
                 userAddress: result['_userAddress'],
             };
@@ -52,9 +51,8 @@ export async function getProjectInfo(props, projectAddress) {
         const project = {
             index: result['_index'],
             name: props.web3.utils.hexToUtf8(result['_name']),
-            description: props.web3.utils.hexToUtf8(result['_description']),
             status: status.value,
-            ipfsFileCID: props.web3.utils.hexToUtf8(result['_ipfsFileCID']),
+            ipfsFileCID: result['_ipfsFileCID'],
             projectAddress: result['_projectAddress'],
             userAddress: result['_userAddress'],
         };
@@ -79,7 +77,7 @@ export async function getAllProjectRequests(props, projectAddress) {
             const project = {
                 index: result['_index'],
                 title: props.web3.utils.hexToUtf8(result['_title']),
-                comments: props.web3.utils.hexToUtf8(result['_comments']),
+                comments: result['_comments'],
                 status: status.value,
                 requestStatus: requestStatus.value,
                 projectAddress: result['_projectAddress'],

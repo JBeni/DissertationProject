@@ -14,6 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { initialProjectFormValidity, initialProjectFormValues, projectStatusDropdown,
     getProjectStatusByValue } from '../formService';
 import { useStylesForm } from './../sharedResources';
+import { getDefaultProjectStatus } from './../formService';
 
 export default function AddProjectForm(props) {
 	const classes = useStylesForm();
@@ -64,13 +65,9 @@ export default function AddProjectForm(props) {
 		let temp = { ...errors };
         let tempValidity = { ...validity };
 		if ('name' in fieldValues) {
-			temp.name = fieldValues.name ? '' : 'This field is required.';
+			temp.name = fieldValues.name.trim() ? '' : 'This field is required.';
             tempValidity.name = fieldValues.name?.length <= 0;
         }
-		if ('description' in fieldValues) {
-			temp.description = fieldValues.description ? '' : 'This field is required.';
-            tempValidity.description = fieldValues.description?.length <= 0;
-		}
 		if ('status' in fieldValues) {
 			temp.status = fieldValues.status.length > 0 ? '' : 'This field is required.';
             tempValidity.status = fieldValues.status?.length <= 0;
@@ -100,7 +97,6 @@ export default function AddProjectForm(props) {
             let status = getProjectStatusByValue(recordForEdit['status']);
             let newData = {
                 name: recordForEdit['name'],
-                description: recordForEdit['description'],
                 status: status.id,
             };
             setValues({
@@ -110,7 +106,7 @@ export default function AddProjectForm(props) {
         } else {
             setValues({
                 ...values,
-                'status': '0',
+                status: getDefaultProjectStatus().id,
             });
         }
 	}, []);
@@ -131,23 +127,6 @@ export default function AddProjectForm(props) {
                                 disabled = {(isEdit === true) ? true : false}
                             />
 							{errors && <FormHelperText className="Mui-error">{errors.name}</FormHelperText>}
-						</FormControl>
-
-                        <FormControl style={{ width: '400px' }}>
-                            <TextField
-                                style={{ marginLeft: '3px', width: '400px' }}
-                                name="description"
-                                label="Description"
-                                variant="outlined"
-                                placeholder="MultiLine with min rows: 5"
-                                multiline
-                                minRows={5}
-                                value={values.description}
-                                onChange={handleInputChange}
-                                error={validity.description}
-                                disabled = {(isEdit === true) ? true : false}
-                            />
-							{errors && <FormHelperText className="Mui-error">{errors.description}</FormHelperText>}
 						</FormControl>
 
 						<FormControl style={{ width: '400px' }}>

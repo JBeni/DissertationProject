@@ -17,7 +17,7 @@ contract UserChain {
 
     struct User {
         uint _index;
-        bytes32 _username;
+        string _username;
         bytes32 _email;
         bytes32 _firstname;
         bytes32 _lastname;
@@ -25,22 +25,13 @@ contract UserChain {
         address _walletAddress;
     }
 
-    event UserRegistered(
+    event UserEvent(
         address indexed _walletAddress,
-        bytes32 indexed _username,
+        string indexed _username,
         bytes32 _email,
         bytes32 _firstname,
         bytes32 _lastname,
         Roles indexed _role
-    );
-
-    event UserChanges(
-        bytes32 _username,
-        bytes32 _firstname,
-        bytes32 _lastname,
-        bytes32 _email,
-        Roles _role,
-        address _walletAddress
     );
 
     constructor() {
@@ -58,7 +49,7 @@ contract UserChain {
     }
 
     function registerUser(
-        bytes32 _username,
+        string memory _username,
         bytes32 _email,
         bytes32 _firstname,
         bytes32 _lastname,
@@ -72,7 +63,7 @@ contract UserChain {
         users[_walletAddress]._lastname = _lastname;
         users[_walletAddress]._role = Roles(_role);
         users[_walletAddress]._walletAddress = _walletAddress;
-        emit UserRegistered(
+        emit UserEvent(
             _walletAddress,
             _username,
             _email,
@@ -88,6 +79,14 @@ contract UserChain {
         users[_walletAddress]._role = Roles(_role);
         uint index = users[_walletAddress]._index;
         allUsers[index]._role = Roles(_role);
+        emit UserEvent(
+            _walletAddress,
+            users[_walletAddress]._username,
+            users[_walletAddress]._email,
+            users[_walletAddress]._firstname,
+            users[_walletAddress]._lastname,
+            Roles(_role)
+        );
         /*
             for (uint index = 0; index < allUsers.length; index++) {
                 if (allUsers[index]._walletAddress == _walletAddress) {

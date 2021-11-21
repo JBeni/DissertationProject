@@ -11,7 +11,6 @@ export default function ViewProjectForm(props) {
             let status = getProjectStatusByValue(recordForEdit['status']);
 			const newData = {
 				name: recordForEdit['name'],
-				description: recordForEdit['description'],
 				status: status.value,
 				ipfsFileCID: recordForEdit['ipfsFileCID'],
 			};
@@ -27,9 +26,6 @@ export default function ViewProjectForm(props) {
 				<Grid item xs={6}>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Name: {values.name}</FormLabel>
-					</p>
-					<p style={{ width: '670px' }}>
-						<FormLabel>Description: {values.description}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Status: {values.status}</FormLabel>

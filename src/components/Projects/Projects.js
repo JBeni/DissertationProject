@@ -28,7 +28,7 @@ class Projects extends Component {
     }
 
     componentDidMount() {
-        //this.getProjects();
+        this.getProjects();
         this.test();
     }
 
@@ -116,24 +116,30 @@ class Projects extends Component {
    			// alert('Form is validated! Submitting the form...');
             this.createProject(
 				userData['name'],
-                userData['description'],
 				userData['status'],
                 userData
 			);
         } else {
-            ;//this.changeUserRole(userData['role'], userData['walletAddress']);
+            ;//this.updateProject(userData['walletAddress']);
         }
         resetForm();
         this.setRecordForEdit(null);
         this.getProjects();
     }
 
-    createProject = async (_name, _description, _status, _fileData) => {
+    createProject = async (_name, _status, _fileData) => {
         let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+
+        console.log(this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_ipfsFileCID), 64));
+
+        debugger;
         await this.props.project.methods
-			.createProject(_name, _description, Number(_status), _ipfsFileCID)
+			.createProject(
+                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_name), 64),
+                Number(_status),
+                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_ipfsFileCID), 64))
 			.send({ from: this.props.account });
-	};
+	}
 
     handleNewDataFromPopup(value) {
         this.setState({ openAddForm: value });
@@ -158,7 +164,6 @@ class Projects extends Component {
 		const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Name', field: 'name' },
-			{ title: 'Description', field: 'description' },
 			{ title: 'Status', field: 'status' },
 			{ title: 'IPFS CID', field: 'ipfsFileCID' },
 		];

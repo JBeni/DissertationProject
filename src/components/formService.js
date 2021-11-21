@@ -2,7 +2,6 @@
 export const initialRequestFormValues = {
     index: '',
 	title: '',
-	description: '',
 	projectStatus: '',
 	requestStatus: '',
     projectAddress: '',
@@ -12,7 +11,6 @@ export const initialRequestFormValues = {
 export const initialRequestFormValidity = {
     index: false,
 	title: false,
-	description: false,
 	projectStatus: false,
 	requestStatus: false,
     projectAddress: false,
@@ -21,7 +19,6 @@ export const initialRequestFormValidity = {
 
 export const initialProjectRequestFormValues = {
 	title: '',
-	description: '',
     comments: '',
 	status: '',
 	requestStatus: '',
@@ -30,7 +27,6 @@ export const initialProjectRequestFormValues = {
 
 export const initialProjectRequestFormValidity = {
 	title: false,
-	description: false,
     comments: false,
 	status: false,
 	requestStatus: false,
@@ -57,7 +53,6 @@ export const initialUserFormValidity = {
 export const initialProjectFormValues = {
 	isEditForm: false,
 	name: '',
-	description: '',
 	status: '',
     file: {
         name: '',
@@ -65,14 +60,18 @@ export const initialProjectFormValues = {
         sizeBytes: '',
         lastModifiedDate: ''
     },
+    ipfsFileCID: '',
 };
 
 export const initialProjectFormValidity = {
 	name: false,
-	description: false,
 	status: false,
     file: false,
 };
+
+export const getDefaultProjectStatus = () => {
+    return { id: '0', value: 'Created' };
+}
 
 export const getDefaultRequestStatus = () => {
     return { id: '0', value: 'UnApproved' };
