@@ -29,7 +29,6 @@ class Projects extends Component {
 
     componentDidMount() {
         //this.getProjects();
-
         this.test();
     }
 
@@ -40,8 +39,6 @@ class Projects extends Component {
             toBlock: 'latest'
         });
         console.log(events);
-
-        console.log(events[0].transactionHash);
 
         // let data = [];
         // events.map((result) => {

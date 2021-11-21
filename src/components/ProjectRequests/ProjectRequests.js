@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
-import { getDefaultRequestStatus } from '../applicationService';
+import { getDefaultRequestStatus } from '../formService';
 
 class ProjectRequests extends Component {
 	constructor(props) {

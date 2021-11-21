@@ -9,7 +9,7 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { userRoleDropdown, getUserRoleByValue, initialUserFormValidity, initialUserFormValues } from './../applicationService';
+import { userRoleDropdown, getUserRoleByValue, initialUserFormValidity, initialUserFormValues } from '../formService';
 import { useStylesForm } from './../sharedResources';
 
 export default function AddForm(props) {
@@ -39,15 +39,15 @@ export default function AddForm(props) {
 		let temp = { ...errors };
         let tempValidity = { ...validity };
 		if ('firstname' in fieldValues) {
-			temp.firstname = fieldValues.firstname ? '' : 'This field is required.';
+			temp.firstname = fieldValues.firstname.trim() ? '' : 'This field is required.';
             tempValidity.firstname = fieldValues.firstname?.length <= 0;
         }
 		if ('lastname' in fieldValues) {
-			temp.lastname = fieldValues.lastname ? '' : 'This field is required.';
+			temp.lastname = fieldValues.lastname.trim() ? '' : 'This field is required.';
             tempValidity.lastname = fieldValues.lastname?.length <= 0;
 		}
         if ('email' in fieldValues) {
-			temp.email = fieldValues.email ? '' : 'This field is required.';
+			temp.email = fieldValues.email.trim() ? '' : 'This field is required.';
             tempValidity.email = fieldValues.email?.length <= 0;
 		}
         if (fieldValues.email?.length > 0) {

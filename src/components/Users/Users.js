@@ -40,15 +40,15 @@ export default class Users extends Component {
 		this.setState({ recordForEdit: data });
 	};
 
-	createUser = async (_username, _email, _firstname, _lastname, role, walletAddress) => {
+	createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
         await this.props.project.methods
 			.registerUser(
-                _username,
-                _email,
-                _firstname,
-                _lastname,
-                Number(role),
-                walletAddress
+                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_username), 64),
+                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_email), 64),
+                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_firstname), 64),
+                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_lastname), 64),
+                Number(_role),
+                _walletAddress
 			)
 			.send({ from: this.props.account })
             .then(function(receipt) {
