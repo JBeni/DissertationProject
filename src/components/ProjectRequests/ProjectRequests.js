@@ -19,7 +19,8 @@ class ProjectRequests extends Component {
 			createRequestForm: false,
             viewRequestForm: false,
 			recordForEdit: null,
-            currentRequestStatus: true,
+            
+            //currentRequestStatus: true,
 
             project: {},
             projectRequests: [],
@@ -40,13 +41,13 @@ class ProjectRequests extends Component {
         let data = await applicationService.getAllProjectRequests(this.props, this.props.match.params.id);
         this.setState({ projectRequests: data });
 
-        if (this.state.projectRequests.length > 0) {
-            let index = this.state.projectRequests.length - 1;
-            let requestStatus = getDefaultRequestStatus();
-            if (this.state.projectRequests[index].requestStatus === requestStatus.value) {
-                this.setState({ currentRequestStatus: false });
-            }    
-        }
+        // if (this.state.projectRequests.length > 0) {
+        //     let index = this.state.projectRequests.length - 1;
+        //     let requestStatus = getDefaultRequestStatus();
+        //     if (this.state.projectRequests[index].requestStatus === requestStatus.value) {
+        //         this.setState({ currentRequestStatus: false });
+        //     }    
+        // }
     }
 
     handleNewDataFromPopup(value) {
@@ -68,7 +69,6 @@ class ProjectRequests extends Component {
     addOrEdit = async (data, resetForm) => {
         this.createProjectRequest(
             data['title'],
-            data['description'],
             data['status'],
             data['requestStatus'],
             this.state.project.projectAddress
@@ -78,9 +78,11 @@ class ProjectRequests extends Component {
         this.getAllProjectRequests();
     }
 
-    createProjectRequest = async (_title, _description, _status, _requestStatus, _projectAddress) => {
+    createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
         await this.props.project.methods
-			.createProjectRequest(_title, _description, Number(_status), Number(_requestStatus), _projectAddress)
+			.createProjectRequest(
+                this.props.web3.utils.utf8ToHex(_title),
+                Number(_status), Number(_requestStatus), _projectAddress)
 			.send({ from: this.props.account });
 	}
 
@@ -88,7 +90,6 @@ class ProjectRequests extends Component {
 		const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Title', field: 'title' },
-			{ title: 'Description', field: 'description' },
 			{ title: 'Project Status', field: 'status' },
 			{ title: 'Request Status', field: 'requestStatus' },
 		];
@@ -99,7 +100,7 @@ class ProjectRequests extends Component {
                 <br/><br/>
 
                 {
-                    this.state.currentRequestStatus === true ?
+                    //this.state.currentRequestStatus === false ?
                         <Button
                         variant="outlined"
                         startIcon={<AddIcon />}
@@ -107,7 +108,7 @@ class ProjectRequests extends Component {
                             this.setRecordForEdit(this.state.project);
                             this.setCreateRequestForm(true);
                         }}>Add Project Request</Button>
-                        : <div>The Current Request must be approved or rejected to add another request</div>
+                        //: <div>The Current Request must be approved or rejected to add another request</div>
                 }
 
 				<Dialog open={this.state.createRequestForm} maxWidth="md">

@@ -35,10 +35,6 @@ export default function AddProjectRequest(props) {
 			temp.title = fieldValues.title ? '' : 'This field is required.';
             tempValidity.title = fieldValues.title?.length <= 0;
         }
-		if ('description' in fieldValues) {
-			temp.description = fieldValues.description ? '' : 'This field is required.';
-            tempValidity.description = fieldValues.description?.length <= 0;
-		}
 		if ('status' in fieldValues) {
 			temp.status = fieldValues.status.length > 0 ? '' : 'This field is required.';
             tempValidity.status = fieldValues.status?.length <= 0;
@@ -92,22 +88,6 @@ export default function AddProjectRequest(props) {
                                 error={validity.title}
                             />
 							{errors && <FormHelperText className="Mui-error">{errors.title}</FormHelperText>}
-						</FormControl>
-
-                        <FormControl style={{ width: '400px' }}>
-                            <TextField
-                                style={{ marginLeft: '3px', width: '400px' }}
-                                name="description"
-                                label="Description"
-                                variant="outlined"
-                                placeholder="MultiLine with min rows: 5"
-                                multiline
-                                minRows={5}
-                                value={values.description}
-                                onChange={handleInputChange}
-                                error={validity.description}
-                            />
-							{errors && <FormHelperText className="Mui-error">{errors.description}</FormHelperText>}
 						</FormControl>
 
 						<FormControl style={{ width: '400px' }}>

@@ -7,13 +7,17 @@ export default function ViewProjectRequest(props) {
 	const [values, setValues] = useState(initialProjectFormValues);
 
 	useEffect(() => {
+        console.log(recordForEdit);
+
 		if (recordForEdit != null) {
             let status = getProjectStatusByValue(recordForEdit['status']);
 			const newData = {
-				name: recordForEdit['name'],
-				description: recordForEdit['description'],
+				title: recordForEdit['title'],
+				comments: recordForEdit['comments'],
 				status: status.value,
-				ipfsFileCID: recordForEdit['ipfsFileCID'],
+				requestStatus: recordForEdit['requestStatus'],
+                projectAddress: recordForEdit['projectAddress'],
+                userAddress: recordForEdit['userAddress'],
 			};
 			setValues({
 				...newData,
@@ -26,16 +30,25 @@ export default function ViewProjectRequest(props) {
 			<Grid container>
 				<Grid item xs={6}>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Name: {values.name}</FormLabel>
+						<FormLabel>Title: {values.title}</FormLabel>
+					</p>
+                    {
+                        values.comments.length > 0 &&
+                        <p style={{ width: '670px' }}>
+                            <FormLabel>Comments: {values.comments}</FormLabel>
+                        </p>
+                    }
+					<p style={{ width: '670px' }}>
+						<FormLabel>Request Status: {values.requestStatus}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Description: {values.description}</FormLabel>
+						<FormLabel>Project Status: {values.status}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Status: {values.status}</FormLabel>
+						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Pinata File CID: {values.ipfsFileCID}</FormLabel>
+						<FormLabel>User Address: {values.userAddress}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>

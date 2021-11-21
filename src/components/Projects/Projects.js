@@ -129,15 +129,11 @@ class Projects extends Component {
 
     createProject = async (_name, _status, _fileData) => {
         let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
-
-        console.log(this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_ipfsFileCID), 64));
-
-        debugger;
         await this.props.project.methods
 			.createProject(
-                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_name), 64),
+                this.props.web3.utils.utf8ToHex(_name),
                 Number(_status),
-                this.props.web3.utils.padRight(this.props.web3.utils.asciiToHex(_ipfsFileCID), 64))
+                _ipfsFileCID)
 			.send({ from: this.props.account });
 	}
 
