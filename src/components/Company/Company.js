@@ -7,24 +7,36 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
+import { getAllRequests } from '../applicationService';
+import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 
 class Company extends Component {
     constructor(props) {
         super(props);
         this.state = {
             editRequest: false,
+            showTable: false,
             viewRequest: false,
 			recordForEdit: null,
-            project: {},
-            projectRequests: [],
+            requests: [],
         };
     }
 
     componentDidMount() {
+        this.getAllRequests();
+    }
+
+    async getAllRequests() {
+        let data = await Promise.resolve(getAllRequests(this.props));
+        this.setState({ requests: data });
     }
 
     handleNewDataFromPopup(value) {
         this.setState({ editRequest: value });
+    }
+
+    setShowTable = (value) => {
+        this.setState({ showTable: value });
     }
 
     setEditRequest = (value) => {
@@ -40,32 +52,32 @@ class Company extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.createProjectRequest(
-            data['title'],
-            data['status'],
+        this.updateProjectRequest(
+            data['index'],
+            data['comments'],
             data['requestStatus'],
-            this.state.project.projectAddress
+            data['indexProjectRequest']
         );
         resetForm();
         this.setRecordForEdit(null);
-        this.getAllProjectRequests();
     }
 
-    createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
+    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest) => {
         await this.props.project.methods
-			.createProjectRequest(_title, Number(_status), Number(_requestStatus), _projectAddress)
-			.send({ from: this.props.account });
+			.updateRequest(Number(_index), _comments, Number(_requestStatus), Number(_indexProjectRequest))
+			.send({ from: this.props.account }).then((receipt) => {
+                this.getAllRequests();
+            });
 	}
 
     render() {
         const tableRef = React.createRef();
         const columns = [
-            { title: 'Index', field: 'index' },
             { title: 'Title', field: 'title' },
             { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Status', field: 'projectStatus' },
             { title: 'Project Address', field: 'projectAddress' },
-            { title: 'User Address', field: 'userAddress' },
+            //{ title: 'User Address', field: 'userAddress' },
         ];
 
         return (
@@ -106,20 +118,20 @@ class Company extends Component {
 
                 <br />
 				<MaterialTable
-					title="Company"
+					title="Supervisor"
 					tableRef={tableRef}
 					icons={materialTableIcons}
 					columns={columns}
-					data={this.state.projectRequests}
+					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-							icon: Edit,
-							tooltip: 'Edit Request',
-							onClick: (event, rowData) => {
+                            icon: Edit,
+                            tooltip: 'Edit Request',
+                            onClick: (event, rowData) => {
                                 this.setEditRequest(true);
                                 this.setRecordForEdit(rowData);
-							},
+                            }
 						},
 						{
 							icon: Visibility,
@@ -131,6 +143,9 @@ class Company extends Component {
 						},
 					]}
 				/>
+
+                <br/><br/>
+                <AllPagesPdf showTable={this.state.showTable} />
             </>
         );
     }

@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
 import { getProjectStatusByValue, initialProjectFormValues } from '../formService';
+import { getRequestStatusByValue } from './../formService';
 
 export default function ViewRequest(props) {
 	const { recordForEdit } = props;
 	const [values, setValues] = useState(initialProjectFormValues);
 
 	useEffect(() => {
+        console.log(recordForEdit);
 		if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit['status']);
+            let projectStatus = getProjectStatusByValue(recordForEdit['projectStatus']);
+            let requestStatus = getRequestStatusByValue(recordForEdit['requestStatus']);
 			const newData = {
-				name: recordForEdit['name'],
-				status: status.value,
-				ipfsFileCID: recordForEdit['ipfsFileCID'],
+				title: recordForEdit['title'],
+				projectStatus: projectStatus.value,
+                requestStatus: requestStatus.value,
+                projectAddress: recordForEdit['projectAddress'],
+                userAddress: recordForEdit['userAddress']
 			};
 			setValues({
 				...newData,
@@ -25,13 +30,19 @@ export default function ViewRequest(props) {
 			<Grid container>
 				<Grid item xs={6}>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Name: {values.name}</FormLabel>
+						<FormLabel>Title: {values.title}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Status: {values.status}</FormLabel>
+						<FormLabel>Request Status: {values.requestStatus}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Pinata File CID: {values.ipfsFileCID}</FormLabel>
+						<FormLabel>Project Status: {values.projectStatus}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>User Status: {values.userAddress}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>
