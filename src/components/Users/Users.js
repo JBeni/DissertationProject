@@ -24,8 +24,6 @@ export default class Users extends Component {
     }
 
     componentDidMount() {
-        //let _username = "Matematica Matematica Matematica"; // 32
-        //this.props.project.methods.getBytes(this.props.web3.utils.utf8ToHex(_username)).send({ from: this.props.account });
     }
 
     getUsers = async () => {
@@ -45,31 +43,18 @@ export default class Users extends Component {
 		this.setState({ recordForEdit: data });
 	};
 
-    ascii_to_hex = (str) => {
-        var arr1 = [];
-        for (var n = 0, l = str.length; n < l; n ++) 
-        {
-            var hex = Number(str.charCodeAt(n)).toString(16);
-            arr1.push(hex);
-        }
-        return arr1.join('');
-    }
-
     createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
-        let username = this.ascii_to_hex(_username);
-
-        // await this.props.project.methods
-		// 	.registerUser(
-        //         this.props.web3.utils.hexToBytes(this.props.web3.utils.toHex(_username)),
-        //         //this.props.web3.utils.asciiToHex(this.props.web3.utils.utf8ToHex(this.props.web3.utils.hexToBytes(_username))),
-        //         this.props.web3.utils.utf8ToHex(_email),
-        //         this.props.web3.utils.utf8ToHex(_firstname),
-        //         this.props.web3.utils.utf8ToHex(_lastname),
-        //         Number(_role),
-        //         _walletAddress
-		// 	)
-		// 	.send({ from: this.props.account })
-        //     .then(function(receipt) {});
+        await this.props.project.methods
+			.registerUser(
+                _username,
+                this.props.web3.utils.utf8ToHex(_email),
+                this.props.web3.utils.utf8ToHex(_firstname),
+                this.props.web3.utils.utf8ToHex(_lastname),
+                Number(_role),
+                _walletAddress
+			)
+			.send({ from: this.props.account })
+            .then(function(receipt) {});
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
