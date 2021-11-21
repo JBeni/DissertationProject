@@ -97,21 +97,21 @@ export function getRequestStatusByValue(requestStatus) {
 
 export const projectStatusDropdown = [
 	{ id: '0', value: 'Created' },
-	{ id: '1', value: 'Approved' },
+	{ id: '1', value: 'ToApprove' },
 	{ id: '2', value: 'StartProject' },
 	{ id: '3', value: 'FinalizationCheck' },
 	{ id: '4', value: 'Completed' },
 ];
 
-export function getProjectStatusById(requestStatus) {
+export function getProjectStatusById(projectStatus) {
     return projectStatusDropdown.find((element) => {
-        return Number(element.id) === Number(requestStatus);
+        return Number(element.id) === Number(projectStatus);
     });
 }
 
-export function getProjectStatusByValue(requestStatus) {
+export function getProjectStatusByValue(projectStatus) {
     return projectStatusDropdown.find((element) => {
-        return element.value === requestStatus;
+        return element.value === projectStatus;
     });
 }
 

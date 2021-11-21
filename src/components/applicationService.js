@@ -100,29 +100,23 @@ export async function getAllRequests(props) {
         console.log(error);
     });
 
-    console.log(allRequests);
-
     let data = [];
-    // allRequests.map((result) => {
-    //     if (projectAddress === result['_projectAddress']) {
-    //         let status = getProjectStatusById(result['_status']);
-    //         let requestStatus = getRequestStatusById(result['_requestStatus']);
-    //         const project = {
-    //             index: result['_index'],
-    //             title: result['_title'],
-    //             comments: result['_comments'],
-    //             status: status.value,
-    //             requestStatus: requestStatus.value,
-    //             projectAddress: result['_projectAddress'],
-    //             userAddress: result['_userAddress'],
-    //         };
-    //         data.push(project);
-    //     }
-    //     return false;
-    // });
+    allRequests.map((result) => {
+        if (Number(result['_projectStatus']) === Number(1)) {
+            let projectStatus = getProjectStatusById(result['_projectStatus']);
+            let requestStatus = getRequestStatusById(result['_requestStatus']);
+            const project = {
+                index: result['_index'],
+                title: props.web3.utils.hexToUtf8(result['_title']),
+                comments: result['_comments'],
+                projectStatus: projectStatus.value,
+                requestStatus: requestStatus.value,
+                projectAddress: result['_projectAddress'],
+                userAddress: result['_userAddress'],
+            };
+            data.push(project);
+        }
+        return false;
+    });
     return data;
 }
-
-
-
-

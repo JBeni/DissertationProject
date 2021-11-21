@@ -23,7 +23,13 @@ class Supervisor extends Component {
     }
 
     componentDidMount() {
-        let data = getAllRequests(this.props);
+        this.getAllRequests();
+    }
+
+    async getAllRequests() {
+        let data = await Promise.resolve(getAllRequests(this.props));
+        this.setState({ requests: data });
+        console.log(data);
     }
 
     handleNewDataFromPopup(value) {
@@ -54,21 +60,20 @@ class Supervisor extends Component {
         this.getAllProjectRequests();
     }
 
-    createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
+    updateProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
         await this.props.project.methods
-			.createProjectRequest(_title, Number(_status), Number(_requestStatus), _projectAddress)
+			.updateProjectRequest(_title, Number(_status), Number(_requestStatus), _projectAddress)
 			.send({ from: this.props.account });
 	}
 
     render() {
         const tableRef = React.createRef();
         const columns = [
-            { title: 'Index', field: 'index' },
             { title: 'Title', field: 'title' },
             { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Status', field: 'projectStatus' },
             { title: 'Project Address', field: 'projectAddress' },
-            { title: 'User Address', field: 'userAddress' },
+            //{ title: 'User Address', field: 'userAddress' },
         ];
 
         return (

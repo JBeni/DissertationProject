@@ -4,7 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 contract SharedChain {
 
     enum RequestStatus { UnApproved, Rejected, Approved }
-    enum ProjectStatus { Created, Approved, StartProject, FinalizationCheck, Completed }
+    enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
 
     event ProjectEvent(
         uint _index,

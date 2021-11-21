@@ -75,7 +75,6 @@ class ProjectRequests extends Component {
         );
         resetForm();
         this.setRecordForEdit(null);
-        this.getAllProjectRequests();
     }
 
     createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
@@ -83,7 +82,10 @@ class ProjectRequests extends Component {
 			.createProjectRequest(
                 this.props.web3.utils.utf8ToHex(_title),
                 Number(_status), Number(_requestStatus), _projectAddress)
-			.send({ from: this.props.account });
+			.send({ from: this.props.account }).then((receipt) => {
+                console.log(receipt);
+                this.getAllProjectRequests();
+            });
 	}
 
 	render() {

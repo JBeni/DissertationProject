@@ -89,8 +89,8 @@ contract ProjectChain is UserChain, SharedChain {
 
     function createRequest(
         bytes32 _title,
-        uint _requestStatus,
         uint _projectStatus,
+        uint _requestStatus,
         address _projectAddress
     ) public {
         requests[requestsCounter]._index = requestsCounter;
