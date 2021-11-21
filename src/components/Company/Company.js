@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getAllRequests } from '../applicationService';
+import { getCompanyRequests } from '../applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 
 class Company extends Component {
@@ -23,11 +23,11 @@ class Company extends Component {
     }
 
     componentDidMount() {
-        this.getAllRequests();
+        this.getCompanyRequests();
     }
 
-    async getAllRequests() {
-        let data = await Promise.resolve(getAllRequests(this.props));
+    async getCompanyRequests() {
+        let data = await Promise.resolve(getCompanyRequests(this.props));
         this.setState({ requests: data });
     }
 
@@ -66,7 +66,7 @@ class Company extends Component {
         await this.props.project.methods
 			.updateRequest(Number(_index), _comments, Number(_requestStatus), Number(_indexProjectRequest))
 			.send({ from: this.props.account }).then((receipt) => {
-                this.getAllRequests();
+                this.getCompanyRequests();
             });
 	}
 

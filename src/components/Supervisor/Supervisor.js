@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getAllRequests } from '../applicationService';
+import { getSupervisorRequests } from '../applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 
 class Supervisor extends Component {
@@ -23,11 +23,11 @@ class Supervisor extends Component {
     }
 
     componentDidMount() {
-        this.getAllRequests();
+        this.getSupervisorRequests();
     }
 
-    async getAllRequests() {
-        let data = await Promise.resolve(getAllRequests(this.props));
+    async getSupervisorRequests() {
+        let data = await Promise.resolve(getSupervisorRequests(this.props));
         this.setState({ requests: data });
     }
 
@@ -66,7 +66,7 @@ class Supervisor extends Component {
         await this.props.project.methods
 			.updateRequest(Number(_index), _comments, Number(_requestStatus), Number(_indexProjectRequest))
 			.send({ from: this.props.account }).then((receipt) => {
-                this.getAllRequests();
+                this.getSupervisorRequests();
             });
 	}
 

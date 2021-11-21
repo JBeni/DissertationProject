@@ -93,7 +93,7 @@ export async function getAllProjectRequests(props, projectAddress) {
 
 /********  Methods for Supervisor and Company  ***********/
 
-export async function getAllRequests(props) {
+export async function getSupervisorRequests(props) {
     let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
     }).catch(function (error) {
@@ -105,6 +105,37 @@ export async function getAllRequests(props) {
         let requestStatus = getRequestStatusById(result['_requestStatus']);
         if (requestStatus.value === 'UnApproved') {
             if (Number(result['_projectStatus']) === Number(1) || Number(result['_projectStatus']) === Number(3) || Number(result['_projectStatus']) === Number(4)) {
+                let projectStatus = getProjectStatusById(result['_projectStatus']);
+                const project = {
+                    index: result['_index'],
+                    title: props.web3.utils.hexToUtf8(result['_title']),
+                    comments: result['_comments'],
+                    projectStatus: projectStatus.value,
+                    requestStatus: requestStatus.value,
+                    projectAddress: result['_projectAddress'],
+                    indexProjectRequest: result['_indexProjectRequest'],
+                    userAddress: result['_userAddress'],
+                };
+                data.push(project);
+            }
+        }
+        return false;
+    });
+    return data;
+}
+
+export async function getCompanyRequests(props) {
+    let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+        return result;
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    let data = [];
+    allRequests.map((result) => {
+        let requestStatus = getRequestStatusById(result['_requestStatus']);
+        if (requestStatus.value === 'UnApproved') {
+            if (Number(result['_projectStatus']) === Number(2)) {
                 let projectStatus = getProjectStatusById(result['_projectStatus']);
                 const project = {
                     index: result['_index'],
