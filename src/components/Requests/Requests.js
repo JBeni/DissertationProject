@@ -38,8 +38,8 @@ class Requests extends Component {
         const tableRef = React.createRef();
         const columns = [
             { title: 'Title', field: 'title' },
-            { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Status', field: 'projectStatus' },
+            { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Address', field: 'projectAddress' },
             //{ title: 'User Address', field: 'userAddress' },
         ];
