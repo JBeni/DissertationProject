@@ -9,6 +9,8 @@ contract ProjectChain is UserChain, SharedChain {
     bytes32 constant REQUEST_HASH_VALUE = "csd?.!?*salas;dlA.;s_as";
     address _projectInitiator;
 
+    uint _indexUniqueAddress = 0;
+
     /**  DATA FOR PROJECT INITIATOR  */
 
     mapping(address => Project) public projects;
@@ -33,7 +35,7 @@ contract ProjectChain is UserChain, SharedChain {
         return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
     }
 
-    function createProject(bytes32 _name, uint _status, string memory _ipfsFileCID) public {
+    function createProject(bytes32 _name, uint _status, string memory _ipfsFileCID, bytes32 _signature) public {
         address _projectAddress = createUniqueProjectAddress(PROJECT_HASH_VALUE, projectsCounter);
 
         projects[_projectAddress]._index = projectsCounter;
@@ -43,6 +45,7 @@ contract ProjectChain is UserChain, SharedChain {
         projects[_projectAddress]._projectAddress = _projectAddress;
         projects[_projectAddress]._userAddress = _projectInitiator;
         projects[_projectAddress]._timestamp = block.timestamp;
+        projects[_projectAddress]._signature = _signature;
 
         emit ProjectEvent(
             projectsCounter,
@@ -51,11 +54,12 @@ contract ProjectChain is UserChain, SharedChain {
             _ipfsFileCID,
             _projectAddress,
             _projectInitiator,
-            block.timestamp
+            block.timestamp,
+            _signature
         );
         allProjects.push(Project(
             projectsCounter, _name, ProjectStatus(_status), _ipfsFileCID,
-            _projectAddress, _projectInitiator, block.timestamp
+            _projectAddress, _projectInitiator, block.timestamp, _signature
         ));
         projectsCounter++;
     }
@@ -68,16 +72,15 @@ contract ProjectChain is UserChain, SharedChain {
         return allProjects;
     }
 
-    function createUniqueProjectRequestAddress(bytes32 _text, uint _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
+    function createUniqueProjectRequestAddress() public returns (address) {
+        _indexUniqueAddress++;
+        return address(uint160(uint256(keccak256(abi.encodePacked(REQUEST_HASH_VALUE, _projectInitiator, _indexUniqueAddress)))));
     }
 
     function createProjectRequest(
-        bytes32 _title, uint _status,
-        uint _requestStatus, address _projectAddress
+        bytes32 _title, uint _status, uint _requestStatus,
+        address _projectAddress, address _projectReqAddress, bytes32 _signature
     ) public {
-        address _projectReqAddress = createUniqueProjectRequestAddress(REQUEST_HASH_VALUE, projectRequestsCounter);
-
         projectRequests[projectRequestsCounter]._index = projectRequestsCounter;
         projectRequests[projectRequestsCounter]._title = _title;
         projectRequests[projectRequestsCounter]._comments = '';
@@ -85,7 +88,9 @@ contract ProjectChain is UserChain, SharedChain {
         projectRequests[projectRequestsCounter]._requestStatus = RequestStatus(_requestStatus);
         projectRequests[projectRequestsCounter]._projectAddress = _projectAddress;
         projectRequests[projectRequestsCounter]._userAddress = _projectInitiator;
+        projectRequests[projectRequestsCounter]._requestAddress = _projectReqAddress;
         projectRequests[projectRequestsCounter]._timestamp = block.timestamp;
+        projectRequests[projectRequestsCounter]._signature = _signature;
 
         filterRequests(projectRequestsCounter, _title, _requestStatus, _status, _projectAddress, _projectReqAddress);
 
@@ -98,12 +103,13 @@ contract ProjectChain is UserChain, SharedChain {
             _projectAddress,
             _projectInitiator,
             _projectReqAddress,
-            block.timestamp
+            block.timestamp,
+            _signature
         );
         allProjectRequests.push(ProjectRequest(
             projectRequestsCounter, _title, '', ProjectStatus(_status),
             RequestStatus(_requestStatus), _projectAddress, _projectInitiator,
-            _projectReqAddress, block.timestamp
+            _projectReqAddress, block.timestamp, _signature
         ));
         projectRequestsCounter++;
     }
@@ -181,6 +187,7 @@ contract ProjectChain is UserChain, SharedChain {
         requests[requestsCounter]._userAddress = _projectInitiator;
         requests[requestsCounter]._requestAddress = _requestAddress;
         requests[requestsCounter]._timestamp = block.timestamp;
+        requests[requestsCounter]._signature = '';
 
         emit RequestEvent(
             requestsCounter,
@@ -191,12 +198,13 @@ contract ProjectChain is UserChain, SharedChain {
             _requestType, _projectAddress,
             _projectInitiator,
             _requestAddress,
-            block.timestamp
+            block.timestamp,
+            ''
         );
         allRequests.push(Request(
             requestsCounter, _indexProjectRequest, _title,  RequestStatus(_requestStatus),
             ProjectStatus(_projectStatus),  _requestType, _projectAddress,
-            _projectInitiator, _requestAddress, block.timestamp
+            _projectInitiator, _requestAddress, block.timestamp, ''
         ));
         requestsCounter++;
     }
@@ -207,12 +215,16 @@ contract ProjectChain is UserChain, SharedChain {
         uint _requestStatus,
         uint _indexProjectRequest,
         uint _projectStatus,
-        address _projectAddress
+        address _projectAddress,
+        bytes32 _signature
     ) public {
         // Update request status in the Requests Mapping and Struct Array
         requests[_index]._requestStatus = RequestStatus(_requestStatus);
+        requests[_index]._signature = _signature;
+
         uint index = requests[_index]._index;
         allRequests[index]._requestStatus = RequestStatus(_requestStatus);
+        allRequests[index]._signature = _signature;
 
         // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
