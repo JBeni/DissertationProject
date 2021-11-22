@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './Styles/Navbar.css';
+import '../Styles/Navbar.css';
 import { useLocation } from 'react-router-dom';
-import Header from './Navbar/Header';
-import Sidebar from './Navbar/Sidebar';
-import Routes from './Navbar/Routes';
-import { getUserRoleById } from './formService';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import Routes from './Routes';
+import { getUserRoleById } from '../formService';
 
 function Navbar(props) {
     const [isActive, setIsActive] = useState(true);
