@@ -73,6 +73,24 @@ export const initialProjectFormValidity = {
     file: false,
 };
 
+
+export function getRequestTypeById(requestType) {
+    return requestTypeDropdown.find((element) => {
+        return Number(element.id) === Number(requestType);
+    });
+}
+
+export function getRequestTypeByValue(requestType) {
+    return requestTypeDropdown.find((element) => {
+        return element.value === requestType;
+    });
+}
+
+export const requestTypeDropdown = [
+    { id: '0', value: 'SupervisorReq' },
+	{ id: '1', value: 'CompanyReq' },
+];
+
 export const getDefaultProjectStatus = () => {
     return { id: '0', value: 'Created' };
 }

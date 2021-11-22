@@ -26,6 +26,7 @@ function Navbar(props) {
         }
 
         return;
+        /*
         (async () => {
             let data = await props.project.methods.getUserInfo(props.account).call().then((result) => {
                 return result;
@@ -33,6 +34,7 @@ function Navbar(props) {
             let role = getUserRoleById(data._role);
             setCurrentUserRole(role.value);
         })();
+        */
 	}, []);
 
     return (
