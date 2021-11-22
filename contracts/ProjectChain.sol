@@ -193,20 +193,33 @@ contract ProjectChain is UserChain, SharedChain {
         requestsCounter++;
     }
 
-    function updateRequest(uint _index, string memory _comments, uint _requestStatus, uint _indexProjectRequest) public {
+    function updateRequest(
+        uint _index,
+        string memory _comments,
+        uint _requestStatus,
+        uint _indexProjectRequest,
+        uint _projectStatus,
+        address _projectAddress
+    ) public {
+        // Update request status in the Requests Mapping and Struct Array
         requests[_index]._requestStatus = RequestStatus(_requestStatus);
         uint index = requests[_index]._index;
         allRequests[index]._requestStatus = RequestStatus(_requestStatus);
 
+        // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
         projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
-        uint indexProject = projectRequests[_indexProjectRequest]._index;
-        allProjectRequests[indexProject]._comments = _comments;
-        allProjectRequests[indexProject]._requestStatus = RequestStatus(_requestStatus);
+        uint indexProjectReq = projectRequests[_indexProjectRequest]._index;
+        allProjectRequests[indexProjectReq]._comments = _comments;
+        allProjectRequests[indexProjectReq]._requestStatus = RequestStatus(_requestStatus);
+
+        // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
+        projects[_projectAddress]._status = ProjectStatus(_projectStatus);
+        uint indexProject = projects[_projectAddress]._index;
+        allProjects[indexProject]._status = ProjectStatus(_projectStatus);
     }
 
     function getAllRequests() public view returns(Request[] memory) {
         return allRequests;
     }
-
 }
