@@ -56,16 +56,24 @@ class Supervisor extends Component {
             data['index'],
             data['comments'],
             data['requestStatus'],
-            data['indexProjectRequest']
+            data['indexProjectRequest'],
+            data['projectStatus'],
+            data['projectAddress']
         );
         resetForm();
         this.setRecordForEdit(null);
     }
 
-    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest) => {
+    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress) => {
         await this.props.project.methods
-			.updateRequest(Number(_index), _comments, Number(_requestStatus), Number(_indexProjectRequest))
-			.send({ from: this.props.account }).then((receipt) => {
+			.updateRequest(
+                Number(_index),
+                _comments,
+                Number(_requestStatus),
+                Number(_indexProjectRequest),
+                _projectStatus,
+                _projectAddress
+            ).send({ from: this.props.account }).then((receipt) => {
                 this.getSupervisorRequests();
             });
 	}
@@ -74,8 +82,8 @@ class Supervisor extends Component {
         const tableRef = React.createRef();
         const columns = [
             { title: 'Title', field: 'title' },
-            { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Status', field: 'projectStatus' },
+            { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Address', field: 'projectAddress' },
             //{ title: 'User Address', field: 'userAddress' },
         ];
@@ -118,7 +126,7 @@ class Supervisor extends Component {
 
                 <br />
 				<MaterialTable
-					title="Supervisor"
+					title="Requests For Supervisor"
 					tableRef={tableRef}
 					icons={materialTableIcons}
 					columns={columns}
