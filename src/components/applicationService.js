@@ -1,5 +1,5 @@
 
-import { getUserRoleById, getProjectStatusById, getRequestStatusById } from './formService';
+import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType } from './formService';
 
 export async function getAllUsers(props) {
     let data = [];
@@ -104,7 +104,8 @@ export async function getSupervisorRequests(props) {
     allRequests.map((result) => {
         let requestStatus = getRequestStatusById(result['_requestStatus']);
         if (requestStatus.value === 'UnApproved') {
-            if (Number(result['_projectStatus']) === Number(1) || Number(result['_projectStatus']) === Number(3) || Number(result['_projectStatus']) === Number(4)) {
+            let requestType = getSupervisorRequestType(result['_requestType']);
+            if (Number(result['_requestType']) === Number(requestType.id)) {
                 let projectStatus = getProjectStatusById(result['_projectStatus']);
                 const project = {
                     index: result['_index'],
@@ -112,6 +113,7 @@ export async function getSupervisorRequests(props) {
                     comments: result['_comments'],
                     projectStatus: projectStatus.value,
                     requestStatus: requestStatus.value,
+                    requestType: requestType.value,
                     projectAddress: result['_projectAddress'],
                     indexProjectRequest: result['_indexProjectRequest'],
                     userAddress: result['_userAddress'],
@@ -135,7 +137,8 @@ export async function getCompanyRequests(props) {
     allRequests.map((result) => {
         let requestStatus = getRequestStatusById(result['_requestStatus']);
         if (requestStatus.value === 'UnApproved') {
-            if (Number(result['_projectStatus']) === Number(2)) {
+            let requestType = getCompanyRequestType(result['_requestType']);
+            if (Number(result['_requestType']) === Number(requestType.id)) {
                 let projectStatus = getProjectStatusById(result['_projectStatus']);
                 const project = {
                     index: result['_index'],
@@ -143,6 +146,7 @@ export async function getCompanyRequests(props) {
                     comments: result['_comments'],
                     projectStatus: projectStatus.value,
                     requestStatus: requestStatus.value,
+                    requestType: requestType.value,
                     projectAddress: result['_projectAddress'],
                     indexProjectRequest: result['_indexProjectRequest'],
                     userAddress: result['_userAddress'],

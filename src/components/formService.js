@@ -86,6 +86,14 @@ export function getRequestTypeByValue(requestType) {
     });
 }
 
+export const getSupervisorRequestType = () => {
+    return { id: '0', value: 'SupervisorReq' };
+}
+
+export const getCompanyRequestType = () => {
+    return { id: '1', value: 'CompanyReq' };
+}
+
 export const requestTypeDropdown = [
     { id: '0', value: 'SupervisorReq' },
 	{ id: '1', value: 'CompanyReq' },
