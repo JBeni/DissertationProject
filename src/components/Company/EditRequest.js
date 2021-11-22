@@ -79,6 +79,8 @@ export default function EditRequest(props) {
                 projectStatus: projectStatus.id,
                 indexProjectRequest: recordForEdit['indexProjectRequest'],
                 comments: '',
+                projectAddress: recordForEdit['projectAddress'],
+                userAddress: recordForEdit['userAddress']
 			});
             setIsEdit(true);
         } else {
