@@ -5,7 +5,7 @@ contract UserChain {
     address public owner;
 
     mapping(address => User) public users;
-    User[] public allUsers;
+    address[] public usersAddress;
     uint256 public usersCounter = 0;
 
     enum Roles {
@@ -75,14 +75,12 @@ contract UserChain {
             Roles(_role),
             block.timestamp
         );
-        allUsers.push(User(usersCounter, _username, _email, _firstname, _lastname, Roles(_role), _walletAddress, block.timestamp));
+        usersAddress.push(_walletAddress);
         usersCounter++;
     }
 
     function changeUserRole(uint _role, address _walletAddress) public {
         users[_walletAddress]._role = Roles(_role);
-        uint index = users[_walletAddress]._index;
-        allUsers[index]._role = Roles(_role);
 
         emit UserEvent(
             _walletAddress,
@@ -95,8 +93,8 @@ contract UserChain {
         );
     }
 
-    function getAllUsers() public view returns (User[] memory) {
-        return allUsers;
+    function getAllUsers() public view returns (address[] memory) {
+        return usersAddress;
     }
 
     function getUserInfo(address _walletAddress) public view returns (User memory) {

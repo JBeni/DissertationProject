@@ -15,11 +15,11 @@ contract ProjectChain is UserChain, SharedChain {
 
     mapping(address => Project) public projects;
     uint public projectsCounter = 0;
-    Project[] public allProjects;
+    address[] public projectsAddress;
 
     mapping(uint => ProjectRequest) public projectRequests;
     uint public projectRequestsCounter = 0;
-    ProjectRequest[] public allProjectRequests;
+    address[] public projectRequestsAddress;
 
     constructor() {
         _projectInitiator = msg.sender;
@@ -57,10 +57,7 @@ contract ProjectChain is UserChain, SharedChain {
             block.timestamp,
             _signature
         );
-        allProjects.push(Project(
-            projectsCounter, _name, ProjectStatus(_status), _ipfsFileCID,
-            _projectAddress, _projectInitiator, block.timestamp, _signature
-        ));
+        projectsAddress.push(_projectAddress);
         projectsCounter++;
     }
 
@@ -68,8 +65,8 @@ contract ProjectChain is UserChain, SharedChain {
         return projects[_address];
     }
 
-    function getAllProjects() public view returns(Project[] memory) {
-        return allProjects;
+    function getAllProjects() public view returns(address[] memory) {
+        return projectsAddress;
     }
 
     function createUniqueProjectRequestAddress() public returns (address) {
@@ -106,11 +103,7 @@ contract ProjectChain is UserChain, SharedChain {
             block.timestamp,
             _signature
         );
-        allProjectRequests.push(ProjectRequest(
-            projectRequestsCounter, _title, '', ProjectStatus(_status),
-            RequestStatus(_requestStatus), _projectAddress, _projectInitiator,
-            _projectReqAddress, block.timestamp, _signature
-        ));
+        projectRequestsAddress.push(_projectReqAddress);
         projectRequestsCounter++;
     }
 
@@ -135,23 +128,23 @@ contract ProjectChain is UserChain, SharedChain {
         createRequest(_indexProjectRequest, _title, _requestStatus, _projectStatus, _requestType, _projectAddress, _requestAddress);
     }
 
-    function getAllProjectRequests() external view returns(ProjectRequest[] memory) {
-        return allProjectRequests;
+    function getAllProjectRequests() external view returns(address[] memory) {
+        return projectRequestsAddress;
     }
-
+/*
     function getLastProjectRequest(address _projectAddress) external view returns(ProjectRequest memory) {
         ProjectRequest memory request;
-        if (allProjectRequests.length > 0) {
-            for (uint index = allProjectRequests.length - 1; index >= 0; index--) {
-                if (_projectAddress == allProjectRequests[index]._projectAddress) {
-                    request._index = allProjectRequests[index]._index;
-                    request._title = allProjectRequests[index]._title;
-                    request._comments = allProjectRequests[index]._comments;
-                    request._status = allProjectRequests[index]._status;
-                    request._requestStatus = allProjectRequests[index]._requestStatus;
-                    request._projectAddress = allProjectRequests[index]._projectAddress;
-                    request._userAddress = allProjectRequests[index]._userAddress;
-                    request._requestAddress = allProjectRequests[index]._requestAddress;
+        if (projectRequestsCounter > 0) {
+            for (uint index = projectRequestsCounter - 1; index >= 0; index--) {
+                if (_projectAddress == projectRequests[index]._projectAddress) {
+                    request._index = projectRequests[index]._index;
+                    request._title = projectRequests[index]._title;
+                    request._comments = projectRequests[index]._comments;
+                    request._status = projectRequests[index]._status;
+                    request._requestStatus = projectRequests[index]._requestStatus;
+                    request._projectAddress = projectRequests[index]._projectAddress;
+                    request._userAddress = projectRequests[index]._userAddress;
+                    request._requestAddress = projectRequests[index]._requestAddress;
                     request._timestamp = block.timestamp;
                     return request;
                 }
@@ -159,7 +152,7 @@ contract ProjectChain is UserChain, SharedChain {
         }
         return request;
     }
-
+*/
 
     /**  DATA FOR SUPERVISOR && COMPANY  */
 
@@ -229,14 +222,9 @@ contract ProjectChain is UserChain, SharedChain {
         // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
         projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
-        uint indexProjectReq = projectRequests[_indexProjectRequest]._index;
-        allProjectRequests[indexProjectReq]._comments = _comments;
-        allProjectRequests[indexProjectReq]._requestStatus = RequestStatus(_requestStatus);
 
         // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
-        uint indexProject = projects[_projectAddress]._index;
-        allProjects[indexProject]._status = ProjectStatus(_projectStatus);
     }
 
     function getAllRequests() public view returns(Request[] memory) {
