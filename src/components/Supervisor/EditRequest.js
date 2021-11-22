@@ -9,7 +9,8 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { initialRequestFormValues, initialRequestFormValidity, projectStatusDropdown, getProjectStatusByValue, requestStatusTwoDropdown } from '../formService';
+import { initialRequestFormValues, initialRequestFormValidity } from '../formService';
+import { projectStatusDropdown, getProjectStatusByValue, requestStatusDropdownTwoOptions } from './../dropdownService';
 import { useStylesForm } from './../sharedResources';
 
 export default function EditRequest(props) {
@@ -152,7 +153,7 @@ export default function EditRequest(props) {
 								onChange={handleInputChange}
                                 error={validity.requestStatus}
 							>
-								{requestStatusTwoDropdown.map((item) => (
+								{requestStatusDropdownTwoOptions.map((item) => (
                                     <MenuItem key={item.id} value={item.id}>
                                         {item.value}
                                     </MenuItem>
