@@ -52,7 +52,6 @@ class ProjectRequests extends Component {
             this.setState({ requestNextStep: false });
         }
         this.setActiveStep(lastRequest);
-        //this.setState({ activeStep: Number(lastRequest['_status']) });
     }
 
     setActiveStep = (lastRequest) => {
