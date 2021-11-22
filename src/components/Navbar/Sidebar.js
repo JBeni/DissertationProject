@@ -82,6 +82,20 @@ function Sidebar(props) {
                                     <span className="nav__name">Project Supervisor</span>
                                 </Link>
                         }
+                        {
+                            props.userRole &&
+                                <Link
+                                    to="/requests"
+                                    className={
+                                        props.currentLocation[1] === 'requests'
+                                            ? 'nav__link active'
+                                            : 'nav__link'
+                                    }
+                                >
+                                    <i className="bx bxs-dashboard nav__icon"></i>
+                                    <span className="nav__name">All Requests</span>
+                                </Link>
+                        }
 					</div>
 				</div>
 

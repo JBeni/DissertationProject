@@ -1,5 +1,5 @@
 
-import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType } from './formService';
+import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from './formService';
 
 export async function getAllUsers(props) {
     let data = [];
@@ -103,7 +103,8 @@ export async function getSupervisorRequests(props) {
     let data = [];
     allRequests.map((result) => {
         let requestStatus = getRequestStatusById(result['_requestStatus']);
-        if (requestStatus.value === 'UnApproved') {
+        let unApproveStatus = getDefaultRequestStatus();
+        if (requestStatus.value === unApproveStatus.value) {
             let requestType = getSupervisorRequestType(result['_requestType']);
             if (Number(result['_requestType']) === Number(requestType.id)) {
                 let projectStatus = getProjectStatusById(result['_projectStatus']);
@@ -136,7 +137,8 @@ export async function getCompanyRequests(props) {
     let data = [];
     allRequests.map((result) => {
         let requestStatus = getRequestStatusById(result['_requestStatus']);
-        if (requestStatus.value === 'UnApproved') {
+        let unApproveStatus = getDefaultRequestStatus();
+        if (requestStatus.value === unApproveStatus.value) {
             let requestType = getCompanyRequestType(result['_requestType']);
             if (Number(result['_requestType']) === Number(requestType.id)) {
                 let projectStatus = getProjectStatusById(result['_projectStatus']);
@@ -153,6 +155,38 @@ export async function getCompanyRequests(props) {
                 };
                 data.push(project);
             }
+        }
+        return false;
+    });
+    return data;
+}
+
+export async function getAllRequests(props) {
+    let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+        return result;
+    }).catch(function (error) {
+        console.log(error);
+    });
+
+    let data = [];
+    allRequests.map((result) => {
+        let requestStatus = getRequestStatusById(result['_requestStatus']);
+        let unApproveStatus = getDefaultRequestStatus();
+        if (requestStatus.value !== unApproveStatus.value) {
+            let requestType = getSupervisorRequestType(result['_requestType']);
+            let projectStatus = getProjectStatusById(result['_projectStatus']);
+            const project = {
+                index: result['_index'],
+                title: props.web3.utils.hexToUtf8(result['_title']),
+                comments: result['_comments'],
+                projectStatus: projectStatus.value,
+                requestStatus: requestStatus.value,
+                requestType: requestType.value,
+                projectAddress: result['_projectAddress'],
+                indexProjectRequest: result['_indexProjectRequest'],
+                userAddress: result['_userAddress'],
+            };
+            data.push(project);
         }
         return false;
     });

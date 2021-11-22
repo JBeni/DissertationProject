@@ -7,6 +7,7 @@ import Dashboard from '../Dashboard';
 import Company from './../Company/Company';
 import Supervisor from './../Supervisor/Supervisor';
 import ProjectRequests from '../ProjectRequests/ProjectRequests';
+import Requests from './../Requests/Requests';
 
 function Routes(props) {
 	return (
@@ -108,6 +109,19 @@ function Routes(props) {
                         path="/supervisor"
                         render={() => (
                             <Supervisor
+                                account={props.account}
+                                project={props.project}
+                                web3={props.web3}
+                            />
+                        )}
+                    />
+            }
+            {
+                props.userRole === 'DefaultRole' &&
+                    <Route
+                        path="/requests"
+                        render={() => (
+                            <Requests
                                 account={props.account}
                                 project={props.project}
                                 web3={props.web3}

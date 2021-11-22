@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { materialTableIcons } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
-import Edit from '@material-ui/icons/Edit';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
