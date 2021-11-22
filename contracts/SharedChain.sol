@@ -6,16 +6,6 @@ contract SharedChain {
     enum RequestStatus { UnApproved, Rejected, Approved }
     enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
 
-    event ProjectEvent(
-        uint _index,
-        bytes32 _name,
-        ProjectStatus _status,
-        string _ipfsFileCID,
-        address _projectAddress,
-        address _userAddress,
-        uint _timestamp
-    );
-
     struct Project {
         uint _index;
         bytes32 _name;
@@ -23,14 +13,13 @@ contract SharedChain {
         string _ipfsFileCID;
         address _projectAddress;
         address _userAddress;
+        uint _timestamp;
     }
-
-    event ProjectRequestEvent(
+    event ProjectEvent(
         uint _index,
-        bytes32 _title,
-        string _comments,
+        bytes32 _name,
         ProjectStatus _status,
-        RequestStatus _requestStatus,
+        string _ipfsFileCID,
         address _projectAddress,
         address _userAddress,
         uint _timestamp
@@ -44,10 +33,22 @@ contract SharedChain {
         RequestStatus _requestStatus;
         address _projectAddress;
         address _userAddress;
+        address _requestAddress;
+        uint _timestamp;
     }
+    event ProjectRequestEvent(
+        uint _index,
+        bytes32 _title,
+        string _comments,
+        ProjectStatus _status,
+        RequestStatus _requestStatus,
+        address _projectAddress,
+        address _userAddress,
+        address _requestAddress,
+        uint _timestamp
+    );
 
-    /****** */
-
+    /******** */
     struct Request {
         uint _index;
         uint _indexProjectRequest;
@@ -57,6 +58,8 @@ contract SharedChain {
         RequestType _requestType;
         address _projectAddress;
         address _userAddress;
+        address _requestAddress;
+        uint _timestamp;
     }
 
     event RequestEvent(
@@ -68,6 +71,7 @@ contract SharedChain {
         RequestType _requestType,
         address _projectAddress,
         address _userAddress,
+        address _requestAddress,
         uint _timestamp
     );
 }

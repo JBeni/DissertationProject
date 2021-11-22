@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-import "./SharedChain.sol";
+import "../SharedChain.sol";
 
 contract SupervisorChain is SharedChain {
     address _supervisorAddress;

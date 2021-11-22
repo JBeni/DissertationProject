@@ -23,15 +23,16 @@ contract UserChain {
         bytes32 _lastname;
         Roles _role;
         address _walletAddress;
+        uint _timestamp;
     }
-
     event UserEvent(
         address indexed _walletAddress,
         string indexed _username,
         bytes32 _email,
         bytes32 _firstname,
         bytes32 _lastname,
-        Roles indexed _role
+        Roles indexed _role,
+        uint _timestamp
     );
 
     constructor() {
@@ -69,9 +70,10 @@ contract UserChain {
             _email,
             _firstname,
             _lastname,
-            Roles(_role)
+            Roles(_role),
+            block.timestamp
         );
-        allUsers.push(User(usersCounter, _username, _email, _firstname, _lastname, Roles(_role), _walletAddress));
+        allUsers.push(User(usersCounter, _username, _email, _firstname, _lastname, Roles(_role), _walletAddress, block.timestamp));
         usersCounter++;
     }
 
@@ -85,7 +87,8 @@ contract UserChain {
             users[_walletAddress]._email,
             users[_walletAddress]._firstname,
             users[_walletAddress]._lastname,
-            Roles(_role)
+            Roles(_role),
+            block.timestamp
         );
     }
 

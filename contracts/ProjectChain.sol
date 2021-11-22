@@ -2,18 +2,15 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 import "./UserChain.sol";
-import "./CompanyChain.sol";
-import "./SupervisorChain.sol";
-
 import "./SharedChain.sol";
 
-// Put constraints on the app based on role not address......
-
 contract ProjectChain is UserChain, SharedChain {
-    string constant HASH_bytes32_VALUE = "csd?S@salas;dlA234_D.;s_as";
+    bytes32 constant PROJECT_HASH_VALUE = "csd?S@salas;dlA234_D.;s_as";
+    bytes32 constant REQUEST_HASH_VALUE = "csd?.!?*salas;dlA.;s_as";
     address _projectInitiator;
 
-    // Project Contract Data
+    /**  DATA FOR PROJECT INITIATOR  */
+
     mapping(address => Project) public projects;
     uint public projectsCounter = 0;
     Project[] public allProjects;
@@ -32,12 +29,12 @@ contract ProjectChain is UserChain, SharedChain {
         _;
     }
 
-    function createUniqueHexAddress(string memory _text, uint _index) public view returns (address) {
+    function createUniqueProjectAddress(bytes32 _text, uint _index) public view returns (address) {
         return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
     }
 
     function createProject(bytes32 _name, uint _status, string memory _ipfsFileCID) public {
-        address _projectAddress = createUniqueHexAddress(HASH_bytes32_VALUE, projectsCounter);
+        address _projectAddress = createUniqueProjectAddress(PROJECT_HASH_VALUE, projectsCounter);
 
         projects[_projectAddress]._index = projectsCounter;
         projects[_projectAddress]._name = _name;
@@ -45,6 +42,7 @@ contract ProjectChain is UserChain, SharedChain {
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._projectAddress = _projectAddress;
         projects[_projectAddress]._userAddress = _projectInitiator;
+        projects[_projectAddress]._timestamp = block.timestamp;
 
         emit ProjectEvent(
             projectsCounter,
@@ -56,8 +54,8 @@ contract ProjectChain is UserChain, SharedChain {
             block.timestamp
         );
         allProjects.push(Project(
-            projectsCounter, _name, ProjectStatus(_status),
-            _ipfsFileCID, _projectAddress, _projectInitiator
+            projectsCounter, _name, ProjectStatus(_status), _ipfsFileCID,
+            _projectAddress, _projectInitiator, block.timestamp
         ));
         projectsCounter++;
     }
@@ -70,10 +68,16 @@ contract ProjectChain is UserChain, SharedChain {
         return allProjects;
     }
 
+    function createUniqueProjectRequestAddress(bytes32 _text, uint _index) public view returns (address) {
+        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
+    }
+
     function createProjectRequest(
         bytes32 _title, uint _status,
         uint _requestStatus, address _projectAddress
     ) public {
+        address _projectReqAddress = createUniqueProjectRequestAddress(REQUEST_HASH_VALUE, projectRequestsCounter);
+
         projectRequests[projectRequestsCounter]._index = projectRequestsCounter;
         projectRequests[projectRequestsCounter]._title = _title;
         projectRequests[projectRequestsCounter]._comments = '';
@@ -81,8 +85,9 @@ contract ProjectChain is UserChain, SharedChain {
         projectRequests[projectRequestsCounter]._requestStatus = RequestStatus(_requestStatus);
         projectRequests[projectRequestsCounter]._projectAddress = _projectAddress;
         projectRequests[projectRequestsCounter]._userAddress = _projectInitiator;
+        projectRequests[projectRequestsCounter]._timestamp = block.timestamp;
 
-        filterRequests(projectRequestsCounter, _title, _requestStatus, _status, _projectAddress);
+        filterRequests(projectRequestsCounter, _title, _requestStatus, _status, _projectAddress, _projectReqAddress);
 
         emit ProjectRequestEvent(
             projectRequestsCounter,
@@ -92,11 +97,13 @@ contract ProjectChain is UserChain, SharedChain {
             RequestStatus(_requestStatus),
             _projectAddress,
             _projectInitiator,
+            _projectReqAddress,
             block.timestamp
         );
         allProjectRequests.push(ProjectRequest(
             projectRequestsCounter, _title, '', ProjectStatus(_status),
-            RequestStatus(_requestStatus), _projectAddress, _projectInitiator
+            RequestStatus(_requestStatus), _projectAddress, _projectInitiator,
+            _projectReqAddress, block.timestamp
         ));
         projectRequestsCounter++;
     }
@@ -106,7 +113,8 @@ contract ProjectChain is UserChain, SharedChain {
         bytes32 _title,
         uint _requestStatus,
         uint _projectStatus,
-        address _projectAddress
+        address _projectAddress,
+        address _requestAddress
     ) internal {
         RequestType _requestType;
         if (
@@ -118,7 +126,7 @@ contract ProjectChain is UserChain, SharedChain {
         } else if (ProjectStatus(_projectStatus) == ProjectStatus.StartProject) {
             _requestType = RequestType.CompanyReq;
         }
-        createRequest(_indexProjectRequest, _title, _requestStatus, _projectStatus, _requestType, _projectAddress);
+        createRequest(_indexProjectRequest, _title, _requestStatus, _projectStatus, _requestType, _projectAddress, _requestAddress);
     }
 
     function getAllProjectRequests() external view returns(ProjectRequest[] memory) {
@@ -137,6 +145,8 @@ contract ProjectChain is UserChain, SharedChain {
                     request._requestStatus = allProjectRequests[index]._requestStatus;
                     request._projectAddress = allProjectRequests[index]._projectAddress;
                     request._userAddress = allProjectRequests[index]._userAddress;
+                    request._requestAddress = allProjectRequests[index]._requestAddress;
+                    request._timestamp = block.timestamp;
                     return request;
                 }
             }
@@ -144,16 +154,9 @@ contract ProjectChain is UserChain, SharedChain {
         return request;
     }
 
-    function getLastProjectRequestWorked() external view returns(ProjectRequest memory) {
-        //ProjectRequest memory request = allProjectRequests[0];
-        //for (uint index = allProjectRequests.length - 1; index > 0; index--) {
-        //}
-        return allProjectRequests[0];
-    }
 
+    /**  DATA FOR SUPERVISOR && COMPANY  */
 
-
-    // They will be filter after the status of the requests
     mapping(uint => Request) public requests;
     uint public requestsCounter = 0;
     Request[] public allRequests;
@@ -164,7 +167,8 @@ contract ProjectChain is UserChain, SharedChain {
         uint _requestStatus,
         uint _projectStatus,
         RequestType _requestType,
-        address _projectAddress
+        address _projectAddress,
+        address _requestAddress
     ) internal {
         requests[requestsCounter]._index = requestsCounter;
         requests[requestsCounter]._indexProjectRequest = _indexProjectRequest;
@@ -175,6 +179,8 @@ contract ProjectChain is UserChain, SharedChain {
         requests[requestsCounter]._projectAddress = _projectAddress;
         // change to supervisorAddress
         requests[requestsCounter]._userAddress = _projectInitiator;
+        requests[requestsCounter]._requestAddress = _requestAddress;
+        requests[requestsCounter]._timestamp = block.timestamp;
 
         emit RequestEvent(
             requestsCounter,
@@ -184,11 +190,13 @@ contract ProjectChain is UserChain, SharedChain {
             ProjectStatus(_projectStatus),
             _requestType, _projectAddress,
             _projectInitiator,
+            _requestAddress,
             block.timestamp
         );
         allRequests.push(Request(
             requestsCounter, _indexProjectRequest, _title,  RequestStatus(_requestStatus),
-            ProjectStatus(_projectStatus),  _requestType, _projectAddress, _projectInitiator
+            ProjectStatus(_projectStatus),  _requestType, _projectAddress,
+            _projectInitiator, _requestAddress, block.timestamp
         ));
         requestsCounter++;
     }
