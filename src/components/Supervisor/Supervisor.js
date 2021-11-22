@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { materialTableIcons } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
+import Edit from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
@@ -124,7 +125,14 @@ class Supervisor extends Component {
 					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						{
+                        {
+                            icon: Edit,
+                            tooltip: 'Edit Request',
+                            onClick: (event, rowData) => {
+                                this.setEditRequest(true);
+                                this.setRecordForEdit(rowData);
+                            }
+						},						{
 							icon: Visibility,
 							tooltip: 'View Request',
 							onClick: (event, rowData) => {

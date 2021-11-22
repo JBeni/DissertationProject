@@ -125,7 +125,15 @@ class Company extends Component {
 					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						{
+                        {
+                            icon: Edit,
+                            tooltip: 'Edit Request',
+                            onClick: (event, rowData) => {
+                                this.setEditRequest(true);
+                                this.setRecordForEdit(rowData);
+                            }
+						},
+                        {
 							icon: Visibility,
 							tooltip: 'View Request',
 							onClick: (event, rowData) => {
