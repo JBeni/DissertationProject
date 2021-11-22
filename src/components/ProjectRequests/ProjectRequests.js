@@ -11,6 +11,8 @@ import { withRouter } from "react-router";
 import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
 import { getRequestStatusById } from '../formService';
+import CustomStepper from './../CustomStepper';
+import { getDefaultProjectStatus } from './../formService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -18,10 +20,12 @@ class ProjectRequests extends Component {
         this.state = {
 			createRequestForm: false,
             viewRequestForm: false,
-			recordForEdit: null,
             requestNextStep: true,
 
-            project: {},
+            recordForEdit: null,
+            activeStep: -1,
+
+            project: { index: '', name: '', status: '', ipfsFileCID: '', projectAddress: '', userAddress: '' },
             projectRequests: [],
 		};
     }
@@ -34,14 +38,34 @@ class ProjectRequests extends Component {
     }
 
     getLastProjectRequest = async (projectAddress) => {
-        let data = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
+        let lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
             .then((result) => { return result; });
-        if ("0x0000000000000000000000000000000000000000" === data._projectAddress) {
+        if ("0x0000000000000000000000000000000000000000" === lastRequest._projectAddress) {
+            // This mean Project is Created
+            let defProjectStatus = getDefaultProjectStatus();
+            this.setState({ activeStep: Number(defProjectStatus.id) + 1 });
             return;
         }
-        let requestStatus = getRequestStatusById(data._requestStatus);
+        let requestStatus = getRequestStatusById(lastRequest._requestStatus);
         if (requestStatus.value === "UnApproved") {
             this.setState({ requestNextStep: false });
+        }
+        this.setActiveStep(lastRequest);
+        //this.setState({ activeStep: Number(lastRequest['_status']) });
+    }
+
+    setActiveStep = (lastRequest) => {
+        console.log(lastRequest);
+        if (Number(lastRequest['_status']) === 0) {
+            // This mean Project is Created
+            this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
+        }
+        // Status with Approve Consent
+        if (Number(lastRequest['_status']) > 0 && Number(lastRequest['_requestStatus']) === 0) {
+            this.setState({ activeStep: Number(lastRequest['_status']) });
+        }
+        if (Number(lastRequest['_status']) > 0 && Number(lastRequest['_requestStatus']) === 2) {
+            this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
         }
     }
 
@@ -92,6 +116,27 @@ class ProjectRequests extends Component {
                 this.getLastProjectRequest(this.props.match.params.id);
             });
 	}
+
+    getProjectStatusSteps() {
+        return ['Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
+    }
+
+    getProjectStatusStepContent(stepIndex) {
+        switch (stepIndex) {
+            case 0:
+                return 'Medicine at manufacturing stage in the supply chain.';
+            case 1:
+                return 'Medicine collected by the Transporter is on its way to you.';
+            case 2:
+                return 'Wholesaler, the medicine is currently with you!';
+            case 3:
+                return 'Medicine is collected by the Transporter! On its way to the Distributor.';
+            case 4:
+                return 'Medicine is delivered to the Distributor';
+            default:
+                return 'Unknown stepIndex';
+        }
+    }
 
 	render() {
 		const tableRef = React.createRef();
@@ -171,6 +216,13 @@ class ProjectRequests extends Component {
 						},
 					]}
 				/>
+
+                    <br/><br/>
+                    <CustomStepper
+                        getSteps={this.getProjectStatusSteps}
+                        activeStep={Number(this.state.activeStep)}
+                        getStepContent={this.getProjectStatusStepContent}
+                    />
 			</div>
 		);
 	}
