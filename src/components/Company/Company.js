@@ -74,7 +74,7 @@ class Company extends Component {
                 _projectStatus,
                 _projectAddress
             ).send({ from: this.props.account }).then((receipt) => {
-                this.getSupervisorRequests();
+                this.getCompanyRequests();
             });
 	}
 
