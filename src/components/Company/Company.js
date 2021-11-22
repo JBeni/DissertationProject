@@ -53,12 +53,12 @@ class Company extends Component {
 
     addOrEdit = async (data, resetForm) => {
         this.updateProjectRequest(
-            data['index'],
-            data['comments'],
-            data['requestStatus'],
-            data['indexProjectRequest'],
-            data['projectStatus'],
-            data['projectAddress']
+            data.index,
+            data.comments,
+            data.requestStatus,
+            data.indexProjectRequest,
+            data.projectStatus,
+            data.projectAddress
         );
         resetForm();
         this.setRecordForEdit(null);

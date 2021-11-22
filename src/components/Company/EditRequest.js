@@ -72,16 +72,16 @@ export default function EditRequest(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit['projectStatus']);
+            let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
             setValues({
 				...values,
-                index: recordForEdit['index'],
-                title: recordForEdit['title'],
+                index: recordForEdit.index,
+                title: recordForEdit.title,
                 projectStatus: projectStatus.id,
-                indexProjectRequest: recordForEdit['indexProjectRequest'],
+                indexProjectRequest: recordForEdit.indexProjectRequest,
                 comments: '',
-                projectAddress: recordForEdit['projectAddress'],
-                userAddress: recordForEdit['userAddress']
+                projectAddress: recordForEdit.projectAddress,
+                userAddress: recordForEdit.userAddress
 			});
             setIsEdit(true);
         } else {

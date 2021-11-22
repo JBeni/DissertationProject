@@ -93,9 +93,9 @@ export default function AddProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit['status']);
+            let status = getProjectStatusByValue(recordForEdit.status);
             let newData = {
-                name: recordForEdit['name'],
+                name: recordForEdit.name,
                 status: status.id,
             };
             setValues({

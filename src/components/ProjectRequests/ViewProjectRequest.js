@@ -9,14 +9,14 @@ export default function ViewProjectRequest(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit['status']);
+            let status = getProjectStatusByValue(recordForEdit.status);
 			const newData = {
-				title: recordForEdit['title'],
-				comments: recordForEdit['comments'],
+				title: recordForEdit.title,
+				comments: recordForEdit.comments,
 				status: status.value,
-				requestStatus: recordForEdit['requestStatus'],
-                projectAddress: recordForEdit['projectAddress'],
-                userAddress: recordForEdit['userAddress'],
+				requestStatus: recordForEdit.requestStatus,
+                projectAddress: recordForEdit.projectAddress,
+                userAddress: recordForEdit.userAddress,
 			};
 			setValues({
 				...newData,

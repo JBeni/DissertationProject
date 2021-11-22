@@ -91,13 +91,13 @@ export default function AddForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let role = getUserRoleByValue(recordForEdit['role']);
+            let role = getUserRoleByValue(recordForEdit.role);
             let newData = {
-                firstname: recordForEdit['firstname'],
-                lastname: recordForEdit['lastname'],
-                email: recordForEdit['email'],
+                firstname: recordForEdit.firstname,
+                lastname: recordForEdit.lastname,
+                email: recordForEdit.email,
                 role: role.id,
-                walletAddress: recordForEdit['walletAddress'],
+                walletAddress: recordForEdit.walletAddress,
             };
             setValues({
 				...newData,

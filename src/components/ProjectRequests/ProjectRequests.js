@@ -55,23 +55,23 @@ class ProjectRequests extends Component {
     }
 
     setActiveStep = (lastRequest) => {
-        if (Number(lastRequest['_status']) === 0) {
+        if (Number(lastRequest._status) === 0) {
             // This mean Project is Created
-            this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
+            this.setState({ activeStep: Number(lastRequest._status) + 1 });
         }
         // Status with Approve Consent
-        if (Number(lastRequest['_status']) > 0 && Number(lastRequest['_requestStatus']) === 0) {
-            this.setState({ activeStep: Number(lastRequest['_status']) });
+        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 0) {
+            this.setState({ activeStep: Number(lastRequest._status) });
         }
-        if (Number(lastRequest['_status']) > 0 && Number(lastRequest['_requestStatus']) === 2) {
-            this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
+        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ activeStep: Number(lastRequest._status) + 1 });
         }
         // Last Project Status
-        console.log(lastRequest['_status']);
-        console.log(lastRequest['_requestStatus']);
+        console.log(lastRequest._status);
+        console.log(lastRequest._requestStatus);
         
-        if (Number(lastRequest['_status']) === 4 && Number(lastRequest['_requestStatus']) === 2) {
-            this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
+        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ activeStep: Number(lastRequest._status) + 1 });
             this.setState({ projectCompleted: true })
         }
     }
@@ -104,9 +104,9 @@ class ProjectRequests extends Component {
 
     addOrEdit = async (data, resetForm) => {
         this.createProjectRequest(
-            data['title'],
-            data['status'],
-            data['requestStatus'],
+            data.title,
+            data.status,
+            data.requestStatus,
             this.state.project.projectAddress
         );
         resetForm();

@@ -115,12 +115,12 @@ class Projects extends Component {
         if (userData.isEditForm === false) {
    			// alert('Form is validated! Submitting the form...');
             this.createProject(
-				userData['name'],
-				userData['status'],
+				userData.name,
+				userData.status,
                 userData
 			);
         } else {
-            ;//this.updateProject(userData['walletAddress']);
+            ;//this.updateProject(userData.walletAddress);
         }
         resetForm();
         this.setRecordForEdit(null);

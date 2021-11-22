@@ -9,14 +9,14 @@ export default function ViewForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let role = getUserRoleByValue(recordForEdit['role']);
+            let role = getUserRoleByValue(recordForEdit.role);
             let newData = {
-				username: recordForEdit['username'],
-				firstname: recordForEdit['firstname'],
-				lastname: recordForEdit['lastname'],
-				email: recordForEdit['email'],
+				username: recordForEdit.username,
+				firstname: recordForEdit.firstname,
+				lastname: recordForEdit.lastname,
+				email: recordForEdit.email,
 				role: role.value,
-				walletAddress: recordForEdit['walletAddress'],
+				walletAddress: recordForEdit.walletAddress,
 			};
 			setValues({
 				...newData,

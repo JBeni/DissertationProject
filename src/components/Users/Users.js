@@ -74,15 +74,15 @@ export default class Users extends Component {
         if (userData.isEditForm === false) {
    			// alert('Form is validated! Submitting the form...');
 			this.createUser(
-				userData['firstname'] + ' ' + userData['lastname'],
-				userData['email'],
-				userData['firstname'],
-				userData['lastname'],
-				userData['role'],
-				userData['walletAddress']
+				userData.firstname + ' ' + userData.lastname,
+				userData.email,
+				userData.firstname,
+				userData.lastname,
+				userData.role,
+				userData.walletAddress
 			);
         } else {
-            this.changeUserRole(userData['role'], userData['walletAddress']);
+            this.changeUserRole(userData.role, userData.walletAddress);
         }
         resetForm();
         this.setRecordForEdit(null);

@@ -9,11 +9,11 @@ export default function ViewProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit['status']);
+            let status = getProjectStatusByValue(recordForEdit.status);
 			const newData = {
-				name: recordForEdit['name'],
+				name: recordForEdit.name,
 				status: status.value,
-				ipfsFileCID: recordForEdit['ipfsFileCID'],
+				ipfsFileCID: recordForEdit.ipfsFileCID,
 			};
 			setValues({
 				...newData,

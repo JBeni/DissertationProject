@@ -62,7 +62,7 @@ export default function AddProjectRequest(props) {
 
 	useEffect(() => {
         if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit['status']);
+            let projectStatus = getProjectStatusByValue(recordForEdit.status);
             let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
             let requestStatus = getDefaultRequestStatus();
             setValues({
