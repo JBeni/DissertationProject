@@ -10,7 +10,7 @@ import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import toast, { Toaster } from 'react-hot-toast';
-import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
+import { TableCell, TableRow } from '@material-ui/core';
 
 export default class Users extends Component {
 	constructor(props) {
