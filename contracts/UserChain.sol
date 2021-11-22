@@ -87,13 +87,6 @@ contract UserChain {
             users[_walletAddress]._lastname,
             Roles(_role)
         );
-        /*
-            for (uint index = 0; index < allUsers.length; index++) {
-                if (allUsers[index]._walletAddress == _walletAddress) {
-                    allUsers[index]._role = Roles(_role);
-                }
-            }
-        */
     }
 
     function getAllUsers() public view returns (User[] memory) {
