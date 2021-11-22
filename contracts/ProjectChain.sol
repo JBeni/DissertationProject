@@ -46,8 +46,19 @@ contract ProjectChain is UserChain, SharedChain {
         projects[_projectAddress]._projectAddress = _projectAddress;
         projects[_projectAddress]._userAddress = _projectInitiator;
 
-        emit ProjectEvent(projectsCounter, _name, ProjectStatus(_status), _ipfsFileCID, _projectAddress, _projectInitiator, block.timestamp);
-        allProjects.push(Project(projectsCounter, _name, ProjectStatus(_status), _ipfsFileCID, _projectAddress, _projectInitiator));
+        emit ProjectEvent(
+            projectsCounter,
+            _name,
+            ProjectStatus(_status),
+            _ipfsFileCID,
+            _projectAddress,
+            _projectInitiator,
+            block.timestamp
+        );
+        allProjects.push(Project(
+            projectsCounter, _name, ProjectStatus(_status),
+            _ipfsFileCID, _projectAddress, _projectInitiator
+        ));
         projectsCounter++;
     }
 
@@ -71,11 +82,43 @@ contract ProjectChain is UserChain, SharedChain {
         projectRequests[projectRequestsCounter]._projectAddress = _projectAddress;
         projectRequests[projectRequestsCounter]._userAddress = _projectInitiator;
 
-        createRequest(projectRequestsCounter, _title, _status, _requestStatus, _projectAddress);
+        filterRequests(projectRequestsCounter, _title, _requestStatus, _status, _projectAddress);
 
-        emit ProjectRequestEvent(projectRequestsCounter, _title, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator, block.timestamp);
-        allProjectRequests.push(ProjectRequest(projectRequestsCounter, _title, '', ProjectStatus(_status), RequestStatus(_requestStatus), _projectAddress, _projectInitiator));
+        emit ProjectRequestEvent(
+            projectRequestsCounter,
+            _title,
+            '',
+            ProjectStatus(_status),
+            RequestStatus(_requestStatus),
+            _projectAddress,
+            _projectInitiator,
+            block.timestamp
+        );
+        allProjectRequests.push(ProjectRequest(
+            projectRequestsCounter, _title, '', ProjectStatus(_status),
+            RequestStatus(_requestStatus), _projectAddress, _projectInitiator
+        ));
         projectRequestsCounter++;
+    }
+
+    function filterRequests(
+        uint _indexProjectRequest,
+        bytes32 _title,
+        uint _requestStatus,
+        uint _projectStatus,
+        address _projectAddress
+    ) internal {
+        RequestType _requestType;
+        if (
+            ProjectStatus(_projectStatus) == ProjectStatus.ToApprove ||
+            ProjectStatus(_projectStatus) == ProjectStatus.FinalizationCheck ||
+            ProjectStatus(_projectStatus) == ProjectStatus.Completed
+        ) {
+            _requestType = RequestType.SupervisorReq;
+        } else if (ProjectStatus(_projectStatus) == ProjectStatus.StartProject) {
+            _requestType = RequestType.CompanyReq;
+        }
+        createRequest(_indexProjectRequest, _title, _requestStatus, _projectStatus, _requestType, _projectAddress);
     }
 
     function getAllProjectRequests() external view returns(ProjectRequest[] memory) {
@@ -118,8 +161,9 @@ contract ProjectChain is UserChain, SharedChain {
     function createRequest(
         uint _indexProjectRequest,
         bytes32 _title,
-        uint _projectStatus,
         uint _requestStatus,
+        uint _projectStatus,
+        RequestType _requestType,
         address _projectAddress
     ) internal {
         requests[requestsCounter]._index = requestsCounter;
@@ -127,12 +171,25 @@ contract ProjectChain is UserChain, SharedChain {
         requests[requestsCounter]._title = _title;
         requests[requestsCounter]._requestStatus = RequestStatus(_requestStatus);
         requests[requestsCounter]._projectStatus = ProjectStatus(_projectStatus);
+        requests[requestsCounter]._requestType = _requestType;
         requests[requestsCounter]._projectAddress = _projectAddress;
         // change to supervisorAddress
         requests[requestsCounter]._userAddress = _projectInitiator;
 
-        emit RequestEvent(requestsCounter, _indexProjectRequest, _title, RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator, block.timestamp);
-        allRequests.push(Request(requestsCounter, _indexProjectRequest, _title,  RequestStatus(_requestStatus), ProjectStatus(_projectStatus), _projectAddress, _projectInitiator));
+        emit RequestEvent(
+            requestsCounter,
+            _indexProjectRequest,
+            _title,
+            RequestStatus(_requestStatus),
+            ProjectStatus(_projectStatus),
+            _requestType, _projectAddress,
+            _projectInitiator,
+            block.timestamp
+        );
+        allRequests.push(Request(
+            requestsCounter, _indexProjectRequest, _title,  RequestStatus(_requestStatus),
+            ProjectStatus(_projectStatus),  _requestType, _projectAddress, _projectInitiator
+        ));
         requestsCounter++;
     }
 
