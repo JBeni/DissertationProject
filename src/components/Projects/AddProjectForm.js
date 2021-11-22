@@ -155,7 +155,7 @@ export default function AddProjectForm(props) {
                                     name="file"
                                     onChange={fileChangeHandler}
                                 />
-                                <Fab color="secondary" size="small" component="span" aria-label="add" variant="extended">
+                                <Fab color="primary" size="small" component="span" aria-label="add" variant="extended">
                                     <AddIcon /> Upload File
                                 </Fab>
                                 <TextField

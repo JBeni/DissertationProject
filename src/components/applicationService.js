@@ -206,3 +206,9 @@ export async function getAllRequests(props) {
     });
     return data;
 }
+
+export async function createUniqueProjectRequestAddress(props) {
+    let response = await props.project.methods.createUniqueProjectRequestAddress().call()//.send({ from: props.account })
+        .catch(function (error) { console.log(error); });
+    return response;
+}

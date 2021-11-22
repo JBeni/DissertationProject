@@ -113,16 +113,30 @@ class ProjectRequests extends Component {
         this.setRecordForEdit(null);
     }
 
+    signProjectRequest = (requestAddress) => {
+        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+        return this.props.web3.eth.accounts.sign(requestAddress, '0x' + userPrivateKey);
+    }
+
+    createUniqueProjectReqAddress = async () => {
+        const data = await Promise.resolve(applicationService.createUniqueProjectRequestAddress(this.props));
+        return data;
+    }
+
     createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
+        const projectReqAddress = await this.createUniqueProjectReqAddress();
+        const signatureData = this.signProjectRequest(projectReqAddress);
+
         await this.props.project.methods
 			.createProjectRequest(
                 this.props.web3.utils.utf8ToHex(_title),
-                Number(_status), Number(_requestStatus), _projectAddress)
+                Number(_status), Number(_requestStatus), _projectAddress,
+                projectReqAddress, signatureData.signature)
 			.send({ from: this.props.account }).then((receipt) => {
                 this.getAllProjectRequests();
                 this.getLastProjectRequest(this.props.match.params.id);
             });
-	}
+    }
 
     getProjectStatusSteps() {
         return ['Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
