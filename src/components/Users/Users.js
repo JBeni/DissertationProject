@@ -10,6 +10,7 @@ import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import toast, { Toaster } from 'react-hot-toast';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 
 export default class Users extends Component {
 	constructor(props) {
@@ -54,10 +55,10 @@ export default class Users extends Component {
                 _walletAddress
 			)
 			.send({ from: this.props.account })
-            .then(function(receipt) {}).then((receipt) => {
-                this.notifyToast();
+            .then((response) => {
+                this.notifyToastSuccess();
                 this.getUsers();
-            });
+            }).catch((error) => { this.notifyToastError(); });
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
@@ -98,7 +99,7 @@ export default class Users extends Component {
         });    
     }
 
-    notifyToastSuccess = () => {
+    notifyToastError = () => {
         toast.error('The user couldnt be saved into the blockchain', {
             position: 'bottom-center',
             duration: 5000,
@@ -186,8 +187,53 @@ export default class Users extends Component {
 					]}
 				/>
 
+                {
+                    this.state.users.map((data) => (
+                        <TableRow>
+                            <TableCell multiline style={{ maxWidth: "50px" }}>{data.username}</TableCell>
+                            <TableCell multiline style={{ maxWidth: "50px" }}>{data.email}</TableCell>
+                            <TableCell multiline style={{ maxWidth: "50px" }}>{data.firstname}</TableCell>
+                            <TableCell multiline style={{ maxWidth: "20px" }}>{data.lastname}</TableCell>
+                            {/* <TableCell multiline style={{ maxWidth: "20px" }}>{new Date(data.returnValues[ 4 ] * 1000).toString()}</TableCell> */}
+                            <TableCell multiline style={{ maxWidth: "40px" }}><Button variant="contained" color="primary" onClick={() => this.verifySignature(data.email, data.lastname)}>Verify Signature</Button></TableCell>
+                        </TableRow>
+                    ))
+                }
+
                 <Toaster position="bottom-center" reverseOrder={false} />
 			</div>
 		);
 	}
+
+    async verifySignature(buyerAddress, signature) {
+        // let v = '0x' + signature.slice(130, 132).toString();
+        // let r = signature.slice(0, 66).toString();
+        // let s = '0x' + signature.slice(66, 130).toString();
+        // let messageHash = web3.eth.accounts.hashMessage(address);
+        // let verificationOutput = await supplyChain.methods.verify(buyerAddress, messageHash, v, r, s).call({ from: account });
+        // if (verificationOutput) {
+        //   alert('Buyer is verified successfully!');
+        //   signature = prompt('Enter signature');
+        //   supplyChain.methods.respondToEntity(buyerAddress, account, address, signature).send({ from: account })
+        //   const data = await supplyChain.methods.getUserInfo(account).call();
+        //   const role = data[ 'role' ];
+        //   if (role === "1") {
+        //     const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
+        //     rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({ from: account });
+        //     alert('Response sent to manufacturer');
+        //   } else if (role === "3") {
+        //     const medicine = new web3.eth.Contract(Medicine.abi, address);
+        //     medicine.methods.updateWholesalerAddress(buyerAddress).send({ from: account });
+        //     alert('Response sent to wholesaler');
+        //   } else if (role === "4") {
+        //     const medicine = new web3.eth.Contract(Medicine.abi, address);
+        //     medicine.methods.updateDistributorAddress(buyerAddress).send({ from: account });
+        //     alert('Response sent to distributor');
+        //   } else {
+        //     console.log('error');
+        //   }
+        // } else {
+        //   alert('Buyer is not verified!');
+        // }
+    }
 }

@@ -64,6 +64,8 @@ contract UserChain {
         users[_walletAddress]._lastname = _lastname;
         users[_walletAddress]._role = Roles(_role);
         users[_walletAddress]._walletAddress = _walletAddress;
+        users[_walletAddress]._timestamp = block.timestamp;
+
         emit UserEvent(
             _walletAddress,
             _username,
@@ -81,6 +83,7 @@ contract UserChain {
         users[_walletAddress]._role = Roles(_role);
         uint index = users[_walletAddress]._index;
         allUsers[index]._role = Roles(_role);
+
         emit UserEvent(
             _walletAddress,
             users[_walletAddress]._username,

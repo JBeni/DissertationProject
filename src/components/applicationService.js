@@ -13,6 +13,7 @@ export async function getAllUsers(props) {
                 lastname: props.web3.utils.hexToUtf8(result['_lastname']),
                 role: role.value,
                 walletAddress: result['_walletAddress'],
+                timestamp: result._timestamp
             };
             data.push(user);
             return false;
@@ -35,6 +36,7 @@ export async function getAllProjects(props) {
                 ipfsFileCID: result['_ipfsFileCID'],
                 projectAddress: result['_projectAddress'],
                 userAddress: result['_userAddress'],
+                timestamp: result._timestamp
             };
             data.push(project);
             return false;
@@ -55,6 +57,7 @@ export async function getProjectInfo(props, projectAddress) {
             ipfsFileCID: result['_ipfsFileCID'],
             projectAddress: result['_projectAddress'],
             userAddress: result['_userAddress'],
+            timestamp: result._timestamp
         };
         return project;
     }).catch(function (error) {
@@ -82,6 +85,8 @@ export async function getAllProjectRequests(props, projectAddress) {
                 requestStatus: requestStatus.value,
                 projectAddress: result['_projectAddress'],
                 userAddress: result['_userAddress'],
+                requestAddress: result._requestAddress,
+                timestamp: result._timestamp
             };
             data.push(project);
         }
@@ -118,6 +123,8 @@ export async function getSupervisorRequests(props) {
                     projectAddress: result['_projectAddress'],
                     indexProjectRequest: result['_indexProjectRequest'],
                     userAddress: result['_userAddress'],
+                    requestAddress: result._requestAddress,
+                    timestamp: result._timestamp
                 };
                 data.push(project);
             }
@@ -152,6 +159,8 @@ export async function getCompanyRequests(props) {
                     projectAddress: result['_projectAddress'],
                     indexProjectRequest: result['_indexProjectRequest'],
                     userAddress: result['_userAddress'],
+                    requestAddress: result._requestAddress,
+                    timestamp: result._timestamp
                 };
                 data.push(project);
             }
@@ -185,6 +194,8 @@ export async function getAllRequests(props) {
                 projectAddress: result['_projectAddress'],
                 indexProjectRequest: result['_indexProjectRequest'],
                 userAddress: result['_userAddress'],
+                requestAddress: result._requestAddress,
+                timestamp: result._timestamp
             };
             data.push(project);
         }
