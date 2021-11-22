@@ -12,7 +12,7 @@ import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
 import { getRequestStatusById } from '../dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
-import { getDefaultProjectStatus } from './../dropdownService';
+import { getDefaultProjectStatus, getProjectStatusById } from './../dropdownService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -21,6 +21,7 @@ class ProjectRequests extends Component {
 			createRequestForm: false,
             viewRequestForm: false,
             requestNextStep: true,
+            projectCompleted: false,
 
             recordForEdit: null,
             activeStep: -1,
@@ -33,7 +34,6 @@ class ProjectRequests extends Component {
     componentDidMount() {
         this.getProjectInfo();
         this.getAllProjectRequests();
-
         this.getLastProjectRequest(this.props.match.params.id);
     }
 
@@ -47,7 +47,8 @@ class ProjectRequests extends Component {
             return;
         }
         let requestStatus = getRequestStatusById(lastRequest._requestStatus);
-        if (requestStatus.value === "UnApproved") {
+        let projectStatus = getProjectStatusById(lastRequest._status);
+        if (requestStatus.value === "UnApproved" || projectStatus.value === "Completed") {
             this.setState({ requestNextStep: false });
         }
         this.setActiveStep(lastRequest);
@@ -55,7 +56,6 @@ class ProjectRequests extends Component {
     }
 
     setActiveStep = (lastRequest) => {
-        console.log(lastRequest);
         if (Number(lastRequest['_status']) === 0) {
             // This mean Project is Created
             this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
@@ -66,6 +66,14 @@ class ProjectRequests extends Component {
         }
         if (Number(lastRequest['_status']) > 0 && Number(lastRequest['_requestStatus']) === 2) {
             this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
+        }
+        // Last Project Status
+        console.log(lastRequest['_status']);
+        console.log(lastRequest['_requestStatus']);
+        
+        if (Number(lastRequest['_status']) === 4 && Number(lastRequest['_requestStatus']) === 2) {
+            this.setState({ activeStep: Number(lastRequest['_status']) + 1 });
+            this.setState({ projectCompleted: true })
         }
     }
 
@@ -133,6 +141,8 @@ class ProjectRequests extends Component {
                 return 'Medicine is collected by the Transporter! On its way to the Distributor.';
             case 4:
                 return 'Medicine is delivered to the Distributor';
+            case 5:
+                return 'Medicine is delivered to the Distributor';
             default:
                 return 'Unknown stepIndex';
         }
@@ -160,7 +170,8 @@ class ProjectRequests extends Component {
                             this.setRecordForEdit(this.state.project);
                             this.setCreateRequestForm(true);
                         }}>Add Project Request</Button>
-                        : <div>The Current Request must be approved or rejected to add another request</div>
+                    : this.state.projectCompleted === true ? <div>Project Steps Completed</div>
+                    : <div>The Current Request must be approved or rejected to add another request</div>
                 }
 
 				<Dialog open={this.state.createRequestForm} maxWidth="md">
