@@ -11,7 +11,7 @@ import { withRouter } from "react-router";
 import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
 import { getRequestStatusById } from '../formService';
-import CustomStepper from './../CustomStepper';
+import ProjectReqStepper from './ProjectReqStepper';
 import { getDefaultProjectStatus } from './../formService';
 
 class ProjectRequests extends Component {
@@ -218,7 +218,7 @@ class ProjectRequests extends Component {
 				/>
 
                     <br/><br/>
-                    <CustomStepper
+                    <ProjectReqStepper
                         getSteps={this.getProjectStatusSteps}
                         activeStep={Number(this.state.activeStep)}
                         getStepContent={this.getProjectStatusStepContent}
