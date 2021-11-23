@@ -35,24 +35,16 @@ contract ProjectChain is UserChain, SharedChain {
     function createProject(bytes32 _name, uint _status, string memory _ipfsFileCID, bytes32 _signature) public {
         address _projectAddress = createUniqueProjectAddress(PROJECT_HASH_VALUE, projectsCounter);
 
-        projects[_projectAddress]._index = projectsCounter;
-        projects[_projectAddress]._name = _name;
-        projects[_projectAddress]._status = ProjectStatus(_status);
-        projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
-        projects[_projectAddress]._projectAddress = _projectAddress;
-        projects[_projectAddress]._userAddress = _projectInitiator;
-        projects[_projectAddress]._timestamp = block.timestamp;
-        projects[_projectAddress]._signature = _signature;
+        projects[_projectAddress] = Project(
+            projectsCounter, _name, ProjectStatus(_status),
+            _ipfsFileCID, _projectAddress,
+            _projectInitiator, block.timestamp, _signature
+        );
 
         emit ProjectEvent(
-            projectsCounter,
-            _name,
-            ProjectStatus(_status),
-            _ipfsFileCID,
-            _projectAddress,
-            _projectInitiator,
-            block.timestamp,
-            _signature
+            projectsCounter, _name, ProjectStatus(_status),
+            _ipfsFileCID, _projectAddress, _projectInitiator,
+            block.timestamp, _signature
         );
         projectsAddress.push(_projectAddress);
         projectsCounter++;
@@ -62,8 +54,14 @@ contract ProjectChain is UserChain, SharedChain {
         return projects[_address];
     }
 
-    function getAllProjects() public view returns(address[] memory) {
-        return projectsAddress;
+    function getAllProjects() public view returns(Project[] memory) {
+        Project[] memory allProjects = new Project[](projectsCounter);
+        for (uint index = 0; index < projectsCounter; index++) {
+            address _projectAddress = projectsAddress[index];
+            Project storage project = projects[_projectAddress];
+            allProjects[index] = project;
+        }
+        return allProjects;
     }
 
 
@@ -82,30 +80,19 @@ contract ProjectChain is UserChain, SharedChain {
         bytes32 _title, uint _status, uint _requestStatus,
         address _projectAddress, address _projectReqAddress, bytes32 _signature
     ) public {
-        projectRequests[projectRequestsCounter]._index = projectRequestsCounter;
-        projectRequests[projectRequestsCounter]._title = _title;
-        projectRequests[projectRequestsCounter]._comments = '';
-        projectRequests[projectRequestsCounter]._status = ProjectStatus(_status);
-        projectRequests[projectRequestsCounter]._requestStatus = RequestStatus(_requestStatus);
-        projectRequests[projectRequestsCounter]._projectAddress = _projectAddress;
-        projectRequests[projectRequestsCounter]._userAddress = _projectInitiator;
-        projectRequests[projectRequestsCounter]._requestAddress = _projectReqAddress;
-        projectRequests[projectRequestsCounter]._timestamp = block.timestamp;
-        projectRequests[projectRequestsCounter]._signature = _signature;
+        projectRequests[projectRequestsCounter] = ProjectRequest(
+            projectRequestsCounter, _title, '', ProjectStatus(_status),
+            RequestStatus(_requestStatus), _projectAddress,
+            _projectInitiator, _projectReqAddress, block.timestamp, _signature
+        );
 
         filterRequests(projectRequestsCounter, _title, _requestStatus, _status, _projectAddress, _projectReqAddress);
 
         emit ProjectRequestEvent(
-            projectRequestsCounter,
-            _title,
-            '',
-            ProjectStatus(_status),
-            RequestStatus(_requestStatus),
-            _projectAddress,
-            _projectInitiator,
-            _projectReqAddress,
-            block.timestamp,
-            _signature
+            projectRequestsCounter, _title, '',
+            ProjectStatus(_status), RequestStatus(_requestStatus),
+            _projectAddress, _projectInitiator,
+            _projectReqAddress, block.timestamp, _signature
         );
         projectRequestsAddress.push(_projectReqAddress);
         projectRequestsCounter++;
@@ -132,15 +119,34 @@ contract ProjectChain is UserChain, SharedChain {
         createRequest(_indexProjectRequest, _title, _requestStatus, _projectStatus, _requestType, _projectAddress, _requestAddress);
     }
 
-    function getAllProjectRequests() external view returns(address[] memory) {
-        return projectRequestsAddress;
+    function getAllProjectRequests() external view returns(ProjectRequest[] memory) {
+        ProjectRequest[] memory allProjectRequests = new ProjectRequest[](projectRequestsCounter);
+        for (uint index = 0; index < projectsCounter; index++) {
+            ProjectRequest storage projectReq = projectRequests[index];
+            allProjectRequests[index] = projectReq;
+        }
+        return allProjectRequests;
     }
-/*
+
     function getLastProjectRequest(address _projectAddress) external view returns(ProjectRequest memory) {
         ProjectRequest memory request;
         if (projectRequestsCounter > 0) {
             for (uint index = projectRequestsCounter - 1; index >= 0; index--) {
                 if (_projectAddress == projectRequests[index]._projectAddress) {
+
+                    request = ProjectRequest(
+                        projectRequests[index]._index,
+                        projectRequests[index]._title,
+                        projectRequests[index]._comments,
+                        projectRequests[index]._status,
+                        projectRequests[index]._requestStatus,
+                        projectRequests[index]._projectAddress,
+                        projectRequests[index]._userAddress,
+                        projectRequests[index]._requestAddress,
+                        block.timestamp,
+                        projectRequests[index]._signature
+                    );
+                /*
                     request._index = projectRequests[index]._index;
                     request._title = projectRequests[index]._title;
                     request._comments = projectRequests[index]._comments;
@@ -150,20 +156,21 @@ contract ProjectChain is UserChain, SharedChain {
                     request._userAddress = projectRequests[index]._userAddress;
                     request._requestAddress = projectRequests[index]._requestAddress;
                     request._timestamp = block.timestamp;
+                */
+
                     return request;
                 }
             }
         }
         return request;
     }
-*/
 
 
     /**  DATA FOR SUPERVISOR && COMPANY  */
 
     mapping(uint => Request) public requests;
     uint public requestsCounter = 0;
-    address[] public allRequests;
+    address[] public requestsAddress;
 
     function createRequest(
         uint _indexProjectRequest,
@@ -174,32 +181,20 @@ contract ProjectChain is UserChain, SharedChain {
         address _projectAddress,
         address _requestAddress
     ) internal {
-        requests[requestsCounter]._index = requestsCounter;
-        requests[requestsCounter]._indexProjectRequest = _indexProjectRequest;
-        requests[requestsCounter]._title = _title;
-        requests[requestsCounter]._requestStatus = RequestStatus(_requestStatus);
-        requests[requestsCounter]._projectStatus = ProjectStatus(_projectStatus);
-        requests[requestsCounter]._requestType = _requestType;
-        requests[requestsCounter]._projectAddress = _projectAddress;
-        // change to supervisorAddress
-        requests[requestsCounter]._userAddress = _projectInitiator;
-        requests[requestsCounter]._requestAddress = _requestAddress;
-        requests[requestsCounter]._timestamp = block.timestamp;
-        requests[requestsCounter]._signature = '';
+        requests[requestsCounter] = Request(
+            requestsCounter, _indexProjectRequest, _title,
+            RequestStatus(_requestStatus), ProjectStatus(_projectStatus),
+            _requestType, _projectAddress, _projectInitiator,
+            _requestAddress, block.timestamp, ''
+        );
 
         emit RequestEvent(
-            requestsCounter,
-            _indexProjectRequest,
-            _title,
-            RequestStatus(_requestStatus),
-            ProjectStatus(_projectStatus),
-            _requestType, _projectAddress,
-            _projectInitiator,
-            _requestAddress,
-            block.timestamp,
-            ''
+            requestsCounter, _indexProjectRequest, _title,
+            RequestStatus(_requestStatus), ProjectStatus(_projectStatus),
+            _requestType, _projectAddress, _projectInitiator,
+            _requestAddress, block.timestamp, ''
         );
-        allRequests.push(_requestAddress);
+        requestsAddress.push(_requestAddress);
         requestsCounter++;
     }
 
@@ -216,7 +211,7 @@ contract ProjectChain is UserChain, SharedChain {
         requests[_index]._requestStatus = RequestStatus(_requestStatus);
         requests[_index]._signature = _signature;
 
-        uint index = requests[_index]._index;
+        //uint index = requests[_index]._index;
         //allRequests[index]._requestStatus = RequestStatus(_requestStatus);
         //allRequests[index]._signature = _signature;
 
@@ -228,7 +223,12 @@ contract ProjectChain is UserChain, SharedChain {
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
     }
 
-    // function getAllRequests() public view returns(Request[] memory) {
-    //     return allRequests;
-    // }
+    function getAllRequests() public view returns(Request[] memory) {
+        Request[] memory allRequests = new Request[](requestsCounter);
+        for (uint index = 0; index < requestsCounter; index++) {
+            Request storage request = requests[index];
+            allRequests[index] = request;
+        }
+        return allRequests;
+    }
 }
