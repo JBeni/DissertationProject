@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import '../Styles/TableHistory.css';
 
-export default function ViewChanges(props) {
+export default function UserHistory(props) {
 	const { userHistory } = props;
 
     useEffect(() => {
