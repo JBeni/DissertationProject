@@ -11,8 +11,8 @@ import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import toast, { Toaster } from 'react-hot-toast';
 import * as eventsService from '../eventsService';
-import ViewChanges from './ViewChanges';
-import { VisibilityOff } from '@material-ui/icons';
+import UserHistory from './UserHistory';
+import HistoryIcon from '@mui/icons-material/History';
 
 export default class Users extends Component {
 	constructor(props) {
@@ -20,9 +20,10 @@ export default class Users extends Component {
 		this.state = {
 			openPopup: false,
             openViewForm: false,
-            openUserChanges: false,
+            openUserHistory: false,
 			recordForEdit: null,
-            recordChanges: [],
+
+            userHistory: [],
 			users: [],
 		};
     }
@@ -45,17 +46,20 @@ export default class Users extends Component {
         this.setState({ openViewForm: value });
     }
 
-    setOpenUserChanges = (value) => {
-        this.setState({ openUserChanges: value });
+    setOpenUserHistory = (value) => {
+        this.setState({ openUserHistory: value });
+        if (value === false) {
+            this.setState({ userHistory: [] });
+        }
     }
 
 	setRecordForEdit = (data) => {
 		this.setState({ recordForEdit: data });
 	}
 
-    setRecordUserChanges = async (rowData) => {
+    setUserHistory = async (rowData) => {
         const data = await eventsService.getUserEvents(this.props, rowData.walletAddress);
-        this.setState({ recordChanges: data });
+        this.setState({ userHistory: data });
     }
 
     createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
@@ -86,7 +90,6 @@ export default class Users extends Component {
 
     addOrEdit = (userData, resetForm) => {
         if (userData.isEditForm === false) {
-   			// alert('Form is validated! Submitting the form...');
 			this.createUser(
 				userData.firstname + ' ' + userData.lastname,
 				userData.email,
@@ -172,20 +175,20 @@ export default class Users extends Component {
                     </DialogContent>
 				</Dialog>
 
-				<Dialog open={this.state.openUserChanges} fullWidth maxWidth="xl">
+				<Dialog open={this.state.openUserHistory} fullWidth maxWidth="xl">
 					<DialogTitle>
 						<div style={{ display: 'flex' }}>
 							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
 								View User Changes
 							</Typography>
 							<Button color="secondary" onClick={() => {
-									this.setOpenUserChanges(false);
+									this.setOpenUserHistory(false);
 								}}><CloseIcon />
 							</Button>
 						</div>
 					</DialogTitle>
 					<DialogContent dividers>
-                        <ViewChanges recordChanges={this.state.recordChanges} />
+                        <UserHistory userHistory={this.state.userHistory} />
                     </DialogContent>
 				</Dialog>
 
@@ -199,12 +202,11 @@ export default class Users extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
 						{
-							icon: VisibilityOff,
-							tooltip: 'View User Changes',
+							icon: HistoryIcon,
+							tooltip: 'User History',
 							onClick: (event, rowData) => {
-                                console.log(rowData);
-                                this.setOpenUserChanges(true);
-                                this.setRecordUserChanges(rowData);
+                                this.setOpenUserHistory(true);
+                                this.setUserHistory(rowData);
 							},
 						},
 						{
@@ -219,7 +221,6 @@ export default class Users extends Component {
 							icon: VisibilityIcon,
 							tooltip: 'View User',
 							onClick: (event, rowData) => {
-                                console.log(rowData);
                                 this.setOpenViewForm(true);
                                 this.setRecordForEdit(rowData);
 							},
