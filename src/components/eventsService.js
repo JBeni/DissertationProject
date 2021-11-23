@@ -33,10 +33,11 @@ export async function getUserEvents(props, _userAddress) {
     });
 
     let data = [];
+    let indexLocal = 1;
     events.map((result) => {
         let role = getUserRoleById(result.returnValues._role);
         const user = {
-            index: Number(result.returnValues._index),
+            index: Number(result.returnValues._index) + indexLocal,
             username: result.returnValues._username,
             email: props.web3.utils.hexToUtf8(result.returnValues._email),
             firstname: props.web3.utils.hexToUtf8(result.returnValues._firstname),
@@ -46,6 +47,7 @@ export async function getUserEvents(props, _userAddress) {
             timestamp: new Date(result.returnValues._timestamp * 1000).toString()
         };
         data.push(user);
+        indexLocal++;
         return false;
     });
     return data;
