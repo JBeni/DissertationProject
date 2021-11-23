@@ -29,28 +29,6 @@ class Projects extends Component {
 
     componentDidMount() {
         this.getProjects();
-        this.test();
-    }
-
-    test = async () => {
-        let events = await this.props.project.getPastEvents('ProjectEvent', {
-            filter: { projectAddress: "0x7Da067967D147D37311F3b27c4c2277e4F7e22C0" },
-            fromBlock: 0,
-            toBlock: 'latest'
-        });
-        console.log(events);
-
-        // let data = [];
-        // events.map((result) => {
-        //     let status = applicationService.getProjectStatusById(result.returnValues.status);
-        //     const project = {
-        //         index: result.returnValues.index,
-        //         projectAddress: result.returnValues.projectAddress,
-        //         status: status.value,
-        //     };
-        //     data.push(project);
-        //     return false;
-        // });
     }
 
     getProjects = async () => {
