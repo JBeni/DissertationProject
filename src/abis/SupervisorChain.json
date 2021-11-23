@@ -1323,7 +1323,7 @@
                 }
               ]
             },
-            "name": "validator_assert_t_enum$_RequestStatus_$614",
+            "name": "validator_assert_t_enum$_RequestStatus_$764",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1366,7 +1366,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "validator_assert_t_enum$_RequestStatus_$614",
+                      "name": "validator_assert_t_enum$_RequestStatus_$764",
                       "nodeType": "YulIdentifier",
                       "src": "1987:43:7"
                     },
@@ -1378,7 +1378,7 @@
                 }
               ]
             },
-            "name": "cleanup_t_enum$_RequestStatus_$614",
+            "name": "cleanup_t_enum$_RequestStatus_$764",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1415,7 +1415,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "cleanup_t_enum$_RequestStatus_$614",
+                      "name": "cleanup_t_enum$_RequestStatus_$764",
                       "nodeType": "YulIdentifier",
                       "src": "2147:34:7"
                     },
@@ -1432,7 +1432,7 @@
                 }
               ]
             },
-            "name": "convert_t_enum$_RequestStatus_$614_to_t_uint8",
+            "name": "convert_t_enum$_RequestStatus_$764_to_t_uint8",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1474,7 +1474,7 @@
                           }
                         ],
                         "functionName": {
-                          "name": "convert_t_enum$_RequestStatus_$614_to_t_uint8",
+                          "name": "convert_t_enum$_RequestStatus_$764_to_t_uint8",
                           "nodeType": "YulIdentifier",
                           "src": "2302:45:7"
                         },
@@ -1495,7 +1495,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_enum$_RequestStatus_$614_to_t_uint8_fromStack",
+            "name": "abi_encode_t_enum$_RequestStatus_$764_to_t_uint8_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1578,7 +1578,7 @@
                 }
               ]
             },
-            "name": "validator_assert_t_enum$_ProjectStatus_$620",
+            "name": "validator_assert_t_enum$_ProjectStatus_$770",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1621,7 +1621,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "validator_assert_t_enum$_ProjectStatus_$620",
+                      "name": "validator_assert_t_enum$_ProjectStatus_$770",
                       "nodeType": "YulIdentifier",
                       "src": "2584:43:7"
                     },
@@ -1633,7 +1633,7 @@
                 }
               ]
             },
-            "name": "cleanup_t_enum$_ProjectStatus_$620",
+            "name": "cleanup_t_enum$_ProjectStatus_$770",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1670,7 +1670,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "cleanup_t_enum$_ProjectStatus_$620",
+                      "name": "cleanup_t_enum$_ProjectStatus_$770",
                       "nodeType": "YulIdentifier",
                       "src": "2744:34:7"
                     },
@@ -1687,7 +1687,7 @@
                 }
               ]
             },
-            "name": "convert_t_enum$_ProjectStatus_$620_to_t_uint8",
+            "name": "convert_t_enum$_ProjectStatus_$770_to_t_uint8",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1729,7 +1729,7 @@
                           }
                         ],
                         "functionName": {
-                          "name": "convert_t_enum$_ProjectStatus_$620_to_t_uint8",
+                          "name": "convert_t_enum$_ProjectStatus_$770_to_t_uint8",
                           "nodeType": "YulIdentifier",
                           "src": "2899:45:7"
                         },
@@ -1750,7 +1750,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_enum$_ProjectStatus_$620_to_t_uint8_fromStack",
+            "name": "abi_encode_t_enum$_ProjectStatus_$770_to_t_uint8_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1833,7 +1833,7 @@
                 }
               ]
             },
-            "name": "validator_assert_t_enum$_RequestType_$610",
+            "name": "validator_assert_t_enum$_RequestType_$760",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1876,7 +1876,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "validator_assert_t_enum$_RequestType_$610",
+                      "name": "validator_assert_t_enum$_RequestType_$760",
                       "nodeType": "YulIdentifier",
                       "src": "3177:41:7"
                     },
@@ -1888,7 +1888,7 @@
                 }
               ]
             },
-            "name": "cleanup_t_enum$_RequestType_$610",
+            "name": "cleanup_t_enum$_RequestType_$760",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1925,7 +1925,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "cleanup_t_enum$_RequestType_$610",
+                      "name": "cleanup_t_enum$_RequestType_$760",
                       "nodeType": "YulIdentifier",
                       "src": "3333:32:7"
                     },
@@ -1942,7 +1942,7 @@
                 }
               ]
             },
-            "name": "convert_t_enum$_RequestType_$610_to_t_uint8",
+            "name": "convert_t_enum$_RequestType_$760_to_t_uint8",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1984,7 +1984,7 @@
                           }
                         ],
                         "functionName": {
-                          "name": "convert_t_enum$_RequestType_$610_to_t_uint8",
+                          "name": "convert_t_enum$_RequestType_$760_to_t_uint8",
                           "nodeType": "YulIdentifier",
                           "src": "3484:43:7"
                         },
@@ -2005,7 +2005,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_enum$_RequestType_$610_to_t_uint8_fromStack",
+            "name": "abi_encode_t_enum$_RequestType_$760_to_t_uint8_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -2400,7 +2400,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_enum$_RequestStatus_$614_to_t_uint8_fromStack",
+                      "name": "abi_encode_t_enum$_RequestStatus_$764_to_t_uint8_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "4619:58:7"
                     },
@@ -2443,7 +2443,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_enum$_ProjectStatus_$620_to_t_uint8_fromStack",
+                      "name": "abi_encode_t_enum$_ProjectStatus_$770_to_t_uint8_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "4716:58:7"
                     },
@@ -2486,7 +2486,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_enum$_RequestType_$610_to_t_uint8_fromStack",
+                      "name": "abi_encode_t_enum$_RequestType_$760_to_t_uint8_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "4814:56:7"
                     },
@@ -2713,7 +2713,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$614_t_enum$_ProjectStatus_$620_t_enum$_RequestType_$610_t_address_t_address_t_address_t_uint256_t_bytes32__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_bytes32__fromStack_reversed",
+            "name": "abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$764_t_enum$_ProjectStatus_$770_t_enum$_RequestType_$760_t_address_t_address_t_address_t_uint256_t_bytes32__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_bytes32__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -2801,7 +2801,7 @@
           }
         ]
       },
-      "contents": "{\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_uint256_to_t_uint256_fromStack(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n    }\n\n    function allocate_unbounded() -> memPtr {\n        memPtr := mload(64)\n    }\n\n    function revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() {\n        revert(0, 0)\n    }\n\n    function revert_error_c1322bf8034eace5e0b5c7295db60986aa89aae5e0ea0873e4689e076861a5db() {\n        revert(0, 0)\n    }\n\n    function validator_revert_t_uint256(value) {\n        if iszero(eq(value, cleanup_t_uint256(value))) { revert(0, 0) }\n    }\n\n    function abi_decode_t_uint256(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_uint256(value)\n    }\n\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0 {\n        if slt(sub(dataEnd, headStart), 32) { revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_uint256(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function cleanup_t_bytes32(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_bytes32_to_t_bytes32_fromStack(value, pos) {\n        mstore(pos, cleanup_t_bytes32(value))\n    }\n\n    function panic_error_0x21() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x21)\n        revert(0, 0x24)\n    }\n\n    function validator_assert_t_enum$_RequestStatus_$614(value) {\n        if iszero(lt(value, 3)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestStatus_$614(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestStatus_$614(value)\n    }\n\n    function convert_t_enum$_RequestStatus_$614_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestStatus_$614(value)\n    }\n\n    function abi_encode_t_enum$_RequestStatus_$614_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestStatus_$614_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_ProjectStatus_$620(value) {\n        if iszero(lt(value, 5)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_ProjectStatus_$620(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_ProjectStatus_$620(value)\n    }\n\n    function convert_t_enum$_ProjectStatus_$620_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_ProjectStatus_$620(value)\n    }\n\n    function abi_encode_t_enum$_ProjectStatus_$620_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_ProjectStatus_$620_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_RequestType_$610(value) {\n        if iszero(lt(value, 2)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestType_$610(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestType_$610(value)\n    }\n\n    function convert_t_enum$_RequestType_$610_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestType_$610(value)\n    }\n\n    function abi_encode_t_enum$_RequestType_$610_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestType_$610_to_t_uint8(value))\n    }\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function abi_encode_t_address_to_t_address_fromStack(value, pos) {\n        mstore(pos, cleanup_t_address(value))\n    }\n\n    function abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$614_t_enum$_ProjectStatus_$620_t_enum$_RequestType_$610_t_address_t_address_t_address_t_uint256_t_bytes32__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_bytes32__fromStack_reversed(headStart , value10, value9, value8, value7, value6, value5, value4, value3, value2, value1, value0) -> tail {\n        tail := add(headStart, 352)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value1,  add(headStart, 32))\n\n        abi_encode_t_bytes32_to_t_bytes32_fromStack(value2,  add(headStart, 64))\n\n        abi_encode_t_enum$_RequestStatus_$614_to_t_uint8_fromStack(value3,  add(headStart, 96))\n\n        abi_encode_t_enum$_ProjectStatus_$620_to_t_uint8_fromStack(value4,  add(headStart, 128))\n\n        abi_encode_t_enum$_RequestType_$610_to_t_uint8_fromStack(value5,  add(headStart, 160))\n\n        abi_encode_t_address_to_t_address_fromStack(value6,  add(headStart, 192))\n\n        abi_encode_t_address_to_t_address_fromStack(value7,  add(headStart, 224))\n\n        abi_encode_t_address_to_t_address_fromStack(value8,  add(headStart, 256))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value9,  add(headStart, 288))\n\n        abi_encode_t_bytes32_to_t_bytes32_fromStack(value10,  add(headStart, 320))\n\n    }\n\n}\n",
+      "contents": "{\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_uint256_to_t_uint256_fromStack(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n    }\n\n    function allocate_unbounded() -> memPtr {\n        memPtr := mload(64)\n    }\n\n    function revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() {\n        revert(0, 0)\n    }\n\n    function revert_error_c1322bf8034eace5e0b5c7295db60986aa89aae5e0ea0873e4689e076861a5db() {\n        revert(0, 0)\n    }\n\n    function validator_revert_t_uint256(value) {\n        if iszero(eq(value, cleanup_t_uint256(value))) { revert(0, 0) }\n    }\n\n    function abi_decode_t_uint256(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_uint256(value)\n    }\n\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0 {\n        if slt(sub(dataEnd, headStart), 32) { revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_uint256(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function cleanup_t_bytes32(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_bytes32_to_t_bytes32_fromStack(value, pos) {\n        mstore(pos, cleanup_t_bytes32(value))\n    }\n\n    function panic_error_0x21() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x21)\n        revert(0, 0x24)\n    }\n\n    function validator_assert_t_enum$_RequestStatus_$764(value) {\n        if iszero(lt(value, 3)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestStatus_$764(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestStatus_$764(value)\n    }\n\n    function convert_t_enum$_RequestStatus_$764_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestStatus_$764(value)\n    }\n\n    function abi_encode_t_enum$_RequestStatus_$764_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestStatus_$764_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_ProjectStatus_$770(value) {\n        if iszero(lt(value, 5)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_ProjectStatus_$770(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_ProjectStatus_$770(value)\n    }\n\n    function convert_t_enum$_ProjectStatus_$770_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_ProjectStatus_$770(value)\n    }\n\n    function abi_encode_t_enum$_ProjectStatus_$770_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_ProjectStatus_$770_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_RequestType_$760(value) {\n        if iszero(lt(value, 2)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestType_$760(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestType_$760(value)\n    }\n\n    function convert_t_enum$_RequestType_$760_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestType_$760(value)\n    }\n\n    function abi_encode_t_enum$_RequestType_$760_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestType_$760_to_t_uint8(value))\n    }\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function abi_encode_t_address_to_t_address_fromStack(value, pos) {\n        mstore(pos, cleanup_t_address(value))\n    }\n\n    function abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$764_t_enum$_ProjectStatus_$770_t_enum$_RequestType_$760_t_address_t_address_t_address_t_uint256_t_bytes32__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_bytes32__fromStack_reversed(headStart , value10, value9, value8, value7, value6, value5, value4, value3, value2, value1, value0) -> tail {\n        tail := add(headStart, 352)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value1,  add(headStart, 32))\n\n        abi_encode_t_bytes32_to_t_bytes32_fromStack(value2,  add(headStart, 64))\n\n        abi_encode_t_enum$_RequestStatus_$764_to_t_uint8_fromStack(value3,  add(headStart, 96))\n\n        abi_encode_t_enum$_ProjectStatus_$770_to_t_uint8_fromStack(value4,  add(headStart, 128))\n\n        abi_encode_t_enum$_RequestType_$760_to_t_uint8_fromStack(value5,  add(headStart, 160))\n\n        abi_encode_t_address_to_t_address_fromStack(value6,  add(headStart, 192))\n\n        abi_encode_t_address_to_t_address_fromStack(value7,  add(headStart, 224))\n\n        abi_encode_t_address_to_t_address_fromStack(value8,  add(headStart, 256))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value9,  add(headStart, 288))\n\n        abi_encode_t_bytes32_to_t_bytes32_fromStack(value10,  add(headStart, 320))\n\n    }\n\n}\n",
       "id": 7,
       "language": "Yul",
       "name": "#utility.yul"
@@ -2815,18 +2815,18 @@
     "absolutePath": "project:/contracts/others/SupervisorChain.sol",
     "exportedSymbols": {
       "SharedChain": [
-        758
+        908
       ],
       "SupervisorChain": [
-        1104
+        1254
       ]
     },
-    "id": 1105,
+    "id": 1255,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1065,
+        "id": 1215,
         "literals": [
           "solidity",
           ">=",
@@ -2842,11 +2842,11 @@
       {
         "absolutePath": "project:/contracts/SharedChain.sol",
         "file": "../SharedChain.sol",
-        "id": 1066,
+        "id": 1216,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 1105,
-        "sourceUnit": 759,
+        "scope": 1255,
+        "sourceUnit": 909,
         "src": "68:28:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -2856,13 +2856,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 1067,
+              "id": 1217,
               "name": "SharedChain",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 758,
+              "referencedDeclaration": 908,
               "src": "128:11:5"
             },
-            "id": 1068,
+            "id": 1218,
             "nodeType": "InheritanceSpecifier",
             "src": "128:11:5"
           }
@@ -2871,10 +2871,10 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1104,
+        "id": 1254,
         "linearizedBaseContracts": [
-          1104,
-          758
+          1254,
+          908
         ],
         "name": "SupervisorChain",
         "nameLocation": "109:15:5",
@@ -2882,12 +2882,12 @@
         "nodes": [
           {
             "constant": false,
-            "id": 1070,
+            "id": 1220,
             "mutability": "mutable",
             "name": "_supervisorAddress",
             "nameLocation": "155:18:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "147:26:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2896,7 +2896,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 1069,
+              "id": 1219,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "147:7:5",
@@ -2911,23 +2911,23 @@
           {
             "constant": false,
             "functionSelector": "97b82957",
-            "id": 1075,
+            "id": 1225,
             "mutability": "mutable",
             "name": "requestsSupervisor",
             "nameLocation": "275:18:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "243:50:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$730_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$880_storage_$",
               "typeString": "mapping(uint256 => struct SharedChain.Request)"
             },
             "typeName": {
-              "id": 1074,
+              "id": 1224,
               "keyType": {
-                "id": 1071,
+                "id": 1221,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "251:4:5",
@@ -2939,23 +2939,23 @@
               "nodeType": "Mapping",
               "src": "243:24:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$730_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$880_storage_$",
                 "typeString": "mapping(uint256 => struct SharedChain.Request)"
               },
               "valueType": {
-                "id": 1073,
+                "id": 1223,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1072,
+                  "id": 1222,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 730,
+                  "referencedDeclaration": 880,
                   "src": "259:7:5"
                 },
-                "referencedDeclaration": 730,
+                "referencedDeclaration": 880,
                 "src": "259:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$730_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$880_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               }
@@ -2965,12 +2965,12 @@
           {
             "constant": false,
             "functionSelector": "8e2661bb",
-            "id": 1078,
+            "id": 1228,
             "mutability": "mutable",
             "name": "requestsSupervisorCounter",
             "nameLocation": "312:25:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "300:41:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -2979,7 +2979,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 1076,
+              "id": 1226,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "300:4:5",
@@ -2990,7 +2990,7 @@
             },
             "value": {
               "hexValue": "30",
-              "id": 1077,
+              "id": 1227,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -3009,42 +3009,42 @@
           {
             "constant": false,
             "functionSelector": "c43dff53",
-            "id": 1082,
+            "id": 1232,
             "mutability": "mutable",
             "name": "allSupervisorRequests",
             "nameLocation": "365:21:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "348:38:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Request_$730_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Request_$880_storage_$dyn_storage",
               "typeString": "struct SharedChain.Request[]"
             },
             "typeName": {
               "baseType": {
-                "id": 1080,
+                "id": 1230,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1079,
+                  "id": 1229,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 730,
+                  "referencedDeclaration": 880,
                   "src": "348:7:5"
                 },
-                "referencedDeclaration": 730,
+                "referencedDeclaration": 880,
                 "src": "348:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$730_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$880_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               },
-              "id": 1081,
+              "id": 1231,
               "nodeType": "ArrayTypeName",
               "src": "348:9:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Request_$730_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Request_$880_storage_$dyn_storage_ptr",
                 "typeString": "struct SharedChain.Request[]"
               }
             },
@@ -3052,23 +3052,23 @@
           },
           {
             "body": {
-              "id": 1090,
+              "id": 1240,
               "nodeType": "Block",
               "src": "409:50:5",
               "statements": [
                 {
                   "expression": {
-                    "id": 1088,
+                    "id": 1238,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1085,
+                      "id": 1235,
                       "name": "_supervisorAddress",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1070,
+                      "referencedDeclaration": 1220,
                       "src": "420:18:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -3079,7 +3079,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 1086,
+                        "id": 1236,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -3090,7 +3090,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 1087,
+                      "id": 1237,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3109,13 +3109,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 1089,
+                  "id": 1239,
                   "nodeType": "ExpressionStatement",
                   "src": "420:31:5"
                 }
               ]
             },
-            "id": 1091,
+            "id": 1241,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -3123,18 +3123,18 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1083,
+              "id": 1233,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "406:2:5"
             },
             "returnParameters": {
-              "id": 1084,
+              "id": 1234,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "409:0:5"
             },
-            "scope": 1104,
+            "scope": 1254,
             "src": "395:64:5",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3142,7 +3142,7 @@
           },
           {
             "body": {
-              "id": 1102,
+              "id": 1252,
               "nodeType": "Block",
               "src": "491:100:5",
               "statements": [
@@ -3154,17 +3154,17 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 1097,
+                        "id": 1247,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 1094,
+                          "id": 1244,
                           "name": "_supervisorAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1070,
+                          "referencedDeclaration": 1220,
                           "src": "510:18:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -3175,7 +3175,7 @@
                         "operator": "==",
                         "rightExpression": {
                           "expression": {
-                            "id": 1095,
+                            "id": 1245,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -3186,7 +3186,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 1096,
+                          "id": 1246,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3207,7 +3207,7 @@
                       },
                       {
                         "hexValue": "596f7520617265206e6f7420612073757065727669736f72",
-                        "id": 1098,
+                        "id": 1248,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3233,7 +3233,7 @@
                           "typeString": "literal_string \"You are not a supervisor\""
                         }
                       ],
-                      "id": 1093,
+                      "id": 1243,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3247,7 +3247,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1099,
+                    "id": 1249,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3262,23 +3262,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1100,
+                  "id": 1250,
                   "nodeType": "ExpressionStatement",
                   "src": "502:69:5"
                 },
                 {
-                  "id": 1101,
+                  "id": 1251,
                   "nodeType": "PlaceholderStatement",
                   "src": "582:1:5"
                 }
               ]
             },
-            "id": 1103,
+            "id": 1253,
             "name": "onlySupervisor",
             "nameLocation": "476:14:5",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 1092,
+              "id": 1242,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "491:0:5"
@@ -3288,7 +3288,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 1105,
+        "scope": 1255,
         "src": "100:2117:5",
         "usedErrors": []
       }
@@ -3299,18 +3299,18 @@
     "absolutePath": "project:/contracts/others/SupervisorChain.sol",
     "exportedSymbols": {
       "SharedChain": [
-        758
+        908
       ],
       "SupervisorChain": [
-        1104
+        1254
       ]
     },
-    "id": 1105,
+    "id": 1255,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1065,
+        "id": 1215,
         "literals": [
           "solidity",
           ">=",
@@ -3326,11 +3326,11 @@
       {
         "absolutePath": "project:/contracts/SharedChain.sol",
         "file": "../SharedChain.sol",
-        "id": 1066,
+        "id": 1216,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 1105,
-        "sourceUnit": 759,
+        "scope": 1255,
+        "sourceUnit": 909,
         "src": "68:28:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3340,13 +3340,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 1067,
+              "id": 1217,
               "name": "SharedChain",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 758,
+              "referencedDeclaration": 908,
               "src": "128:11:5"
             },
-            "id": 1068,
+            "id": 1218,
             "nodeType": "InheritanceSpecifier",
             "src": "128:11:5"
           }
@@ -3355,10 +3355,10 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1104,
+        "id": 1254,
         "linearizedBaseContracts": [
-          1104,
-          758
+          1254,
+          908
         ],
         "name": "SupervisorChain",
         "nameLocation": "109:15:5",
@@ -3366,12 +3366,12 @@
         "nodes": [
           {
             "constant": false,
-            "id": 1070,
+            "id": 1220,
             "mutability": "mutable",
             "name": "_supervisorAddress",
             "nameLocation": "155:18:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "147:26:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -3380,7 +3380,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 1069,
+              "id": 1219,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "147:7:5",
@@ -3395,23 +3395,23 @@
           {
             "constant": false,
             "functionSelector": "97b82957",
-            "id": 1075,
+            "id": 1225,
             "mutability": "mutable",
             "name": "requestsSupervisor",
             "nameLocation": "275:18:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "243:50:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$730_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$880_storage_$",
               "typeString": "mapping(uint256 => struct SharedChain.Request)"
             },
             "typeName": {
-              "id": 1074,
+              "id": 1224,
               "keyType": {
-                "id": 1071,
+                "id": 1221,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "251:4:5",
@@ -3423,23 +3423,23 @@
               "nodeType": "Mapping",
               "src": "243:24:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$730_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$880_storage_$",
                 "typeString": "mapping(uint256 => struct SharedChain.Request)"
               },
               "valueType": {
-                "id": 1073,
+                "id": 1223,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1072,
+                  "id": 1222,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 730,
+                  "referencedDeclaration": 880,
                   "src": "259:7:5"
                 },
-                "referencedDeclaration": 730,
+                "referencedDeclaration": 880,
                 "src": "259:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$730_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$880_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               }
@@ -3449,12 +3449,12 @@
           {
             "constant": false,
             "functionSelector": "8e2661bb",
-            "id": 1078,
+            "id": 1228,
             "mutability": "mutable",
             "name": "requestsSupervisorCounter",
             "nameLocation": "312:25:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "300:41:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -3463,7 +3463,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 1076,
+              "id": 1226,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "300:4:5",
@@ -3474,7 +3474,7 @@
             },
             "value": {
               "hexValue": "30",
-              "id": 1077,
+              "id": 1227,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -3493,42 +3493,42 @@
           {
             "constant": false,
             "functionSelector": "c43dff53",
-            "id": 1082,
+            "id": 1232,
             "mutability": "mutable",
             "name": "allSupervisorRequests",
             "nameLocation": "365:21:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1104,
+            "scope": 1254,
             "src": "348:38:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Request_$730_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Request_$880_storage_$dyn_storage",
               "typeString": "struct SharedChain.Request[]"
             },
             "typeName": {
               "baseType": {
-                "id": 1080,
+                "id": 1230,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1079,
+                  "id": 1229,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 730,
+                  "referencedDeclaration": 880,
                   "src": "348:7:5"
                 },
-                "referencedDeclaration": 730,
+                "referencedDeclaration": 880,
                 "src": "348:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$730_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$880_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               },
-              "id": 1081,
+              "id": 1231,
               "nodeType": "ArrayTypeName",
               "src": "348:9:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Request_$730_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Request_$880_storage_$dyn_storage_ptr",
                 "typeString": "struct SharedChain.Request[]"
               }
             },
@@ -3536,23 +3536,23 @@
           },
           {
             "body": {
-              "id": 1090,
+              "id": 1240,
               "nodeType": "Block",
               "src": "409:50:5",
               "statements": [
                 {
                   "expression": {
-                    "id": 1088,
+                    "id": 1238,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1085,
+                      "id": 1235,
                       "name": "_supervisorAddress",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1070,
+                      "referencedDeclaration": 1220,
                       "src": "420:18:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -3563,7 +3563,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 1086,
+                        "id": 1236,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -3574,7 +3574,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 1087,
+                      "id": 1237,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3593,13 +3593,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 1089,
+                  "id": 1239,
                   "nodeType": "ExpressionStatement",
                   "src": "420:31:5"
                 }
               ]
             },
-            "id": 1091,
+            "id": 1241,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -3607,18 +3607,18 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1083,
+              "id": 1233,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "406:2:5"
             },
             "returnParameters": {
-              "id": 1084,
+              "id": 1234,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "409:0:5"
             },
-            "scope": 1104,
+            "scope": 1254,
             "src": "395:64:5",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -3626,7 +3626,7 @@
           },
           {
             "body": {
-              "id": 1102,
+              "id": 1252,
               "nodeType": "Block",
               "src": "491:100:5",
               "statements": [
@@ -3638,17 +3638,17 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 1097,
+                        "id": 1247,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 1094,
+                          "id": 1244,
                           "name": "_supervisorAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1070,
+                          "referencedDeclaration": 1220,
                           "src": "510:18:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -3659,7 +3659,7 @@
                         "operator": "==",
                         "rightExpression": {
                           "expression": {
-                            "id": 1095,
+                            "id": 1245,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -3670,7 +3670,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 1096,
+                          "id": 1246,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3691,7 +3691,7 @@
                       },
                       {
                         "hexValue": "596f7520617265206e6f7420612073757065727669736f72",
-                        "id": 1098,
+                        "id": 1248,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3717,7 +3717,7 @@
                           "typeString": "literal_string \"You are not a supervisor\""
                         }
                       ],
-                      "id": 1093,
+                      "id": 1243,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3731,7 +3731,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1099,
+                    "id": 1249,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3746,23 +3746,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1100,
+                  "id": 1250,
                   "nodeType": "ExpressionStatement",
                   "src": "502:69:5"
                 },
                 {
-                  "id": 1101,
+                  "id": 1251,
                   "nodeType": "PlaceholderStatement",
                   "src": "582:1:5"
                 }
               ]
             },
-            "id": 1103,
+            "id": 1253,
             "name": "onlySupervisor",
             "nameLocation": "476:14:5",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 1092,
+              "id": 1242,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "491:0:5"
@@ -3772,7 +3772,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 1105,
+        "scope": 1255,
         "src": "100:2117:5",
         "usedErrors": []
       }
@@ -3785,7 +3785,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-23T08:40:08.972Z",
+  "updatedAt": "2021-11-23T08:57:48.633Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
