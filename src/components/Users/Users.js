@@ -10,7 +10,9 @@ import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import toast, { Toaster } from 'react-hot-toast';
-import { TableCell, TableRow } from '@material-ui/core';
+import * as eventsService from '../eventsService';
+import UserChanges from './UserChanges';
+import { VisibilityOff } from '@material-ui/icons';
 
 export default class Users extends Component {
 	constructor(props) {
@@ -18,13 +20,16 @@ export default class Users extends Component {
 		this.state = {
 			openPopup: false,
             openViewForm: false,
+            openUserChanges: false,
 			recordForEdit: null,
+            recordChanges: [],
 			users: [],
 		};
     }
 
     componentDidMount() {
         this.getUsers();
+        eventsService.getAllUserEvents(this.props);
     }
 
     getUsers = async () => {
@@ -34,15 +39,24 @@ export default class Users extends Component {
 
     setOpenPopup = (value) => {
 		this.setState({ openPopup: value });
-	};
+	}
 
     setOpenViewForm = (value) => {
         this.setState({ openViewForm: value });
     }
 
+    setOpenUserChanges = (value) => {
+        this.setState({ openUserChanges: value });
+    }
+
 	setRecordForEdit = (data) => {
 		this.setState({ recordForEdit: data });
 	}
+
+    setRecordUserChanges = async (rowData) => {
+        const data = await eventsService.getUserEvents(this.props, rowData.walletAddress);
+        this.setState({ recordChanges: data });
+    }
 
     createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
         await this.props.project.methods
@@ -158,6 +172,23 @@ export default class Users extends Component {
                     </DialogContent>
 				</Dialog>
 
+				<Dialog open={this.state.openUserChanges} fullWidth maxWidth="xl">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								View User Changes
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenUserChanges(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers>
+                        <UserChanges recordChanges={this.state.recordChanges} />
+                    </DialogContent>
+				</Dialog>
+
 				<br /><br />
 				<MaterialTable
 					title="Users"
@@ -167,6 +198,15 @@ export default class Users extends Component {
 					data={this.state.users}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
+						{
+							icon: VisibilityOff,
+							tooltip: 'View User Changes',
+							onClick: (event, rowData) => {
+                                console.log(rowData);
+                                this.setOpenUserChanges(true);
+                                this.setRecordUserChanges(rowData);
+							},
+						},
 						{
 							icon: Edit,
 							tooltip: 'Edit User',
