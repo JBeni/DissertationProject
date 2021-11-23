@@ -23,6 +23,25 @@ export default function AddProjectForm(props) {
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialProjectFormValidity);
 
+    useEffect(() => {
+		if (recordForEdit != null) {
+            let status = getProjectStatusByValue(recordForEdit.status);
+            let newData = {
+                name: recordForEdit.name,
+                status: status.id,
+            };
+            setValues({
+				...newData,
+			});
+            setIsEdit(true);
+        } else {
+            setValues({
+                ...values,
+                status: getDefaultProjectStatus().id,
+            });
+        }
+	}, []);
+
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setValues({
@@ -90,25 +109,6 @@ export default function AddProjectForm(props) {
             props.handleNewDataFromPopup(false);
 		}
 	};
-
-	useEffect(() => {
-		if (recordForEdit != null) {
-            let status = getProjectStatusByValue(recordForEdit.status);
-            let newData = {
-                name: recordForEdit.name,
-                status: status.id,
-            };
-            setValues({
-				...newData,
-			});
-            setIsEdit(true);
-        } else {
-            setValues({
-                ...values,
-                status: getDefaultProjectStatus().id,
-            });
-        }
-	}, []);
 
 	return (
 		<>

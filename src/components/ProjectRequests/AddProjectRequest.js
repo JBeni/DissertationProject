@@ -11,6 +11,19 @@ export default function AddProjectRequest(props) {
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialProjectRequestFormValidity);
 
+    useEffect(() => {
+        if (recordForEdit != null) {
+            let projectStatus = getProjectStatusByValue(recordForEdit.status);
+            let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
+            let requestStatus = getDefaultRequestStatus();
+            setValues({
+                ...values,
+                status: nextStatus.toString(),
+                requestStatus: requestStatus.id,
+            });
+        }
+	}, []);
+
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setValues({
@@ -59,19 +72,6 @@ export default function AddProjectRequest(props) {
             props.handleNewDataFromPopup(false);
 		}
 	};
-
-	useEffect(() => {
-        if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit.status);
-            let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
-            let requestStatus = getDefaultRequestStatus();
-            setValues({
-                ...values,
-                status: nextStatus.toString(),
-                requestStatus: requestStatus.id,
-            });
-        }
-	}, []);
 
 	return (
 		<>

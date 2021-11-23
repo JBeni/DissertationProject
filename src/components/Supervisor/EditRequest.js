@@ -21,6 +21,27 @@ export default function EditRequest(props) {
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialRequestFormValidity);
 
+    useEffect(() => {
+		if (recordForEdit != null) {
+            let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
+            setValues({
+				...values,
+                index: recordForEdit.index,
+                title: recordForEdit.title,
+                projectStatus: projectStatus.id,
+                indexProjectRequest: recordForEdit.indexProjectRequest,
+                comments: '',
+                projectAddress: recordForEdit.projectAddress,
+                userAddress: recordForEdit.userAddress
+			});
+            setIsEdit(true);
+        } else {
+            setValues({
+                ...values
+            });
+        }
+	}, []);
+
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setValues({
@@ -70,28 +91,7 @@ export default function EditRequest(props) {
 		}
 	};
 
-	useEffect(() => {
-		if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
-            setValues({
-				...values,
-                index: recordForEdit.index,
-                title: recordForEdit.title,
-                projectStatus: projectStatus.id,
-                indexProjectRequest: recordForEdit.indexProjectRequest,
-                comments: '',
-                projectAddress: recordForEdit.projectAddress,
-                userAddress: recordForEdit.userAddress
-			});
-            setIsEdit(true);
-        } else {
-            setValues({
-                ...values
-            });
-        }
-	}, []);
-
-	return (
+    return (
 		<>
 			<form className={classes.root} autoComplete="off" onSubmit={handleSubmit}>
 				<Grid container>

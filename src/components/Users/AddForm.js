@@ -21,7 +21,24 @@ export default function AddForm(props) {
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(initialUserFormValidity);
 
-	const handleInputChange = (e) => {
+    useEffect(() => {
+		if (recordForEdit != null) {
+            let role = getUserRoleByValue(recordForEdit.role);
+            let newData = {
+                firstname: recordForEdit.firstname,
+                lastname: recordForEdit.lastname,
+                email: recordForEdit.email,
+                role: role.id,
+                walletAddress: recordForEdit.walletAddress,
+            };
+            setValues({
+				...newData,
+			});
+            setIsEdit(true);
+        }
+	}, [recordForEdit]);
+
+    const handleInputChange = (e) => {
 		const { name, value } = e.target;
 		setValues({
 			...values,
@@ -88,23 +105,6 @@ export default function AddForm(props) {
             props.handleNewDataFromPopup(false);
 		}
 	};
-
-	useEffect(() => {
-		if (recordForEdit != null) {
-            let role = getUserRoleByValue(recordForEdit.role);
-            let newData = {
-                firstname: recordForEdit.firstname,
-                lastname: recordForEdit.lastname,
-                email: recordForEdit.email,
-                role: role.id,
-                walletAddress: recordForEdit.walletAddress,
-            };
-            setValues({
-				...newData,
-			});
-            setIsEdit(true);
-        }
-	}, [recordForEdit]);
 
 	return (
 		<>

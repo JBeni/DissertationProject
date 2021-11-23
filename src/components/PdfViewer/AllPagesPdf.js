@@ -9,17 +9,16 @@ export default function AllPagesPdf(props) {
     const [showPdf, setShowPdf] = useState(false);
 	const { pdf } = props;
 
-	function onDocumentLoadSuccess({ numPages }) {
+    useEffect(() => {
+    }, []);
+
+    function onDocumentLoadSuccess({ numPages }) {
 		setNumPages(numPages);
 	}
 
     const setShowTable = (value) => {
         setShowPdf(value);
     }
-
-    useEffect(() => {
-
-    }, []);
 
 	return (
         <>
@@ -40,7 +39,7 @@ export default function AllPagesPdf(props) {
             {
                 showPdf === true &&
                     <Document
-                        file={'File/comp-1801-w08-2021-22.pdf'}
+                        file={pdf}
                         options={{ workerSrc: '/pdf.worker.js' }}
                         onLoadSuccess={onDocumentLoadSuccess}
                     >
