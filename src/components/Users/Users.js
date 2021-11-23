@@ -11,7 +11,7 @@ import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import toast, { Toaster } from 'react-hot-toast';
 import * as eventsService from '../eventsService';
-import UserChanges from './UserChanges';
+import ViewChanges from './ViewChanges';
 import { VisibilityOff } from '@material-ui/icons';
 
 export default class Users extends Component {
@@ -185,7 +185,7 @@ export default class Users extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers>
-                        <UserChanges recordChanges={this.state.recordChanges} />
+                        <ViewChanges recordChanges={this.state.recordChanges} />
                     </DialogContent>
 				</Dialog>
 

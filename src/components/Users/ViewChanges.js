@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import '../Styles/Table.style.css';
+import '../Styles/TableChanges.style.css';
 
-export default function UserChanges(props) {
+export default function ViewChanges(props) {
 	const { recordChanges } = props;
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export default function UserChanges(props) {
 				<tbody>
                     {
                         recordChanges.map((item) => (
-                            <tr>
+                            <tr key={ item.index }>
                                 <td>{ item.username }</td>
                                 <td>{ item.email }</td>
                                 <td>{ item.firstname }</td>
