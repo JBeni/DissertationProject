@@ -26,12 +26,13 @@ contract UserChain {
         uint _timestamp;
     }
     event UserEvent(
-        address indexed _walletAddress,
+        uint _index,
         string indexed _username,
         bytes32 _email,
         bytes32 _firstname,
         bytes32 _lastname,
         Roles indexed _role,
+        address indexed _walletAddress,
         uint _timestamp
     );
 
@@ -67,12 +68,13 @@ contract UserChain {
         users[_walletAddress]._timestamp = block.timestamp;
 
         emit UserEvent(
-            _walletAddress,
+            usersCounter,
             _username,
             _email,
             _firstname,
             _lastname,
             Roles(_role),
+            _walletAddress,
             block.timestamp
         );
         usersAddress.push(_walletAddress);
@@ -83,18 +85,25 @@ contract UserChain {
         users[_walletAddress]._role = Roles(_role);
 
         emit UserEvent(
-            _walletAddress,
+            users[_walletAddress]._index,
             users[_walletAddress]._username,
             users[_walletAddress]._email,
             users[_walletAddress]._firstname,
             users[_walletAddress]._lastname,
             Roles(_role),
+            _walletAddress,
             block.timestamp
         );
     }
 
-    function getAllUsers() public view returns (address[] memory) {
-        return usersAddress;
+    function getAllUsers() public view returns(User[] memory) {
+        User[] memory allUsers = new User[](usersCounter);
+        for (uint index = 0; index < usersCounter; index++) {
+            address _userAddress = usersAddress[index];
+            User storage user = users[_userAddress];
+            allUsers[index] = user;
+        }
+        return allUsers;
     }
 
     function getUserInfo(address _walletAddress) public view returns (User memory) {
