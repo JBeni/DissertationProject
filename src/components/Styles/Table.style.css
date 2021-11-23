@@ -1,5 +1,7 @@
 
 .container-body {
+    width: 1500px;
+    margin-left: 150px;
     font-family: Mukta, sans-serif;
     margin-top: 25px;
     min-height: 350px;
@@ -11,7 +13,7 @@
 }
 
 table {
-    width: 1300px;
+    width: 1500px;
     border-collapse: collapse;
     box-shadow: 0 5px 10px #e1e5ee;
     background-color: white;
