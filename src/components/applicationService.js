@@ -2,7 +2,7 @@
 import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from './dropdownService';
 
 export async function getAllUsers(props) {
-    let data = [];
+    let dataArray = [];
     await props.project.methods.getAllUsers().call().then((result) => {
         result.map((result) => {
             let role = getUserRoleById(result._role);
@@ -15,17 +15,17 @@ export async function getAllUsers(props) {
                 walletAddress: result._walletAddress,
                 timestamp: result._timestamp
             };
-            data.push(user);
+            dataArray.push(user);
             return false;
         });
     }).catch(function (error) {
         console.log(error);
     });
-    return data;
+    return dataArray;
 }
 
 export async function getAllProjects(props) {
-    let data = [];
+    let dataArray = [];
     await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
             let status = getProjectStatusById(result._status);
@@ -38,13 +38,13 @@ export async function getAllProjects(props) {
                 userAddress: result._userAddress,
                 timestamp: result._timestamp
             };
-            data.push(project);
+            dataArray.push(project);
             return false;
         });
     }).catch(function (error) {
         console.log(error);
     });
-    return data;
+    return dataArray;
 }
 
 export async function getProjectInfo(props, projectAddress) {
@@ -72,7 +72,7 @@ export async function getAllProjectRequests(props, projectAddress) {
         console.log(error);
     });
 
-    let data = [];
+    let dataArray = [];
     allProjectRequest.map((result) => {
         if (projectAddress === result._projectAddress) {
             let status = getProjectStatusById(result._status);
@@ -88,11 +88,11 @@ export async function getAllProjectRequests(props, projectAddress) {
                 requestAddress: result._requestAddress,
                 timestamp: result._timestamp
             };
-            data.push(project);
+            dataArray.push(project);
         }
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 
@@ -105,7 +105,7 @@ export async function getSupervisorRequests(props) {
         console.log(error);
     });
 
-    let data = [];
+    let dataArray = [];
     allRequests.map((result) => {
         let requestStatus = getRequestStatusById(result._requestStatus);
         let unApproveStatus = getDefaultRequestStatus();
@@ -127,12 +127,12 @@ export async function getSupervisorRequests(props) {
                     requestAddress: result._requestAddress,
                     timestamp: result._timestamp
                 };
-                data.push(project);
+                dataArray.push(project);
             }
         }
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 export async function getCompanyRequests(props) {
@@ -142,7 +142,7 @@ export async function getCompanyRequests(props) {
         console.log(error);
     });
 
-    let data = [];
+    let dataArray = [];
     allRequests.map((result) => {
         let requestStatus = getRequestStatusById(result._requestStatus);
         let unApproveStatus = getDefaultRequestStatus();
@@ -164,12 +164,12 @@ export async function getCompanyRequests(props) {
                     requestAddress: result._requestAddress,
                     timestamp: result._timestamp
                 };
-                data.push(project);
+                dataArray.push(project);
             }
         }
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 export async function getAllRequests(props) {
