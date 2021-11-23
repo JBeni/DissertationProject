@@ -133,7 +133,6 @@ contract ProjectChain is UserChain, SharedChain {
         if (projectRequestsCounter > 0) {
             for (uint index = projectRequestsCounter - 1; index >= 0; index--) {
                 if (_projectAddress == projectRequests[index]._projectAddress) {
-
                     request = ProjectRequest(
                         projectRequests[index]._index,
                         projectRequests[index]._title,
@@ -146,18 +145,6 @@ contract ProjectChain is UserChain, SharedChain {
                         block.timestamp,
                         projectRequests[index]._signature
                     );
-                /*
-                    request._index = projectRequests[index]._index;
-                    request._title = projectRequests[index]._title;
-                    request._comments = projectRequests[index]._comments;
-                    request._status = projectRequests[index]._status;
-                    request._requestStatus = projectRequests[index]._requestStatus;
-                    request._projectAddress = projectRequests[index]._projectAddress;
-                    request._userAddress = projectRequests[index]._userAddress;
-                    request._requestAddress = projectRequests[index]._requestAddress;
-                    request._timestamp = block.timestamp;
-                */
-
                     return request;
                 }
             }
