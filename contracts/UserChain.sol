@@ -58,24 +58,14 @@ contract UserChain {
         uint256 _role,
         address _walletAddress
     ) public onlyOwner {
-        users[_walletAddress]._index = usersCounter;
-        users[_walletAddress]._username = _username;
-        users[_walletAddress]._email = _email;
-        users[_walletAddress]._firstname = _firstname;
-        users[_walletAddress]._lastname = _lastname;
-        users[_walletAddress]._role = Roles(_role);
-        users[_walletAddress]._walletAddress = _walletAddress;
-        users[_walletAddress]._timestamp = block.timestamp;
+        users[_walletAddress] = User(
+            usersCounter, _username, _email, _firstname, _lastname,
+            Roles(_role), _walletAddress, block.timestamp
+        );
 
         emit UserEvent(
-            usersCounter,
-            _username,
-            _email,
-            _firstname,
-            _lastname,
-            Roles(_role),
-            _walletAddress,
-            block.timestamp
+            usersCounter, _username, _email, _firstname,
+            _lastname, Roles(_role), _walletAddress, block.timestamp
         );
         usersAddress.push(_walletAddress);
         usersCounter++;
@@ -85,14 +75,9 @@ contract UserChain {
         users[_walletAddress]._role = Roles(_role);
 
         emit UserEvent(
-            users[_walletAddress]._index,
-            users[_walletAddress]._username,
-            users[_walletAddress]._email,
-            users[_walletAddress]._firstname,
-            users[_walletAddress]._lastname,
-            Roles(_role),
-            _walletAddress,
-            block.timestamp
+            users[_walletAddress]._index, users[_walletAddress]._username,
+            users[_walletAddress]._email, users[_walletAddress]._firstname,
+            users[_walletAddress]._lastname, Roles(_role), _walletAddress, block.timestamp
         );
     }
 
