@@ -7,19 +7,9 @@ import "./SharedChain.sol";
 contract ProjectChain is UserChain, SharedChain {
     bytes32 constant PROJECT_HASH_VALUE = "csd?S@salas;dlA234_D.;s_as";
     bytes32 constant REQUEST_HASH_VALUE = "csd?.!?*salas;dlA.;s_as";
+
     address _projectInitiator;
-
     uint _indexUniqueAddress = 0;
-
-    /**  DATA FOR PROJECT INITIATOR  */
-
-    mapping(address => Project) public projects;
-    uint public projectsCounter = 0;
-    address[] public projectsAddress;
-
-    mapping(uint => ProjectRequest) public projectRequests;
-    uint public projectRequestsCounter = 0;
-    address[] public projectRequestsAddress;
 
     constructor() {
         _projectInitiator = msg.sender;
@@ -30,6 +20,13 @@ contract ProjectChain is UserChain, SharedChain {
         require(_projectInitiator == msg.sender, "You are not a project initiator");
         _;
     }
+
+
+    /**  PROJECT INITIATOR  */
+
+    mapping(address => Project) public projects;
+    uint public projectsCounter = 0;
+    address[] public projectsAddress;
 
     function createUniqueProjectAddress(bytes32 _text, uint _index) public view returns (address) {
         return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
@@ -68,6 +65,13 @@ contract ProjectChain is UserChain, SharedChain {
     function getAllProjects() public view returns(address[] memory) {
         return projectsAddress;
     }
+
+
+    /**  Project Requests  */
+
+    mapping(uint => ProjectRequest) public projectRequests;
+    uint public projectRequestsCounter = 0;
+    address[] public projectRequestsAddress;
 
     function createUniqueProjectRequestAddress() public returns (address) {
         _indexUniqueAddress++;
@@ -154,11 +158,12 @@ contract ProjectChain is UserChain, SharedChain {
     }
 */
 
+
     /**  DATA FOR SUPERVISOR && COMPANY  */
 
     mapping(uint => Request) public requests;
     uint public requestsCounter = 0;
-    Request[] public allRequests;
+    address[] public allRequests;
 
     function createRequest(
         uint _indexProjectRequest,
@@ -194,11 +199,7 @@ contract ProjectChain is UserChain, SharedChain {
             block.timestamp,
             ''
         );
-        allRequests.push(Request(
-            requestsCounter, _indexProjectRequest, _title,  RequestStatus(_requestStatus),
-            ProjectStatus(_projectStatus),  _requestType, _projectAddress,
-            _projectInitiator, _requestAddress, block.timestamp, ''
-        ));
+        allRequests.push(_requestAddress);
         requestsCounter++;
     }
 
@@ -216,8 +217,8 @@ contract ProjectChain is UserChain, SharedChain {
         requests[_index]._signature = _signature;
 
         uint index = requests[_index]._index;
-        allRequests[index]._requestStatus = RequestStatus(_requestStatus);
-        allRequests[index]._signature = _signature;
+        //allRequests[index]._requestStatus = RequestStatus(_requestStatus);
+        //allRequests[index]._signature = _signature;
 
         // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
@@ -227,7 +228,7 @@ contract ProjectChain is UserChain, SharedChain {
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
     }
 
-    function getAllRequests() public view returns(Request[] memory) {
-        return allRequests;
-    }
+    // function getAllRequests() public view returns(Request[] memory) {
+    //     return allRequests;
+    // }
 }
