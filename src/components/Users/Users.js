@@ -107,7 +107,7 @@ export default class Users extends Component {
     }
 
 	render() {
-		const tableRef = React.createRef();
+        const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Username', field: 'username' },
 			{ title: 'Email', field: 'email' },
@@ -186,19 +186,6 @@ export default class Users extends Component {
 						},
 					]}
 				/>
-
-                {
-                    this.state.users.map((data) => (
-                        <TableRow>
-                            <TableCell multiline style={{ maxWidth: "50px" }}>{data.username}</TableCell>
-                            <TableCell multiline style={{ maxWidth: "50px" }}>{data.email}</TableCell>
-                            <TableCell multiline style={{ maxWidth: "50px" }}>{data.firstname}</TableCell>
-                            <TableCell multiline style={{ maxWidth: "20px" }}>{data.lastname}</TableCell>
-                            {/* <TableCell multiline style={{ maxWidth: "20px" }}>{new Date(data.returnValues[ 4 ] * 1000).toString()}</TableCell> */}
-                            <TableCell multiline style={{ maxWidth: "40px" }}><Button variant="contained" color="primary" onClick={() => this.verifySignature(data.email, data.lastname)}>Verify Signature</Button></TableCell>
-                        </TableRow>
-                    ))
-                }
 
                 <Toaster position="bottom-center" reverseOrder={false} />
 			</div>
