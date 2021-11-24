@@ -1,5 +1,5 @@
 import React from 'react'
-import LineChart from './../Charts/LineChart';
+import LineChart from '../Charts/LinearChart';
 
 function Dashboard() {
     return (

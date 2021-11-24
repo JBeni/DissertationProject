@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Chart, Dataset } from 'react-rainbow-components';
 
 const containerStyles = {
@@ -9,7 +9,7 @@ const containerStyles = {
 	marginRight: 50,
 };
 
-class LineChart extends React.Component {
+class LineChart extends Component {
 	constructor(props) {
 		super(props);
 		this.titles = [
