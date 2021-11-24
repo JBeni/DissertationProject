@@ -59,7 +59,7 @@ class App extends Component {
             /**
              * eth.getAccounts() returns the address values in the format expected by the MetaMask
              * 
-             *  The eth_requestAccounts return the address with lowercase, therefore, IS NOT OKAY
+             * The eth_requestAccounts return the address with lowercase, therefore, IS NOT OKAY
              */
             const accounts = await web3.eth.getAccounts();
 			this.setState({
