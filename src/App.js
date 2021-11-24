@@ -30,9 +30,14 @@ class App extends Component {
     async loadWeb3() {
 		if (window.ethereum) {
             // const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+
             window.ethereum.on('accountsChanged', function (accounts) {
                 window.location.reload();
             });
+            window.ethereum.on('disconnect', function (accounts) {
+                console.log('Disconnected');
+            });
+
             window.web3 = new Web3(window.ethereum);
 		} else if (window.web3) {
 			window.web3 = new Web3(window.web3.currentProvider);
