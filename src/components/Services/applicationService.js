@@ -1,5 +1,5 @@
 
-import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from './dropdownService';
+import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from '../Services/dropdownService';
 
 export async function getAllUsers(props) {
     let dataArray = [];

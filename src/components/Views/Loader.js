@@ -1,16 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStylesLoader } from '../sharedResources';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import '../Styles/Loader.css';
 
-const useStyles = makeStyles((theme) => ({
-	root: {
-		display: 'flex',
-	},
-}));
-
 export default function Loader() {
-    const classes = useStyles();
+    const classes = useStylesLoader();
 
 	return (
 		<div className={classes.root}>

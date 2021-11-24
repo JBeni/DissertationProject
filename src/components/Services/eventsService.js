@@ -1,4 +1,4 @@
-import { getUserRoleById } from './dropdownService';
+import { getUserRoleById } from '../Services/dropdownService';
 
 export async function getAllUserEvents(props) {
     let events = await props.project.getPastEvents('UserEvent', {

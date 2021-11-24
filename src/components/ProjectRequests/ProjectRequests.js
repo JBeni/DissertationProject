@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MaterialTable from '@material-table/core';
-import * as applicationService from '../applicationService';
+import * as applicationService from '../Services/applicationService';
 import { DialogContent, Typography, DialogTitle, Dialog, Button } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
-import { getRequestStatusById } from '../dropdownService';
+import { getRequestStatusById } from '../Services/dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
-import { getDefaultProjectStatus, getProjectStatusById } from './../dropdownService';
+import { getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
 
 class ProjectRequests extends Component {
 	constructor(props) {

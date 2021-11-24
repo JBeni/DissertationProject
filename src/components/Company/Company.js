@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getCompanyRequests } from '../applicationService';
+import { getCompanyRequests } from '../Services/applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 
 class Company extends Component {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
-import { initialUserFormValues } from './../formService';
-import { getUserRoleByValue } from './../dropdownService';
+import { initialUserFormValues } from '../Services/formService';
+import { getUserRoleByValue } from '../Services/dropdownService';
 
 export default function ViewForm(props) {
 	const { recordForEdit } = props;

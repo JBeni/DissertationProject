@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getSupervisorRequests } from '../applicationService';
+import { getSupervisorRequests } from '../Services/applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 
 class Supervisor extends Component {

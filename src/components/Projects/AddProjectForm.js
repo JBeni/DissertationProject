@@ -11,9 +11,9 @@ import {
 	Button,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { initialProjectFormValidity, initialProjectFormValues } from '../formService';
+import { initialProjectFormValidity, initialProjectFormValues } from '../Services/formService';
 import { useStylesForm } from './../sharedResources';
-import { getProjectStatusByValue, projectStatusDropdown, getDefaultProjectStatus } from './../dropdownService';
+import { getProjectStatusByValue, projectStatusDropdown, getDefaultProjectStatus } from '../Services/dropdownService';
 
 export default function AddProjectForm(props) {
 	const classes = useStylesForm();

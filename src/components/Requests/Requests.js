@@ -5,7 +5,7 @@ import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@materia
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import MaterialTable from '@material-table/core';
-import { getAllRequests } from '../applicationService';
+import { getAllRequests } from '../Services/applicationService';
 
 class Requests extends Component {
     constructor(props) {

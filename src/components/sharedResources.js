@@ -73,3 +73,9 @@ export const useStylesForm = makeStyles((theme) => ({
 		textTransform: 'none',
 	},
 }));
+
+export const useStylesLoader = makeStyles((theme) => ({
+	root: {
+		display: 'flex',
+	},
+}));

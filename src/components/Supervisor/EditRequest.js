@@ -9,8 +9,8 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { initialRequestFormValues, initialRequestFormValidity } from '../formService';
-import { projectStatusDropdown, getProjectStatusByValue, requestStatusDropdownTwoOptions } from './../dropdownService';
+import { initialRequestFormValues, initialRequestFormValidity } from '../Services/formService';
+import { projectStatusDropdown, getProjectStatusByValue, requestStatusDropdownTwoOptions } from '../Services/dropdownService';
 import { useStylesForm } from './../sharedResources';
 
 export default function EditRequest(props) {

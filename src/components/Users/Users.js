@@ -5,12 +5,12 @@ import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
 import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@material-ui/core';
 import AddForm from './AddForm';
-import * as applicationService from '../applicationService';
+import * as applicationService from '../Services/applicationService';
 import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import toast, { Toaster } from 'react-hot-toast';
-import * as eventsService from '../eventsService';
+import * as eventsService from '../Services/eventsService';
 import UserHistory from './UserHistory';
 import HistoryIcon from '@mui/icons-material/History';
 

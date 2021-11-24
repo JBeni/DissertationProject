@@ -9,8 +9,8 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { initialUserFormValidity, initialUserFormValues } from '../formService';
-import { userRoleDropdown, getUserRoleByValue } from './../dropdownService';
+import { initialUserFormValidity, initialUserFormValues } from '../Services/formService';
+import { userRoleDropdown, getUserRoleByValue } from '../Services/dropdownService';
 import { useStylesForm } from './../sharedResources';
 
 export default function AddForm(props) {
