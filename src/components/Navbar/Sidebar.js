@@ -36,7 +36,7 @@ function Sidebar(props) {
                                             : 'nav__link'
                                     }
                                 >
-                                    <i className="bx bx-grid-alt nav__icon"></i>
+                                    <i className="bx bx-user-pin nav__icon"></i>
                                     <span className="nav__name">Users</span>
                                 </Link>
                         }
@@ -50,7 +50,7 @@ function Sidebar(props) {
                                             : 'nav__link'
                                     }
                                 >
-                                    <i className="bx bx-user nav__icon"></i>
+                                    <i className="bx bxs-detail nav__icon"></i>
                                     <span className="nav__name">Projects</span>
                                 </Link>
                         }
@@ -64,8 +64,8 @@ function Sidebar(props) {
                                             : 'nav__link'
                                     }
                                 >
-                                    <i className="bx bx-message-square-detail nav__icon"></i>
-                                    <span className="nav__name">Company Builder</span>
+                                    <i className="bx bxs-buildings nav__icon"></i>
+                                    <span className="nav__name">Company</span>
                                 </Link>
                         }
                         {
@@ -78,7 +78,7 @@ function Sidebar(props) {
                                             : 'nav__link'
                                     }
                                 >
-                                    <i className="bx bx-bookmark nav__icon"></i>
+                                    <i className="bx bx-analyse nav__icon"></i>
                                     <span className="nav__name">Project Supervisor</span>
                                 </Link>
                         }
@@ -92,7 +92,7 @@ function Sidebar(props) {
                                             : 'nav__link'
                                     }
                                 >
-                                    <i className="bx bxs-dashboard nav__icon"></i>
+                                    <i className="bx bx-git-pull-request nav__icon"></i>
                                     <span className="nav__name">All Requests</span>
                                 </Link>
                         }
@@ -100,8 +100,8 @@ function Sidebar(props) {
 				</div>
 
 				<p className="nav__link">
-					<i className="bx bxs-copyright nav__icon"></i>
-					<span className="nav__name">Copyright 2021</span>
+					<i className="bx bx-copyright nav__icon"></i>
+					<span className="nav__name">Copyright {(new Date().getFullYear())}</span>
 				</p>
 			</nav>
 		</div>
