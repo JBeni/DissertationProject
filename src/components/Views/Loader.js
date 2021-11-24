@@ -19,7 +19,7 @@ export default function Loader(props) {
                 </div>
             }
             {
-                isUserInBlockchain === true &&
+                isUserInBlockchain === true && isLoading === false &&
                 <div className="text-loader">
                     <p></p>
                     <p>Unauthorized Access</p>
