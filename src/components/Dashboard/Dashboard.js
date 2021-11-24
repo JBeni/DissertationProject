@@ -1,13 +1,11 @@
 import React from 'react'
+import LineChartExample from './../Charts/LinearChartExample';
 
 function Dashboard() {
     return (
         <div>
-            Dashboard asd asd AddSupervisor asd
-            sadsa
-            Dashboardd
-            asyncda
-            Sidebaras
+            <br/><br/>
+            <LineChartExample />
         </div>
     )
 }
