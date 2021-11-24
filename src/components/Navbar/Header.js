@@ -1,6 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { getUserInfo } from '../Services/applicationService';
 
 function Header(props) {
+    const [userData, setUserData] = useState();
+
+    useEffect(() => {
+        (async() => {
+            let data = await getUserInfo(props);
+            setUserData(data);
+        })();
+    }, [props]);
+
     return (
         <header className={ props.isActive ? "header body-pd" : "header" }>
             <div className="header__toggle">
@@ -8,15 +18,13 @@ function Header(props) {
             </div>
 
             <div className="flex-div">
-                <div className="flex-div">
-                    Current Account Address: {props.account}
+                <div style={{ marginRight: '50px' }}>
+                    Wallet Address: {props.account}
                 </div>
             </div>
 
-            <div className="header__p">
-                <p>{props.account}</p>
-
-                {/* <img src="assets/images/perfil.jpg" alt="Not" /> */}
+            <div>
+                { userData?.username?.length > 1 && <p>{userData.username} asjhdajshdjahsdj asdhajshdjashd</p> }
             </div>
         </header>
     );

@@ -24,6 +24,24 @@ export async function getAllUsers(props) {
     return dataArray;
 }
 
+export async function getUserInfo(props) {
+    return await props.project.methods.getUserInfo(props.account).call().then((result) => {
+        let role = getUserRoleById(result._role);
+        const user = {
+            username: result._username,
+            email: props.web3.utils.hexToUtf8(result._email),
+            firstname: props.web3.utils.hexToUtf8(result._firstname),
+            lastname: props.web3.utils.hexToUtf8(result._lastname),
+            role: role.value,
+            walletAddress: result._walletAddress,
+            timestamp: result._timestamp
+        };
+        return user;
+    }).catch(function (error) {
+        console.log(error);
+    });
+}
+
 export async function getAllProjects(props) {
     let dataArray = [];
     await props.project.methods.getAllProjects().call().then((result) => {

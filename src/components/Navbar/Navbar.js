@@ -24,7 +24,7 @@ function Navbar(props) {
         if (props.account === "0xf08b741073b3cb01ef6fb3b412e71c977f276faa") {
             //setCurrentUserRole('Admin');
             setCurrentUserRole('DefaultRole');
-            return;
+            //return;
         }
 
         (async () => {
@@ -34,11 +34,11 @@ function Navbar(props) {
             let role = getUserRoleById(data._role);
             setCurrentUserRole(role.value);
         })();
-	}, [props.account, props.project]);
+	}, [props, props.account, props.project]);
 
     return (
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
-            <Header account={props.account} isActive={isActive} changeMenuOption={changeMenuOption} />
+            <Header account={account} project={project} web3={web3} isActive={isActive} changeMenuOption={changeMenuOption} />
             <Sidebar userRole={currentUserRole} isActive={isActive} currentLocation={currentLocation} />
 
             <div className="main-section-container">
