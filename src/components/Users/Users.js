@@ -71,8 +71,7 @@ export default class Users extends Component {
                 this.props.web3.utils.utf8ToHex(_lastname),
                 Number(_role),
                 _walletAddress
-			)
-			.send({ from: this.props.account })
+			).send({ from: this.props.account })
             .then((response) => {
                 this.notifyToastSuccess();
                 this.getUsers();
