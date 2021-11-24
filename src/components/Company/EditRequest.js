@@ -32,7 +32,8 @@ export default function EditRequest(props) {
                 indexProjectRequest: recordForEdit.indexProjectRequest,
                 comments: '',
                 projectAddress: recordForEdit.projectAddress,
-                userAddress: recordForEdit.userAddress
+                userAddress: recordForEdit.userAddress,
+                requestAddress: recordForEdit.requestAddress
 			});
             setIsEdit(true);
         } else {
