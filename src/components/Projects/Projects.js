@@ -6,7 +6,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import ViewProjectForm from './ViewProjectForm';
 import AddProjectForm from './AddProjectForm';
-import ProjectTable from './ProjectTable';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
@@ -20,7 +19,6 @@ class Projects extends Component {
 		this.state = {
 			openAddForm: false,
             openViewForm: false,
-            showTable: false,
 			recordForEdit: null,
             selecteProjectAddress: '',
 			projects: [],
@@ -42,10 +40,6 @@ class Projects extends Component {
 
     setOpenViewForm = (value) => {
         this.setState({ openViewForm: value });
-    }
-
-    setShowTable = (value) => {
-        this.setState({ showTable: value });
     }
 
 	setRecordForEdit = (data) => {
@@ -230,24 +224,6 @@ class Projects extends Component {
 						},
 					]}
 				/>
-
-                <br /><br />
-                <ProjectTable showTable={this.state.showTable} projects={this.state.projects} />
-
-                {/* <LoaderCircle /> */}
-
-                <br /><br />
-                {/* <h4>Single Page</h4>
-                <div>
-                    <SinglePage pdf={'https://gateway.pinata.cloud/ipfs/QmZvoi8DB5M4HuLjRrhmbDhDQkF3TTFnM4mrgADJRrTCXu'} />
-                </div> */}
-
-                {/* <h4>All Pages</h4>
-                <div className="all-page-container">
-                    <AllPages pdf={'Files/comp-1801-w08-2021-22.pdf'} />
-                </div> */}
-
-
 			</div>
 		);
 	}
