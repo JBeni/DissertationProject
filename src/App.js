@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import Navbar from './Components/Navbar/Navbar';
+import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import ProjectChain from './abis/ProjectChain.json';
-import Loader from './Components/Views/Loader';
+import Loader from './components/Views/Loader';
 
 class App extends Component {
 	constructor() {
@@ -13,7 +13,6 @@ class App extends Component {
 			loading: true,
 			web3: null,
 		};
-
         this.initializeConnection();
     }
 
