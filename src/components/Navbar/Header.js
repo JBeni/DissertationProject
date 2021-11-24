@@ -24,7 +24,7 @@ function Header(props) {
             </div>
 
             <div>
-                { userData?.username?.length > 1 && <p>{userData.username} asjhdajshdjahsdj asdhajshdjashd</p> }
+                { userData?.username?.length > 1 && <p>{userData.username}</p> }
             </div>
         </header>
     );
