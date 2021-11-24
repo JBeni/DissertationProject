@@ -41,7 +41,7 @@ export default function EditRequest(props) {
                 ...values
             });
         }
-	}, []);
+	}, [recordForEdit, values]);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;

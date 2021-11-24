@@ -22,7 +22,7 @@ export default function AddProjectRequest(props) {
                 requestStatus: requestStatus.id,
             });
         }
-	}, []);
+	}, [recordForEdit, values]);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
