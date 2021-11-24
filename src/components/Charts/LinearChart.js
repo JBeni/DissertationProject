@@ -9,7 +9,7 @@ const containerStyles = {
 	marginRight: 50,
 };
 
-class LineChartExample extends React.Component {
+class LineChart extends React.Component {
 	constructor(props) {
 		super(props);
 		this.titles = [
@@ -73,4 +73,4 @@ class LineChartExample extends React.Component {
 	}
 }
 
-export default LineChartExample;
+export default LineChart;

@@ -1,11 +1,11 @@
 import React from 'react'
-import LineChartExample from './../Charts/LinearChartExample';
+import LineChart from './../Charts/LineChart';
 
 function Dashboard() {
     return (
         <div>
             <br/><br/>
-            <LineChartExample />
+            <LineChart />
         </div>
     )
 }
