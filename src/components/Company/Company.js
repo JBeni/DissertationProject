@@ -58,23 +58,28 @@ class Company extends Component {
             data.requestStatus,
             data.indexProjectRequest,
             data.projectStatus,
-            data.projectAddress
+            data.projectAddress,
+            data.requestAddress
         );
         resetForm();
         this.setRecordForEdit(null);
     }
 
-    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress) => {
+    signRequest = (_requestAddress) => {
+        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+        return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
+    }
+
+    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
+        const signatureData = this.signRequest(_requestAddress);
+
         await this.props.project.methods
 			.updateRequest(
-                Number(_index),
-                _comments,
-                Number(_requestStatus),
-                Number(_indexProjectRequest),
-                _projectStatus,
-                _projectAddress
+                _index, _indexProjectRequest, _comments,
+                _requestStatus, _projectStatus,
+                _projectAddress, signatureData.signature
             ).send({ from: this.props.account }).then((receipt) => {
-                this.getCompanyRequests();
+                this.getSupervisorRequests();
             });
 	}
 
