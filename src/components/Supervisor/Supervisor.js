@@ -9,6 +9,7 @@ import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import { getSupervisorRequests } from '../Services/applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -139,7 +140,7 @@ class Supervisor extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-                            icon: Edit,
+                            icon: GridViewOutlinedIcon,
                             tooltip: 'Edit Request',
                             onClick: (event, rowData) => {
                                 this.setEditRequest(true);

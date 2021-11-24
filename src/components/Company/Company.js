@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { materialTableIcons } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
-import Edit from '@material-ui/icons/Edit';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
@@ -139,7 +139,7 @@ class Company extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-                            icon: Edit,
+                            icon: GridViewOutlinedIcon,
                             tooltip: 'Edit Request',
                             onClick: (event, rowData) => {
                                 this.setEditRequest(true);
