@@ -28,13 +28,12 @@ contract ProjectChain is UserChain, SharedChain {
     uint public projectsCounter = 0;
     address[] public projectsAddress;
 
-    function createUniqueProjectAddress(bytes32 _text, uint _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_text, _projectInitiator, _index)))));
+    function createUniqueProjectAddress() public returns (address) {
+        _indexUniqueAddress++;
+        return address(uint160(uint256(keccak256(abi.encodePacked(PROJECT_HASH_VALUE, _projectInitiator, _indexUniqueAddress)))));
     }
 
-    function createProject(bytes32 _name, uint _status, string memory _ipfsFileCID, bytes32 _signature) public {
-        address _projectAddress = createUniqueProjectAddress(PROJECT_HASH_VALUE, projectsCounter);
-
+    function createProject(address _projectAddress, bytes32 _name, uint _status, string memory _ipfsFileCID, bytes32 _signature) public {
         projects[_projectAddress] = Project(
             projectsCounter, _name, ProjectStatus(_status),
             _ipfsFileCID, _projectAddress,
@@ -119,7 +118,7 @@ contract ProjectChain is UserChain, SharedChain {
         createRequest(_indexProjectRequest, _title, _requestStatus, _projectStatus, _requestType, _projectAddress, _requestAddress);
     }
 
-    function getAllProjectRequests() external view returns(ProjectRequest[] memory) {
+    function getAllProjectRequests() public view returns(ProjectRequest[] memory) {
         ProjectRequest[] memory allProjectRequests = new ProjectRequest[](projectRequestsCounter);
         for (uint index = 0; index < projectsCounter; index++) {
             ProjectRequest storage projectReq = projectRequests[index];
@@ -128,7 +127,7 @@ contract ProjectChain is UserChain, SharedChain {
         return allProjectRequests;
     }
 
-    function getLastProjectRequest(address _projectAddress) external view returns(ProjectRequest memory) {
+    function getLastProjectRequest(address _projectAddress) public view returns(ProjectRequest memory) {
         ProjectRequest memory request;
         if (projectRequestsCounter > 0) {
             for (uint index = projectRequestsCounter - 1; index >= 0; index--) {
@@ -187,9 +186,9 @@ contract ProjectChain is UserChain, SharedChain {
 
     function updateRequest(
         uint _index,
+        uint _indexProjectRequest,
         string memory _comments,
         uint _requestStatus,
-        uint _indexProjectRequest,
         uint _projectStatus,
         address _projectAddress,
         bytes32 _signature
@@ -208,6 +207,10 @@ contract ProjectChain is UserChain, SharedChain {
 
         // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
+
+
+        // !!!!! OBSERVATION
+        //emit changes for both project request mapping and request mapping
     }
 
     function getAllRequests() public view returns(Request[] memory) {
