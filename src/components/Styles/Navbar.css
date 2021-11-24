@@ -31,19 +31,12 @@ a {
 	color: var(--first-color);
 	font-size: 1.5rem;
 	cursor: pointer;
+    margin-right: 15px;
 }
 
-.header__p {
-	width: 35px;
-	height: 35px;
-	display: flex;
-	justify-content: center;
-	overflow: hidden;
-}
-
-.header__p p {
-    margin-top: 9px;
-	width: 40px;
+div p {
+    display: inline-block;
+    margin-top: 10px;
 }
 
 .l-navbar {
@@ -140,15 +133,6 @@ a {
 	.header {
 		height: calc(var(--header-height) + 1rem);
 		padding: 0 2rem 0 calc(var(--nav-width) + 2rem);
-	}
-
-	.header__p {
-		width: 40px;
-		height: 40px;
-	}
-
-	.header__p p {
-		width: 45px;
 	}
 
 	.l-navbar {
