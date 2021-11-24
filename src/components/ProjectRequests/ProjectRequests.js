@@ -67,9 +67,6 @@ class ProjectRequests extends Component {
             this.setState({ activeStep: Number(lastRequest._status) + 1 });
         }
         // Last Project Status
-        console.log(lastRequest._status);
-        console.log(lastRequest._requestStatus);
-        
         if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 2) {
             this.setState({ activeStep: Number(lastRequest._status) + 1 });
             this.setState({ projectCompleted: true })
@@ -131,8 +128,8 @@ class ProjectRequests extends Component {
 			.createProjectRequest(
                 this.props.web3.utils.utf8ToHex(_title),
                 Number(_status), Number(_requestStatus), _projectAddress,
-                projectReqAddress, signatureData.signature)
-			.send({ from: this.props.account }).then((receipt) => {
+                projectReqAddress, signatureData.signature
+            ).send({ from: this.props.account }).then((receipt) => {
                 this.getAllProjectRequests();
                 this.getLastProjectRequest(this.props.match.params.id);
             });
