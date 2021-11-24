@@ -104,15 +104,30 @@ class Projects extends Component {
         this.setRecordForEdit(null);
     }
 
+    createUniqueProjectAddress = async () => {
+        const data = await Promise.resolve(applicationService.createUniqueProjectAddress(this.props));
+        return data;
+    }
+
+    signCreateProject = (_projectAddress) => {
+        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+        return this.props.web3.eth.accounts.sign(_projectAddress, '0x' + userPrivateKey);
+    }
+
     createProject = async (_name, _status, _fileData) => {
         //let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         let _ipfsFileCID = 'QmddchiYMQGZYLZf86jhyhkxRqrGfpBNr53b4oiV76q6aq';
+        const projectAddress = await this.createUniqueProjectAddress();
+        const signatureData = this.signProjectRequest(projectAddress);
+
         await this.props.project.methods
 			.createProject(
+                projectAddress,
                 this.props.web3.utils.utf8ToHex(_name),
                 Number(_status),
-                _ipfsFileCID)
-			.send({ from: this.props.account }).then((receipt) => {
+                _ipfsFileCID,
+                signatureData.signature
+            ).send({ from: this.props.account }).then((receipt) => {
                 this.getProjects();
             });
 	}
