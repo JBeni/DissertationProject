@@ -1,5 +1,6 @@
 
 import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from '../Services/dropdownService';
+const axios = require('axios');
 
 export async function getAllUsers(props) {
     let dataArray = [];
@@ -223,6 +224,25 @@ export async function getAllRequests(props) {
         return false;
     });
     return data;
+}
+
+export async function getIpfsFileForRequest(props, _projectAddress) {
+    let projectData = await props.project.methods.getProjectInfo(_projectAddress).call().then((response) => {
+        return response;
+    });
+
+    let queryString = '?';
+    queryString = queryString + `hashContains=${projectData._ipfsFileCID}&`;
+    queryString = queryString + `status=pinned&`;
+    const url = `https://api.pinata.cloud/data/pinList${queryString}`;
+    return axios.get(url, {
+        headers: {
+            pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+            pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
+        },
+    })
+    .then(function (response) {})
+    .catch(function (error) {console.error(error);});
 }
 
 export async function createUniqueProjectRequestAddress(props) {
