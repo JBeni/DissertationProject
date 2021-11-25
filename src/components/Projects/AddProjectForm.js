@@ -40,7 +40,7 @@ export default function AddProjectForm(props) {
                 status: getDefaultProjectStatus().id,
             });
         }
-	}, [recordForEdit, values]);
+	}, [recordForEdit]);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;

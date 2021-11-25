@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import { materialTableIcons } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
-import Edit from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import { getSupervisorRequests } from '../Services/applicationService';
-import AllPagesPdf from '../PdfViewer/AllPagesPdf';
+import SinglePagePdf from '../PdfViewer/SinglePagePdf';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 
 class Supervisor extends Component {
@@ -91,7 +90,6 @@ class Supervisor extends Component {
             { title: 'Project Status', field: 'projectStatus' },
             { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Address', field: 'projectAddress' },
-            //{ title: 'User Address', field: 'userAddress' },
         ];
 
         return (
@@ -158,7 +156,7 @@ class Supervisor extends Component {
 				/>
 
                 <br/><br/>
-                <AllPagesPdf showPdf={this.state.showPdf} />
+                <SinglePagePdf showPdf={this.state.showPdf} />
             </>
         );
     }

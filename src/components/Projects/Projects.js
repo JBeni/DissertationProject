@@ -112,8 +112,9 @@ class Projects extends Component {
         //let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         let _ipfsFileCID = 'QmddchiYMQGZYLZf86jhyhkxRqrGfpBNr53b4oiV76q6aq';
         const projectAddress = await this.createUniqueProjectAddress();
-        const signatureData = this.signProjectRequest(projectAddress);
+        const signatureData = this.signCreateProject(projectAddress);
 
+        console.log(signatureData.signature);
         await this.props.project.methods
 			.createProject(
                 projectAddress,
