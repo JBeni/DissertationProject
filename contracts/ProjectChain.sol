@@ -33,7 +33,7 @@ contract ProjectChain is UserChain, SharedChain {
         return address(uint160(uint256(keccak256(abi.encodePacked(PROJECT_HASH_VALUE, _projectInitiator, _indexUniqueAddress)))));
     }
 
-    function createProject(address _projectAddress, bytes32 _name, uint _status, string memory _ipfsFileCID, bytes32 _signature) public {
+    function createProject(address _projectAddress, bytes32 _name, uint _status, string memory _ipfsFileCID, string memory _signature) public {
         projects[_projectAddress] = Project(
             projectsCounter, _name, ProjectStatus(_status),
             _ipfsFileCID, _projectAddress,
@@ -77,7 +77,7 @@ contract ProjectChain is UserChain, SharedChain {
 
     function createProjectRequest(
         bytes32 _title, uint _status, uint _requestStatus,
-        address _projectAddress, address _projectReqAddress, bytes32 _signature
+        address _projectAddress, address _projectReqAddress, string memory _signature
     ) public {
         projectRequests[projectRequestsCounter] = ProjectRequest(
             projectRequestsCounter, _title, '', ProjectStatus(_status),
@@ -191,7 +191,7 @@ contract ProjectChain is UserChain, SharedChain {
         uint _requestStatus,
         uint _projectStatus,
         address _projectAddress,
-        bytes32 _signature
+        string memory _signature
     ) public {
         // Update request status in the Requests Mapping and Struct Array
         requests[_index]._requestStatus = RequestStatus(_requestStatus);

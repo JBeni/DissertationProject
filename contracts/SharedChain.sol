@@ -14,7 +14,7 @@ contract SharedChain {
         address _projectAddress;
         address _userAddress;
         uint _timestamp;
-        bytes32 _signature;
+        string _signature;
     }
     event ProjectEvent(
         uint _index,
@@ -24,7 +24,7 @@ contract SharedChain {
         address _projectAddress,
         address _userAddress,
         uint _timestamp,
-        bytes32 _signature
+        string _signature
     );
 
     struct ProjectRequest {
@@ -37,7 +37,7 @@ contract SharedChain {
         address _userAddress;
         address _requestAddress;
         uint _timestamp;
-        bytes32 _signature;
+        string _signature;
     }
     event ProjectRequestEvent(
         uint _index,
@@ -49,7 +49,7 @@ contract SharedChain {
         address _userAddress,
         address _requestAddress,
         uint _timestamp,
-        bytes32 _signature
+        string _signature
     );
 
     /******** */
@@ -64,7 +64,7 @@ contract SharedChain {
         address _userAddress;
         address _requestAddress;
         uint _timestamp;
-        bytes32 _signature;
+        string _signature;
     }
     event RequestEvent(
         uint _index,
@@ -77,6 +77,6 @@ contract SharedChain {
         address _userAddress,
         address _requestAddress,
         uint _timestamp,
-        bytes32 _signature
+        string _signature
     );
 }
