@@ -86,6 +86,7 @@ class App extends Component {
                 this.setState({ isUserInBlockchain: true, loading: false });
             }
         }
+        this.setState({ loading: false });
     }
 
 	render() {
@@ -100,7 +101,7 @@ class App extends Component {
 				</React.Fragment>
 			);
 		} else {
-			return <Loader isLoading={this.state.loading} isUserInBlockchain={this.state.isUserInBlockchain}></Loader>;
+			return <Loader isUserInBlockchain={this.state.isUserInBlockchain}></Loader>;
 		}
 	}
 }
