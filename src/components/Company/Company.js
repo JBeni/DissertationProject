@@ -90,7 +90,6 @@ class Company extends Component {
             { title: 'Project Status', field: 'projectStatus' },
             { title: 'Request Status', field: 'requestStatus' },
             { title: 'Project Address', field: 'projectAddress' },
-            //{ title: 'User Address', field: 'userAddress' },
         ];
 
         return (
