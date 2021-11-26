@@ -114,7 +114,6 @@ class Projects extends Component {
         const projectAddress = await this.createUniqueProjectAddress();
         const signatureData = this.signCreateProject(projectAddress);
 
-        console.log(signatureData.signature);
         await this.props.project.methods
 			.createProject(
                 projectAddress,
@@ -130,21 +129,6 @@ class Projects extends Component {
     handleNewDataFromPopup(value) {
         this.setState({ openAddForm: value });
     }
-
-	filterFilesFromPinataIpfs = () => {
-		let queryString = '?';
-		//queryString = queryString + `hashContains=${queryParams.hashContains}&`;
-		//queryString = queryString + `status=pinned&`;
-		const url = `https://api.pinata.cloud/data/pinList${queryString}`;
-		axios.get(url, {
-				headers: {
-					pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-					pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-				},
-			})
-			.then(function (response) {})
-			.catch(function (error) {console.error(error);});
-	}
 
 	render() {
 		const tableRef = React.createRef();
