@@ -5,7 +5,7 @@ import '../Styles/Loader.css';
 
 export default function Loader(props) {
     const classes = useStylesLoader();
-    const { isUserInBlockchain } = props;
+    const { isLoading, isUserInBlockchain } = props;
 
     useEffect(() => {
     }, []);
@@ -14,20 +14,21 @@ export default function Loader(props) {
 		<div className={classes.root}>
 			<CircularProgress size={0.8 * 500} color="primary" className="center-container" />
             {
-                //isUserInBlockchain === true &&
-                <div className="text-loader">
-                    <p>The Project contract not deployed to detected network.</p>
-                    <p>You need to start the Ganache deployment network to run this project.</p>
-                    <p>You must login into MetaMask then select the Ganache network.</p>
-                </div>
-            }
-            {
-                //isUserInBlockchain === false &&
-                <div className="text-loader">
-                    <p></p>
-                    <p>Unauthorized Access</p>
-                    <p></p>
-                </div>
+                isLoading === true ?
+                    <div className="text-loader">
+                        <p>The Project contract not deployed to detected network.</p>
+                        <p>You need to start the Ganache deployment network to run this project.</p>
+                        <p>You must login into MetaMask then select the Ganache network.</p>
+                    </div>
+                    :
+                    isUserInBlockchain === false ?
+                    <div className="text-loader">
+                        <p></p>
+                        <p>Unauthorized Access</p>
+                        <p></p>
+                    </div>
+                    :
+                    <></>
             }
 		</div>
 	);
