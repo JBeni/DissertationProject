@@ -46,16 +46,13 @@ class App extends Component {
 	async loadBlockChain() {
 		const web3 = window.web3;
         const networkId = await web3.eth.net.getId();
-		const networkData = ProjectChain.networks[networkId];
-		if (networkData) {
+
+        const networkProjectData = ProjectChain.networks[networkId];
+		if (networkProjectData) {
 			const project = new web3.eth.Contract(
 				ProjectChain.abi,
-				networkData.address
+				networkProjectData.address
 			);
-            const adminChain = new web3.eth.Contract(
-                AdminChain.abi,
-                networkData.address
-            );
 
             /**
              * eth.getAccounts() returns the address values in the format expected by the MetaMask
@@ -66,32 +63,32 @@ class App extends Component {
             this.setState({
 				project: project,
                 account: accounts[0],
-                adminChain: adminChain,
 				web3: web3,
-
-                loading: false
 			});
-
-
-            const adminData = await adminChain.methods.getAdminInfo().call({ from: accounts[0] }).then((response) => {
-                console.log(response);
-                return response;
-            });
-
-            // const timeS = await project.methods.methodData().call().then((response) => {
-            //     console.log(response);
-            // });
-
-
-            //await this.checkUserInBlockchain(this.state.account, project, adminChain, web3);
 		} else {
 			window.alert('Project contract not deployed to detected network.');
 		}
+
+        const networkAdminData = AdminChain.networks[networkId];
+		if (networkAdminData) {
+            const adminChain = new web3.eth.Contract(
+                AdminChain.abi,
+                networkAdminData.address
+            );
+
+            this.setState({
+				adminChain: adminChain,
+                loading: false
+			});
+		} else {
+			window.alert('Owner Chain contract not deployed to detected network.');
+		}
+
+        await this.checkUserInBlockchain(this.state.account, this.state.project, this.state.adminChain, web3);
 	}
 
     async checkUserInBlockchain(_account, _project, _adminChain, _web) {
         const adminData = await _adminChain.methods.getAdminInfo().call({ from: _account }).then((response) => {
-            console.log(response);
             return response;
         });
 
