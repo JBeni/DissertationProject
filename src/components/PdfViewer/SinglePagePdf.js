@@ -32,6 +32,7 @@ export default function SinglePagePdf(props) {
 	}
 
     useEffect(() => {
+        console.log(props);
     }, []);
 
 	return (
@@ -48,7 +49,7 @@ export default function SinglePagePdf(props) {
                 onClick={() => {
                 setShowTable(false);
             }}>Hide Pdf</Button>
-                <br /><br />
+            <br /><br />
 
             {
                 showPdf === true &&
