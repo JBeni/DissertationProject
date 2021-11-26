@@ -4,7 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./UserChain.sol";
 import "./SharedChain.sol";
 
-contract ProjectChain is UserChain, SharedChain {
+contract ProjectChain is UserChain {
     bytes32 constant PROJECT_HASH_VALUE = "csd?S@salas;dlA234_D.;s_as";
     bytes32 constant REQUEST_HASH_VALUE = "csd?.!?*salas;dlA.;s_as";
 
