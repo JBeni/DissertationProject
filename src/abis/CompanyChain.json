@@ -202,6 +202,61 @@
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_index",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "string",
+          "name": "_username",
+          "type": "string"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "_email",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "_firstname",
+          "type": "bytes32"
+        },
+        {
+          "indexed": false,
+          "internalType": "bytes32",
+          "name": "_lastname",
+          "type": "bytes32"
+        },
+        {
+          "indexed": true,
+          "internalType": "enum SharedChain.Roles",
+          "name": "_role",
+          "type": "uint8"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "_walletAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "_timestamp",
+          "type": "uint256"
+        }
+      ],
+      "name": "UserEvent",
+      "type": "event"
+    },
+    {
       "inputs": [
         {
           "internalType": "uint256",
@@ -353,9 +408,9 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_name\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_status\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_ipfsFileCID\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"name\":\"ProjectEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_comments\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_status\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_requestStatus\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"name\":\"ProjectRequestEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_indexProjectRequest\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_status\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_projectStatus\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.RequestType\",\"name\":\"_requestType\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"name\":\"RequestEvent\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allCompanyRequests\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_indexProjectRequest\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_requestStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_projectStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.RequestType\",\"name\":\"_requestType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"requestsCompany\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_indexProjectRequest\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_requestStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_projectStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.RequestType\",\"name\":\"_requestType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"requestsCompanyCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/others/CompanyChain.sol\":\"CompanyChain\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/SharedChain.sol\":{\"keccak256\":\"0x3d89e15b73fd517f5ab176bc7529816df9d29bf756852f63e0cd0a626732d9e0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b3e95c09affad9421d2e56cf28176d64fbb6d230e108d556a66376607c311490\",\"dweb:/ipfs/QmSiJuuTGyZKCDebfc6P3kmSRGo4tACmZwyfzrfYTbcjhN\"]},\"project:/contracts/others/CompanyChain.sol\":{\"keccak256\":\"0xa52b48bb4b9c4a3ab34d9397115991200c0248db13cab8bdc9f16e0264566518\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ac7d127e994c6fdc49b206ff960bf6c0ca8da1f644698cebf34176dfda9a067d\",\"dweb:/ipfs/QmQiCWVa2CsscHmhVHUVQ4Dzv9p79qqvm6H4dJpsQVFgHx\"]}},\"version\":1}",
-  "bytecode": "0x6080604052600060025534801561001557600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610795806100656000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c8063af21684f14610046578063e7418dc214610064578063f9cf86491461009e575b600080fd5b61004e6100d8565b60405161005b91906103d9565b60405180910390f35b61007e60048036038101906100799190610425565b6100de565b6040516100959b9a9998979695949392919061064c565b60405180910390f35b6100b860048036038101906100b39190610425565b610247565b6040516100cf9b9a9998979695949392919061064c565b60405180910390f35b60025481565b60016020528060005260406000206000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060060154908060070180546101c49061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546101f09061072d565b801561023d5780601f106102125761010080835404028352916020019161023d565b820191906000526020600020905b81548152906001019060200180831161022057829003601f168201915b505050505090508b565b6003818154811061025757600080fd5b90600052602060002090600802016000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169080600601549080600701805461033d9061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546103699061072d565b80156103b65780601f1061038b576101008083540402835291602001916103b6565b820191906000526020600020905b81548152906001019060200180831161039957829003601f168201915b505050505090508b565b6000819050919050565b6103d3816103c0565b82525050565b60006020820190506103ee60008301846103ca565b92915050565b600080fd5b610402816103c0565b811461040d57600080fd5b50565b60008135905061041f816103f9565b92915050565b60006020828403121561043b5761043a6103f4565b5b600061044984828501610410565b91505092915050565b6000819050919050565b61046581610452565b82525050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b600381106104ab576104aa61046b565b5b50565b60008190506104bc8261049a565b919050565b60006104cc826104ae565b9050919050565b6104dc816104c1565b82525050565b600581106104f3576104f261046b565b5b50565b6000819050610504826104e2565b919050565b6000610514826104f6565b9050919050565b61052481610509565b82525050565b6002811061053b5761053a61046b565b5b50565b600081905061054c8261052a565b919050565b600061055c8261053e565b9050919050565b61056c81610551565b82525050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061059d82610572565b9050919050565b6105ad81610592565b82525050565b600081519050919050565b600082825260208201905092915050565b60005b838110156105ed5780820151818401526020810190506105d2565b838111156105fc576000848401525b50505050565b6000601f19601f8301169050919050565b600061061e826105b3565b61062881856105be565b93506106388185602086016105cf565b61064181610602565b840191505092915050565b600061016082019050610662600083018e6103ca565b61066f602083018d6103ca565b61067c604083018c61045c565b610689606083018b6104d3565b610696608083018a61051b565b6106a360a0830189610563565b6106b060c08301886105a4565b6106bd60e08301876105a4565b6106cb6101008301866105a4565b6106d96101208301856103ca565b8181036101408301526106ec8184610613565b90509c9b505050505050505050505050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b6000600282049050600182168061074557607f821691505b60208210811415610759576107586106fe565b5b5091905056fea26469706673582212203966f99a9362b6e5a1556a5a63b162fd732ea6f2be5762cde56c0bc9a551e36a64736f6c634300080a0033",
-  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c8063af21684f14610046578063e7418dc214610064578063f9cf86491461009e575b600080fd5b61004e6100d8565b60405161005b91906103d9565b60405180910390f35b61007e60048036038101906100799190610425565b6100de565b6040516100959b9a9998979695949392919061064c565b60405180910390f35b6100b860048036038101906100b39190610425565b610247565b6040516100cf9b9a9998979695949392919061064c565b60405180910390f35b60025481565b60016020528060005260406000206000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060060154908060070180546101c49061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546101f09061072d565b801561023d5780601f106102125761010080835404028352916020019161023d565b820191906000526020600020905b81548152906001019060200180831161022057829003601f168201915b505050505090508b565b6003818154811061025757600080fd5b90600052602060002090600802016000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169080600601549080600701805461033d9061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546103699061072d565b80156103b65780601f1061038b576101008083540402835291602001916103b6565b820191906000526020600020905b81548152906001019060200180831161039957829003601f168201915b505050505090508b565b6000819050919050565b6103d3816103c0565b82525050565b60006020820190506103ee60008301846103ca565b92915050565b600080fd5b610402816103c0565b811461040d57600080fd5b50565b60008135905061041f816103f9565b92915050565b60006020828403121561043b5761043a6103f4565b5b600061044984828501610410565b91505092915050565b6000819050919050565b61046581610452565b82525050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b600381106104ab576104aa61046b565b5b50565b60008190506104bc8261049a565b919050565b60006104cc826104ae565b9050919050565b6104dc816104c1565b82525050565b600581106104f3576104f261046b565b5b50565b6000819050610504826104e2565b919050565b6000610514826104f6565b9050919050565b61052481610509565b82525050565b6002811061053b5761053a61046b565b5b50565b600081905061054c8261052a565b919050565b600061055c8261053e565b9050919050565b61056c81610551565b82525050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061059d82610572565b9050919050565b6105ad81610592565b82525050565b600081519050919050565b600082825260208201905092915050565b60005b838110156105ed5780820151818401526020810190506105d2565b838111156105fc576000848401525b50505050565b6000601f19601f8301169050919050565b600061061e826105b3565b61062881856105be565b93506106388185602086016105cf565b61064181610602565b840191505092915050565b600061016082019050610662600083018e6103ca565b61066f602083018d6103ca565b61067c604083018c61045c565b610689606083018b6104d3565b610696608083018a61051b565b6106a360a0830189610563565b6106b060c08301886105a4565b6106bd60e08301876105a4565b6106cb6101008301866105a4565b6106d96101208301856103ca565b8181036101408301526106ec8184610613565b90509c9b505050505050505050505050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b6000600282049050600182168061074557607f821691505b60208210811415610759576107586106fe565b5b5091905056fea26469706673582212203966f99a9362b6e5a1556a5a63b162fd732ea6f2be5762cde56c0bc9a551e36a64736f6c634300080a0033",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_name\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_status\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_ipfsFileCID\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"name\":\"ProjectEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_comments\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_status\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_requestStatus\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"name\":\"ProjectRequestEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_indexProjectRequest\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_status\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_projectStatus\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"enum SharedChain.RequestType\",\"name\":\"_requestType\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"name\":\"RequestEvent\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"string\",\"name\":\"_username\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_email\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_firstname\",\"type\":\"bytes32\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"_lastname\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"enum SharedChain.Roles\",\"name\":\"_role\",\"type\":\"uint8\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_walletAddress\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"}],\"name\":\"UserEvent\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"allCompanyRequests\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_indexProjectRequest\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_requestStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_projectStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.RequestType\",\"name\":\"_requestType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"requestsCompany\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"_index\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_indexProjectRequest\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"_title\",\"type\":\"bytes32\"},{\"internalType\":\"enum SharedChain.RequestStatus\",\"name\":\"_requestStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.ProjectStatus\",\"name\":\"_projectStatus\",\"type\":\"uint8\"},{\"internalType\":\"enum SharedChain.RequestType\",\"name\":\"_requestType\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"_projectAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_userAddress\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"_requestAddress\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_timestamp\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_signature\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"requestsCompanyCounter\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/others/CompanyChain.sol\":\"CompanyChain\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/SharedChain.sol\":{\"keccak256\":\"0xafc6ee4bb4e0d9d2db14b7ea442a930c7d92f63e8a68d4be7680309775de5300\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://e2325e70f529dea8daa8456a670cc87e544b3569719e25916fd3b817ca9c7873\",\"dweb:/ipfs/QmdfkkDaD9DK2dgws8tTUMH3j8SvvBmwaavqdqr8Eubeux\"]},\"project:/contracts/others/CompanyChain.sol\":{\"keccak256\":\"0xa52b48bb4b9c4a3ab34d9397115991200c0248db13cab8bdc9f16e0264566518\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ac7d127e994c6fdc49b206ff960bf6c0ca8da1f644698cebf34176dfda9a067d\",\"dweb:/ipfs/QmQiCWVa2CsscHmhVHUVQ4Dzv9p79qqvm6H4dJpsQVFgHx\"]}},\"version\":1}",
+  "bytecode": "0x6080604052600060025534801561001557600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610795806100656000396000f3fe608060405234801561001057600080fd5b50600436106100415760003560e01c8063af21684f14610046578063e7418dc214610064578063f9cf86491461009e575b600080fd5b61004e6100d8565b60405161005b91906103d9565b60405180910390f35b61007e60048036038101906100799190610425565b6100de565b6040516100959b9a9998979695949392919061064c565b60405180910390f35b6100b860048036038101906100b39190610425565b610247565b6040516100cf9b9a9998979695949392919061064c565b60405180910390f35b60025481565b60016020528060005260406000206000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060060154908060070180546101c49061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546101f09061072d565b801561023d5780601f106102125761010080835404028352916020019161023d565b820191906000526020600020905b81548152906001019060200180831161022057829003601f168201915b505050505090508b565b6003818154811061025757600080fd5b90600052602060002090600802016000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169080600601549080600701805461033d9061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546103699061072d565b80156103b65780601f1061038b576101008083540402835291602001916103b6565b820191906000526020600020905b81548152906001019060200180831161039957829003601f168201915b505050505090508b565b6000819050919050565b6103d3816103c0565b82525050565b60006020820190506103ee60008301846103ca565b92915050565b600080fd5b610402816103c0565b811461040d57600080fd5b50565b60008135905061041f816103f9565b92915050565b60006020828403121561043b5761043a6103f4565b5b600061044984828501610410565b91505092915050565b6000819050919050565b61046581610452565b82525050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b600381106104ab576104aa61046b565b5b50565b60008190506104bc8261049a565b919050565b60006104cc826104ae565b9050919050565b6104dc816104c1565b82525050565b600581106104f3576104f261046b565b5b50565b6000819050610504826104e2565b919050565b6000610514826104f6565b9050919050565b61052481610509565b82525050565b6002811061053b5761053a61046b565b5b50565b600081905061054c8261052a565b919050565b600061055c8261053e565b9050919050565b61056c81610551565b82525050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061059d82610572565b9050919050565b6105ad81610592565b82525050565b600081519050919050565b600082825260208201905092915050565b60005b838110156105ed5780820151818401526020810190506105d2565b838111156105fc576000848401525b50505050565b6000601f19601f8301169050919050565b600061061e826105b3565b61062881856105be565b93506106388185602086016105cf565b61064181610602565b840191505092915050565b600061016082019050610662600083018e6103ca565b61066f602083018d6103ca565b61067c604083018c61045c565b610689606083018b6104d3565b610696608083018a61051b565b6106a360a0830189610563565b6106b060c08301886105a4565b6106bd60e08301876105a4565b6106cb6101008301866105a4565b6106d96101208301856103ca565b8181036101408301526106ec8184610613565b90509c9b505050505050505050505050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b6000600282049050600182168061074557607f821691505b60208210811415610759576107586106fe565b5b5091905056fea26469706673582212209ed39eb3788893fed3ca58ae5ef07af5f088b01626dd8d2dc8f6f167ccef7e6864736f6c634300080a0033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b50600436106100415760003560e01c8063af21684f14610046578063e7418dc214610064578063f9cf86491461009e575b600080fd5b61004e6100d8565b60405161005b91906103d9565b60405180910390f35b61007e60048036038101906100799190610425565b6100de565b6040516100959b9a9998979695949392919061064c565b60405180910390f35b6100b860048036038101906100b39190610425565b610247565b6040516100cf9b9a9998979695949392919061064c565b60405180910390f35b60025481565b60016020528060005260406000206000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060060154908060070180546101c49061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546101f09061072d565b801561023d5780601f106102125761010080835404028352916020019161023d565b820191906000526020600020905b81548152906001019060200180831161022057829003601f168201915b505050505090508b565b6003818154811061025757600080fd5b90600052602060002090600802016000915090508060000154908060010154908060020154908060030160009054906101000a900460ff16908060030160019054906101000a900460ff16908060030160029054906101000a900460ff16908060030160039054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060040160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16908060050160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169080600601549080600701805461033d9061072d565b80601f01602080910402602001604051908101604052809291908181526020018280546103699061072d565b80156103b65780601f1061038b576101008083540402835291602001916103b6565b820191906000526020600020905b81548152906001019060200180831161039957829003601f168201915b505050505090508b565b6000819050919050565b6103d3816103c0565b82525050565b60006020820190506103ee60008301846103ca565b92915050565b600080fd5b610402816103c0565b811461040d57600080fd5b50565b60008135905061041f816103f9565b92915050565b60006020828403121561043b5761043a6103f4565b5b600061044984828501610410565b91505092915050565b6000819050919050565b61046581610452565b82525050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602160045260246000fd5b600381106104ab576104aa61046b565b5b50565b60008190506104bc8261049a565b919050565b60006104cc826104ae565b9050919050565b6104dc816104c1565b82525050565b600581106104f3576104f261046b565b5b50565b6000819050610504826104e2565b919050565b6000610514826104f6565b9050919050565b61052481610509565b82525050565b6002811061053b5761053a61046b565b5b50565b600081905061054c8261052a565b919050565b600061055c8261053e565b9050919050565b61056c81610551565b82525050565b600073ffffffffffffffffffffffffffffffffffffffff82169050919050565b600061059d82610572565b9050919050565b6105ad81610592565b82525050565b600081519050919050565b600082825260208201905092915050565b60005b838110156105ed5780820151818401526020810190506105d2565b838111156105fc576000848401525b50505050565b6000601f19601f8301169050919050565b600061061e826105b3565b61062881856105be565b93506106388185602086016105cf565b61064181610602565b840191505092915050565b600061016082019050610662600083018e6103ca565b61066f602083018d6103ca565b61067c604083018c61045c565b610689606083018b6104d3565b610696608083018a61051b565b6106a360a0830189610563565b6106b060c08301886105a4565b6106bd60e08301876105a4565b6106cb6101008301866105a4565b6106d96101208301856103ca565b8181036101408301526106ec8184610613565b90509c9b505050505050505050505050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b6000600282049050600182168061074557607f821691505b60208210811415610759576107586106fe565b5b5091905056fea26469706673582212209ed39eb3788893fed3ca58ae5ef07af5f088b01626dd8d2dc8f6f167ccef7e6864736f6c634300080a0033",
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [
@@ -1323,7 +1378,7 @@
                 }
               ]
             },
-            "name": "validator_assert_t_enum$_RequestStatus_$870",
+            "name": "validator_assert_t_enum$_RequestStatus_$833",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1366,7 +1421,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "validator_assert_t_enum$_RequestStatus_$870",
+                      "name": "validator_assert_t_enum$_RequestStatus_$833",
                       "nodeType": "YulIdentifier",
                       "src": "1987:43:7"
                     },
@@ -1378,7 +1433,7 @@
                 }
               ]
             },
-            "name": "cleanup_t_enum$_RequestStatus_$870",
+            "name": "cleanup_t_enum$_RequestStatus_$833",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1415,7 +1470,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "cleanup_t_enum$_RequestStatus_$870",
+                      "name": "cleanup_t_enum$_RequestStatus_$833",
                       "nodeType": "YulIdentifier",
                       "src": "2147:34:7"
                     },
@@ -1432,7 +1487,7 @@
                 }
               ]
             },
-            "name": "convert_t_enum$_RequestStatus_$870_to_t_uint8",
+            "name": "convert_t_enum$_RequestStatus_$833_to_t_uint8",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1474,7 +1529,7 @@
                           }
                         ],
                         "functionName": {
-                          "name": "convert_t_enum$_RequestStatus_$870_to_t_uint8",
+                          "name": "convert_t_enum$_RequestStatus_$833_to_t_uint8",
                           "nodeType": "YulIdentifier",
                           "src": "2302:45:7"
                         },
@@ -1495,7 +1550,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_enum$_RequestStatus_$870_to_t_uint8_fromStack",
+            "name": "abi_encode_t_enum$_RequestStatus_$833_to_t_uint8_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1578,7 +1633,7 @@
                 }
               ]
             },
-            "name": "validator_assert_t_enum$_ProjectStatus_$876",
+            "name": "validator_assert_t_enum$_ProjectStatus_$839",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1621,7 +1676,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "validator_assert_t_enum$_ProjectStatus_$876",
+                      "name": "validator_assert_t_enum$_ProjectStatus_$839",
                       "nodeType": "YulIdentifier",
                       "src": "2584:43:7"
                     },
@@ -1633,7 +1688,7 @@
                 }
               ]
             },
-            "name": "cleanup_t_enum$_ProjectStatus_$876",
+            "name": "cleanup_t_enum$_ProjectStatus_$839",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1670,7 +1725,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "cleanup_t_enum$_ProjectStatus_$876",
+                      "name": "cleanup_t_enum$_ProjectStatus_$839",
                       "nodeType": "YulIdentifier",
                       "src": "2744:34:7"
                     },
@@ -1687,7 +1742,7 @@
                 }
               ]
             },
-            "name": "convert_t_enum$_ProjectStatus_$876_to_t_uint8",
+            "name": "convert_t_enum$_ProjectStatus_$839_to_t_uint8",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1729,7 +1784,7 @@
                           }
                         ],
                         "functionName": {
-                          "name": "convert_t_enum$_ProjectStatus_$876_to_t_uint8",
+                          "name": "convert_t_enum$_ProjectStatus_$839_to_t_uint8",
                           "nodeType": "YulIdentifier",
                           "src": "2899:45:7"
                         },
@@ -1750,7 +1805,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_enum$_ProjectStatus_$876_to_t_uint8_fromStack",
+            "name": "abi_encode_t_enum$_ProjectStatus_$839_to_t_uint8_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1833,7 +1888,7 @@
                 }
               ]
             },
-            "name": "validator_assert_t_enum$_RequestType_$866",
+            "name": "validator_assert_t_enum$_RequestType_$829",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1876,7 +1931,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "validator_assert_t_enum$_RequestType_$866",
+                      "name": "validator_assert_t_enum$_RequestType_$829",
                       "nodeType": "YulIdentifier",
                       "src": "3177:41:7"
                     },
@@ -1888,7 +1943,7 @@
                 }
               ]
             },
-            "name": "cleanup_t_enum$_RequestType_$866",
+            "name": "cleanup_t_enum$_RequestType_$829",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1925,7 +1980,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "cleanup_t_enum$_RequestType_$866",
+                      "name": "cleanup_t_enum$_RequestType_$829",
                       "nodeType": "YulIdentifier",
                       "src": "3333:32:7"
                     },
@@ -1942,7 +1997,7 @@
                 }
               ]
             },
-            "name": "convert_t_enum$_RequestType_$866_to_t_uint8",
+            "name": "convert_t_enum$_RequestType_$829_to_t_uint8",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -1984,7 +2039,7 @@
                           }
                         ],
                         "functionName": {
-                          "name": "convert_t_enum$_RequestType_$866_to_t_uint8",
+                          "name": "convert_t_enum$_RequestType_$829_to_t_uint8",
                           "nodeType": "YulIdentifier",
                           "src": "3484:43:7"
                         },
@@ -2005,7 +2060,7 @@
                 }
               ]
             },
-            "name": "abi_encode_t_enum$_RequestType_$866_to_t_uint8_fromStack",
+            "name": "abi_encode_t_enum$_RequestType_$829_to_t_uint8_fromStack",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -3088,7 +3143,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_enum$_RequestStatus_$870_to_t_uint8_fromStack",
+                      "name": "abi_encode_t_enum$_RequestStatus_$833_to_t_uint8_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "5710:58:7"
                     },
@@ -3131,7 +3186,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_enum$_ProjectStatus_$876_to_t_uint8_fromStack",
+                      "name": "abi_encode_t_enum$_ProjectStatus_$839_to_t_uint8_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "5807:58:7"
                     },
@@ -3174,7 +3229,7 @@
                       }
                     ],
                     "functionName": {
-                      "name": "abi_encode_t_enum$_RequestType_$866_to_t_uint8_fromStack",
+                      "name": "abi_encode_t_enum$_RequestType_$829_to_t_uint8_fromStack",
                       "nodeType": "YulIdentifier",
                       "src": "5905:56:7"
                     },
@@ -3449,7 +3504,7 @@
                 }
               ]
             },
-            "name": "abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$870_t_enum$_ProjectStatus_$876_t_enum$_RequestType_$866_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__fromStack_reversed",
+            "name": "abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$833_t_enum$_ProjectStatus_$839_t_enum$_RequestType_$829_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__fromStack_reversed",
             "nodeType": "YulFunctionDefinition",
             "parameters": [
               {
@@ -3854,7 +3909,7 @@
           }
         ]
       },
-      "contents": "{\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_uint256_to_t_uint256_fromStack(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n    }\n\n    function allocate_unbounded() -> memPtr {\n        memPtr := mload(64)\n    }\n\n    function revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() {\n        revert(0, 0)\n    }\n\n    function revert_error_c1322bf8034eace5e0b5c7295db60986aa89aae5e0ea0873e4689e076861a5db() {\n        revert(0, 0)\n    }\n\n    function validator_revert_t_uint256(value) {\n        if iszero(eq(value, cleanup_t_uint256(value))) { revert(0, 0) }\n    }\n\n    function abi_decode_t_uint256(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_uint256(value)\n    }\n\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0 {\n        if slt(sub(dataEnd, headStart), 32) { revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_uint256(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function cleanup_t_bytes32(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_bytes32_to_t_bytes32_fromStack(value, pos) {\n        mstore(pos, cleanup_t_bytes32(value))\n    }\n\n    function panic_error_0x21() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x21)\n        revert(0, 0x24)\n    }\n\n    function validator_assert_t_enum$_RequestStatus_$870(value) {\n        if iszero(lt(value, 3)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestStatus_$870(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestStatus_$870(value)\n    }\n\n    function convert_t_enum$_RequestStatus_$870_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestStatus_$870(value)\n    }\n\n    function abi_encode_t_enum$_RequestStatus_$870_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestStatus_$870_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_ProjectStatus_$876(value) {\n        if iszero(lt(value, 5)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_ProjectStatus_$876(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_ProjectStatus_$876(value)\n    }\n\n    function convert_t_enum$_ProjectStatus_$876_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_ProjectStatus_$876(value)\n    }\n\n    function abi_encode_t_enum$_ProjectStatus_$876_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_ProjectStatus_$876_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_RequestType_$866(value) {\n        if iszero(lt(value, 2)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestType_$866(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestType_$866(value)\n    }\n\n    function convert_t_enum$_RequestType_$866_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestType_$866(value)\n    }\n\n    function abi_encode_t_enum$_RequestType_$866_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestType_$866_to_t_uint8(value))\n    }\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function abi_encode_t_address_to_t_address_fromStack(value, pos) {\n        mstore(pos, cleanup_t_address(value))\n    }\n\n    function array_length_t_string_memory_ptr(value) -> length {\n\n        length := mload(value)\n\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function copy_memory_to_memory(src, dst, length) {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length)\n        {\n            // clear end\n            mstore(add(dst, length), 0)\n        }\n    }\n\n    function round_up_to_mul_of_32(value) -> result {\n        result := and(add(value, 31), not(31))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, round_up_to_mul_of_32(length))\n    }\n\n    function abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$870_t_enum$_ProjectStatus_$876_t_enum$_RequestType_$866_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__fromStack_reversed(headStart , value10, value9, value8, value7, value6, value5, value4, value3, value2, value1, value0) -> tail {\n        tail := add(headStart, 352)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value1,  add(headStart, 32))\n\n        abi_encode_t_bytes32_to_t_bytes32_fromStack(value2,  add(headStart, 64))\n\n        abi_encode_t_enum$_RequestStatus_$870_to_t_uint8_fromStack(value3,  add(headStart, 96))\n\n        abi_encode_t_enum$_ProjectStatus_$876_to_t_uint8_fromStack(value4,  add(headStart, 128))\n\n        abi_encode_t_enum$_RequestType_$866_to_t_uint8_fromStack(value5,  add(headStart, 160))\n\n        abi_encode_t_address_to_t_address_fromStack(value6,  add(headStart, 192))\n\n        abi_encode_t_address_to_t_address_fromStack(value7,  add(headStart, 224))\n\n        abi_encode_t_address_to_t_address_fromStack(value8,  add(headStart, 256))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value9,  add(headStart, 288))\n\n        mstore(add(headStart, 320), sub(tail, headStart))\n        tail := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value10,  tail)\n\n    }\n\n    function panic_error_0x22() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x22)\n        revert(0, 0x24)\n    }\n\n    function extract_byte_array_length(data) -> length {\n        length := div(data, 2)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) {\n            length := and(length, 0x7f)\n        }\n\n        if eq(outOfPlaceEncoding, lt(length, 32)) {\n            panic_error_0x22()\n        }\n    }\n\n}\n",
+      "contents": "{\n\n    function cleanup_t_uint256(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_uint256_to_t_uint256_fromStack(value, pos) {\n        mstore(pos, cleanup_t_uint256(value))\n    }\n\n    function abi_encode_tuple_t_uint256__to_t_uint256__fromStack_reversed(headStart , value0) -> tail {\n        tail := add(headStart, 32)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n    }\n\n    function allocate_unbounded() -> memPtr {\n        memPtr := mload(64)\n    }\n\n    function revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() {\n        revert(0, 0)\n    }\n\n    function revert_error_c1322bf8034eace5e0b5c7295db60986aa89aae5e0ea0873e4689e076861a5db() {\n        revert(0, 0)\n    }\n\n    function validator_revert_t_uint256(value) {\n        if iszero(eq(value, cleanup_t_uint256(value))) { revert(0, 0) }\n    }\n\n    function abi_decode_t_uint256(offset, end) -> value {\n        value := calldataload(offset)\n        validator_revert_t_uint256(value)\n    }\n\n    function abi_decode_tuple_t_uint256(headStart, dataEnd) -> value0 {\n        if slt(sub(dataEnd, headStart), 32) { revert_error_dbdddcbe895c83990c08b3492a0e83918d802a52331272ac6fdb6a7c4aea3b1b() }\n\n        {\n\n            let offset := 0\n\n            value0 := abi_decode_t_uint256(add(headStart, offset), dataEnd)\n        }\n\n    }\n\n    function cleanup_t_bytes32(value) -> cleaned {\n        cleaned := value\n    }\n\n    function abi_encode_t_bytes32_to_t_bytes32_fromStack(value, pos) {\n        mstore(pos, cleanup_t_bytes32(value))\n    }\n\n    function panic_error_0x21() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x21)\n        revert(0, 0x24)\n    }\n\n    function validator_assert_t_enum$_RequestStatus_$833(value) {\n        if iszero(lt(value, 3)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestStatus_$833(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestStatus_$833(value)\n    }\n\n    function convert_t_enum$_RequestStatus_$833_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestStatus_$833(value)\n    }\n\n    function abi_encode_t_enum$_RequestStatus_$833_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestStatus_$833_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_ProjectStatus_$839(value) {\n        if iszero(lt(value, 5)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_ProjectStatus_$839(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_ProjectStatus_$839(value)\n    }\n\n    function convert_t_enum$_ProjectStatus_$839_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_ProjectStatus_$839(value)\n    }\n\n    function abi_encode_t_enum$_ProjectStatus_$839_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_ProjectStatus_$839_to_t_uint8(value))\n    }\n\n    function validator_assert_t_enum$_RequestType_$829(value) {\n        if iszero(lt(value, 2)) { panic_error_0x21() }\n    }\n\n    function cleanup_t_enum$_RequestType_$829(value) -> cleaned {\n        cleaned := value validator_assert_t_enum$_RequestType_$829(value)\n    }\n\n    function convert_t_enum$_RequestType_$829_to_t_uint8(value) -> converted {\n        converted := cleanup_t_enum$_RequestType_$829(value)\n    }\n\n    function abi_encode_t_enum$_RequestType_$829_to_t_uint8_fromStack(value, pos) {\n        mstore(pos, convert_t_enum$_RequestType_$829_to_t_uint8(value))\n    }\n\n    function cleanup_t_uint160(value) -> cleaned {\n        cleaned := and(value, 0xffffffffffffffffffffffffffffffffffffffff)\n    }\n\n    function cleanup_t_address(value) -> cleaned {\n        cleaned := cleanup_t_uint160(value)\n    }\n\n    function abi_encode_t_address_to_t_address_fromStack(value, pos) {\n        mstore(pos, cleanup_t_address(value))\n    }\n\n    function array_length_t_string_memory_ptr(value) -> length {\n\n        length := mload(value)\n\n    }\n\n    function array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length) -> updated_pos {\n        mstore(pos, length)\n        updated_pos := add(pos, 0x20)\n    }\n\n    function copy_memory_to_memory(src, dst, length) {\n        let i := 0\n        for { } lt(i, length) { i := add(i, 32) }\n        {\n            mstore(add(dst, i), mload(add(src, i)))\n        }\n        if gt(i, length)\n        {\n            // clear end\n            mstore(add(dst, length), 0)\n        }\n    }\n\n    function round_up_to_mul_of_32(value) -> result {\n        result := and(add(value, 31), not(31))\n    }\n\n    function abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value, pos) -> end {\n        let length := array_length_t_string_memory_ptr(value)\n        pos := array_storeLengthForEncoding_t_string_memory_ptr_fromStack(pos, length)\n        copy_memory_to_memory(add(value, 0x20), pos, length)\n        end := add(pos, round_up_to_mul_of_32(length))\n    }\n\n    function abi_encode_tuple_t_uint256_t_uint256_t_bytes32_t_enum$_RequestStatus_$833_t_enum$_ProjectStatus_$839_t_enum$_RequestType_$829_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__to_t_uint256_t_uint256_t_bytes32_t_uint8_t_uint8_t_uint8_t_address_t_address_t_address_t_uint256_t_string_memory_ptr__fromStack_reversed(headStart , value10, value9, value8, value7, value6, value5, value4, value3, value2, value1, value0) -> tail {\n        tail := add(headStart, 352)\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value0,  add(headStart, 0))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value1,  add(headStart, 32))\n\n        abi_encode_t_bytes32_to_t_bytes32_fromStack(value2,  add(headStart, 64))\n\n        abi_encode_t_enum$_RequestStatus_$833_to_t_uint8_fromStack(value3,  add(headStart, 96))\n\n        abi_encode_t_enum$_ProjectStatus_$839_to_t_uint8_fromStack(value4,  add(headStart, 128))\n\n        abi_encode_t_enum$_RequestType_$829_to_t_uint8_fromStack(value5,  add(headStart, 160))\n\n        abi_encode_t_address_to_t_address_fromStack(value6,  add(headStart, 192))\n\n        abi_encode_t_address_to_t_address_fromStack(value7,  add(headStart, 224))\n\n        abi_encode_t_address_to_t_address_fromStack(value8,  add(headStart, 256))\n\n        abi_encode_t_uint256_to_t_uint256_fromStack(value9,  add(headStart, 288))\n\n        mstore(add(headStart, 320), sub(tail, headStart))\n        tail := abi_encode_t_string_memory_ptr_to_t_string_memory_ptr_fromStack(value10,  tail)\n\n    }\n\n    function panic_error_0x22() {\n        mstore(0, 35408467139433450592217433187231851964531694900788300625387963629091585785856)\n        mstore(4, 0x22)\n        revert(0, 0x24)\n    }\n\n    function extract_byte_array_length(data) -> length {\n        length := div(data, 2)\n        let outOfPlaceEncoding := and(data, 1)\n        if iszero(outOfPlaceEncoding) {\n            length := and(length, 0x7f)\n        }\n\n        if eq(outOfPlaceEncoding, lt(length, 32)) {\n            panic_error_0x22()\n        }\n    }\n\n}\n",
       "id": 7,
       "language": "Yul",
       "name": "#utility.yul"
@@ -3868,18 +3923,18 @@
     "absolutePath": "project:/contracts/others/CompanyChain.sol",
     "exportedSymbols": {
       "CompanyChain": [
-        1319
+        1285
       ],
       "SharedChain": [
-        1014
+        1019
       ]
     },
-    "id": 1320,
+    "id": 1286,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1280,
+        "id": 1246,
         "literals": [
           "solidity",
           ">=",
@@ -3895,11 +3950,11 @@
       {
         "absolutePath": "project:/contracts/SharedChain.sol",
         "file": "../SharedChain.sol",
-        "id": 1281,
+        "id": 1247,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 1320,
-        "sourceUnit": 1015,
+        "scope": 1286,
+        "sourceUnit": 1020,
         "src": "68:28:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -3909,13 +3964,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 1282,
+              "id": 1248,
               "name": "SharedChain",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 1014,
+              "referencedDeclaration": 1019,
               "src": "125:11:5"
             },
-            "id": 1283,
+            "id": 1249,
             "nodeType": "InheritanceSpecifier",
             "src": "125:11:5"
           }
@@ -3924,10 +3979,10 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1319,
+        "id": 1285,
         "linearizedBaseContracts": [
-          1319,
-          1014
+          1285,
+          1019
         ],
         "name": "CompanyChain",
         "nameLocation": "109:12:5",
@@ -3935,12 +3990,12 @@
         "nodes": [
           {
             "constant": false,
-            "id": 1285,
+            "id": 1251,
             "mutability": "mutable",
             "name": "_companyAddress",
             "nameLocation": "152:15:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "144:23:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -3949,7 +4004,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 1284,
+              "id": 1250,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "144:7:5",
@@ -3964,23 +4019,23 @@
           {
             "constant": false,
             "functionSelector": "e7418dc2",
-            "id": 1290,
+            "id": 1256,
             "mutability": "mutable",
             "name": "requestsCompany",
             "nameLocation": "208:15:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "176:47:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$986_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$991_storage_$",
               "typeString": "mapping(uint256 => struct SharedChain.Request)"
             },
             "typeName": {
-              "id": 1289,
+              "id": 1255,
               "keyType": {
-                "id": 1286,
+                "id": 1252,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "184:4:5",
@@ -3992,23 +4047,23 @@
               "nodeType": "Mapping",
               "src": "176:24:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$986_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$991_storage_$",
                 "typeString": "mapping(uint256 => struct SharedChain.Request)"
               },
               "valueType": {
-                "id": 1288,
+                "id": 1254,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1287,
+                  "id": 1253,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 986,
+                  "referencedDeclaration": 991,
                   "src": "192:7:5"
                 },
-                "referencedDeclaration": 986,
+                "referencedDeclaration": 991,
                 "src": "192:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$986_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$991_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               }
@@ -4018,12 +4073,12 @@
           {
             "constant": false,
             "functionSelector": "af21684f",
-            "id": 1293,
+            "id": 1259,
             "mutability": "mutable",
             "name": "requestsCompanyCounter",
             "nameLocation": "242:22:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "230:38:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -4032,7 +4087,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 1291,
+              "id": 1257,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "230:4:5",
@@ -4043,7 +4098,7 @@
             },
             "value": {
               "hexValue": "30",
-              "id": 1292,
+              "id": 1258,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -4062,42 +4117,42 @@
           {
             "constant": false,
             "functionSelector": "f9cf8649",
-            "id": 1297,
+            "id": 1263,
             "mutability": "mutable",
             "name": "allCompanyRequests",
             "nameLocation": "292:18:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "275:35:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Request_$986_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Request_$991_storage_$dyn_storage",
               "typeString": "struct SharedChain.Request[]"
             },
             "typeName": {
               "baseType": {
-                "id": 1295,
+                "id": 1261,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1294,
+                  "id": 1260,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 986,
+                  "referencedDeclaration": 991,
                   "src": "275:7:5"
                 },
-                "referencedDeclaration": 986,
+                "referencedDeclaration": 991,
                 "src": "275:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$986_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$991_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               },
-              "id": 1296,
+              "id": 1262,
               "nodeType": "ArrayTypeName",
               "src": "275:9:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Request_$986_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Request_$991_storage_$dyn_storage_ptr",
                 "typeString": "struct SharedChain.Request[]"
               }
             },
@@ -4105,23 +4160,23 @@
           },
           {
             "body": {
-              "id": 1305,
+              "id": 1271,
               "nodeType": "Block",
               "src": "333:47:5",
               "statements": [
                 {
                   "expression": {
-                    "id": 1303,
+                    "id": 1269,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1300,
+                      "id": 1266,
                       "name": "_companyAddress",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1285,
+                      "referencedDeclaration": 1251,
                       "src": "344:15:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -4132,7 +4187,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 1301,
+                        "id": 1267,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -4143,7 +4198,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 1302,
+                      "id": 1268,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -4162,13 +4217,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 1304,
+                  "id": 1270,
                   "nodeType": "ExpressionStatement",
                   "src": "344:28:5"
                 }
               ]
             },
-            "id": 1306,
+            "id": 1272,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -4176,18 +4231,18 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1298,
+              "id": 1264,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "330:2:5"
             },
             "returnParameters": {
-              "id": 1299,
+              "id": 1265,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "333:0:5"
             },
-            "scope": 1319,
+            "scope": 1285,
             "src": "319:61:5",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4195,7 +4250,7 @@
           },
           {
             "body": {
-              "id": 1317,
+              "id": 1283,
               "nodeType": "Block",
               "src": "409:102:5",
               "statements": [
@@ -4207,17 +4262,17 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 1312,
+                        "id": 1278,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 1309,
+                          "id": 1275,
                           "name": "_companyAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1285,
+                          "referencedDeclaration": 1251,
                           "src": "428:15:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -4228,7 +4283,7 @@
                         "operator": "==",
                         "rightExpression": {
                           "expression": {
-                            "id": 1310,
+                            "id": 1276,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -4239,7 +4294,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 1311,
+                          "id": 1277,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -4260,7 +4315,7 @@
                       },
                       {
                         "hexValue": "596f7520617265206e6f74206120636f6d70616e79206275696c646572",
-                        "id": 1313,
+                        "id": 1279,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -4286,7 +4341,7 @@
                           "typeString": "literal_string \"You are not a company builder\""
                         }
                       ],
-                      "id": 1308,
+                      "id": 1274,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -4300,7 +4355,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1314,
+                    "id": 1280,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4315,23 +4370,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1315,
+                  "id": 1281,
                   "nodeType": "ExpressionStatement",
                   "src": "420:71:5"
                 },
                 {
-                  "id": 1316,
+                  "id": 1282,
                   "nodeType": "PlaceholderStatement",
                   "src": "502:1:5"
                 }
               ]
             },
-            "id": 1318,
+            "id": 1284,
             "name": "onlyCompany",
             "nameLocation": "397:11:5",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 1307,
+              "id": 1273,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "409:0:5"
@@ -4341,7 +4396,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 1320,
+        "scope": 1286,
         "src": "100:1957:5",
         "usedErrors": []
       }
@@ -4352,18 +4407,18 @@
     "absolutePath": "project:/contracts/others/CompanyChain.sol",
     "exportedSymbols": {
       "CompanyChain": [
-        1319
+        1285
       ],
       "SharedChain": [
-        1014
+        1019
       ]
     },
-    "id": 1320,
+    "id": 1286,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1280,
+        "id": 1246,
         "literals": [
           "solidity",
           ">=",
@@ -4379,11 +4434,11 @@
       {
         "absolutePath": "project:/contracts/SharedChain.sol",
         "file": "../SharedChain.sol",
-        "id": 1281,
+        "id": 1247,
         "nameLocation": "-1:-1:-1",
         "nodeType": "ImportDirective",
-        "scope": 1320,
-        "sourceUnit": 1015,
+        "scope": 1286,
+        "sourceUnit": 1020,
         "src": "68:28:5",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4393,13 +4448,13 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 1282,
+              "id": 1248,
               "name": "SharedChain",
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 1014,
+              "referencedDeclaration": 1019,
               "src": "125:11:5"
             },
-            "id": 1283,
+            "id": 1249,
             "nodeType": "InheritanceSpecifier",
             "src": "125:11:5"
           }
@@ -4408,10 +4463,10 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 1319,
+        "id": 1285,
         "linearizedBaseContracts": [
-          1319,
-          1014
+          1285,
+          1019
         ],
         "name": "CompanyChain",
         "nameLocation": "109:12:5",
@@ -4419,12 +4474,12 @@
         "nodes": [
           {
             "constant": false,
-            "id": 1285,
+            "id": 1251,
             "mutability": "mutable",
             "name": "_companyAddress",
             "nameLocation": "152:15:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "144:23:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -4433,7 +4488,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 1284,
+              "id": 1250,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "144:7:5",
@@ -4448,23 +4503,23 @@
           {
             "constant": false,
             "functionSelector": "e7418dc2",
-            "id": 1290,
+            "id": 1256,
             "mutability": "mutable",
             "name": "requestsCompany",
             "nameLocation": "208:15:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "176:47:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$986_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$991_storage_$",
               "typeString": "mapping(uint256 => struct SharedChain.Request)"
             },
             "typeName": {
-              "id": 1289,
+              "id": 1255,
               "keyType": {
-                "id": 1286,
+                "id": 1252,
                 "name": "uint",
                 "nodeType": "ElementaryTypeName",
                 "src": "184:4:5",
@@ -4476,23 +4531,23 @@
               "nodeType": "Mapping",
               "src": "176:24:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$986_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_Request_$991_storage_$",
                 "typeString": "mapping(uint256 => struct SharedChain.Request)"
               },
               "valueType": {
-                "id": 1288,
+                "id": 1254,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1287,
+                  "id": 1253,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 986,
+                  "referencedDeclaration": 991,
                   "src": "192:7:5"
                 },
-                "referencedDeclaration": 986,
+                "referencedDeclaration": 991,
                 "src": "192:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$986_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$991_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               }
@@ -4502,12 +4557,12 @@
           {
             "constant": false,
             "functionSelector": "af21684f",
-            "id": 1293,
+            "id": 1259,
             "mutability": "mutable",
             "name": "requestsCompanyCounter",
             "nameLocation": "242:22:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "230:38:5",
             "stateVariable": true,
             "storageLocation": "default",
@@ -4516,7 +4571,7 @@
               "typeString": "uint256"
             },
             "typeName": {
-              "id": 1291,
+              "id": 1257,
               "name": "uint",
               "nodeType": "ElementaryTypeName",
               "src": "230:4:5",
@@ -4527,7 +4582,7 @@
             },
             "value": {
               "hexValue": "30",
-              "id": 1292,
+              "id": 1258,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -4546,42 +4601,42 @@
           {
             "constant": false,
             "functionSelector": "f9cf8649",
-            "id": 1297,
+            "id": 1263,
             "mutability": "mutable",
             "name": "allCompanyRequests",
             "nameLocation": "292:18:5",
             "nodeType": "VariableDeclaration",
-            "scope": 1319,
+            "scope": 1285,
             "src": "275:35:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_array$_t_struct$_Request_$986_storage_$dyn_storage",
+              "typeIdentifier": "t_array$_t_struct$_Request_$991_storage_$dyn_storage",
               "typeString": "struct SharedChain.Request[]"
             },
             "typeName": {
               "baseType": {
-                "id": 1295,
+                "id": 1261,
                 "nodeType": "UserDefinedTypeName",
                 "pathNode": {
-                  "id": 1294,
+                  "id": 1260,
                   "name": "Request",
                   "nodeType": "IdentifierPath",
-                  "referencedDeclaration": 986,
+                  "referencedDeclaration": 991,
                   "src": "275:7:5"
                 },
-                "referencedDeclaration": 986,
+                "referencedDeclaration": 991,
                 "src": "275:7:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Request_$986_storage_ptr",
+                  "typeIdentifier": "t_struct$_Request_$991_storage_ptr",
                   "typeString": "struct SharedChain.Request"
                 }
               },
-              "id": 1296,
+              "id": 1262,
               "nodeType": "ArrayTypeName",
               "src": "275:9:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_array$_t_struct$_Request_$986_storage_$dyn_storage_ptr",
+                "typeIdentifier": "t_array$_t_struct$_Request_$991_storage_$dyn_storage_ptr",
                 "typeString": "struct SharedChain.Request[]"
               }
             },
@@ -4589,23 +4644,23 @@
           },
           {
             "body": {
-              "id": 1305,
+              "id": 1271,
               "nodeType": "Block",
               "src": "333:47:5",
               "statements": [
                 {
                   "expression": {
-                    "id": 1303,
+                    "id": 1269,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 1300,
+                      "id": 1266,
                       "name": "_companyAddress",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1285,
+                      "referencedDeclaration": 1251,
                       "src": "344:15:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -4616,7 +4671,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 1301,
+                        "id": 1267,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -4627,7 +4682,7 @@
                           "typeString": "msg"
                         }
                       },
-                      "id": 1302,
+                      "id": 1268,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -4646,13 +4701,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 1304,
+                  "id": 1270,
                   "nodeType": "ExpressionStatement",
                   "src": "344:28:5"
                 }
               ]
             },
-            "id": 1306,
+            "id": 1272,
             "implemented": true,
             "kind": "constructor",
             "modifiers": [],
@@ -4660,18 +4715,18 @@
             "nameLocation": "-1:-1:-1",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 1298,
+              "id": 1264,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "330:2:5"
             },
             "returnParameters": {
-              "id": 1299,
+              "id": 1265,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "333:0:5"
             },
-            "scope": 1319,
+            "scope": 1285,
             "src": "319:61:5",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -4679,7 +4734,7 @@
           },
           {
             "body": {
-              "id": 1317,
+              "id": 1283,
               "nodeType": "Block",
               "src": "409:102:5",
               "statements": [
@@ -4691,17 +4746,17 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 1312,
+                        "id": 1278,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 1309,
+                          "id": 1275,
                           "name": "_companyAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1285,
+                          "referencedDeclaration": 1251,
                           "src": "428:15:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -4712,7 +4767,7 @@
                         "operator": "==",
                         "rightExpression": {
                           "expression": {
-                            "id": 1310,
+                            "id": 1276,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -4723,7 +4778,7 @@
                               "typeString": "msg"
                             }
                           },
-                          "id": 1311,
+                          "id": 1277,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -4744,7 +4799,7 @@
                       },
                       {
                         "hexValue": "596f7520617265206e6f74206120636f6d70616e79206275696c646572",
-                        "id": 1313,
+                        "id": 1279,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -4770,7 +4825,7 @@
                           "typeString": "literal_string \"You are not a company builder\""
                         }
                       ],
-                      "id": 1308,
+                      "id": 1274,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -4784,7 +4839,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1314,
+                    "id": 1280,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -4799,23 +4854,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1315,
+                  "id": 1281,
                   "nodeType": "ExpressionStatement",
                   "src": "420:71:5"
                 },
                 {
-                  "id": 1316,
+                  "id": 1282,
                   "nodeType": "PlaceholderStatement",
                   "src": "502:1:5"
                 }
               ]
             },
-            "id": 1318,
+            "id": 1284,
             "name": "onlyCompany",
             "nameLocation": "397:11:5",
             "nodeType": "ModifierDefinition",
             "parameters": {
-              "id": 1307,
+              "id": 1273,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "409:0:5"
@@ -4825,7 +4880,7 @@
             "visibility": "internal"
           }
         ],
-        "scope": 1320,
+        "scope": 1286,
         "src": "100:1957:5",
         "usedErrors": []
       }
@@ -4838,7 +4893,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-11-26T14:30:28.122Z",
+  "updatedAt": "2021-11-26T17:27:01.568Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
