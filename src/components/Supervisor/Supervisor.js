@@ -9,6 +9,7 @@ import MaterialTable from '@material-table/core';
 import { getSupervisorRequests } from '../Services/applicationService';
 import SinglePagePdf from '../PdfViewer/SinglePagePdf';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -138,13 +139,22 @@ class Supervisor extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
+                            icon: PictureAsPdfIcon,
+                            tooltip: 'View Project File',
+                            onClick: (event, rowData) => {
+                                this.setEditRequest(true);
+                                this.setRecordForEdit(rowData);
+                            }
+						},
+                        {
                             icon: GridViewOutlinedIcon,
                             tooltip: 'Edit Request',
                             onClick: (event, rowData) => {
                                 this.setEditRequest(true);
                                 this.setRecordForEdit(rowData);
                             }
-						},						{
+						},
+                        {
 							icon: Visibility,
 							tooltip: 'View Request',
 							onClick: (event, rowData) => {
