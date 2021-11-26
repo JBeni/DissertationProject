@@ -1,40 +1,14 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-contract UserChain {
+import './SharedChain.sol';
+
+contract UserChain is SharedChain {
     address public owner;
 
     mapping(address => User) public users;
     address[] public usersAddress;
     uint256 public usersCounter = 0;
-
-    enum Roles {
-        DefaultRole,
-        ProjectInitiator,
-        CompanyBuilder,
-        ProjectSupervisor
-    }
-
-    struct User {
-        uint _index;
-        string _username;
-        bytes32 _email;
-        bytes32 _firstname;
-        bytes32 _lastname;
-        Roles _role;
-        address _walletAddress;
-        uint _timestamp;
-    }
-    event UserEvent(
-        uint _index,
-        string indexed _username,
-        bytes32 _email,
-        bytes32 _firstname,
-        bytes32 _lastname,
-        Roles indexed _role,
-        address indexed _walletAddress,
-        uint _timestamp
-    );
 
     constructor() {
         owner = msg.sender;
