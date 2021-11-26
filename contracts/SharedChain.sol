@@ -6,6 +6,34 @@ contract SharedChain {
     enum RequestStatus { UnApproved, Rejected, Approved }
     enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
 
+    enum Roles {
+        DefaultRole,
+        ProjectInitiator,
+        CompanyBuilder,
+        ProjectSupervisor
+    }
+
+    struct User {
+        uint _index;
+        string _username;
+        bytes32 _email;
+        bytes32 _firstname;
+        bytes32 _lastname;
+        Roles _role;
+        address _walletAddress;
+        uint _timestamp;
+    }
+    event UserEvent(
+        uint _index,
+        string indexed _username,
+        bytes32 _email,
+        bytes32 _firstname,
+        bytes32 _lastname,
+        Roles indexed _role,
+        address indexed _walletAddress,
+        uint _timestamp
+    );
+
     struct Project {
         uint _index;
         bytes32 _name;
