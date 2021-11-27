@@ -5,6 +5,7 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import Routes from './Routes';
 import { getUserRoleById } from '../Services/dropdownService';
+import { getDefaultRole } from './../Services/applicationService';
 
 function Navbar(props) {
     const [isActive, setIsActive] = useState(true);
@@ -17,7 +18,7 @@ function Navbar(props) {
     const [account] = useState(props.account);
     const [project] = useState(props.project);
     const [web3] = useState(props.web3);
-    const [currentUserRole, setCurrentUserRole] = useState('DefaultRole');
+    const [currentUserRole, setCurrentUserRole] = useState(getDefaultRole());
 
 	useEffect(() => {
         // This is Admin - Owner Contract

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DefaultPage from '../NotFound/DefaultPage';
 import Projects from '../Projects/Projects';
@@ -8,12 +8,20 @@ import Company from './../Company/Company';
 import Supervisor from './../Supervisor/Supervisor';
 import ProjectRequests from '../ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
+import { getDefaultRole } from './../Services/applicationService';
 
 function Routes(props) {
+    const [defaultRole, setDefaultRole] = useState('');
+
+    useEffect(() => {
+        const role = getDefaultRole();
+        setDefaultRole(role);
+    }, []);
+
 	return (
 		<Switch>
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/" exact
                         render={() => (
@@ -26,7 +34,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/dashboard" exact
                         render={() => (
@@ -39,7 +47,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/users"
                         render={() => (
@@ -52,7 +60,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                 <Route
                     path="/projects" exact
                     render={() => (
@@ -65,7 +73,7 @@ function Routes(props) {
                 />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/projects/:id"
                         render={() => (
@@ -78,7 +86,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/project-initiator"
                         render={() => (
@@ -91,7 +99,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/company"
                         render={() => (
@@ -104,7 +112,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/supervisor"
                         render={() => (
@@ -117,7 +125,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         path="/requests"
                         render={() => (
@@ -130,7 +138,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === 'DefaultRole' &&
+                props.userRole === defaultRole &&
                     <Route
                         render={() => (
                             <DefaultPage

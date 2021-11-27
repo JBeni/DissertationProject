@@ -2,6 +2,15 @@
 import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from '../Services/dropdownService';
 const axios = require('axios');
 
+/****** **********/
+
+export const getDefaultRole = () => {
+    return "DefaultRole";
+}
+
+
+/*****************    *******/
+
 export async function getAllUsers(props) {
     let dataArray = [];
     await props.project.methods.getAllUsers().call().then((result) => {
