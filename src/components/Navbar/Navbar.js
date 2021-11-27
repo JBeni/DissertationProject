@@ -34,7 +34,7 @@ function Navbar(props) {
             let role = getUserRoleById(data._role);
             setCurrentUserRole(role.value);
         })();
-	}, [props, props.account, props.project]);
+	}, []);
 
     return (
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
