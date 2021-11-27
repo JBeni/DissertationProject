@@ -1,6 +1,14 @@
 
 /***    Methods for Dropdowns */
 
+export const getAddressZeroValue = () => {
+    return "0x0000000000000000000000000000000000000000";
+}
+
+export const getCompletedProjectStatus = () => {
+    return { id: '4', value: 'Completed' };
+}
+
 export const getSupervisorRequestType = () => {
     return { id: '0', value: 'SupervisorReq' };
 }

@@ -12,7 +12,7 @@ import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
 import { getRequestStatusById } from '../Services/dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
-import { getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
+import { getAddressZeroValue, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -38,17 +38,26 @@ class ProjectRequests extends Component {
     }
 
     getLastProjectRequest = async (projectAddress) => {
-        let lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
+        const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
             .then((result) => { return result; });
-        if ("0x0000000000000000000000000000000000000000" === lastRequest._projectAddress) {
+        
+        const addressZero = getAddressZeroValue();
+        /**
+         * If at this time we don't have not a single request the method will
+         * RETURN an array with an item initialized with default data
+         */
+        if (lastRequest._projectAddress === addressZero) {
             // This mean Project is Created
-            let defProjectStatus = getDefaultProjectStatus();
+            const defProjectStatus = getDefaultProjectStatus();
             this.setState({ activeStep: Number(defProjectStatus.id) + 1 });
             return;
         }
-        let requestStatus = getRequestStatusById(lastRequest._requestStatus);
-        let projectStatus = getProjectStatusById(lastRequest._status);
-        if (requestStatus.value === "UnApproved" || projectStatus.value === "Completed") {
+        const requestStatus = getRequestStatusById(lastRequest._requestStatus);
+        const projectStatus = getProjectStatusById(lastRequest._status);
+
+        const unApprovedReqStatus = getDefaultRequestStatus();
+        const completedProjectStatus = getCompletedProjectStatus();
+        if (requestStatus.value === unApprovedReqStatus || projectStatus.value === completedProjectStatus) {
             this.setState({ requestNextStep: false });
         }
         this.setActiveStep(lastRequest);
