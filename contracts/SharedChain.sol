@@ -2,6 +2,7 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 contract SharedChain {
+
     enum RequestType { SupervisorReq, CompanyReq }
     enum RequestStatus { UnApproved, Rejected, Approved }
     enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
@@ -13,6 +14,8 @@ contract SharedChain {
         ProjectSupervisor
     }
 
+
+    /******  User Data */
     struct User {
         uint _index;
         string _username;
@@ -34,6 +37,8 @@ contract SharedChain {
         uint _timestamp
     );
 
+
+    /*********  Project Related Data */
     struct Project {
         uint _index;
         bytes32 _name;
@@ -80,7 +85,8 @@ contract SharedChain {
         string _signature
     );
 
-    /******** */
+
+    /******** Supervisor and Company Data */
     struct Request {
         uint _index;
         uint _indexProjectRequest;
