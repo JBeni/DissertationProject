@@ -14,6 +14,7 @@ import { getRequestStatusById } from '../Services/dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
 import { getAddressZeroValue, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
 import { Toaster } from 'react-hot-toast';
+import * as toasterService from '../Services/toasterService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -166,6 +167,14 @@ class ProjectRequests extends Component {
             default:
                 return 'Unknown stepIndex';
         }
+    }
+
+    notifyToastSuccess = () => {
+        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
+    }
+
+    notifyToastError = () => {
+        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
     }
 
 	render() {

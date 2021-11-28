@@ -9,8 +9,9 @@ import * as applicationService from '../Services/applicationService';
 import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import * as eventsService from '../Services/eventsService';
+import * as toasterService from '../Services/toasterService';
 import UserHistory from './UserHistory';
 import HistoryIcon from '@mui/icons-material/History';
 
@@ -109,17 +110,11 @@ export default class Users extends Component {
     }
 
     notifyToastSuccess = () => {
-        toast.success('User was stored successfully into the blockchain', {
-            position: 'bottom-center',
-            duration: 4000,
-        });    
+        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
     }
 
     notifyToastError = () => {
-        toast.error('The user couldnt be saved into the blockchain', {
-            position: 'bottom-center',
-            duration: 5000,
-        });    
+        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
     }
 
 	render() {

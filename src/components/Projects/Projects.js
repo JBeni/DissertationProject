@@ -10,6 +10,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import * as toasterService from '../Services/toasterService';
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -129,6 +130,14 @@ class Projects extends Component {
 
     handleNewDataFromPopup(value) {
         this.setState({ openAddForm: value });
+    }
+
+    notifyToastSuccess = () => {
+        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
+    }
+
+    notifyToastError = () => {
+        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
     }
 
 	render() {

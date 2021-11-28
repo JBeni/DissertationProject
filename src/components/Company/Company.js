@@ -10,6 +10,7 @@ import MaterialTable from '@material-table/core';
 import { getCompanyRequests } from '../Services/applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 import { Toaster } from 'react-hot-toast';
+import * as toasterService from '../Services/toasterService';
 
 class Company extends Component {
     constructor(props) {
@@ -83,6 +84,14 @@ class Company extends Component {
                 this.getSupervisorRequests();
             });
 	}
+
+    notifyToastSuccess = () => {
+        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
+    }
+
+    notifyToastError = () => {
+        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
+    }
 
     render() {
         const tableRef = React.createRef();

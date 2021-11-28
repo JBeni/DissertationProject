@@ -11,6 +11,7 @@ import SinglePagePdf from '../PdfViewer/SinglePagePdf';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { Toaster } from 'react-hot-toast';
+import * as toasterService from '../Services/toasterService';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -84,6 +85,14 @@ class Supervisor extends Component {
                 this.getSupervisorRequests();
             });
 	}
+
+    notifyToastSuccess = () => {
+        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
+    }
+
+    notifyToastError = () => {
+        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
+    }
 
     render() {
         const tableRef = React.createRef();

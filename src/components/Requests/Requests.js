@@ -7,6 +7,7 @@ import ViewRequest from './ViewRequest';
 import MaterialTable from '@material-table/core';
 import { getAllRequests } from '../Services/applicationService';
 import { Toaster } from 'react-hot-toast';
+import * as toasterService from '../Services/toasterService';
 
 class Requests extends Component {
     constructor(props) {
@@ -34,6 +35,14 @@ class Requests extends Component {
 	setRecordForView = (data) => {
 		this.setState({ recordForView: data });
 	}
+
+    notifyToastSuccess = () => {
+        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
+    }
+
+    notifyToastError = () => {
+        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
+    }
 
     render() {
         const tableRef = React.createRef();
