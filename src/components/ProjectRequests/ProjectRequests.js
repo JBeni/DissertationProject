@@ -13,6 +13,7 @@ import ViewProjectRequest from './ViewProjectRequest';
 import { getRequestStatusById } from '../Services/dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
 import { getAddressZeroValue, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
+import { Toaster } from 'react-hot-toast';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -247,12 +248,14 @@ class ProjectRequests extends Component {
 					]}
 				/>
 
-                    <br/><br/>
-                    <ProjectReqStepper
-                        getSteps={this.getProjectStatusSteps}
-                        activeStep={Number(this.state.activeStep)}
-                        getStepContent={this.getProjectStatusStepContent}
-                    />
+                <br/><br/>
+                <ProjectReqStepper
+                    getSteps={this.getProjectStatusSteps}
+                    activeStep={Number(this.state.activeStep)}
+                    getStepContent={this.getProjectStatusStepContent}
+                />
+
+                <Toaster position="bottom-center" reverseOrder={false} />
 			</div>
 		);
 	}

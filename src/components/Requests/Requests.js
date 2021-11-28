@@ -6,6 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import MaterialTable from '@material-table/core';
 import { getAllRequests } from '../Services/applicationService';
+import { Toaster } from 'react-hot-toast';
 
 class Requests extends Component {
     constructor(props) {
@@ -86,6 +87,8 @@ class Requests extends Component {
 						},
 					]}
 				/>
+
+                <Toaster position="bottom-center" reverseOrder={false} />
             </>
         );
     }

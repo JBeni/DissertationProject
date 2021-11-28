@@ -10,6 +10,7 @@ import { getSupervisorRequests } from '../Services/applicationService';
 import SinglePagePdf from '../PdfViewer/SinglePagePdf';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { Toaster } from 'react-hot-toast';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -167,6 +168,8 @@ class Supervisor extends Component {
 
                 <br/><br/>
                 <SinglePagePdf showPdf={this.state.showPdf} />
+
+                <Toaster position="bottom-center" reverseOrder={false} />
             </>
         );
     }

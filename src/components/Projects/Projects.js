@@ -9,6 +9,7 @@ import AddProjectForm from './AddProjectForm';
 import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -209,6 +210,8 @@ class Projects extends Component {
 						},
 					]}
 				/>
+
+                <Toaster position="bottom-center" reverseOrder={false} />
 			</div>
 		);
 	}

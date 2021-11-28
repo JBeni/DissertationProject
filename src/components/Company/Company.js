@@ -9,6 +9,7 @@ import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import { getCompanyRequests } from '../Services/applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
+import { Toaster } from 'react-hot-toast';
 
 class Company extends Component {
     constructor(props) {
@@ -158,6 +159,8 @@ class Company extends Component {
 
                 <br/><br/>
                 <AllPagesPdf showPdf={this.state.showPdf} />
+
+                <Toaster position="bottom-center" reverseOrder={false} />
             </>
         );
     }
