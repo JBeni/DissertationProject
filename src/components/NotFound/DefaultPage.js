@@ -1,7 +1,7 @@
 import React from 'react';
 
 function DefaultPage() {
-	return <div>Default Page</div>;
+	return <div>Page Not Found</div>;
 }
 
 export default DefaultPage;
