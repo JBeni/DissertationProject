@@ -26,10 +26,10 @@ export default function EditRequest(props) {
             let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
             setValues({
 				...values,
-                index: recordForEdit.index,
+                index: Number(recordForEdit.index),
                 title: recordForEdit.title,
                 projectStatus: projectStatus.id,
-                indexProjectRequest: recordForEdit.indexProjectRequest,
+                indexProjectRequest: Number(recordForEdit.indexProjectRequest),
                 comments: '',
                 projectAddress: recordForEdit.projectAddress,
                 userAddress: recordForEdit.userAddress,
