@@ -69,7 +69,7 @@ export async function getAllProjectEvents(props) {
     events.map((result) => {
         let status = getProjectStatusById(result.returnValues._status);
         const project = {
-            index: result.returnValues._index,
+            index: Number(result.returnValues._index),
             name: props.web3.utils.hexToUtf8(result.returnValues._name),
             status: status.returnValues.value,
             ipfsFileCID: result.returnValues._ipfsFileCID,
