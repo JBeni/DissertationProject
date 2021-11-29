@@ -39,11 +39,27 @@ function Navbar(props) {
 
     return (
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
-            <Header account={account} project={project} web3={web3} isActive={isActive} changeMenuOption={changeMenuOption} />
-            <Sidebar userRole={currentUserRole} isActive={isActive} currentLocation={currentLocation} />
+            <Header
+                currentUsername={props.currentUsername}
+                account={account}
+                project={project}
+                web3={web3}
+                isActive={isActive}
+                changeMenuOption={changeMenuOption}
+            />
+            <Sidebar
+                userRole={currentUserRole}
+                isActive={isActive}
+                currentLocation={currentLocation}
+            />
 
             <div className="main-section-container">
-                <Routes userRole={currentUserRole} account={account} project={project} web3={web3} />
+                <Routes
+                    userRole={currentUserRole}
+                    account={account}
+                    project={project}
+                    web3={web3}
+                />
             </div>
         </div>
     );
