@@ -55,7 +55,7 @@ class Projects extends Component {
     }
 
     setProjectHistory = async (rowData) => {
-        const data = await eventsService.getProjectEvents(this.props, rowData.walletAddress);
+        const data = await eventsService.getProjectEvents(this.props, rowData.projectAddress);
         this.setState({ openProjectHistory: data });
     }
 
