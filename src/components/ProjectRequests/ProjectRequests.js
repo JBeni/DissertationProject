@@ -28,7 +28,7 @@ class ProjectRequests extends Component {
             recordForEdit: null,
             activeStep: -1,
 
-            project: { index: '', name: '', status: '', ipfsFileCID: '', projectAddress: '', userAddress: '' },
+            project: { index: -1, name: '', status: '', ipfsFileCID: '', projectAddress: '', userAddress: '' },
             projectRequests: [],
 		};
     }
