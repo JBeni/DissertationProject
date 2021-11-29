@@ -58,7 +58,7 @@ export async function getAllProjects(props) {
         result.map((result) => {
             let status = getProjectStatusById(result._status);
             const project = {
-                index: result._index,
+                index: Number(result._index),
                 name: props.web3.utils.hexToUtf8(result._name),
                 status: status.value,
                 ipfsFileCID: result._ipfsFileCID,
@@ -79,7 +79,7 @@ export async function getProjectInfo(props, projectAddress) {
     return await props.project.methods.getProjectInfo(projectAddress).call().then((result) => {
         let status = getProjectStatusById(result._status);
         const project = {
-            index: result._index,
+            index: Number(result._index),
             name: props.web3.utils.hexToUtf8(result._name),
             status: status.value,
             ipfsFileCID: result._ipfsFileCID,
@@ -106,7 +106,7 @@ export async function getAllProjectRequests(props, projectAddress) {
             let status = getProjectStatusById(result._status);
             let requestStatus = getRequestStatusById(result._requestStatus);
             const project = {
-                index: result._index,
+                index: Number(result._index),
                 title: props.web3.utils.hexToUtf8(result._title),
                 comments: result._comments,
                 status: status.value,
@@ -143,14 +143,14 @@ export async function getSupervisorRequests(props) {
             if (Number(result._requestType) === Number(requestType.id)) {
                 let projectStatus = getProjectStatusById(result._projectStatus);
                 const project = {
-                    index: result._index,
+                    index: Number(result._index),
                     title: props.web3.utils.hexToUtf8(result._title),
                     comments: result._comments,
                     projectStatus: projectStatus.value,
                     requestStatus: requestStatus.value,
                     requestType: requestType.value,
                     projectAddress: result._projectAddress,
-                    indexProjectRequest: result._indexProjectRequest,
+                    indexProjectRequest: Number(result._indexProjectRequest),
                     userAddress: result._userAddress,
                     requestAddress: result._requestAddress,
                     timestamp: result._timestamp
@@ -180,14 +180,14 @@ export async function getCompanyRequests(props) {
             if (Number(result._requestType) === Number(requestType.id)) {
                 let projectStatus = getProjectStatusById(result._projectStatus);
                 const project = {
-                    index: result._index,
+                    index: Number(result._index),
                     title: props.web3.utils.hexToUtf8(result._title),
                     comments: result._comments,
                     projectStatus: projectStatus.value,
                     requestStatus: requestStatus.value,
                     requestType: requestType.value,
                     projectAddress: result._projectAddress,
-                    indexProjectRequest: result._indexProjectRequest,
+                    indexProjectRequest: Number(result._indexProjectRequest),
                     userAddress: result._userAddress,
                     requestAddress: result._requestAddress,
                     timestamp: result._timestamp
@@ -216,14 +216,14 @@ export async function getAllRequests(props) {
             let requestType = getSupervisorRequestType(result._requestType);
             let projectStatus = getProjectStatusById(result._projectStatus);
             const project = {
-                index: result._index,
+                index: Number(result._index),
                 title: props.web3.utils.hexToUtf8(result._title),
                 comments: result._comments,
                 projectStatus: projectStatus.value,
                 requestStatus: requestStatus.value,
                 requestType: requestType.value,
                 projectAddress: result._projectAddress,
-                indexProjectRequest: result._indexProjectRequest,
+                indexProjectRequest: Number(result._indexProjectRequest),
                 userAddress: result._userAddress,
                 requestAddress: result._requestAddress,
                 timestamp: result._timestamp
