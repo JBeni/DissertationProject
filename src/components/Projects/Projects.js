@@ -10,7 +10,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
+import * as eventsService from '../Services/eventsService';
 import * as toasterService from '../Services/toasterService';
+import HistoryIcon from '@mui/icons-material/History';
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -23,6 +25,7 @@ class Projects extends Component {
             openViewForm: false,
 			recordForEdit: null,
             selecteProjectAddress: '',
+            openProjectHistory: [],
 			projects: [],
         };
     }
@@ -42,6 +45,18 @@ class Projects extends Component {
 
     setOpenViewForm = (value) => {
         this.setState({ openViewForm: value });
+    }
+
+    setOpenProjectHistory = (value) => {
+        this.setState({ openProjectHistory: value });
+        if (value === false) {
+            this.setState({ openProjectHistory: [] });
+        }
+    }
+
+    setProjectHistory = async (rowData) => {
+        const data = await eventsService.getProjectEvents(this.props, rowData.walletAddress);
+        this.setState({ openProjectHistory: data });
     }
 
 	setRecordForEdit = (data) => {
@@ -87,7 +102,6 @@ class Projects extends Component {
 
     addOrEdit = (userData, resetForm) => {
         if (userData.isEditForm === false) {
-   			// alert('Form is validated! Submitting the form...');
             this.createProject(
 				userData.name,
 				userData.status,
@@ -202,6 +216,14 @@ class Projects extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
 						{
+							icon: HistoryIcon,
+							tooltip: 'User History',
+							onClick: (event, rowData) => {
+                                this.setOpenProjectHistory(true);
+                                this.setProjectHistory(rowData);
+							},
+						},
+                        {
 							icon: AddIcon,
 							tooltip: 'Add Project Requests',
 							onClick: (event, rowData) => {
