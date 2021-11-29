@@ -17,6 +17,7 @@ class App extends Component {
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
+            currentUsername: null,
         };
     }
 
@@ -92,7 +93,7 @@ class App extends Component {
         });
 
         if (_account === adminData._walletAddress) {
-            this.setState({ loading: false });
+            this.setState({ loading: false, currentUsername: adminData._username });
             return;
         }
 
@@ -104,7 +105,7 @@ class App extends Component {
                 return { username: response._username, walletAddress: response._walletAddress };
             });
             if (userInfo.walletAddress === _account) {
-                this.setState({ loading: false });
+                this.setState({ loading: false, currentUsername: userInfo.username });
                 return;
             }
         }
@@ -118,7 +119,7 @@ class App extends Component {
 					<Navbar
 						account={this.state.account}
 						project={this.state.project}
-                        admin={this.state.adminChain}
+                        currentUsername={this.state.currentUsername}
 						web3={this.state.web3}
 					/>
 				</React.Fragment>
