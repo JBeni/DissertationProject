@@ -1,15 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { getUserInfo } from '../Services/applicationService';
+import React, { useEffect } from 'react';
 
 function Header(props) {
-    const [userData, setUserData] = useState();
+    const { currentUsername } = props;
 
     useEffect(() => {
-        (async() => {
-            let data = await getUserInfo(props);
-            setUserData(data);
-        })();
-    }, [props]);
+    }, []);
 
     return (
         <header className={ props.isActive ? "header body-pd" : "header" }>
@@ -19,12 +14,12 @@ function Header(props) {
 
             <div className="flex-div">
                 <div style={{ marginRight: '50px' }}>
-                    Wallet Address: {props.account}
+                    Wallet Address: { props.account }
                 </div>
             </div>
 
             <div>
-                { userData?.username?.length > 1 && <p>{userData.username}</p> }
+                { currentUsername?.length > 1 && <p>{ currentUsername }</p> }
             </div>
         </header>
     );
