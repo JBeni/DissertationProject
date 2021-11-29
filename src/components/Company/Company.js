@@ -55,10 +55,10 @@ class Company extends Component {
 
     addOrEdit = async (data, resetForm) => {
         this.updateProjectRequest(
-            data.index,
+            Number(data.index),
             data.comments,
             data.requestStatus,
-            data.indexProjectRequest,
+            Number(data.indexProjectRequest),
             data.projectStatus,
             data.projectAddress,
             data.requestAddress
@@ -77,7 +77,7 @@ class Company extends Component {
 
         await this.props.project.methods
 			.updateRequest(
-                _index, _indexProjectRequest, _comments,
+                Number(_index), Number(_indexProjectRequest), _comments,
                 _requestStatus, _projectStatus,
                 _projectAddress, signatureData.signature
             ).send({ from: this.props.account }).then((receipt) => {
