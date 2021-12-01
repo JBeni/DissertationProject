@@ -14,6 +14,7 @@ import * as eventsService from '../Services/eventsService';
 import * as toasterService from '../Services/toasterService';
 import HistoryIcon from '@mui/icons-material/History';
 import Edit from '@material-ui/icons/Edit';
+import ProjectHistory from './ProjectHistory';
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -25,8 +26,10 @@ class Projects extends Component {
 			openAddForm: false,
             openViewForm: false,
 			recordForEdit: null,
-            selecteProjectAddress: '',
-            openProjectHistory: [],
+            openProjectHistory: false,
+            selectedProjectAddress: '',
+            
+            projectHistory: [],
 			projects: [],
         };
     }
@@ -51,13 +54,13 @@ class Projects extends Component {
     setOpenProjectHistory = (value) => {
         this.setState({ openProjectHistory: value });
         if (value === false) {
-            this.setState({ openProjectHistory: [] });
+            this.setState({ projectHistory: [] });
         }
     }
 
     setProjectHistory = async (rowData) => {
         const data = await eventsService.getProjectEvents(this.props, rowData.projectAddress);
-        this.setState({ openProjectHistory: data });
+        this.setState({ projectHistory: data });
     }
 
 	setRecordForEdit = (data) => {
@@ -65,7 +68,7 @@ class Projects extends Component {
 	}
 
     setSelectedProjectAddress = (value) => {
-        this.setState({ selecteProjectAddress: value });
+        this.setState({ selectedProjectAddress: value });
     }
 
     uploadFileToPinata = (fileData) => {
@@ -222,6 +225,23 @@ class Projects extends Component {
                     </DialogContent>
 				</Dialog>
 
+				<Dialog open={this.state.openProjectHistory} fullWidth maxWidth="xl">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								View User Changes
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenProjectHistory(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers>
+                        <ProjectHistory projectHistory={this.state.projectHistory} />
+                    </DialogContent>
+				</Dialog>
+
 				<br /><br />
 				<MaterialTable
 					title="Projects"
@@ -251,7 +271,7 @@ class Projects extends Component {
 							icon: AddIcon,
 							tooltip: 'Go to Project Requests',
 							onClick: (event, rowData) => {
-                                this.setSelectedProjectAddress(rowData.projectAddress);
+                                //this.setSelectedProjectAddress(rowData.projectAddress);
                                 this.props.history.push(`/projects/${rowData.projectAddress}`);
 							},
 						},

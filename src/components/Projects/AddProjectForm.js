@@ -24,11 +24,13 @@ export default function AddProjectForm(props) {
     const [validity, setValidity] = useState(initialProjectFormValidity);
 
     useEffect(() => {
-		if (recordForEdit != null) {
+        if (recordForEdit != null) {
             let status = getProjectStatusByValue(recordForEdit.status);
             let newData = {
                 name: recordForEdit.name,
                 status: status.id,
+                'file': { name: '', type: '', sizeBytes: '', lastModifiedDate: '' },
+                projectAddress: recordForEdit.projectAddress
             };
             setValues({
 				...newData,
