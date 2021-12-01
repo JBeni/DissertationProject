@@ -32,7 +32,6 @@ export default function SinglePagePdf(props) {
 	}
 
     useEffect(() => {
-        console.log(props);
     }, []);
 
 	return (

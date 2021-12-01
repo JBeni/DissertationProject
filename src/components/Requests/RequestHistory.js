@@ -5,7 +5,6 @@ export default function RequestHistory(props) {
 	const { userHistory } = props;
 
     useEffect(() => {
-        console.log(userHistory);
     }, [userHistory])
 
     return (

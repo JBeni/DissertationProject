@@ -8,7 +8,6 @@ export default function ViewRequest(props) {
 	const [values, setValues] = useState(initialProjectFormValues);
 
 	useEffect(() => {
-        console.log(recordForEdit);
 		if (recordForEdit != null) {
             let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
             let requestStatus = getRequestStatusByValue(recordForEdit.requestStatus);
