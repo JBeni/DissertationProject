@@ -49,6 +49,17 @@ contract ProjectChain is UserChain {
         projectsCounter++;
     }
 
+    function updateProject(address _projectAddress, string memory _ipfsFileCID, string memory _signature) public {
+        projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
+        projects[_projectAddress]._signature = _signature;
+
+        emit ProjectEvent(
+            projects[_projectAddress]._index, projects[_projectAddress]._name, projects[_projectAddress]._status,
+            projects[_projectAddress]._ipfsFileCID, projects[_projectAddress]._projectAddress, _projectInitiator,
+            block.timestamp, projects[_projectAddress]._signature
+        );
+    }
+
     function getProjectInfo(address _address) public view returns (Project memory) {
         return projects[_address];
     }
