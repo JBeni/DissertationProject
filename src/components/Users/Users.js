@@ -194,14 +194,14 @@ export default class Users extends Component {
 					data={this.state.users}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						{
-							icon: HistoryIcon,
-							tooltip: 'User History',
-							onClick: (event, rowData) => {
+                        {
+                            icon: HistoryIcon,
+                            tooltip: 'User History',
+                            onClick: (event, rowData) => {
                                 this.setOpenUserHistory(true);
                                 this.setUserHistory(rowData);
-							},
-						},
+                            },
+                        },
 						{
 							icon: Edit,
 							tooltip: 'Edit User',

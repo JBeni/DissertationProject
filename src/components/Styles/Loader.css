@@ -13,3 +13,15 @@
     margin-top: 330px;
     margin-left: 600px;
 }
+
+.waiting-center-container {
+    margin-top: 80px;
+    margin-left: 500px;
+    margin-bottom: 40px;
+}
+
+.message-center {
+    margin-left: -150px;
+    font-size: 18px;
+    font-weight: 700;
+}

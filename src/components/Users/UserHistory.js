@@ -1,12 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../Styles/TableHistory.css';
+import WaitingLoader from '../Views/WaitingLoader';
 
 export default function UserHistory(props) {
 	const { userHistory } = props;
 
+    const [loading, setLoading] = useState(false);
+
     useEffect(() => {
-        console.log(userHistory);
+        if (userHistory?.length > 0) {
+            setLoading(true);
+        }
     }, [userHistory])
+
+    if (loading === false) return <WaitingLoader />
 
     return (
 		<div className="container-body">
