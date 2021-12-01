@@ -101,6 +101,8 @@ export async function getAllProjectRequests(props, projectAddress) {
     });
 
     let dataArray = [];
+    if (allProjectRequest === undefined) return dataArray;
+
     allProjectRequest.map((result) => {
         if (projectAddress === result._projectAddress) {
             let status = getProjectStatusById(result._status);
