@@ -13,6 +13,7 @@ import { Toaster } from 'react-hot-toast';
 import * as eventsService from '../Services/eventsService';
 import * as toasterService from '../Services/toasterService';
 import HistoryIcon from '@mui/icons-material/History';
+import Edit from '@material-ui/icons/Edit';
 
 const axios = require('axios');
 const FormData = require('form-data');
@@ -100,15 +101,15 @@ class Projects extends Component {
         }
     }
 
-    addOrEdit = (userData, resetForm) => {
-        if (userData.isEditForm === false) {
+    addOrEdit = (projectData, resetForm) => {
+        if (projectData.isEditForm === false) {
             this.createProject(
-				userData.name,
-				userData.status,
-                userData
+				projectData.name,
+				projectData.status,
+                projectData
 			);
         } else {
-            ;//this.updateProject(userData.walletAddress);
+            this.updateProject(projectData.projectAddress, projectData);
         }
         resetForm();
         this.setRecordForEdit(null);
@@ -143,6 +144,25 @@ class Projects extends Component {
             })
             .catch((error) => {
                 toasterService.notifyToastError('Create Project operation has failed');
+            });
+	}
+
+    updateProject = async (_projectAddress, _fileData) => {
+        let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+        const signatureData = this.signCreateProject(_projectAddress);
+
+        await this.props.project.methods
+			.updateProject(
+                _projectAddress,
+                _ipfsFileCID,
+                signatureData.signature
+            ).send({ from: this.props.account })
+            .then((response) => {
+                toasterService.notifyToastSuccess('Update Project operation was made successfully');
+                this.getProjects();
+            })
+            .catch((error) => {
+                toasterService.notifyToastError('Update Project operation has failed');
             });
 	}
 
@@ -217,6 +237,14 @@ class Projects extends Component {
 							onClick: (event, rowData) => {
                                 this.setOpenProjectHistory(true);
                                 this.setProjectHistory(rowData);
+							},
+						},
+						{
+							icon: Edit,
+							tooltip: 'Edit Project',
+							onClick: (event, rowData) => {
+                                this.setOpenAddForm(true);
+                                this.setRecordForEdit(rowData);
 							},
 						},
                         {
