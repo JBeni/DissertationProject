@@ -74,17 +74,24 @@ export default class Users extends Component {
                 _walletAddress
 			).send({ from: this.props.account })
             .then((response) => {
-                this.notifyToastSuccess();
+                toasterService.notifyToastSuccess('Create User operation was made successfully');
                 this.getUsers();
-            }).catch((error) => { this.notifyToastError(); });
+            }).catch((error) => {
+                toasterService.notifyToastError('Create User operation has failed');
+            });
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
         await this.props.project.methods.changeUserRole(
             Number(_role),
             _walletAddress
-        ).send({ from: this.props.account }).then((receipt) => {
+        ).send({ from: this.props.account })
+        .then((response) => {
+            toasterService.notifyToastSuccess('Update User Role operation was made successfully');
             this.getUsers();
+        })
+        .catch((error) => {
+            toasterService.notifyToastError('Update User Role operation has failed');
         });
 	}
 
@@ -107,14 +114,6 @@ export default class Users extends Component {
 
     handleNewDataFromPopup(data) {
         this.setState({ openPopup: data });
-    }
-
-    notifyToastSuccess = () => {
-        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
-    }
-
-    notifyToastError = () => {
-        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
     }
 
 	render() {

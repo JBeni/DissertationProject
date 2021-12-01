@@ -137,21 +137,18 @@ class Projects extends Component {
                 Number(_status),
                 _ipfsFileCID,
                 signatureData.signature
-            ).send({ from: this.props.account }).then((receipt) => {
+            ).send({ from: this.props.account })
+            .then((response) => {
+                toasterService.notifyToastSuccess('Create Project operation was made successfully');
                 this.getProjects();
+            })
+            .catch((error) => {
+                toasterService.notifyToastError('Create Project operation has failed');
             });
 	}
 
     handleNewDataFromPopup(value) {
         this.setState({ openAddForm: value });
-    }
-
-    notifyToastSuccess = () => {
-        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
-    }
-
-    notifyToastError = () => {
-        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
     }
 
 	render() {

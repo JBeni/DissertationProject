@@ -140,9 +140,14 @@ class ProjectRequests extends Component {
                 this.props.web3.utils.utf8ToHex(_title),
                 Number(_status), Number(_requestStatus), _projectAddress,
                 projectReqAddress, signatureData.signature
-            ).send({ from: this.props.account }).then((receipt) => {
+            ).send({ from: this.props.account })
+            .then((response) => {
                 this.getAllProjectRequests();
                 this.getLastProjectRequest(this.props.match.params.id);
+                toasterService.notifyToastError('Create Project Request operation was made successfully');
+            })
+            .catch((error) => {
+                toasterService.notifyToastError('Create Project Request operation has failed');
             });
     }
 
@@ -167,14 +172,6 @@ class ProjectRequests extends Component {
             default:
                 return 'Unknown stepIndex';
         }
-    }
-
-    notifyToastSuccess = () => {
-        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
-    }
-
-    notifyToastError = () => {
-        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
     }
 
 	render() {

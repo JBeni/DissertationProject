@@ -81,18 +81,15 @@ class Supervisor extends Component {
                 Number(_index), Number(_indexProjectRequest), _comments,
                 _requestStatus, _projectStatus,
                 _projectAddress, signatureData.signature
-            ).send({ from: this.props.account }).then((receipt) => {
+            ).send({ from: this.props.account })
+            .then((response) => {
+                toasterService.notifyToastSuccess('Update Request operation was made successfully');
                 this.getSupervisorRequests();
-            });
+            })
+            .catch((error) => {
+                toasterService.notifyToastError('Update Request operation has failed');
+            })
 	}
-
-    notifyToastSuccess = () => {
-        toasterService.notifyToastSuccess('User was stored successfully into the blockchain');
-    }
-
-    notifyToastError = () => {
-        toasterService.notifyToastError('The user couldnt be saved into the blockchain');
-    }
 
     render() {
         const tableRef = React.createRef();
