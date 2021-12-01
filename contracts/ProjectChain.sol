@@ -119,7 +119,10 @@ contract ProjectChain is UserChain {
     }
 
     function getAllProjectRequests() public view returns(ProjectRequest[] memory) {
-        ProjectRequest[] memory allProjectRequests = new ProjectRequest[](projectRequestsCounter);
+        ProjectRequest[] memory allProjectRequests;
+        if (projectRequestsCounter == 0) return allProjectRequests;
+
+        allProjectRequests = new ProjectRequest[](projectRequestsCounter);
         for (uint index = 0; index < projectsCounter; index++) {
             ProjectRequest storage projectReq = projectRequests[index];
             allProjectRequests[index] = projectReq;
