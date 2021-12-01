@@ -125,8 +125,7 @@ class Projects extends Component {
     }
 
     createProject = async (_name, _status, _fileData) => {
-        //let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
-        let _ipfsFileCID = 'QmddchiYMQGZYLZf86jhyhkxRqrGfpBNr53b4oiV76q6aq';
+        let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         const projectAddress = await this.createUniqueProjectAddress();
         const signatureData = this.signCreateProject(projectAddress);
 
@@ -214,7 +213,7 @@ class Projects extends Component {
 					actions={[
 						{
 							icon: HistoryIcon,
-							tooltip: 'User History',
+							tooltip: 'Project History',
 							onClick: (event, rowData) => {
                                 this.setOpenProjectHistory(true);
                                 this.setProjectHistory(rowData);
@@ -222,7 +221,7 @@ class Projects extends Component {
 						},
                         {
 							icon: AddIcon,
-							tooltip: 'Add Project Requests',
+							tooltip: 'Go to Project Requests',
 							onClick: (event, rowData) => {
                                 this.setSelectedProjectAddress(rowData.projectAddress);
                                 this.props.history.push(`/projects/${rowData.projectAddress}`);
