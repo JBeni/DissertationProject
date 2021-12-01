@@ -256,6 +256,21 @@ export async function getIpfsFileForRequest(props, _projectAddress) {
     .catch(function (error) {console.error(error);});
 }
 
+export async function getIpfsFileByCID(_ipfsFileCID) {
+    let queryString = '?';
+    queryString = queryString + `hashContains=${_ipfsFileCID}&`;
+    queryString = queryString + `status=pinned&`;
+    const url = `https://api.pinata.cloud/data/pinList${queryString}`;
+    return await axios.get(url, {
+        headers: {
+            pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
+            pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
+        },
+    })
+    .then(function (response) { return response.data; })
+    .catch(function (error) {console.error(error);});
+}
+
 export async function createUniqueProjectRequestAddress(props) {
     let response = await props.project.methods.createUniqueProjectRequestAddress().call()
         .catch(function (error) { console.log(error); });
