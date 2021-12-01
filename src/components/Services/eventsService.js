@@ -111,3 +111,17 @@ export async function getProjectEvents(props, _projectAddress) {
     });
     return data;
 }
+
+export async function checkProjectInEvents(props, _projectAddress) {
+    let events = await props.project.getPastEvents('ProjectEvent', {
+        filter: { _projectAddress: _projectAddress },
+        fromBlock: 0,
+        toBlock: 'latest'
+    });
+
+    events = events.filter((event) => {
+        return event.returnValues._projectAddress === _projectAddress;
+    });
+
+    return events;
+}
