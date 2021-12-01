@@ -15,6 +15,7 @@ import ProjectReqStepper from './ProjectReqStepper';
 import { getAddressZeroValue, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
+import * as eventsService from '../Services/eventsService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -33,10 +34,17 @@ class ProjectRequests extends Component {
 		};
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        // Accessing path without the existence of the project
+        const data = await eventsService.checkProjectInEvents(this.props, this.props.match.params.id);
+        if (data?.length === 0) {
+            this.props.history.push('/projects');
+            return;
+        }
+
         this.getProjectInfo();
         this.getAllProjectRequests();
-        this.getLastProjectRequest(this.props.match.params.id);
+        //this.getLastProjectRequest(this.props.match.params.id);
     }
 
     getLastProjectRequest = async (projectAddress) => {
@@ -87,6 +95,7 @@ class ProjectRequests extends Component {
     getProjectInfo = async () => {
         let data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
         this.setState({ project: data });
+        return data;
     }
 
     getAllProjectRequests = async () => {
@@ -144,7 +153,7 @@ class ProjectRequests extends Component {
             .then((response) => {
                 this.getAllProjectRequests();
                 this.getLastProjectRequest(this.props.match.params.id);
-                toasterService.notifyToastError('Create Project Request operation was made successfully');
+                toasterService.notifyToastSuccess('Create Project Request operation was made successfully');
             })
             .catch((error) => {
                 toasterService.notifyToastError('Create Project Request operation has failed');
