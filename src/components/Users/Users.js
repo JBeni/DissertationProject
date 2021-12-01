@@ -225,36 +225,4 @@ export default class Users extends Component {
 			</div>
 		);
 	}
-
-    async verifySignature(buyerAddress, signature) {
-        // let v = '0x' + signature.slice(130, 132).toString();
-        // let r = signature.slice(0, 66).toString();
-        // let s = '0x' + signature.slice(66, 130).toString();
-        // let messageHash = web3.eth.accounts.hashMessage(address);
-        // let verificationOutput = await supplyChain.methods.verify(buyerAddress, messageHash, v, r, s).call({ from: account });
-        // if (verificationOutput) {
-        //   alert('Buyer is verified successfully!');
-        //   signature = prompt('Enter signature');
-        //   supplyChain.methods.respondToEntity(buyerAddress, account, address, signature).send({ from: account })
-        //   const data = await supplyChain.methods.getUserInfo(account).call();
-        //   const role = data[ 'role' ];
-        //   if (role === "1") {
-        //     const rawMaterial = new web3.eth.Contract(RawMaterial.abi, address);
-        //     rawMaterial.methods.updateManufacturerAddress(buyerAddress).send({ from: account });
-        //     alert('Response sent to manufacturer');
-        //   } else if (role === "3") {
-        //     const medicine = new web3.eth.Contract(Medicine.abi, address);
-        //     medicine.methods.updateWholesalerAddress(buyerAddress).send({ from: account });
-        //     alert('Response sent to wholesaler');
-        //   } else if (role === "4") {
-        //     const medicine = new web3.eth.Contract(Medicine.abi, address);
-        //     medicine.methods.updateDistributorAddress(buyerAddress).send({ from: account });
-        //     alert('Response sent to distributor');
-        //   } else {
-        //     console.log('error');
-        //   }
-        // } else {
-        //   alert('Buyer is not verified!');
-        // }
-    }
 }
