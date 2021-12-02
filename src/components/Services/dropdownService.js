@@ -80,7 +80,7 @@ export const requestTypeDropdown = [
 	{ id: '1', value: 'CompanyReq' },
 ];
 
-export const requestStatusDropdownTwoOptions = [
+export const requestStatusFormDropdown = [
     { id: '1', value: 'Rejected' },
 	{ id: '2', value: 'Approved' },
 ];
