@@ -8,9 +8,6 @@ export default function ProjectHistory(props) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        console.log(projectHistory);
-
-
         if (projectHistory?.length > 0) {
             setLoading(true);
         }
