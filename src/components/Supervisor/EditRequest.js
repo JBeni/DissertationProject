@@ -10,7 +10,7 @@ import {
 	Button,
 } from '@material-ui/core';
 import { initialRequestFormValues, initialRequestFormValidity } from '../Services/formService';
-import { projectStatusDropdown, getProjectStatusByValue, requestStatusDropdownTwoOptions } from '../Services/dropdownService';
+import { projectStatusDropdown, getProjectStatusByValue, requestStatusFormDropdown } from '../Services/dropdownService';
 import { useStylesForm } from './../sharedResources';
 
 export default function EditRequest(props) {
@@ -154,7 +154,7 @@ export default function EditRequest(props) {
 								onChange={handleInputChange}
                                 error={validity.requestStatus}
 							>
-								{requestStatusDropdownTwoOptions.map((item) => (
+								{requestStatusFormDropdown.map((item) => (
                                     <MenuItem key={item.id} value={item.id}>
                                         {item.value}
                                     </MenuItem>
