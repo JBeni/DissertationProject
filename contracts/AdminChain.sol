@@ -14,7 +14,7 @@ contract AdminChain {
         AdminMighty
     }
 
-    constructor() { }
+    constructor() {}
 
     function createtAdmin(string memory _username, uint _role, address _wallet) public returns (string memory) {
         if (adminNumbers == 0) {
