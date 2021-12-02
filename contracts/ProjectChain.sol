@@ -65,7 +65,10 @@ contract ProjectChain is UserChain {
     }
 
     function getAllProjects() public view returns(Project[] memory) {
-        Project[] memory allProjects = new Project[](projectsCounter);
+        Project[] memory allProjects;
+        if (projectsCounter == 0) return allProjects;
+
+        allProjects = new Project[](projectsCounter);
         for (uint index = 0; index < projectsCounter; index++) {
             address _projectAddress = projectsAddress[index];
             Project storage project = projects[_projectAddress];
@@ -228,7 +231,10 @@ contract ProjectChain is UserChain {
     }
 
     function getAllRequests() public view returns(Request[] memory) {
-        Request[] memory allRequests = new Request[](requestsCounter);
+        Request[] memory allRequests;
+        if (requestsCounter == 0) return allRequests;
+
+        allRequests = new Request[](requestsCounter);
         for (uint index = 0; index < requestsCounter; index++) {
             Request storage request = requests[index];
             allRequests[index] = request;
