@@ -1,4 +1,5 @@
 import { getUserRoleById, getProjectStatusById } from '../Services/dropdownService';
+import { getRequestStatusById } from './dropdownService';
 
 
 /** User Events Methods */
@@ -8,6 +9,8 @@ export async function getAllUserEvents(props) {
         fromBlock: 0,
         toBlock: 'latest'
     });
+
+    if (events === undefined || events.length === 0) return [];
 
     let data = [];
     events.map((result) => {
@@ -34,6 +37,8 @@ export async function getUserEvents(props, _userAddress) {
         fromBlock: 0,
         toBlock: 'latest'
     });
+
+    if (events === undefined || events.length === 0) return [];
 
     let data = [];
     let indexLocal = 1;
@@ -65,6 +70,8 @@ export async function getAllProjectEvents(props) {
         toBlock: 'latest'
     });
 
+    if (events === undefined || events.length === 0) return [];
+
     let data = [];
     events.map((result) => {
         let status = getProjectStatusById(result.returnValues._status);
@@ -90,6 +97,8 @@ export async function getProjectEvents(props, _projectAddress) {
         fromBlock: 0,
         toBlock: 'latest'
     });
+
+    if (events === undefined || events.length === 0) return [];
 
     let data = [];
     let indexLocal = 1;
@@ -124,4 +133,37 @@ export async function checkProjectInEvents(props, _projectAddress) {
     });
 
     return events;
+}
+
+export async function getProjectRequestEvents(props, _projectAddress) {
+    let events = await props.project.getPastEvents('ProjectRequestEvent', {
+        filter: { _projectAddress: _projectAddress },
+        fromBlock: 0,
+        toBlock: 'latest'
+    });
+
+    if (events === undefined || events.length === 0) return [];
+
+    let data = [];
+    let indexLocal = 1;
+    events.map((result) => {
+        let projectStatus = getProjectStatusById(result.returnValues._status);
+        let requestStatus = getRequestStatusById(result.returnValues._requestStatus);
+        const project = {
+            index: Number(result.returnValues._index) + indexLocal,
+            title: props.web3.utils.hexToUtf8(result.returnValues._title),
+            ticommentstle: result.returnValues._comments,
+            status: projectStatus.value,
+            requestStatus: requestStatus.value,
+            projectAddress: result.returnValues._projectAddress,
+            requestAddress: result.returnValues.requestAddress,
+            userAddress: result.returnValues._userAddress,
+            timestamp: new Date(result.returnValues._timestamp * 1000).toString(),
+            signature: result.returnValues._signature
+        };
+        data.push(project);
+        indexLocal++;
+        return false;
+    });
+    return data;
 }
