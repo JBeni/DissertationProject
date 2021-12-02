@@ -15,9 +15,10 @@ import * as toasterService from '../Services/toasterService';
 import HistoryIcon from '@mui/icons-material/History';
 import Edit from '@material-ui/icons/Edit';
 import ProjectHistory from './ProjectHistory';
+import ProjectReqHistory from './ProjectReqHistory';
 
 const axios = require('axios');
-const FormData = require('form-data');
+//const FormData = require('form-data');
 
 class Projects extends Component {
 	constructor(props) {
@@ -27,8 +28,10 @@ class Projects extends Component {
             openViewForm: false,
 			recordForEdit: null,
             openProjectHistory: false,
+            openProjectReqHistory: false,
             selectedProjectAddress: '',
             
+            projectReqHistory: [],
             projectHistory: [],
 			projects: [],
         };
@@ -61,6 +64,18 @@ class Projects extends Component {
     setProjectHistory = async (rowData) => {
         const data = await eventsService.getProjectEvents(this.props, rowData.projectAddress);
         this.setState({ projectHistory: data });
+    }
+
+    setOpenProjectReqHistory = (value) => {
+        this.setState({ openProjectReqHistory: value });
+        if (value === false) {
+            this.setState({ projectReqHistory: [] });
+        }
+    }
+
+    setProjectReqHistory = async (rowData) => {
+        const data = await eventsService.getProjectRequestEvents(this.props, rowData.projectAddress);
+        this.setState({ projectReqHistory: data });
     }
 
 	setRecordForEdit = (data) => {
@@ -229,7 +244,7 @@ class Projects extends Component {
 					<DialogTitle>
 						<div style={{ display: 'flex' }}>
 							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-								View User Changes
+								View Project Changes
 							</Typography>
 							<Button color="secondary" onClick={() => {
 									this.setOpenProjectHistory(false);
@@ -239,6 +254,23 @@ class Projects extends Component {
 					</DialogTitle>
 					<DialogContent dividers>
                         <ProjectHistory projectHistory={this.state.projectHistory} />
+                    </DialogContent>
+				</Dialog>
+
+				<Dialog open={this.state.openProjectReqHistory} fullWidth maxWidth="xl">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								View Project Request Changes
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenProjectReqHistory(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers>
+                        <ProjectReqHistory projectReqHistory={this.state.projectReqHistory} />
                     </DialogContent>
 				</Dialog>
 
@@ -257,6 +289,14 @@ class Projects extends Component {
 							onClick: (event, rowData) => {
                                 this.setOpenProjectHistory(true);
                                 this.setProjectHistory(rowData);
+							},
+						},
+						{
+							icon: HistoryIcon,
+							tooltip: 'Project Req History',
+							onClick: (event, rowData) => {
+                                this.setOpenProjectReqHistory(true);
+                                this.setProjectReqHistory(rowData);
 							},
 						},
 						{
