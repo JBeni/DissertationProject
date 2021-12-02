@@ -25,7 +25,6 @@ class ProjectRequests extends Component {
             viewRequestForm: false,
             requestNextStep: true,
             projectCompleted: false,
-
             recordForEdit: null,
             activeStep: -1,
 
@@ -252,7 +251,7 @@ class ProjectRequests extends Component {
 					data={this.state.projectRequests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						{
+                        {
 							icon: Visibility,
 							tooltip: 'View Request',
 							onClick: (event, rowData) => {
