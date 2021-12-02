@@ -6,6 +6,7 @@ import Loader from './components/Views/Loader';
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
 import AdminChain from './abis/AdminChain.json';
+import ServiceChain from './abis/ServiceChain.json';
 
 class App extends Component {
 	constructor() {
@@ -14,6 +15,7 @@ class App extends Component {
 			account: null,
 			project: null,
             adminChain: null,
+            serviceChain: null,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
@@ -66,7 +68,6 @@ class App extends Component {
 				ProjectChain.abi,
 				networkProjectData.address
 			);
-
             this.setState({ project: project });
 		} else {
 			window.alert('Project contract not deployed to detected network.');
@@ -78,10 +79,20 @@ class App extends Component {
                 AdminChain.abi,
                 networkAdminData.address
             );
-
             this.setState({ adminChain: adminChain });
 		} else {
 			window.alert('Owner Chain contract not deployed to detected network.');
+		}
+
+        const networkServiceData = ServiceChain.networks[networkId];
+        if (networkServiceData) {
+            const serviceChain = new web3.eth.Contract(
+                ServiceChain.abi,
+                networkServiceData.address
+            );
+            this.setState({ serviceChain: serviceChain });
+		} else {
+			window.alert('Service Chain contract not deployed to detected network.');
 		}
 
         await this.checkUserRole(accounts[0], this.state.project, this.state.adminChain, web3);
@@ -119,6 +130,7 @@ class App extends Component {
 					<Navbar
 						account={this.state.account}
 						project={this.state.project}
+                        serviceChain={this.state.serviceChain}
                         currentUsername={this.state.currentUsername}
 						web3={this.state.web3}
 					/>
