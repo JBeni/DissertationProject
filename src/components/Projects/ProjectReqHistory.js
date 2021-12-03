@@ -5,14 +5,18 @@ import WaitingLoader from '../Views/WaitingLoader';
 export default function ProjectReqHistory(props) {
 	const { projectReqHistory } = props;
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         if (projectReqHistory?.length > 0) {
             setLoading(true);
+            setMessage('The data is loading. Wait a moment...');
+            return;
         }
+        setMessage('There are no data at the moment...');
     }, [projectReqHistory])
 
-    if (loading === false) return <WaitingLoader />
+    if (loading === false) return <WaitingLoader message={message} />
 
     return (
 		<div className="container-body">
