@@ -9,7 +9,6 @@ export async function getAllUserEvents(props) {
         fromBlock: 0,
         toBlock: 'latest'
     });
-
     if (events === undefined || events.length === 0) return [];
 
     let data = [];
@@ -37,7 +36,6 @@ export async function getUserEvents(props, _userAddress) {
         fromBlock: 0,
         toBlock: 'latest'
     });
-
     if (events === undefined || events.length === 0) return [];
 
     let data = [];
@@ -69,25 +67,26 @@ export async function getAllProjectEvents(props) {
         fromBlock: 0,
         toBlock: 'latest'
     });
-
     if (events === undefined || events.length === 0) return [];
 
     let data = [];
     events.map((result) => {
-        let status = getProjectStatusById(result.returnValues._status);
+        let status = getProjectStatusById(result.returnValues._project._status);
         const project = {
-            index: Number(result.returnValues._index),
-            name: result.returnValues._name,
-            status: status.returnValues.value,
-            ipfsFileCID: result.returnValues._ipfsFileCID,
-            projectAddress: result.returnValues._projectAddress,
-            userAddress: result.returnValues._userAddress,
-            timestamp: new Date(result.returnValues._timestamp * 1000).toString(),
-            signature: result.returnValues._signature
+            index: Number(result.returnValues._project._index),
+            name: result.returnValues._project._name,
+            status: status.value,
+            ipfsFileCID: result.returnValues._project._ipfsFileCID,
+            projectAddress: result.returnValues._project._projectAddress,
+            userAddress: result.returnValues._project._userAddress,
+            timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
+            signature: result.returnValues._project._signature
         };
         data.push(project);
         return false;
     });
+
+    console.log(data);
     return data;
 }
 
@@ -102,16 +101,16 @@ export async function getProjectEvents(props, _projectAddress) {
     let data = [];
     let indexLocal = 1;
     events.map((result) => {
-        let status = getProjectStatusById(result.returnValues._status);
+        let status = getProjectStatusById(result.returnValues._project._status);
         const project = {
-            index: Number(result.returnValues._index) + indexLocal,
-            name: result.returnValues._name,
+            index: Number(result.returnValues._project._index) + indexLocal,
+            name: result.returnValues._project._name,
             status: status.value,
-            ipfsFileCID: result.returnValues._ipfsFileCID,
-            projectAddress: result.returnValues._projectAddress,
-            userAddress: result.returnValues._userAddress,
-            timestamp: new Date(result.returnValues._timestamp * 1000).toString(),
-            signature: result.returnValues._signature
+            ipfsFileCID: result.returnValues._project._ipfsFileCID,
+            projectAddress: result.returnValues._project._projectAddress,
+            userAddress: result.returnValues._project._userAddress,
+            timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
+            signature: result.returnValues._project._signature
         };
         data.push(project);
         indexLocal++;
@@ -140,25 +139,24 @@ export async function getProjectRequestEvents(props, _projectAddress) {
         fromBlock: 0,
         toBlock: 'latest'
     });
-
     if (events === undefined || events.length === 0) return [];
 
     let data = [];
     let indexLocal = 1;
     events.map((result) => {
-        let projectStatus = getProjectStatusById(result.returnValues._status);
-        let requestStatus = getRequestStatusById(result.returnValues._requestStatus);
+        let projectStatus = getProjectStatusById(result.returnValues._project._status);
+        let requestStatus = getRequestStatusById(result.returnValues._project._requestStatus);
         const project = {
-            index: Number(result.returnValues._index) + indexLocal,
-            title: result.returnValues._title,
-            ticommentstle: result.returnValues._comments,
+            index: Number(result.returnValues._project._index) + indexLocal,
+            title: result.returnValues._project._title,
+            ticommentstle: result.returnValues._project._comments,
             status: projectStatus.value,
             requestStatus: requestStatus.value,
-            projectAddress: result.returnValues._projectAddress,
-            requestAddress: result.returnValues.requestAddress,
-            userAddress: result.returnValues._userAddress,
-            timestamp: new Date(result.returnValues._timestamp * 1000).toString(),
-            signature: result.returnValues._signature
+            projectAddress: result.returnValues._project._projectAddress,
+            requestAddress: result.returnValues._project.requestAddress,
+            userAddress: result.returnValues._project._userAddress,
+            timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
+            signature: result.returnValues._project._signature
         };
         data.push(project);
         indexLocal++;
