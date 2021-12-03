@@ -15,8 +15,8 @@ module.exports = async function (deployer, network, accounts) {
         return instance.createtAdmin(username, role, walletAddress);
     });
 
-    await deployer.deploy(ServiceChain);
-    await ServiceChain.deployed().then(function(instance) {
-        return instance.createDropdowns();
-    });
+    //await deployer.deploy(ServiceChain);
+    // await ServiceChain.deployed().then(function(instance) {
+    //     return instance.createDropdowns();
+    // });
 };
