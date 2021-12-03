@@ -70,7 +70,7 @@ class ProjectRequests extends Component {
 
         const unApprovedReqStatus = getDefaultRequestStatus();
         const completedProjectStatus = getCompletedProjectStatus();
-        if (requestStatus.value === unApprovedReqStatus || projectStatus.value === completedProjectStatus) {
+        if (requestStatus.value === unApprovedReqStatus.value || projectStatus.value === completedProjectStatus.value) {
             this.setState({ requestNextStep: false });
         }
         
@@ -145,11 +145,8 @@ class ProjectRequests extends Component {
     }
 
     setActiveStep = (lastRequest) => {
-
-        console.log(lastRequest);
-
         // Status with Approve Consent
-        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 0) {
+        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) < 2) {
             this.setState({ activeStep: Number(lastRequest._status) });
         }
         if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 2) {
