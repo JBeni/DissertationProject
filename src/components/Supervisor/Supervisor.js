@@ -8,10 +8,10 @@ import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import { getSupervisorRequests } from '../Services/applicationService';
 import SinglePagePdf from '../PdfViewer/SinglePagePdf';
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
+import Edit from '@material-ui/icons/Edit';
 
 class Supervisor extends Component {
     constructor(props) {
@@ -167,7 +167,7 @@ class Supervisor extends Component {
                             }
 						},
                         {
-                            icon: GridViewOutlinedIcon,
+                            icon: Edit,
                             tooltip: 'Edit Request',
                             onClick: (event, rowData) => {
                                 this.setEditRequest(true);
