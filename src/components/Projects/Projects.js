@@ -18,7 +18,7 @@ import ProjectHistory from './ProjectHistory';
 import ProjectReqHistory from './ProjectReqHistory';
 
 const axios = require('axios');
-//const FormData = require('form-data');
+const FormData = require('form-data');
 
 class Projects extends Component {
 	constructor(props) {
@@ -104,14 +104,33 @@ class Projects extends Component {
             });
             data.append('pinataMetadata', metadata);
 
+            //pinataOptions are optional
+            const pinataOptions = JSON.stringify({
+                cidVersion: 0,
+                customPinPolicy: {
+                    regions: [
+                        {
+                            id: 'FRA1',
+                            desiredReplicationCount: 1
+                        },
+                        {
+                            id: 'NYC1',
+                            desiredReplicationCount: 2
+                        }
+                    ]
+                }
+            });
+            data.append('pinataOptions', pinataOptions);
+
             return axios.post(url, data, {
                 maxBodyLength: 'Infinity',
                 headers: {
-                    'Content-Type': `multipart/form-data`,
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                     pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
                     pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
                 }
             }).then(function (response) {
+                console.log(response.data);
                 return response.data.IpfsHash;
             }).catch(function (error) {
                 console.error(error);
