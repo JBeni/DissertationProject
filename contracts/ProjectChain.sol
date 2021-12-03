@@ -5,11 +5,7 @@ import "./UserChain.sol";
 import "./SharedChain.sol";
 
 contract ProjectChain is UserChain {
-    bytes32 constant PROJECT_HASH_VALUE = "csS@salas;dlA234_D.;s_as";
-    bytes32 constant REQUEST_HASH_VALUE = "csd?.!?*salas;dlA.;s_as";
-
     address _projectInitiator;
-    uint256 _indexUniqueAddress = 0;
 
     constructor() {
         _projectInitiator = msg.sender;
@@ -19,10 +15,6 @@ contract ProjectChain is UserChain {
         require(
             users[_projectInitiator]._role == Roles.ProjectInitiator,
             "You don't have the rights for this resources."
-        );
-        require(
-            _projectInitiator == msg.sender,
-            "You are not a project initiator"
         );
         _;
     }
@@ -34,31 +26,8 @@ contract ProjectChain is UserChain {
     address[] public projectsAddress;
 
     function createUniqueProjectAddress(string memory _name, uint _index) public view returns (address) {
-        return
-            address(
-                uint160(
-                    uint256(
-                        keccak256(
-                            abi.encodePacked(
-                                _name,
-                                _projectInitiator,
-                                _index
-                            )
-                        )
-                    )
-                )
-            );
+        return address(uint160(uint256(keccak256(abi.encodePacked(_name,_projectInitiator,_index)))));
     }
-
-
-    function hash(
-        string memory _text,
-        uint _num,
-        address _addr
-    ) public pure returns (bytes32) {
-        return keccak256(abi.encodePacked(_text, _num, _addr));
-    }
-
 
     function createProject(
         address _projectAddress,
@@ -78,16 +47,7 @@ contract ProjectChain is UserChain {
             _signature
         );
 
-        emit ProjectEvent(
-            projectsCounter,
-            _name,
-            ProjectStatus(_status),
-            _ipfsFileCID,
-            _projectAddress,
-            _projectInitiator,
-            block.timestamp,
-            _signature
-        );
+        emit ProjectEvent(projects[_projectAddress]);
         projectsAddress.push(_projectAddress);
         projectsCounter++;
     }
@@ -100,16 +60,7 @@ contract ProjectChain is UserChain {
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._signature = _signature;
 
-        emit ProjectEvent(
-            projects[_projectAddress]._index,
-            projects[_projectAddress]._name,
-            projects[_projectAddress]._status,
-            projects[_projectAddress]._ipfsFileCID,
-            projects[_projectAddress]._projectAddress,
-            _projectInitiator,
-            block.timestamp,
-            projects[_projectAddress]._signature
-        );
+        emit ProjectEvent(projects[_projectAddress]);
     }
 
     function getProjectInfo(address _address)
@@ -139,21 +90,8 @@ contract ProjectChain is UserChain {
     uint256 public projectRequestsCounter = 0;
     address[] public projectRequestsAddress;
 
-    function createUniqueProjectRequestAddress(bytes32 _title, uint _index) public view returns (address) {
-        return
-            address(
-                uint160(
-                    uint256(
-                        keccak256(
-                            abi.encodePacked(
-                                _title,
-                                _projectInitiator,
-                                _index
-                            )
-                        )
-                    )
-                )
-            );
+    function createUniqueProjectRequestAddress(string memory _title, uint _index) public view returns (address) {
+        return address(uint160(uint256(keccak256(abi.encodePacked(_title, _projectInitiator, _index)))));
     }
 
     function createProjectRequest(
@@ -186,18 +124,7 @@ contract ProjectChain is UserChain {
             _projectReqAddress
         );
 
-        emit ProjectRequestEvent(
-            projectRequestsCounter,
-            _title,
-            "",
-            ProjectStatus(_status),
-            RequestStatus(_requestStatus),
-            _projectAddress,
-            _projectInitiator,
-            _projectReqAddress,
-            block.timestamp,
-            _signature
-        );
+        emit ProjectRequestEvent(projectRequests[projectRequestsCounter]);
         projectRequestsAddress.push(_projectReqAddress);
         projectRequestsCounter++;
     }
@@ -281,11 +208,11 @@ contract ProjectChain is UserChain {
         return request;
     }
 
+
     /**  DATA FOR SUPERVISOR && COMPANY  */
 
     mapping(uint256 => Request) public requests;
     uint256 public requestsCounter = 0;
-    address[] public requestsAddress;
 
     function createRequest(
         uint256 _indexProjectRequest,
@@ -310,20 +237,7 @@ contract ProjectChain is UserChain {
             ""
         );
 
-        emit RequestEvent(
-            requestsCounter,
-            _indexProjectRequest,
-            _title,
-            RequestStatus(_requestStatus),
-            ProjectStatus(_projectStatus),
-            _requestType,
-            _projectAddress,
-            _projectInitiator,
-            _requestAddress,
-            block.timestamp,
-            ""
-        );
-        requestsAddress.push(_requestAddress);
+        emit RequestEvent(requests[requestsCounter]);
         requestsCounter++;
     }
 
@@ -340,22 +254,22 @@ contract ProjectChain is UserChain {
         requests[_index]._requestStatus = RequestStatus(_requestStatus);
         requests[_index]._signature = _signature;
 
-        //uint index = requests[_index]._index;
-        //allRequests[index]._requestStatus = RequestStatus(_requestStatus);
-        //allRequests[index]._signature = _signature;
+        emit RequestEvent(requests[_index]);
+
 
         // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
-        projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(
-            _requestStatus
-        );
+        projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
+        projectRequests[_indexProjectRequest]._signature = _signature;
+
+        emit ProjectRequestEvent(projectRequests[_indexProjectRequest]);
 
         // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
 
-        // !!!!! OBSERVATION
-        //emit changes for both project request mapping and request mapping
+        emit ProjectEvent(projects[_projectAddress]);
     }
+
 
     function getAllRequests() public view returns (Request[] memory) {
         Request[] memory allRequests;

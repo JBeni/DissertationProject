@@ -50,14 +50,7 @@ contract SharedChain {
         string _signature;
     }
     event ProjectEvent(
-        uint _index,
-        string _name,
-        ProjectStatus _status,
-        string _ipfsFileCID,
-        address _projectAddress,
-        address _userAddress,
-        uint _timestamp,
-        string _signature
+        Project indexed _project
     );
 
     struct ProjectRequest {
@@ -73,18 +66,8 @@ contract SharedChain {
         string _signature;
     }
     event ProjectRequestEvent(
-        uint _index,
-        string _title,
-        string _comments,
-        ProjectStatus _status,
-        RequestStatus _requestStatus,
-        address _projectAddress,
-        address _userAddress,
-        address _requestAddress,
-        uint _timestamp,
-        string _signature
+        ProjectRequest indexed _projectRequest
     );
-
 
     /******** Supervisor and Company Data */
     struct Request {
@@ -101,16 +84,6 @@ contract SharedChain {
         string _signature;
     }
     event RequestEvent(
-        uint _index,
-        uint _indexProjectRequest,
-        string _title,
-        RequestStatus _status,
-        ProjectStatus _projectStatus,
-        RequestType _requestType,
-        address _projectAddress,
-        address _userAddress,
-        address _requestAddress,
-        uint _timestamp,
-        string _signature
+        Request indexed _request
     );
 }
