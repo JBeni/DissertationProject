@@ -55,7 +55,7 @@ export async function getAllProjects(props) {
             let status = getProjectStatusById(result._status);
             const project = {
                 index: Number(result._index),
-                name: props.web3.utils.hexToUtf8(result._name),
+                name: result._name,
                 status: status.value,
                 ipfsFileCID: result._ipfsFileCID,
                 projectAddress: result._projectAddress,
@@ -74,7 +74,7 @@ export async function getProjectInfo(props, projectAddress) {
         let status = getProjectStatusById(result._status);
         const project = {
             index: Number(result._index),
-            name: props.web3.utils.hexToUtf8(result._name),
+            name: result._name,
             status: status.value,
             ipfsFileCID: result._ipfsFileCID,
             projectAddress: result._projectAddress,
@@ -97,7 +97,7 @@ export async function getAllProjectRequests(props, projectAddress) {
             let requestStatus = getRequestStatusById(result._requestStatus);
             const project = {
                 index: Number(result._index),
-                title: props.web3.utils.hexToUtf8(result._title),
+                title: result._title,
                 comments: result._comments,
                 status: status.value,
                 requestStatus: requestStatus.value,
@@ -132,7 +132,7 @@ export async function getSupervisorRequests(props) {
                 let projectStatus = getProjectStatusById(result._projectStatus);
                 const project = {
                     index: Number(result._index),
-                    title: props.web3.utils.hexToUtf8(result._title),
+                    title: result._title,
                     comments: result._comments,
                     projectStatus: projectStatus.value,
                     requestStatus: requestStatus.value,
@@ -167,7 +167,7 @@ export async function getCompanyRequests(props) {
                 let projectStatus = getProjectStatusById(result._projectStatus);
                 const project = {
                     index: Number(result._index),
-                    title: props.web3.utils.hexToUtf8(result._title),
+                    title: result._title,
                     comments: result._comments,
                     projectStatus: projectStatus.value,
                     requestStatus: requestStatus.value,
@@ -253,14 +253,14 @@ export async function getIpfsFileByCID(_ipfsFileCID) {
     .catch(function (error) {console.error(error);});
 }
 
-export async function createUniqueProjectRequestAddress(props) {
-    let response = await props.project.methods.createUniqueProjectRequestAddress().call()
+export async function createUniqueProjectRequestAddress(props, _title, _index) {
+    let response = await props.project.methods.createUniqueProjectRequestAddress(_title, _index).call()
         .catch(function (error) {});
     return response;
 }
 
-export async function createUniqueProjectAddress(props) {
-    let response = await props.project.methods.createUniqueProjectAddress().call()
+export async function createUniqueProjectAddress(props, _name, _index) {
+    let response = await props.project.methods.createUniqueProjectAddress(_name, _index).call()
         .catch(function (error) {});
     return response;
 }
