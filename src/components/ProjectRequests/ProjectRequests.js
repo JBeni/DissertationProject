@@ -142,22 +142,12 @@ class ProjectRequests extends Component {
             this.setState({ currentStep: 'Project Completed', nextStep: 'All steps completed.' });
             return;
         }
-
-        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ activeStep: Number(lastRequest._status) });
-        }
-
-        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ activeStep: Number(lastRequest._status) + 1 });
-        }
-        // Last Project Status
-        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ activeStep: Number(lastRequest._status) + 1 });
-            this.setState({ projectCompleted: true })
-        }
     }
 
     setActiveStep = (lastRequest) => {
+
+        console.log(lastRequest);
+
         // Status with Approve Consent
         if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 0) {
             this.setState({ activeStep: Number(lastRequest._status) });
