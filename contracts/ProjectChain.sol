@@ -94,6 +94,11 @@ contract ProjectChain is UserChain {
         return address(uint160(uint256(keccak256(abi.encodePacked(_title, _projectInitiator, _index)))));
     }
 
+
+
+/*
+
+
     function createProjectRequest(
         string memory _title,
         uint256 _status,
@@ -169,7 +174,7 @@ contract ProjectChain is UserChain {
         if (projectRequestsCounter == 0) return allProjectRequests;
 
         allProjectRequests = new ProjectRequest[](projectRequestsCounter);
-        for (uint256 index = 0; index < projectsCounter; index++) {
+        for (uint256 index = 0; index < projectRequestsCounter; index++) {
             ProjectRequest storage projectReq = projectRequests[index];
             allProjectRequests[index] = projectReq;
         }
@@ -209,7 +214,13 @@ contract ProjectChain is UserChain {
     }
 
 
+
+*/
+
+
     /**  DATA FOR SUPERVISOR && COMPANY  */
+
+/*
 
     mapping(uint256 => Request) public requests;
     uint256 public requestsCounter = 0;
@@ -256,7 +267,6 @@ contract ProjectChain is UserChain {
 
         emit RequestEvent(requests[_index]);
 
-
         // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
         projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
@@ -265,11 +275,11 @@ contract ProjectChain is UserChain {
         emit ProjectRequestEvent(projectRequests[_indexProjectRequest], _projectAddress);
 
         // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
+        if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
-
         emit ProjectEvent(projects[_projectAddress], _projectAddress);
+        }
     }
-
 
     function getAllRequests() public view returns (Request[] memory) {
         Request[] memory allRequests;
@@ -282,4 +292,89 @@ contract ProjectChain is UserChain {
         }
         return allRequests;
     }
+
+*/
+
+
+    function verifyTest(address p, bytes32 hash, uint8 v, bytes32 r, bytes32 s) external pure returns(bool) {
+        return ecrecover(hash, v, r, s) == p;
+    }
+
+    // verify signature verifica daca mesajul semnat cu cheia privata apartinei contului cu adresa publica care trebuia sa semneze tranzactia
+    // the buyer address din examplul ala e adresa walletul;ui care a initiat tranzactia
+    function test(address p, bytes32 hash, uint8 v, bytes32 r, bytes32 s) external pure returns(address) {
+        return ecrecover(hash, v, r, s);
+    }
+
+
+
+    function getMessageHash(
+        address _projectAddress
+    ) public pure returns (bytes32) {
+        return keccak256(abi.encodePacked(_projectAddress));
+    }
+
+    function getEthSignedMessageHash(bytes32 _messageHash)
+        public
+        pure
+        returns (bytes32)
+    {
+        return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", _messageHash));
+    }
+
+    function verify(
+        address _projectAddress,
+        string memory signature
+    ) public pure returns (bool) {
+        bytes32 messageHash = getMessageHash(_projectAddress);
+        bytes32 ethSignedMessageHash = getEthSignedMessageHash(messageHash);
+
+        return recoverSigner(ethSignedMessageHash, signature) == _projectAddress;
+    }
+
+    function recoverSigner(bytes32 _ethSignedMessageHash, string memory _signature)
+        public
+        pure
+        returns (address)
+    {
+        (bytes32 r, bytes32 s, uint8 v) = splitSignature(_signature);
+
+        return ecrecover(_ethSignedMessageHash, v, r, s);
+    }
+
+    function splitSignature(string memory sig)
+        public
+        pure
+        returns (
+            bytes32 r,
+            bytes32 s,
+            uint8 v
+        )
+    {
+        require(bytes(sig).length == 65, "invalid signature length");
+
+        assembly {
+            /*
+            First 32 bytes stores the length of the signature
+
+            add(sig, 32) = pointer of sig + 32
+            effectively, skips first 32 bytes of signature
+
+            mload(p) loads next 32 bytes starting at the memory address p into memory
+            */
+
+            // first 32 bytes, after the length prefix
+            r := mload(add(sig, 32))
+            // second 32 bytes
+            s := mload(add(sig, 64))
+            // final byte (first byte of the next 32 bytes)
+            v := byte(0, mload(add(sig, 96)))
+        }
+
+        // implicitly return (r, s, v)
+    }
+
+
+
+
 }
