@@ -29,7 +29,7 @@ export default function AddProjectForm(props) {
             let newData = {
                 name: recordForEdit.name,
                 status: status.id,
-                'file': { name: '', type: '', sizeBytes: '', lastModifiedDate: '' },
+                'file': { name: '', type: '', size: '', lastModifiedDate: '' },
                 projectAddress: recordForEdit.projectAddress
             };
             setValues({
@@ -59,14 +59,14 @@ export default function AddProjectForm(props) {
 			'file': {
                 name: event.target.files[0].name,
                 type: event.target.files[0].type,
-                sizeBytes: event.target.files[0].size,
+                size: event.target.files[0].size,
                 lastModifiedDate: event.target.files[0].lastModifiedDate
             }
 		});
         validate({ 'file': {
             name: event.target.files[0].name,
             type: event.target.files[0].type,
-            sizeBytes: event.target.files[0].sizeBytes,
+            size: event.target.files[0].size,
             lastModifiedDate: event.target.files[0].lastModifiedDate
         }});
     }
@@ -75,7 +75,7 @@ export default function AddProjectForm(props) {
 		setValues(initialProjectFormValues);
 		setValues({
 			...values,
-			'file': { name: '', type: '', sizeBytes: '', lastModifiedDate: '' }
+			'file': { name: '', type: '', size: '', lastModifiedDate: '' }
 		});
 		setErrors({});
         setValidity(initialProjectFormValidity);
