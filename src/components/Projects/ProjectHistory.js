@@ -5,17 +5,17 @@ import WaitingLoader from '../Views/WaitingLoader';
 export default function ProjectHistory(props) {
 	const { projectHistory } = props;
 
-    const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        if (projectHistory?.length > 0) {
-            setLoading(true);
-        }
-    }, [projectHistory])
+	useEffect(() => {
+		if (projectHistory?.length > 0) {
+			setLoading(true);
+		}
+	}, [projectHistory]);
 
-    if (loading === false) return <WaitingLoader />
+	if (loading === false) return <WaitingLoader />;
 
-    return (
+	return (
 		<div className="container-body">
 			<table>
 				<thead>
@@ -27,24 +27,24 @@ export default function ProjectHistory(props) {
 						<th>User Address</th>
 						<th>Timestamp</th>
 						<th>Signature</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-                    {
-                        projectHistory.map((item) => (
-                            <tr key={ item.index }>
-                                <td>{ item.name }</td>
-                                <td>{ item.status }</td>
-                                <td>{ item.ipfsFileCID }</td>
-                                <td>{ item.projectAddress }</td>
-                                <td>{ item.userAddress }</td>
-                                <td>{ item.timestamp }</td>
-                                <td>{ item.signature }</td>
-                            </tr>
-                        ))
-                    }
+					{projectHistory.map((item) => (
+						<tr key={item.index}>
+							<td>{item.name}</td>
+							<td>{item.status}</td>
+							<td>{item.ipfsFileCID}</td>
+							<td>{item.projectAddress}</td>
+							<td>{item.userAddress}</td>
+							<td>{item.timestamp}</td>
+							<td>{item.signature}</td>
+							<td>Verify Signature</td>
+						</tr>
+					))}
 				</tbody>
 			</table>
 		</div>
 	);
-};
+}
