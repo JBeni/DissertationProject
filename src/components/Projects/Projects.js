@@ -18,7 +18,6 @@ import ProjectHistory from './ProjectHistory';
 import ProjectReqHistory from './ProjectReqHistory';
 
 const axios = require('axios');
-const FormData = require('form-data');
 
 class Projects extends Component {
 	constructor(props) {
@@ -86,27 +85,18 @@ class Projects extends Component {
         this.setState({ selectedProjectAddress: value });
     }
 
-    uploadFileToPinata = (file) => {
-
-        console.log(file);
-
-
-        debugger
+    uploadFileToPinata = async (file) => {
         if (file.name?.length > 0) {
             const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-            let data = new FormData();
+            const data = new FormData();
 
-            // let fileBlob = new Blob([file], {
-            //     type: 'application/json',
-            // });
+            let blob = new Blob([file], { type: file.type });
 
-            let fileBlob = new Blob([file]);
-
-            data.append('file',  fileBlob, file.name);
+            data.append('file', blob, file.name);
             const metadata = JSON.stringify({
                 name: file.name,
                 type: file.type,
-                sizeBytes: file.size,
+                size: file.size,
                 lastModifiedDate: file.lastModifiedDate
             });
             data.append('pinataMetadata', metadata);
@@ -114,14 +104,12 @@ class Projects extends Component {
             return axios.post(url, data, {
                 maxBodyLength: 'Infinity',
                 headers: {
-                    'Content-Type': `multipart/form-data`,
+                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
                     pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
                     pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
                 }
             }).then(function (response) {
-                console.log(response.data);
                 return response.data.IpfsHash;
-            }).catch(function (error) {
             });
         }
     }
@@ -162,7 +150,7 @@ class Projects extends Component {
     }
 
     createProject = async (_name, _status, _fileData) => {
-        let _ipfsCID //= await Promise.resolve(this.uploadFileToPinata(_fileData));
+        let _ipfsCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         const projectAddress = await this.createUniqueProjectAddress();
         const signatureData = this.signCreateProject(projectAddress);
 
