@@ -199,8 +199,6 @@ class ProjectRequests extends Component {
     }
 
 	setRecordForEdit = (data) => {
-        console.log(data);
-
         this.setState({ recordForEdit: data });
 	}
 
