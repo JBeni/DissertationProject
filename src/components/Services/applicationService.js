@@ -201,7 +201,7 @@ export async function getAllRequests(props) {
             let projectStatus = getProjectStatusById(result._projectStatus);
             const project = {
                 index: Number(result._index),
-                title: props.web3.utils.hexToUtf8(result._title),
+                title: result._title,
                 comments: result._comments,
                 projectStatus: projectStatus.value,
                 requestStatus: requestStatus.value,
@@ -235,7 +235,7 @@ export async function getIpfsFileForRequest(props, _projectAddress) {
         },
     })
     .then(function (response) {})
-    .catch(function (error) {console.error(error);});
+    .catch(function (error) {});
 }
 
 export async function getIpfsFileByCID(_ipfsFileCID) {
@@ -250,7 +250,7 @@ export async function getIpfsFileByCID(_ipfsFileCID) {
         },
     })
     .then(function (response) { return response.data; })
-    .catch(function (error) {console.error(error);});
+    .catch(function (error) {});
 }
 
 export async function createUniqueProjectRequestAddress(props, _title, _index) {
