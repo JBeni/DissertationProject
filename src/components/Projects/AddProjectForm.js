@@ -75,6 +75,7 @@ export default function AddProjectForm(props) {
 		setValues(initialProjectFormValues);
 		setValues({
 			...values,
+            name: '',
 			'file': { name: '', type: '', size: '', lastModifiedDate: '' }
 		});
 		setErrors({});
