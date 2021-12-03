@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Remove env file
 .env
+
+./package-lock.json
+package-lock.json
