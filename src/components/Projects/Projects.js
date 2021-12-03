@@ -128,8 +128,8 @@ class Projects extends Component {
         this.setRecordForEdit(null);
     }
 
-    createUniqueProjectAddress = async () => {
-        const data = await Promise.resolve(applicationService.createUniqueProjectAddress(this.props));
+    createUniqueProjectAddress = async (_name, _index) => {
+        const data = await Promise.resolve(applicationService.createUniqueProjectAddress(this.props, _name, _index));
         return data;
     }
 
@@ -151,14 +151,14 @@ class Projects extends Component {
 
     createProject = async (_name, _status, _fileData) => {
         let _ipfsCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
-        const projectAddress = await this.createUniqueProjectAddress();
+        const projectAddress = await this.createUniqueProjectAddress(_name, new Date().getTime());
         const signatureData = this.signCreateProject(projectAddress);
 
         if (signatureData !== null) {
             await this.props.project.methods
                 .createProject(
                     projectAddress,
-                    this.props.web3.utils.utf8ToHex(_name),
+                    _name,
                     Number(_status),
                     _ipfsCID,
                     signatureData.signature
