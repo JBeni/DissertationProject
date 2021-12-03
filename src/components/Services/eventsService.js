@@ -77,7 +77,7 @@ export async function getAllProjectEvents(props) {
         let status = getProjectStatusById(result.returnValues._status);
         const project = {
             index: Number(result.returnValues._index),
-            name: props.web3.utils.hexToUtf8(result.returnValues._name),
+            name: result.returnValues._name,
             status: status.returnValues.value,
             ipfsFileCID: result.returnValues._ipfsFileCID,
             projectAddress: result.returnValues._projectAddress,
@@ -97,7 +97,6 @@ export async function getProjectEvents(props, _projectAddress) {
         fromBlock: 0,
         toBlock: 'latest'
     });
-
     if (events === undefined || events.length === 0) return [];
 
     let data = [];
@@ -106,7 +105,7 @@ export async function getProjectEvents(props, _projectAddress) {
         let status = getProjectStatusById(result.returnValues._status);
         const project = {
             index: Number(result.returnValues._index) + indexLocal,
-            name: props.web3.utils.hexToUtf8(result.returnValues._name),
+            name: result.returnValues._name,
             status: status.value,
             ipfsFileCID: result.returnValues._ipfsFileCID,
             projectAddress: result.returnValues._projectAddress,
@@ -151,7 +150,7 @@ export async function getProjectRequestEvents(props, _projectAddress) {
         let requestStatus = getRequestStatusById(result.returnValues._requestStatus);
         const project = {
             index: Number(result.returnValues._index) + indexLocal,
-            title: props.web3.utils.hexToUtf8(result.returnValues._title),
+            title: result.returnValues._title,
             ticommentstle: result.returnValues._comments,
             status: projectStatus.value,
             requestStatus: requestStatus.value,
