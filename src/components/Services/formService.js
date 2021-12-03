@@ -61,7 +61,7 @@ export const initialProjectFormValues = {
     file: {
         name: '',
         type: '',
-        sizeBytes: '',
+        size: '',
         lastModifiedDate: ''
     },
     ipfsFileCID: '',
