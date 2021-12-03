@@ -170,6 +170,32 @@ class Projects extends Component {
                 .catch((error) => {
                     toasterService.notifyToastError('Create Project operation has failed');
                 });
+
+
+            let v = '0x' + signatureData.signature.slice(130, 132).toString();
+            let r = signatureData.signature.slice(0, 66).toString();
+            let s = '0x' + signatureData.signature.slice(66, 130).toString();
+
+            let messageHash = this.props.web3.eth.accounts.hashMessage(projectAddress);
+
+            console.log(signatureData);
+            console.log(messageHash);
+
+            console.log('distantare intre valori');
+
+            console.log(projectAddress, messageHash, v, r, s);
+
+            let verificationOutput = await this.props.project.methods
+                .verifyTest(projectAddress, messageHash, v, r, s)
+                .call({ from: this.props.account });
+            console.log(verificationOutput);
+
+            let verification = await this.props.project.methods
+                .test(projectAddress, messageHash, v, r, s)
+                .call({ from: this.props.account });
+            console.log(verification);
+
+
         }
 	}
 
