@@ -7,7 +7,7 @@ import { useStylesCustomStepper } from '../sharedResources';
 
 export default function ProjectReqStepper(props) {
     const classes = useStylesCustomStepper();
-    const content = props.getStepContent(props.activeStep);
+    const { currentStep, nextStep } = props;
 
     useEffect(() => {
     }, []);
@@ -25,7 +25,9 @@ export default function ProjectReqStepper(props) {
                 ))}
             </Stepper>
             <div style={{ marginLeft: '100px' }}>
-                <Typography className={classes.instructions}>Curent: {content}</Typography>
+                <Typography className={classes.instructions}>Curent Step: {currentStep}</Typography>
+                <br/>
+                <Typography className={classes.instructions}>Next Step: {nextStep}</Typography>
             </div>
         </div>
     );

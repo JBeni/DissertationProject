@@ -28,6 +28,9 @@ class ProjectRequests extends Component {
             recordForEdit: null,
             activeStep: -1,
 
+            currentStep: '',
+            nextStep: '',
+
             project: { index: -1, name: '', status: '', ipfsFileCID: '', projectAddress: '', userAddress: '' },
             projectRequests: [],
 		};
@@ -43,22 +46,23 @@ class ProjectRequests extends Component {
 
         this.getProjectInfo();
         this.getAllProjectRequests();
-        //this.getLastProjectRequest(this.props.match.params.id);
+        this.getLastProjectRequest(this.props.match.params.id);
     }
 
     getLastProjectRequest = async (projectAddress) => {
         const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
             .then((result) => { return result; });
-        
+
         const addressZero = getAddressZeroValue();
         /**
-         * If at this time we don't have not a single request the method will
+         * If at this time we don't have a request the method will
          * RETURN an array with an item initialized with default data
          */
         if (lastRequest._projectAddress === addressZero) {
-            // This mean Project is Created
+            // Project was Created
             const defProjectStatus = getDefaultProjectStatus();
             this.setState({ activeStep: Number(defProjectStatus.id) + 1 });
+            this.setState({ currentStep: 'Project created', nextStep: 'Send approve request to Supervisor' });
             return;
         }
         const requestStatus = getRequestStatusById(lastRequest._requestStatus);
@@ -69,14 +73,91 @@ class ProjectRequests extends Component {
         if (requestStatus.value === unApprovedReqStatus || projectStatus.value === completedProjectStatus) {
             this.setState({ requestNextStep: false });
         }
+        
         this.setActiveStep(lastRequest);
+        this.setMessageNextStep(lastRequest);
+    }
+
+    setMessageNextStep = (lastRequest) => {
+        // Approve Request was Sent
+        if (Number(lastRequest._status) === 1 && Number(lastRequest._requestStatus) === 0) {
+            this.setState({ currentStep: 'Approve Request was Sent', nextStep: 'Wait for Supervisor response' });
+            return;
+        }
+        // Approve Request was Rejected
+        if (Number(lastRequest._status) === 1 && Number(lastRequest._requestStatus) === 1) {
+            this.setState({ currentStep: 'Approve Request was Rejected', nextStep: 'See the reason and make the adjustment' });
+            return;
+        }
+        // Approve Request was Approved
+        if (Number(lastRequest._status) === 1 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ currentStep: 'Approve Request was Approved', nextStep: 'Send start project request to company.' });
+            return;
+        }
+
+        // StartProject Request was Sent
+        if (Number(lastRequest._status) === 2 && Number(lastRequest._requestStatus) === 0) {
+            this.setState({ currentStep: 'StartProject Request was Sent', nextStep: 'Wait for Company response' });
+            return;
+        }
+        // StartProject Request was Rejected
+        if (Number(lastRequest._status) === 2 && Number(lastRequest._requestStatus) === 1) {
+            this.setState({ currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' });
+            return;
+        }
+        // StartProject Request was Approved
+        if (Number(lastRequest._status) === 2 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ currentStep: 'StartProject Request was Approved', nextStep: 'Send check the progress before finalization request to Supervisor' });
+            return;
+        }
+
+        // FinalizationCheck Request was Sent
+        if (Number(lastRequest._status) === 3 && Number(lastRequest._requestStatus) === 0) {
+            this.setState({ currentStep: 'FinalizationCheck Request was Sent', nextStep: 'Wait for Supervisor response' });
+            return;
+        }
+        // FinalizationCheck Request was Rejected
+        if (Number(lastRequest._status) === 3 && Number(lastRequest._requestStatus) === 1) {
+            this.setState({ currentStep: 'FinalizationCheck Request was Rejected', nextStep: 'See the reason and make the adjustment' });
+            return;
+        }
+        // FinalizationCheck Request was Approved
+        if (Number(lastRequest._status) === 3 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ currentStep: 'FinalizationCheck Request was Approved', nextStep: 'Send completed project request to Supervisor' });
+            return;
+        }
+
+        // Completed Request was Sent
+        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 0) {
+            this.setState({ currentStep: 'Completed Request was Sent', nextStep: 'Wait for Supervisor response' });
+            return;
+        }
+        // Completed Request was Rejected
+        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 1) {
+            this.setState({ currentStep: 'Completed Request was Rejected', nextStep: 'See the reason and make the adjustment' });
+            return;
+        }
+        // Completed Request was Approved
+        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ currentStep: 'Project Completed', nextStep: 'All steps completed.' });
+            return;
+        }
+
+        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 0) {
+            this.setState({ activeStep: Number(lastRequest._status) });
+        }
+
+        if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ activeStep: Number(lastRequest._status) + 1 });
+        }
+        // Last Project Status
+        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 2) {
+            this.setState({ activeStep: Number(lastRequest._status) + 1 });
+            this.setState({ projectCompleted: true })
+        }
     }
 
     setActiveStep = (lastRequest) => {
-        if (Number(lastRequest._status) === 0) {
-            // This mean Project is Created
-            this.setState({ activeStep: Number(lastRequest._status) + 1 });
-        }
         // Status with Approve Consent
         if (Number(lastRequest._status) > 0 && Number(lastRequest._requestStatus) === 0) {
             this.setState({ activeStep: Number(lastRequest._status) });
@@ -91,10 +172,13 @@ class ProjectRequests extends Component {
         }
     }
 
+    getProjectStatusSteps() {
+        return [ 'Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
+    }
+
     getProjectInfo = async () => {
         let data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
         this.setState({ project: data });
-        return data;
     }
 
     getAllProjectRequests = async () => {
@@ -115,7 +199,9 @@ class ProjectRequests extends Component {
     }
 
 	setRecordForEdit = (data) => {
-		this.setState({ recordForEdit: data });
+        console.log(data);
+
+        this.setState({ recordForEdit: data });
 	}
 
     addOrEdit = async (data, resetForm) => {
@@ -145,20 +231,20 @@ class ProjectRequests extends Component {
         }
     }
 
-    createUniqueProjectReqAddress = async () => {
-        const data = await Promise.resolve(applicationService.createUniqueProjectRequestAddress(this.props));
+    createUniqueProjectReqAddress = async (_title, _index) => {
+        const data = await Promise.resolve(applicationService.createUniqueProjectRequestAddress(this.props, _title, _index));
         return data;
     }
 
     createProjectRequest = async (_title, _status, _requestStatus, _projectAddress) => {
-        const projectReqAddress = await this.createUniqueProjectReqAddress();
+        const projectReqAddress = await this.createUniqueProjectReqAddress(_title, new Date().getTime());
         const signatureData = this.signProjectRequest(projectReqAddress);
 
         if (signatureData !== null) {
             await this.props.project.methods
                 .createProjectRequest(
-                    this.props.web3.utils.utf8ToHex(_title),
-                    Number(_status), Number(_requestStatus), _projectAddress,
+                    _title, Number(_status),
+                    Number(_requestStatus), _projectAddress,
                     projectReqAddress, signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
@@ -172,30 +258,7 @@ class ProjectRequests extends Component {
         }
     }
 
-    getProjectStatusSteps() {
-        return ['Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
-    }
-
-    getProjectStatusStepContent(stepIndex) {
-        switch (stepIndex) {
-            case 0:
-                return 'Medicine at manufacturing stage in the supply chain.';
-            case 1:
-                return 'Medicine collected by the Transporter is on its way to you.';
-            case 2:
-                return 'Wholesaler, the medicine is currently with you!';
-            case 3:
-                return 'Medicine is collected by the Transporter! On its way to the Distributor.';
-            case 4:
-                return 'Medicine is delivered to the Distributor';
-            case 5:
-                return 'Medicine is delivered to the Distributor';
-            default:
-                return 'Unknown stepIndex';
-        }
-    }
-
-	render() {
+    render() {
 		const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Title', field: 'title' },
@@ -279,7 +342,8 @@ class ProjectRequests extends Component {
                 <ProjectReqStepper
                     getSteps={this.getProjectStatusSteps}
                     activeStep={Number(this.state.activeStep)}
-                    getStepContent={this.getProjectStatusStepContent}
+                    currentStep={this.state.currentStep}
+                    nextStep={this.state.nextStep}
                 />
 
                 <Toaster position="bottom-center" reverseOrder={false} />
