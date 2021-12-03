@@ -28,9 +28,7 @@ export async function getAllUsers(props) {
             dataArray.push(user);
             return false;
         });
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
     return dataArray;
 }
 
@@ -47,9 +45,7 @@ export async function getUserInfo(props) {
             timestamp: result._timestamp
         };
         return user;
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 }
 
 export async function getAllProjects(props) {
@@ -69,9 +65,7 @@ export async function getAllProjects(props) {
             dataArray.push(project);
             return false;
         });
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
     return dataArray;
 }
 
@@ -88,17 +82,13 @@ export async function getProjectInfo(props, projectAddress) {
             timestamp: result._timestamp
         };
         return project;
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 }
 
 export async function getAllProjectRequests(props, projectAddress) {
     let allProjectRequest = await props.project.methods.getAllProjectRequests().call().then((result) => {
         return result;
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 
     let dataArray = [];
     allProjectRequest.map((result) => {
@@ -129,9 +119,7 @@ export async function getAllProjectRequests(props, projectAddress) {
 export async function getSupervisorRequests(props) {
     let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -166,9 +154,7 @@ export async function getSupervisorRequests(props) {
 export async function getCompanyRequests(props) {
     let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -203,9 +189,7 @@ export async function getCompanyRequests(props) {
 export async function getAllRequests(props) {
     let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
-    }).catch(function (error) {
-        console.log(error);
-    });
+    }).catch(function (error) {});
 
     let data = [];
     allRequests.map((result) => {
@@ -271,12 +255,12 @@ export async function getIpfsFileByCID(_ipfsFileCID) {
 
 export async function createUniqueProjectRequestAddress(props) {
     let response = await props.project.methods.createUniqueProjectRequestAddress().call()
-        .catch(function (error) { console.log(error); });
+        .catch(function (error) {});
     return response;
 }
 
 export async function createUniqueProjectAddress(props) {
     let response = await props.project.methods.createUniqueProjectAddress().call()
-        .catch(function (error) { console.log(error); });
+        .catch(function (error) {});
     return response;
 }
