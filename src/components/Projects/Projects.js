@@ -86,46 +86,35 @@ class Projects extends Component {
         this.setState({ selectedProjectAddress: value });
     }
 
-    uploadFileToPinata = (fileData) => {
-        if (fileData.file.name?.length > 0) {
+    uploadFileToPinata = (file) => {
+
+        console.log(file);
+
+
+        debugger
+        if (file.name?.length > 0) {
             const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
             let data = new FormData();
 
-            let file= new Blob([fileData.file], {
-                type: 'application/json',
-            });
+            // let fileBlob = new Blob([file], {
+            //     type: 'application/json',
+            // });
 
-            data.append('file',  file, fileData.file.name);
+            let fileBlob = new Blob([file]);
+
+            data.append('file',  fileBlob, file.name);
             const metadata = JSON.stringify({
-                name: fileData.file.name,
-                type: fileData.file.type,
-                sizeBytes: fileData.file.size,
-                lastModifiedDate: fileData.file.lastModifiedDate
+                name: file.name,
+                type: file.type,
+                sizeBytes: file.size,
+                lastModifiedDate: file.lastModifiedDate
             });
             data.append('pinataMetadata', metadata);
-
-            //pinataOptions are optional
-            const pinataOptions = JSON.stringify({
-                cidVersion: 0,
-                customPinPolicy: {
-                    regions: [
-                        {
-                            id: 'FRA1',
-                            desiredReplicationCount: 1
-                        },
-                        {
-                            id: 'NYC1',
-                            desiredReplicationCount: 2
-                        }
-                    ]
-                }
-            });
-            data.append('pinataOptions', pinataOptions);
 
             return axios.post(url, data, {
                 maxBodyLength: 'Infinity',
                 headers: {
-                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
+                    'Content-Type': `multipart/form-data`,
                     pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
                     pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
                 }
@@ -133,7 +122,6 @@ class Projects extends Component {
                 console.log(response.data);
                 return response.data.IpfsHash;
             }).catch(function (error) {
-                console.error(error);
             });
         }
     }
@@ -143,10 +131,10 @@ class Projects extends Component {
             this.createProject(
 				projectData.name,
 				projectData.status,
-                projectData
+                projectData.file
 			);
         } else {
-            this.updateProject(projectData.projectAddress, projectData);
+            this.updateProject(projectData.projectAddress, projectData.file);
         }
         resetForm();
         this.setRecordForEdit(null);
@@ -159,48 +147,63 @@ class Projects extends Component {
 
     signCreateProject = (_projectAddress) => {
         const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-        return this.props.web3.eth.accounts.sign(_projectAddress, '0x' + userPrivateKey);
+
+        if (userPrivateKey === null) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
+
+        try {
+            return this.props.web3.eth.accounts.sign(_projectAddress, '0x' + userPrivateKey);
+        } catch (error) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
     }
 
     createProject = async (_name, _status, _fileData) => {
-        let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+        let _ipfsCID //= await Promise.resolve(this.uploadFileToPinata(_fileData));
         const projectAddress = await this.createUniqueProjectAddress();
         const signatureData = this.signCreateProject(projectAddress);
 
-        await this.props.project.methods
-			.createProject(
-                projectAddress,
-                this.props.web3.utils.utf8ToHex(_name),
-                Number(_status),
-                _ipfsFileCID,
-                signatureData.signature
-            ).send({ from: this.props.account })
-            .then((response) => {
-                toasterService.notifyToastSuccess('Create Project operation was made successfully');
-                this.getProjects();
-            })
-            .catch((error) => {
-                toasterService.notifyToastError('Create Project operation has failed');
-            });
+        if (signatureData !== null) {
+            await this.props.project.methods
+                .createProject(
+                    projectAddress,
+                    this.props.web3.utils.utf8ToHex(_name),
+                    Number(_status),
+                    _ipfsCID,
+                    signatureData.signature
+                ).send({ from: this.props.account })
+                .then((response) => {
+                    toasterService.notifyToastSuccess('Create Project operation was made successfully');
+                    this.getProjects();
+                })
+                .catch((error) => {
+                    toasterService.notifyToastError('Create Project operation has failed');
+                });
+        }
 	}
 
     updateProject = async (_projectAddress, _fileData) => {
         let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         const signatureData = this.signCreateProject(_projectAddress);
 
-        await this.props.project.methods
-			.updateProject(
-                _projectAddress,
-                _ipfsFileCID,
-                signatureData.signature
-            ).send({ from: this.props.account })
-            .then((response) => {
-                toasterService.notifyToastSuccess('Update Project operation was made successfully');
-                this.getProjects();
-            })
-            .catch((error) => {
-                toasterService.notifyToastError('Update Project operation has failed');
-            });
+        if (signatureData !== null) {
+            await this.props.project.methods
+                .updateProject(
+                    _projectAddress,
+                    _ipfsFileCID,
+                    signatureData.signature
+                ).send({ from: this.props.account })
+                .then((response) => {
+                    toasterService.notifyToastSuccess('Update Project operation was made successfully');
+                    this.getProjects();
+                })
+                .catch((error) => {
+                    toasterService.notifyToastError('Update Project operation has failed');
+                });
+        }
 	}
 
     handleNewDataFromPopup(value) {

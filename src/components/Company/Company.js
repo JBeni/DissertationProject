@@ -69,25 +69,38 @@ class Company extends Component {
 
     signRequest = (_requestAddress) => {
         const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-        return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
+
+        if (userPrivateKey === null) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
+
+        try {
+            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
+        } catch (error) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
     }
 
     updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
         const signatureData = this.signRequest(_requestAddress);
 
-        await this.props.project.methods
-			.updateRequest(
-                Number(_index), Number(_indexProjectRequest), _comments,
-                _requestStatus, _projectStatus,
-                _projectAddress, signatureData.signature
-            ).send({ from: this.props.account })
-            .then((response) => {
-                toasterService.notifyToastSuccess('Update Request operation was made successfully');
-                this.getSupervisorRequests();
-            })
-            .catch((error) => {
-                toasterService.notifyToastError('Update Request operation has failed');
-            });
+        if (signatureData !== null) {
+            await this.props.project.methods
+                .updateRequest(
+                    Number(_index), Number(_indexProjectRequest), _comments,
+                    _requestStatus, _projectStatus,
+                    _projectAddress, signatureData.signature
+                ).send({ from: this.props.account })
+                .then((response) => {
+                    toasterService.notifyToastSuccess('Update Request operation was made successfully');
+                    this.getSupervisorRequests();
+                })
+                .catch((error) => {
+                    toasterService.notifyToastError('Update Request operation has failed');
+                });
+        }
     }
 
     render() {

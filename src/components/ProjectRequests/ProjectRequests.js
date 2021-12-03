@@ -131,7 +131,18 @@ class ProjectRequests extends Component {
 
     signProjectRequest = (requestAddress) => {
         const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-        return this.props.web3.eth.accounts.sign(requestAddress, '0x' + userPrivateKey);
+
+        if (userPrivateKey === null) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
+
+        try {
+            return this.props.web3.eth.accounts.sign(requestAddress, '0x' + userPrivateKey);
+        } catch (error) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
     }
 
     createUniqueProjectReqAddress = async () => {
@@ -143,20 +154,22 @@ class ProjectRequests extends Component {
         const projectReqAddress = await this.createUniqueProjectReqAddress();
         const signatureData = this.signProjectRequest(projectReqAddress);
 
-        await this.props.project.methods
-			.createProjectRequest(
-                this.props.web3.utils.utf8ToHex(_title),
-                Number(_status), Number(_requestStatus), _projectAddress,
-                projectReqAddress, signatureData.signature
-            ).send({ from: this.props.account })
-            .then((response) => {
-                this.getAllProjectRequests();
-                this.getLastProjectRequest(this.props.match.params.id);
-                toasterService.notifyToastSuccess('Create Project Request operation was made successfully');
-            })
-            .catch((error) => {
-                toasterService.notifyToastError('Create Project Request operation has failed');
-            });
+        if (signatureData !== null) {
+            await this.props.project.methods
+                .createProjectRequest(
+                    this.props.web3.utils.utf8ToHex(_title),
+                    Number(_status), Number(_requestStatus), _projectAddress,
+                    projectReqAddress, signatureData.signature
+                ).send({ from: this.props.account })
+                .then((response) => {
+                    this.getAllProjectRequests();
+                    this.getLastProjectRequest(this.props.match.params.id);
+                    toasterService.notifyToastSuccess('Create Project Request operation was made successfully');
+                })
+                .catch((error) => {
+                    toasterService.notifyToastError('Create Project Request operation has failed');
+                });
+        }
     }
 
     getProjectStatusSteps() {
