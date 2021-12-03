@@ -41,7 +41,7 @@ contract SharedChain {
     /*********  Project Related Data */
     struct Project {
         uint _index;
-        bytes32 _name;
+        string _name;
         ProjectStatus _status;
         string _ipfsFileCID;
         address _projectAddress;
@@ -51,7 +51,7 @@ contract SharedChain {
     }
     event ProjectEvent(
         uint _index,
-        bytes32 _name,
+        string _name,
         ProjectStatus _status,
         string _ipfsFileCID,
         address _projectAddress,
@@ -62,7 +62,7 @@ contract SharedChain {
 
     struct ProjectRequest {
         uint _index;
-        bytes32 _title;
+        string _title;
         string _comments;
         ProjectStatus _status;
         RequestStatus _requestStatus;
@@ -74,7 +74,7 @@ contract SharedChain {
     }
     event ProjectRequestEvent(
         uint _index,
-        bytes32 _title,
+        string _title,
         string _comments,
         ProjectStatus _status,
         RequestStatus _requestStatus,
@@ -90,7 +90,7 @@ contract SharedChain {
     struct Request {
         uint _index;
         uint _indexProjectRequest;
-        bytes32 _title;
+        string _title;
         RequestStatus _requestStatus;
         ProjectStatus _projectStatus;
         RequestType _requestType;
@@ -103,7 +103,7 @@ contract SharedChain {
     event RequestEvent(
         uint _index,
         uint _indexProjectRequest,
-        bytes32 _title,
+        string _title,
         RequestStatus _status,
         ProjectStatus _projectStatus,
         RequestType _requestType,
