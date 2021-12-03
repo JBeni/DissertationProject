@@ -7,7 +7,7 @@ function Sidebar(props) {
 			<nav className="nav">
 				<div>
 					<p className="nav__logo">
-						<i className="bx bx-layer nav__logo-icon"></i>
+						<i className="bx bxs-bank nav__logo-icon"></i>
 						<span className="nav__logo-name">ProjectChain</span>
 					</p>
 
