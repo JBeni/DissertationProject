@@ -50,7 +50,8 @@ contract SharedChain {
         string _signature;
     }
     event ProjectEvent(
-        Project indexed _project
+        Project _project,
+        address indexed _projectAddress
     );
 
     struct ProjectRequest {
@@ -66,7 +67,8 @@ contract SharedChain {
         string _signature;
     }
     event ProjectRequestEvent(
-        ProjectRequest indexed _projectRequest
+        ProjectRequest _projectRequest,
+        address indexed _projectAddress
     );
 
     /******** Supervisor and Company Data */
@@ -84,6 +86,6 @@ contract SharedChain {
         string _signature;
     }
     event RequestEvent(
-        Request indexed _request
+        Request _request
     );
 }

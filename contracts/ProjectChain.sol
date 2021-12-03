@@ -47,7 +47,7 @@ contract ProjectChain is UserChain {
             _signature
         );
 
-        emit ProjectEvent(projects[_projectAddress]);
+        emit ProjectEvent(projects[_projectAddress], _projectAddress);
         projectsAddress.push(_projectAddress);
         projectsCounter++;
     }
@@ -60,7 +60,7 @@ contract ProjectChain is UserChain {
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._signature = _signature;
 
-        emit ProjectEvent(projects[_projectAddress]);
+        emit ProjectEvent(projects[_projectAddress], _projectAddress);
     }
 
     function getProjectInfo(address _address)
@@ -124,7 +124,7 @@ contract ProjectChain is UserChain {
             _projectReqAddress
         );
 
-        emit ProjectRequestEvent(projectRequests[projectRequestsCounter]);
+        emit ProjectRequestEvent(projectRequests[projectRequestsCounter], _projectAddress);
         projectRequestsAddress.push(_projectReqAddress);
         projectRequestsCounter++;
     }
@@ -262,12 +262,12 @@ contract ProjectChain is UserChain {
         projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
         projectRequests[_indexProjectRequest]._signature = _signature;
 
-        emit ProjectRequestEvent(projectRequests[_indexProjectRequest]);
+        emit ProjectRequestEvent(projectRequests[_indexProjectRequest], _projectAddress);
 
         // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
         projects[_projectAddress]._status = ProjectStatus(_projectStatus);
 
-        emit ProjectEvent(projects[_projectAddress]);
+        emit ProjectEvent(projects[_projectAddress], _projectAddress);
     }
 
 
