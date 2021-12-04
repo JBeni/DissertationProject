@@ -45,7 +45,7 @@ contract SharedChain {
         ProjectStatus _status;
         string _ipfsFileCID;
         address _projectAddress;
-        address _userAddress;
+        address _signerAddress;
         uint _timestamp;
         string _signature;
     }
@@ -61,7 +61,7 @@ contract SharedChain {
         ProjectStatus _status;
         RequestStatus _requestStatus;
         address _projectAddress;
-        address _userAddress;
+        address _signerAddress;
         address _requestAddress;
         uint _timestamp;
         string _signature;
@@ -80,7 +80,7 @@ contract SharedChain {
         ProjectStatus _projectStatus;
         RequestType _requestType;
         address _projectAddress;
-        address _userAddress;
+        address _signerAddress;
         address _requestAddress;
         uint _timestamp;
         string _signature;
