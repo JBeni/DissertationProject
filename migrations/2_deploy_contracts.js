@@ -2,6 +2,7 @@
 var ProjectChain = artifacts.require('ProjectChain');
 var AdminChain = artifacts.require('AdminChain');
 var ServiceChain = artifacts.require('ServiceChain');
+var VerifySignature = artifacts.require('VerifySignature');
 
 module.exports = async function (deployer, network, accounts) {
     await deployer.deploy(ProjectChain);
@@ -19,4 +20,6 @@ module.exports = async function (deployer, network, accounts) {
     // await ServiceChain.deployed().then(function(instance) {
     //     return instance.createDropdowns();
     // });
+
+    await deployer.deploy(VerifySignature);
 };
