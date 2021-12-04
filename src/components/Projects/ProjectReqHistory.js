@@ -29,7 +29,7 @@ export default function ProjectReqHistory(props) {
 						<th>Request Status</th>
 						<th>Project Address</th>
 						<th>Request Address</th>
-						<th>User Address</th>
+						<th>Signer Address</th>
 						<th>Timestamp</th>
 						<th>Signature</th>
 					</tr>
@@ -43,7 +43,7 @@ export default function ProjectReqHistory(props) {
                                 <td>{ item.requestStatus }</td>
                                 <td>{ item.projectAddress }</td>
                                 <td>{ item.requestAddress }</td>
-                                <td>{ item.userAddress }</td>
+                                <td>{ item.signerAddress }</td>
                                 <td>{ item.timestamp }</td>
                                 <td>{ item.signature }</td>
                             </tr>

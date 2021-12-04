@@ -30,9 +30,9 @@ export async function getAllUserEvents(props) {
     return data;
 }
 
-export async function getUserEvents(props, _userAddress) {
+export async function getUserEvents(props, _walletAddress) {
     let events = await props.project.getPastEvents('UserEvent', {
-        filter: { _walletAddress: _userAddress },
+        filter: { _walletAddress: _walletAddress },
         fromBlock: 0,
         toBlock: 'latest'
     });
@@ -78,7 +78,7 @@ export async function getAllProjectEvents(props) {
             status: status.value,
             ipfsFileCID: result.returnValues._project._ipfsFileCID,
             projectAddress: result.returnValues._project._projectAddress,
-            userAddress: result.returnValues._project._userAddress,
+            signerAddress: result.returnValues._project._signerAddress,
             timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
             signature: result.returnValues._project._signature
         };
@@ -108,7 +108,7 @@ export async function getProjectEvents(props, _projectAddress) {
             status: status.value,
             ipfsFileCID: result.returnValues._project._ipfsFileCID,
             projectAddress: result.returnValues._project._projectAddress,
-            userAddress: result.returnValues._project._userAddress,
+            signerAddress: result.returnValues._project._signerAddress,
             timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
             signature: result.returnValues._project._signature
         };
@@ -154,7 +154,7 @@ export async function getProjectRequestEvents(props, _projectAddress) {
             requestStatus: requestStatus.value,
             projectAddress: result.returnValues._project._projectAddress,
             requestAddress: result.returnValues._project.requestAddress,
-            userAddress: result.returnValues._project._userAddress,
+            signerAddress: result.returnValues._project._signerAddress,
             timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
             signature: result.returnValues._project._signature
         };

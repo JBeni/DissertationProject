@@ -16,7 +16,7 @@ export default function ViewProjectRequest(props) {
 				status: status.value,
 				requestStatus: recordForEdit.requestStatus,
                 projectAddress: recordForEdit.projectAddress,
-                userAddress: recordForEdit.userAddress,
+                signerAddress: recordForEdit.signerAddress,
 			};
 			setValues({
 				...newData,
@@ -47,7 +47,7 @@ export default function ViewProjectRequest(props) {
 						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>User Address: {values.userAddress}</FormLabel>
+						<FormLabel>Signer Address: {values.signerAddress}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>

@@ -59,7 +59,7 @@ export async function getAllProjects(props) {
                 status: status.value,
                 ipfsFileCID: result._ipfsFileCID,
                 projectAddress: result._projectAddress,
-                userAddress: result._userAddress,
+                signerAddress: result._signerAddress,
                 timestamp: result._timestamp
             };
             dataArray.push(project);
@@ -78,7 +78,7 @@ export async function getProjectInfo(props, projectAddress) {
             status: status.value,
             ipfsFileCID: result._ipfsFileCID,
             projectAddress: result._projectAddress,
-            userAddress: result._userAddress,
+            signerAddress: result._signerAddress,
             timestamp: result._timestamp
         };
         return project;
@@ -102,7 +102,7 @@ export async function getAllProjectRequests(props, projectAddress) {
                 status: status.value,
                 requestStatus: requestStatus.value,
                 projectAddress: result._projectAddress,
-                userAddress: result._userAddress,
+                signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
                 timestamp: result._timestamp
             };
@@ -139,7 +139,7 @@ export async function getSupervisorRequests(props) {
                     requestType: requestType.value,
                     projectAddress: result._projectAddress,
                     indexProjectRequest: Number(result._indexProjectRequest),
-                    userAddress: result._userAddress,
+                    signerAddress: result._signerAddress,
                     requestAddress: result._requestAddress,
                     timestamp: result._timestamp
                 };
@@ -174,7 +174,7 @@ export async function getCompanyRequests(props) {
                     requestType: requestType.value,
                     projectAddress: result._projectAddress,
                     indexProjectRequest: Number(result._indexProjectRequest),
-                    userAddress: result._userAddress,
+                    signerAddress: result._signerAddress,
                     requestAddress: result._requestAddress,
                     timestamp: result._timestamp
                 };
@@ -208,7 +208,7 @@ export async function getAllRequests(props) {
                 requestType: requestType.value,
                 projectAddress: result._projectAddress,
                 indexProjectRequest: Number(result._indexProjectRequest),
-                userAddress: result._userAddress,
+                signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
                 timestamp: result._timestamp
             };

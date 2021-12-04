@@ -31,7 +31,7 @@ class ProjectRequests extends Component {
             currentStep: '',
             nextStep: '',
 
-            project: { index: -1, name: '', status: '', ipfsFileCID: '', projectAddress: '', userAddress: '' },
+            project: { index: -1, name: '', status: '', ipfsFileCID: '', projectAddress: '', signerAddress: '' },
             projectRequests: [],
 		};
     }

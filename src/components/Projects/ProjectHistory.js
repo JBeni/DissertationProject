@@ -24,7 +24,7 @@ export default function ProjectHistory(props) {
 						<th>Status</th>
 						<th>File CID</th>
 						<th>Project Address</th>
-						<th>User Address</th>
+						<th>Signer Address</th>
 						<th>Timestamp</th>
 						<th>Signature</th>
 						<th>Actions</th>
@@ -37,7 +37,7 @@ export default function ProjectHistory(props) {
 							<td>{item.status}</td>
 							<td>{item.ipfsFileCID}</td>
 							<td>{item.projectAddress}</td>
-							<td>{item.userAddress}</td>
+							<td>{item.signerAddress}</td>
 							<td>{item.timestamp}</td>
 							<td>{item.signature}</td>
 							<td>Verify Signature</td>
