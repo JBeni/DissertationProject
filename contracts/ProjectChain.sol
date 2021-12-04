@@ -201,7 +201,7 @@ contract ProjectChain is UserChain {
                         projectRequests[index]._status,
                         projectRequests[index]._requestStatus,
                         projectRequests[index]._projectAddress,
-                        projectRequests[index]._userAddress,
+                        projectRequests[index]._signerAddress,
                         projectRequests[index]._requestAddress,
                         block.timestamp,
                         projectRequests[index]._signature

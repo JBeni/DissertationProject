@@ -58,8 +58,8 @@ contract UserChain is SharedChain {
     function getAllUsers() public view returns(User[] memory) {
         User[] memory allUsers = new User[](usersCounter);
         for (uint index = 0; index < usersCounter; index++) {
-            address _userAddress = usersAddress[index];
-            User storage user = users[_userAddress];
+            address _walletAddress = usersAddress[index];
+            User storage user = users[_walletAddress];
             allUsers[index] = user;
         }
         return allUsers;
