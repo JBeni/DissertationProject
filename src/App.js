@@ -7,6 +7,7 @@ import Loader from './components/Views/Loader';
 import ProjectChain from './abis/ProjectChain.json';
 import AdminChain from './abis/AdminChain.json';
 import ServiceChain from './abis/ServiceChain.json';
+import VerifySignature from './abis/VerifySignature.json';
 
 class App extends Component {
 	constructor() {
@@ -16,6 +17,7 @@ class App extends Component {
 			project: null,
             adminChain: null,
             serviceChain: null,
+            verifySignature: null,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
@@ -93,6 +95,17 @@ class App extends Component {
             this.setState({ serviceChain: serviceChain });
 		} else {
 			window.alert('Service Chain contract not deployed to detected network.');
+		}
+
+        const networkVerifySignatureData = VerifySignature.networks[networkId];
+        if (networkVerifySignatureData) {
+            const verifySignature = new web3.eth.Contract(
+                VerifySignature.abi,
+                networkVerifySignatureData.address
+            );
+            this.setState({ verifySignature: verifySignature });
+		} else {
+			window.alert('Verify Signature contract not deployed to detected network.');
 		}
 
         await this.checkUserRole(accounts[0], this.state.project, this.state.adminChain, web3);
