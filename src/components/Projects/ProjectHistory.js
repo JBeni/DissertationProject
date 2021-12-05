@@ -20,7 +20,7 @@ export default function ProjectHistory(props) {
         let s = '0x' + _signature.slice(66, 130).toString();
         let messageHash = this.props.web3.eth.accounts.hashMessage(_projectAddress);
 
-        let verificationOutput = await this.props.project.methods
+        let verificationOutput = await this.props.signatureChain.methods
             .verifySignature(_signerAddress, messageHash, v, r, s)
             .call({ from: this.props.account });
         console.log(verificationOutput);
