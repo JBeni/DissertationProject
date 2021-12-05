@@ -17,6 +17,7 @@ function Navbar(props) {
 
     const [account] = useState(props.account);
     const [project] = useState(props.project);
+    const [signatureChain] = useState(props.signatureChain);
     const [web3] = useState(props.web3);
     const [currentUserRole, setCurrentUserRole] = useState(getDefaultRole());
 
@@ -42,8 +43,6 @@ function Navbar(props) {
             <Header
                 currentUsername={props.currentUsername}
                 account={account}
-                project={project}
-                web3={web3}
                 isActive={isActive}
                 changeMenuOption={changeMenuOption}
             />
@@ -58,6 +57,7 @@ function Navbar(props) {
                     userRole={currentUserRole}
                     account={account}
                     project={project}
+                    signatureChain={signatureChain}
                     web3={web3}
                 />
             </div>
