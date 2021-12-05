@@ -67,6 +67,7 @@ function Routes(props) {
                         <Projects
                             account={props.account}
                             project={props.project}
+                            signatureChain={props.signatureChain}
                             web3={props.web3}
                         />
                     )}
