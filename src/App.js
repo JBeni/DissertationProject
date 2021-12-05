@@ -7,7 +7,7 @@ import Loader from './components/Views/Loader';
 import ProjectChain from './abis/ProjectChain.json';
 import AdminChain from './abis/AdminChain.json';
 import ServiceChain from './abis/ServiceChain.json';
-import VerifySignature from './abis/VerifySignature.json';
+import SignatureChain from './abis/SignatureChain.json';
 
 class App extends Component {
 	constructor() {
@@ -17,7 +17,7 @@ class App extends Component {
 			project: null,
             adminChain: null,
             serviceChain: null,
-            verifySignature: null,
+            signatureChain: null,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
@@ -72,7 +72,7 @@ class App extends Component {
 			);
             this.setState({ project: project });
 		} else {
-			window.alert('Project contract not deployed to detected network.');
+			window.alert('Project Chain contract not deployed to detected network.');
 		}
 
         const networkAdminData = AdminChain.networks[networkId];
@@ -97,15 +97,15 @@ class App extends Component {
 			window.alert('Service Chain contract not deployed to detected network.');
 		}
 
-        const networkVerifySignatureData = VerifySignature.networks[networkId];
-        if (networkVerifySignatureData) {
-            const verifySignature = new web3.eth.Contract(
-                VerifySignature.abi,
-                networkVerifySignatureData.address
+        const networkSignatureChainData = SignatureChain.networks[networkId];
+        if (networkSignatureChainData) {
+            const signatureChain = new web3.eth.Contract(
+                SignatureChain.abi,
+                networkSignatureChainData.address
             );
-            this.setState({ verifySignature: verifySignature });
+            this.setState({ signatureChain: signatureChain });
 		} else {
-			window.alert('Verify Signature contract not deployed to detected network.');
+			window.alert('Signature Chain contract not deployed to detected network.');
 		}
 
         await this.checkUserRole(accounts[0], this.state.project, this.state.adminChain, web3);
@@ -144,6 +144,7 @@ class App extends Component {
 						account={this.state.account}
 						project={this.state.project}
                         serviceChain={this.state.serviceChain}
+                        signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
 						web3={this.state.web3}
 					/>
