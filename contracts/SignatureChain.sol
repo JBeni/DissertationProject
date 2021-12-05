@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.3 < 0.9.0;
 
-contract VerifySignature {
+contract SignatureChain {
 
     // verify signature verifica daca mesajul semnat cu cheia privata apartinei contului cu adresa publica care trebuia sa semneze tranzactia
     // the buyer address din examplul ala e adresa walletul;ui care a initiat tranzactia
@@ -9,7 +9,7 @@ contract VerifySignature {
         return ecrecover(hash, v, r, s) == p;
     }
 
-    function test(bytes32 hash, uint8 v, bytes32 r, bytes32 s) external pure returns(address) {
+    function verifyTest(bytes32 hash, uint8 v, bytes32 r, bytes32 s) external pure returns(address) {
         return ecrecover(hash, v, r, s);
     }
 
