@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../Styles/TableHistory.css';
 import WaitingLoader from '../Views/WaitingLoader';
+import { Button } from '@material-ui/core';
 
 export default function ProjectReqHistory(props) {
 	const { projectReqHistory } = props;
@@ -15,6 +16,18 @@ export default function ProjectReqHistory(props) {
         }
         setMessage('There are no data at the moment...');
     }, [projectReqHistory])
+
+    const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
+        let v = '0x' + _signature.slice(130, 132).toString();
+        let r = _signature.slice(0, 66).toString();
+        let s = '0x' + _signature.slice(66, 130).toString();
+        let messageHash = this.props.web3.eth.accounts.hashMessage(_projectAddress);
+
+        let verificationOutput = await this.props.signatureChain.methods
+            .verifySignature(_signerAddress, messageHash, v, r, s)
+            .call({ from: this.props.account });
+        console.log(verificationOutput);
+    }
 
     if (loading === false) return <WaitingLoader message={message} />
 
@@ -45,7 +58,11 @@ export default function ProjectReqHistory(props) {
                                 <td>{ item.requestAddress }</td>
                                 <td>{ item.signerAddress }</td>
                                 <td>{ item.timestamp }</td>
-                                <td>{ item.signature }</td>
+                                <td>
+                                    <Button variant="contained" color="secondary" onClick={ () =>
+                                        verifySignature(item.projectAddress, item.signerAddress, item.signature)
+                                    }>Verify Signature</Button>
+                                </td>
                             </tr>
                         ))
                     }

@@ -5,7 +5,6 @@ import { Button } from '@material-ui/core';
 
 export default function ProjectHistory(props) {
 	const { projectHistory } = props;
-
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
