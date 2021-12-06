@@ -25,6 +25,14 @@ export const getDefaultRequestStatus = () => {
     return { id: '0', value: 'UnApproved' };
 }
 
+export const getRejectedRequestStatus = () => {
+    return { id: '1', value: 'Rejected' };
+}
+
+export const getApprovedRequestStatus = () => {
+    return { id: '2', value: 'Approved' };
+}
+
 export function getRequestTypeById(requestType) {
     return requestTypeDropdown.find((element) => {
         return Number(element.id) === Number(requestType);
