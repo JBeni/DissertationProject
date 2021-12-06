@@ -17,12 +17,17 @@ export default function ProjectHistory(props) {
         let v = '0x' + _signature.slice(130, 132).toString();
         let r = _signature.slice(0, 66).toString();
         let s = '0x' + _signature.slice(66, 130).toString();
-        let messageHash = this.props.web3.eth.accounts.hashMessage(_projectAddress);
+        let messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
 
-        let verificationOutput = await this.props.signatureChain.methods
+        let verificationOutput = await props.signatureChain.methods
             .verifySignature(_signerAddress, messageHash, v, r, s)
-            .call({ from: this.props.account });
-        console.log(verificationOutput);
+            .call();
+
+        if (verificationOutput) {
+            alert('Signer Address is verified successfully!');
+        } else {
+            alert('Signer Address is not verified!');
+        }
     }
 
 	if (loading === false) return <WaitingLoader />;

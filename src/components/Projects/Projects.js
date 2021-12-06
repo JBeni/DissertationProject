@@ -263,7 +263,7 @@ class Projects extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers>
-                        <ProjectHistory projectHistory={this.state.projectHistory} />
+                        <ProjectHistory web3={this.props.web3} signatureChain={this.props.signatureChain}  projectHistory={this.state.projectHistory} />
                     </DialogContent>
 				</Dialog>
 

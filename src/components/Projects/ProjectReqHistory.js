@@ -28,7 +28,8 @@ export default function ProjectReqHistory(props) {
 
         let verificationOutput = await props.signatureChain.methods
             .verifySignature(_signerAddress, messageHash, v, r, s)
-            .call({ from: props.account });
+            .call();
+            //.call({ from: props.account });
         console.log(verificationOutput);
     }
 
