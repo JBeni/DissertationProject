@@ -12,7 +12,7 @@ import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
 import { getRequestStatusById } from '../Services/dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
-import { getAddressZeroValue, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
+import { getAddressZeroValue, getApprovedRequestStatus, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
 import * as eventsService from '../Services/eventsService';
@@ -70,10 +70,14 @@ class ProjectRequests extends Component {
 
         const unApprovedReqStatus = getDefaultRequestStatus();
         const completedProjectStatus = getCompletedProjectStatus();
-        if (requestStatus.value === unApprovedReqStatus.value || projectStatus.value === completedProjectStatus.value) {
+        const approvedReqStatus = getApprovedRequestStatus();
+        if (requestStatus.value === unApprovedReqStatus.value) {
             this.setState({ requestNextStep: false });
         }
-        
+        if (projectStatus.value === completedProjectStatus.value && requestStatus.value === approvedReqStatus.value) {
+            this.setState({ requestNextStep: false });
+        }
+
         this.setActiveStep(lastRequest);
         this.setMessageNextStep(lastRequest);
     }
