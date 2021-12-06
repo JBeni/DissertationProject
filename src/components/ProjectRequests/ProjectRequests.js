@@ -50,6 +50,9 @@ class ProjectRequests extends Component {
     }
 
     getLastProjectRequest = async (projectAddress) => {
+        const requests = await eventsService.getProjectRequestEvents(this.props, projectAddress);
+        if (requests.length === 0) return;
+
         const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
             .then((result) => { return result; });
 
