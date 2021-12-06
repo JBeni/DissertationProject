@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { materialTableIcons } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
-import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import Edit from '@material-ui/icons/Edit';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
@@ -95,7 +95,7 @@ class Company extends Component {
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Request operation was made successfully');
-                    this.getSupervisorRequests();
+                    this.getCompanyRequests();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Update Request operation has failed');
@@ -158,7 +158,7 @@ class Company extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-                            icon: GridViewOutlinedIcon,
+                            icon: Edit,
                             tooltip: 'Edit Request',
                             onClick: (event, rowData) => {
                                 this.setEditRequest(true);
