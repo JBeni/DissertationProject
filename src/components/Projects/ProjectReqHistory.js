@@ -9,6 +9,9 @@ export default function ProjectReqHistory(props) {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
+        console.log(projectReqHistory);
+
+
         if (projectReqHistory?.length > 0) {
             setLoading(true);
             setMessage('The data is loading. Wait a moment...');
@@ -21,11 +24,11 @@ export default function ProjectReqHistory(props) {
         let v = '0x' + _signature.slice(130, 132).toString();
         let r = _signature.slice(0, 66).toString();
         let s = '0x' + _signature.slice(66, 130).toString();
-        let messageHash = this.props.web3.eth.accounts.hashMessage(_projectAddress);
+        let messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
 
-        let verificationOutput = await this.props.signatureChain.methods
+        let verificationOutput = await props.signatureChain.methods
             .verifySignature(_signerAddress, messageHash, v, r, s)
-            .call({ from: this.props.account });
+            .call({ from: props.account });
         console.log(verificationOutput);
     }
 
@@ -50,7 +53,8 @@ export default function ProjectReqHistory(props) {
 				<tbody>
                     {
                         projectReqHistory.map((item) => (
-                            <tr key={ item.title }>
+                            <tr key={ item.index }>
+                                <td>{ item.title }</td>
                                 <td>{ item.comments }</td>
                                 <td>{ item.status }</td>
                                 <td>{ item.requestStatus }</td>

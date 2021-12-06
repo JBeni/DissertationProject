@@ -144,19 +144,19 @@ export async function getProjectRequestEvents(props, _projectAddress) {
     let data = [];
     let indexLocal = 1;
     events.map((result) => {
-        let projectStatus = getProjectStatusById(result.returnValues._project._status);
-        let requestStatus = getRequestStatusById(result.returnValues._project._requestStatus);
+        let projectStatus = getProjectStatusById(result.returnValues._projectRequest._status);
+        let requestStatus = getRequestStatusById(result.returnValues._projectRequest._requestStatus);
         const project = {
-            index: Number(result.returnValues._project._index) + indexLocal,
-            title: result.returnValues._project._title,
-            ticommentstle: result.returnValues._project._comments,
+            index: Number(result.returnValues._projectRequest._index) + indexLocal,
+            title: result.returnValues._projectRequest._title,
+            ticommentstle: result.returnValues._projectRequest._comments,
             status: projectStatus.value,
             requestStatus: requestStatus.value,
-            projectAddress: result.returnValues._project._projectAddress,
-            requestAddress: result.returnValues._project.requestAddress,
-            signerAddress: result.returnValues._project._signerAddress,
-            timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
-            signature: result.returnValues._project._signature
+            projectAddress: result.returnValues._projectRequest._projectAddress,
+            requestAddress: result.returnValues._projectRequest._requestAddress,
+            signerAddress: result.returnValues._projectRequest._signerAddress,
+            timestamp: new Date(result.returnValues._projectRequest._timestamp * 1000).toString(),
+            signature: result.returnValues._projectRequest._signature
         };
         data.push(project);
         indexLocal++;
