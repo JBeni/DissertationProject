@@ -14,6 +14,7 @@ export default function ViewProjectForm(props) {
 				name: recordForEdit.name,
 				status: status.value,
 				ipfsFileCID: recordForEdit.ipfsFileCID,
+                projectAddress: recordForEdit.projectAddress
 			};
 			setValues({
 				...newData,
@@ -33,6 +34,9 @@ export default function ViewProjectForm(props) {
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Pinata File CID: {values.ipfsFileCID}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>
