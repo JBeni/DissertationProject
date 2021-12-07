@@ -17,7 +17,7 @@ function Navbar(props) {
     const [project] = useState(props.project);
     const [signatureChain] = useState(props.signatureChain);
     const [web3] = useState(props.web3);
-    const { currentUserRole } = props.currentUserRole;
+    const { currentUserRole } = props;
 
 	useEffect(() => {
 	}, []);
