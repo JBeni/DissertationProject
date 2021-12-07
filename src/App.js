@@ -184,7 +184,7 @@ class App extends Component {
         if (this.state.loading === false) {
             return (
 				<React.Fragment>
-                    {/* {
+                    {
                         this.state.loggedIn === false
                             ? <Dialog open={this.state.openSignIn} maxWidth="md">
                                     <DialogTitle>
@@ -210,7 +210,7 @@ class App extends Component {
                                 web3={this.state.web3}
                             />
                         : <></>
-                    } */}
+                    }
                     <Navbar
                         account={this.state.account}
                         project={this.state.project}
