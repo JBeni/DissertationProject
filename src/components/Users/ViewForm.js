@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
-import { initialUserFormValues } from '../Services/formService';
-import { getUserRoleByValue } from '../Services/dropdownService';
+import * as formService from '../Services/formService';
+import * as dropdownService from '../Services/dropdownService';
 
 export default function ViewForm(props) {
 	const { recordForEdit } = props;
-	const [values, setValues] = useState(initialUserFormValues);
+	const [values, setValues] = useState(formService.initialUserFormValues);
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let role = getUserRoleByValue(recordForEdit.role);
+            let role = dropdownService.getUserRoleByValue(recordForEdit.role);
             let newData = {
 				username: recordForEdit.username,
 				firstname: recordForEdit.firstname,

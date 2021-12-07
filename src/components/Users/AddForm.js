@@ -9,21 +9,21 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { initialUserFormValidity, initialUserFormValues } from '../Services/formService';
-import { userRoleDropdown, getUserRoleByValue } from '../Services/dropdownService';
+import * as formService from '../Services/formService';
+import * as dropdownService from '../Services/dropdownService';
 import { useStylesForm } from './../sharedResources';
 
 export default function AddForm(props) {
 	const classes = useStylesForm();
 	const {addOrEdit, recordForEdit} = props;
     const [isEdit, setIsEdit] = useState(false);
-	const [values, setValues] = useState(initialUserFormValues);
+	const [values, setValues] = useState(formService.initialUserFormValues);
 	const [errors, setErrors] = useState({});
-    const [validity, setValidity] = useState(initialUserFormValidity);
+    const [validity, setValidity] = useState(formService.initialUserFormValidity);
 
     useEffect(() => {
 		if (recordForEdit != null) {
-            let role = getUserRoleByValue(recordForEdit.role);
+            let role = dropdownService.getUserRoleByValue(recordForEdit.role);
             let newData = {
                 firstname: recordForEdit.firstname,
                 lastname: recordForEdit.lastname,
@@ -48,9 +48,9 @@ export default function AddForm(props) {
 	};
 
 	const resetForm = () => {
-		setValues(initialUserFormValues);
+		setValues(formService.initialUserFormValues);
 		setErrors({});
-        setValidity(initialUserFormValidity);
+        setValidity(formService.initialUserFormValidity);
 	};
 
 	const validate = (fieldValues = values) => {
@@ -159,7 +159,7 @@ export default function AddForm(props) {
 								onChange={handleInputChange}
                                 error={validity.role}
 							>
-								{userRoleDropdown.map((item) => (
+								{dropdownService.userRoleDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
 										{item.value}
 									</MenuItem>

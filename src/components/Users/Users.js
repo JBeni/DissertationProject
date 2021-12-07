@@ -10,7 +10,7 @@ import ViewForm from './ViewForm';
 import { materialTableIcons } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import { Toaster } from 'react-hot-toast';
-import * as eventsService from '../Services/eventsService';
+import * as eventService from '../Services/eventService';
 import * as toasterService from '../Services/toasterService';
 import UserHistory from './UserHistory';
 import HistoryIcon from '@mui/icons-material/History';
@@ -31,7 +31,7 @@ export default class Users extends Component {
 
     componentDidMount() {
         this.getUsers();
-        eventsService.getAllUserEvents(this.props);
+        eventService.getAllUserEvents(this.props);
     }
 
     getUsers = async () => {
@@ -59,7 +59,7 @@ export default class Users extends Component {
 	}
 
     setUserHistory = async (rowData) => {
-        const data = await eventsService.getUserEvents(this.props, rowData.walletAddress);
+        const data = await eventService.getUserEvents(this.props, rowData.walletAddress);
         this.setState({ userHistory: data });
     }
 

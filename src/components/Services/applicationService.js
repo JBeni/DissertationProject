@@ -1,13 +1,6 @@
 
-import { getUserRoleById, getProjectStatusById, getRequestStatusById, getCompanyRequestType, getSupervisorRequestType, getDefaultRequestStatus } from '../Services/dropdownService';
+import * as dropdownService from '../Services/dropdownService';
 const axios = require('axios');
-
-/****** **********/
-
-export const getDefaultRole = () => {
-    return "DefaultRole";
-}
-
 
 /*****************    *******/
 
@@ -15,7 +8,7 @@ export async function getAllUsers(props) {
     let dataArray = [];
     await props.project.methods.getAllUsers().call().then((result) => {
         result.map((result) => {
-            let role = getUserRoleById(result._role);
+            let role = dropdownService.getUserRoleById(result._role);
             const user = {
                 username: result._username,
                 email: props.web3.utils.hexToUtf8(result._email),
@@ -34,7 +27,7 @@ export async function getAllUsers(props) {
 
 export async function getUserInfo(props) {
     return await props.project.methods.getUserInfo(props.account).call().then((result) => {
-        let role = getUserRoleById(result._role);
+        let role = dropdownService.getUserRoleById(result._role);
         const user = {
             username: result._username,
             email: props.web3.utils.hexToUtf8(result._email),
@@ -52,7 +45,7 @@ export async function getAllProjects(props) {
     let dataArray = [];
     await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
-            let status = getProjectStatusById(result._status);
+            let status = dropdownService.getProjectStatusById(result._status);
             const project = {
                 index: Number(result._index),
                 name: result._name,
@@ -71,7 +64,7 @@ export async function getAllProjects(props) {
 
 export async function getProjectInfo(props, projectAddress) {
     return await props.project.methods.getProjectInfo(projectAddress).call().then((result) => {
-        let status = getProjectStatusById(result._status);
+        let status = dropdownService.getProjectStatusById(result._status);
         const project = {
             index: Number(result._index),
             name: result._name,
@@ -93,8 +86,8 @@ export async function getAllProjectRequests(props, projectAddress) {
     let dataArray = [];
     allProjectRequest.map((result) => {
         if (projectAddress === result._projectAddress) {
-            let status = getProjectStatusById(result._status);
-            let requestStatus = getRequestStatusById(result._requestStatus);
+            let status = dropdownService.getProjectStatusById(result._status);
+            let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
             const project = {
                 index: Number(result._index),
                 title: result._title,
@@ -123,13 +116,13 @@ export async function getSupervisorRequests(props) {
 
     let dataArray = [];
     allRequests.map((result) => {
-        let requestStatus = getRequestStatusById(result._requestStatus);
-        let unApproveStatus = getDefaultRequestStatus();
-        let requestType = getSupervisorRequestType(result._requestType);
+        let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        let unApproveStatus = dropdownService.getDefaultRequestStatus();
+        let requestType = dropdownService.getSupervisorRequestType(result._requestType);
 
         if (requestStatus.value === unApproveStatus.value) {
             if (Number(result._requestType) === Number(requestType.id)) {
-                let projectStatus = getProjectStatusById(result._projectStatus);
+                let projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
                 const project = {
                     index: Number(result._index),
                     title: result._title,
@@ -158,13 +151,13 @@ export async function getCompanyRequests(props) {
 
     let dataArray = [];
     allRequests.map((result) => {
-        let requestStatus = getRequestStatusById(result._requestStatus);
-        let unApproveStatus = getDefaultRequestStatus();
-        let requestType = getCompanyRequestType(result._requestType);
+        let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        let unApproveStatus = dropdownService.getDefaultRequestStatus();
+        let requestType = dropdownService.getCompanyRequestType(result._requestType);
 
         if (requestStatus.value === unApproveStatus.value) {
             if (Number(result._requestType) === Number(requestType.id)) {
-                let projectStatus = getProjectStatusById(result._projectStatus);
+                let projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
                 const project = {
                     index: Number(result._index),
                     title: result._title,
@@ -193,12 +186,12 @@ export async function getAllRequests(props) {
 
     let data = [];
     allRequests.map((result) => {
-        let requestStatus = getRequestStatusById(result._requestStatus);
-        let unApproveStatus = getDefaultRequestStatus();
+        let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        let unApproveStatus = dropdownService.getDefaultRequestStatus();
 
         if (requestStatus.value !== unApproveStatus.value) {
-            let requestType = getSupervisorRequestType(result._requestType);
-            let projectStatus = getProjectStatusById(result._projectStatus);
+            let requestType = dropdownService.getSupervisorRequestType(result._requestType);
+            let projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
             const project = {
                 index: Number(result._index),
                 title: result._title,

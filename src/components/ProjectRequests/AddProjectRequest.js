@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Button } from '@material-ui/core';
 import { useStylesForm } from '../sharedResources';
-import { initialProjectRequestFormValues, initialProjectRequestFormValidity } from '../Services/formService';
-import { getDefaultRequestStatus, projectStatusDropdown, getProjectStatusByValue, requestStatusDropdown } from '../Services/dropdownService';
+import * as formService from '../Services/formService';
+import * as dropdownService from '../Services/dropdownService';
 
 export default function AddProjectRequest(props) {
 	const classes = useStylesForm();
 	const {addOrEdit, recordForEdit} = props;
-	const [values, setValues] = useState(initialProjectRequestFormValues);
+	const [values, setValues] = useState(formService.initialProjectRequestFormValues);
 	const [errors, setErrors] = useState({});
-    const [validity, setValidity] = useState(initialProjectRequestFormValidity);
+    const [validity, setValidity] = useState(formService.initialProjectRequestFormValidity);
 
     useEffect(() => {
         if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit.status);
+            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.status);
             let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
-            let requestStatus = getDefaultRequestStatus();
+            let requestStatus = dropdownService.getDefaultRequestStatus();
             setValues({
                 ...values,
                 status: nextStatus.toString(),
@@ -34,12 +34,12 @@ export default function AddProjectRequest(props) {
 	};
 
 	const resetForm = () => {
-		setValues(initialProjectRequestFormValues);
+		setValues(formService.initialProjectRequestFormValues);
 		setValues({
 			...values,
 		});
 		setErrors({});
-        setValidity(initialProjectRequestFormValidity);
+        setValidity(formService.initialProjectRequestFormValidity);
 	};
 
 	const validate = (fieldValues = values) => {
@@ -100,7 +100,7 @@ export default function AddProjectRequest(props) {
                                 error={validity.requestStatus}
                                 disabled={true}
 							>
-								{requestStatusDropdown.map((item) => (
+								{dropdownService.requestStatusDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
 										{item.value}
 									</MenuItem>
@@ -119,7 +119,7 @@ export default function AddProjectRequest(props) {
                                 error={validity.status}
                                 disabled={true}
 							>
-								{projectStatusDropdown.map((item) => (
+								{dropdownService.projectStatusDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
 										{item.value}
 									</MenuItem>

@@ -1,10 +1,6 @@
 
 /***    Methods for Dropdowns */
 
-export const getAddressZeroValue = () => {
-    return "0x0000000000000000000000000000000000000000";
-}
-
 export const getCompletedProjectStatus = () => {
     return { id: '4', value: 'Completed' };
 }
@@ -109,7 +105,7 @@ export const projectStatusDropdown = [
 
 export const userRoleDropdown = [
 	{ id: '0', value: 'DefaultRole' },
-	{ id: '1', value: 'ProjectInitiator' },
-	{ id: '2', value: 'CompanyBuilder' },
-	{ id: '3', value: 'ProjectSupervisor' },
+	{ id: '1', value: 'UserProject' },
+	{ id: '2', value: 'Company' },
+	{ id: '3', value: 'Supervisor' },
 ];

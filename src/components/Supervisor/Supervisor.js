@@ -6,7 +6,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getSupervisorRequests } from '../Services/applicationService';
+import * as applicationService from '../Services/applicationService';
 import SinglePagePdf from '../PdfViewer/SinglePagePdf';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { Toaster } from 'react-hot-toast';
@@ -30,7 +30,7 @@ class Supervisor extends Component {
     }
 
     async getSupervisorRequests() {
-        let data = await Promise.resolve(getSupervisorRequests(this.props));
+        let data = await Promise.resolve(applicationService.getSupervisorRequests(this.props));
         this.setState({ requests: data });
     }
 

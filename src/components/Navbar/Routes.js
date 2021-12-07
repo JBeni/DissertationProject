@@ -8,13 +8,13 @@ import Company from './../Company/Company';
 import Supervisor from './../Supervisor/Supervisor';
 import ProjectRequests from '../ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
-import { getDefaultRole } from './../Services/applicationService';
+import * as roleService from './../Services/roleService';
 
 function Routes(props) {
     const [defaultRole, setDefaultRole] = useState('');
 
     useEffect(() => {
-        const role = getDefaultRole();
+        const role = roleService.getDefaultRole();
         setDefaultRole(role);
     }, []);
 

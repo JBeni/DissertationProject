@@ -10,12 +10,12 @@ import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import AddProjectRequest from './AddProjectRequest';
 import ViewProjectRequest from './ViewProjectRequest';
-import { getRequestStatusById } from '../Services/dropdownService';
+import * as dropdownService from '../Services/dropdownService';
 import ProjectReqStepper from './ProjectReqStepper';
-import { getAddressZeroValue, getApprovedRequestStatus, getCompletedProjectStatus, getDefaultRequestStatus, getDefaultProjectStatus, getProjectStatusById } from '../Services/dropdownService';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
-import * as eventsService from '../Services/eventsService';
+import * as eventService from '../Services/eventService';
+import * as roleService from '../Services/roleService';
 
 class ProjectRequests extends Component {
 	constructor(props) {
@@ -38,7 +38,7 @@ class ProjectRequests extends Component {
 
     async componentDidMount() {
         // Accessing path without the existence of the project
-        const data = await eventsService.checkProjectInEvents(this.props, this.props.match.params.id);
+        const data = await eventService.checkProjectInEvents(this.props, this.props.match.params.id);
         if (data?.length === 0) {
             this.props.history.push('/projects');
             return;
@@ -50,30 +50,30 @@ class ProjectRequests extends Component {
     }
 
     getLastProjectRequest = async (projectAddress) => {
-        const requests = await eventsService.getProjectRequestEvents(this.props, projectAddress);
+        const requests = await eventService.getProjectRequestEvents(this.props, projectAddress);
         if (requests.length === 0) return;
 
         const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
             .then((result) => { return result; });
 
-        const addressZero = getAddressZeroValue();
+        const addressZero = roleService.getAddressZeroValue();
         /**
          * If at this time we don't have a request the method will
          * RETURN an array with an item initialized with default data
          */
         if (lastRequest._projectAddress === addressZero) {
             // Project was Created
-            const defProjectStatus = getDefaultProjectStatus();
+            const defProjectStatus = dropdownService.getDefaultProjectStatus();
             this.setState({ activeStep: Number(defProjectStatus.id) + 1 });
             this.setState({ currentStep: 'Project created', nextStep: 'Send approve request to Supervisor' });
             return;
         }
-        const requestStatus = getRequestStatusById(lastRequest._requestStatus);
-        const projectStatus = getProjectStatusById(lastRequest._status);
+        const requestStatus = dropdownService.getRequestStatusById(lastRequest._requestStatus);
+        const projectStatus = dropdownService.getProjectStatusById(lastRequest._status);
 
-        const unApprovedReqStatus = getDefaultRequestStatus();
-        const completedProjectStatus = getCompletedProjectStatus();
-        const approvedReqStatus = getApprovedRequestStatus();
+        const unApprovedReqStatus = dropdownService.getDefaultRequestStatus();
+        const completedProjectStatus = dropdownService.getCompletedProjectStatus();
+        const approvedReqStatus = dropdownService.getApprovedRequestStatus();
         if (requestStatus.value === unApprovedReqStatus.value) {
             this.setState({ requestNextStep: false });
         }

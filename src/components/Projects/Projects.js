@@ -10,7 +10,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import { materialTableIcons } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import * as eventsService from '../Services/eventsService';
+import * as eventService from '../Services/eventService';
 import * as toasterService from '../Services/toasterService';
 import HistoryIcon from '@mui/icons-material/History';
 import Edit from '@material-ui/icons/Edit';
@@ -61,7 +61,7 @@ class Projects extends Component {
     }
 
     setProjectHistory = async (rowData) => {
-        const data = await eventsService.getProjectEvents(this.props, rowData.projectAddress);
+        const data = await eventService.getProjectEvents(this.props, rowData.projectAddress);
         this.setState({ projectHistory: data });
     }
 
@@ -73,7 +73,7 @@ class Projects extends Component {
     }
 
     setProjectReqHistory = async (rowData) => {
-        const data = await eventsService.getProjectRequestEvents(this.props, rowData.projectAddress);
+        const data = await eventService.getProjectRequestEvents(this.props, rowData.projectAddress);
         this.setState({ projectReqHistory: data });
     }
 

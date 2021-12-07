@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
-import { initialProjectFormValues } from '../Services/formService';
-import { getProjectStatusByValue, getRequestStatusByValue } from '../Services/dropdownService';
+import * as formService from '../Services/formService';
+import * as dropdownService from '../Services/dropdownService';
 
 export default function ViewRequest(props) {
 	const { recordForEdit } = props;
-	const [values, setValues] = useState(initialProjectFormValues);
+	const [values, setValues] = useState(formService.initialRequestFormValues);
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
-            let requestStatus = getRequestStatusByValue(recordForEdit.requestStatus);
+            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
+            let requestStatus = dropdownService.getRequestStatusByValue(recordForEdit.requestStatus);
 			const newData = {
 				title: recordForEdit.title,
 				projectStatus: projectStatus.value,

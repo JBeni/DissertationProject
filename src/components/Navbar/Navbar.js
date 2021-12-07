@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Routes from './Routes';
-import { getUserRoleById } from '../Services/dropdownService';
-import { getDefaultRole } from './../Services/applicationService';
+import * as dropdownService from '../Services/dropdownService';
+import * as roleService from './../Services/roleService';
 
 function Navbar(props) {
     const [isActive, setIsActive] = useState(true);
@@ -19,7 +19,7 @@ function Navbar(props) {
     const [project] = useState(props.project);
     const [signatureChain] = useState(props.signatureChain);
     const [web3] = useState(props.web3);
-    const [currentUserRole, setCurrentUserRole] = useState(getDefaultRole());
+    const [currentUserRole, setCurrentUserRole] = useState(roleService.getDefaultRole());
 
 	useEffect(() => {
         // This is Admin - Owner Contract
@@ -33,7 +33,7 @@ function Navbar(props) {
             let data = await props.project.methods.getUserInfo(props.account).call().then((result) => {
                 return result;
             });
-            let role = getUserRoleById(data._role);
+            let role = dropdownService.getUserRoleById(data._role);
             setCurrentUserRole(role.value);
         })();
 	}, []);

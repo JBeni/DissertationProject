@@ -5,7 +5,7 @@ import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@materia
 import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import MaterialTable from '@material-table/core';
-import { getAllRequests } from '../Services/applicationService';
+import * as applicationService from '../Services/applicationService';
 
 class Requests extends Component {
     constructor(props) {
@@ -22,7 +22,7 @@ class Requests extends Component {
     }
 
     async getAllRequests() {
-        let data = await Promise.resolve(getAllRequests(this.props));
+        let data = await Promise.resolve(applicationService.getAllRequests(this.props));
         this.setState({ requests: data });
     }
 

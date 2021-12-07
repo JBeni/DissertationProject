@@ -9,21 +9,21 @@ import {
 	FormHelperText,
 	Button,
 } from '@material-ui/core';
-import { initialRequestFormValues, initialRequestFormValidity } from '../Services/formService';
-import { projectStatusDropdown, getProjectStatusByValue, requestStatusFormDropdown } from '../Services/dropdownService';
+import * as formService from '../Services/formService';
+import * as dropdownService from '../Services/dropdownService';
 import { useStylesForm } from './../sharedResources';
 
 export default function EditRequest(props) {
 	const classes = useStylesForm();
 	const {addOrEdit, recordForEdit} = props;
     const [isEdit, setIsEdit] = useState(false);
-	const [values, setValues] = useState(initialRequestFormValues);
+	const [values, setValues] = useState(formService.initialRequestFormValues);
 	const [errors, setErrors] = useState({});
-    const [validity, setValidity] = useState(initialRequestFormValidity);
+    const [validity, setValidity] = useState(formService.initialRequestFormValidity);
 
     useEffect(() => {
 		if (recordForEdit != null) {
-            let projectStatus = getProjectStatusByValue(recordForEdit.projectStatus);
+            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
             setValues({
 				...values,
                 index: Number(recordForEdit.index),
@@ -53,12 +53,12 @@ export default function EditRequest(props) {
 	};
 
 	const resetForm = () => {
-		setValues(initialRequestFormValues);
+		setValues(formService.initialRequestFormValues);
 		setValues({
 			...values
 		});
 		setErrors({});
-        setValidity(initialRequestFormValidity);
+        setValidity(formService.initialRequestFormValidity);
 	};
 
 	const validate = (fieldValues = values) => {
@@ -136,7 +136,7 @@ export default function EditRequest(props) {
                                 error={validity.projectStatus}
                                 disabled={true}
 							>
-								{projectStatusDropdown.map((item) => (
+								{dropdownService.projectStatusDropdown.map((item) => (
 									<MenuItem key={item.id} value={item.id}>
 										{item.value}
 									</MenuItem>
@@ -154,7 +154,7 @@ export default function EditRequest(props) {
 								onChange={handleInputChange}
                                 error={validity.requestStatus}
 							>
-								{requestStatusFormDropdown.map((item) => (
+								{dropdownService.requestStatusFormDropdown.map((item) => (
                                     <MenuItem key={item.id} value={item.id}>
                                         {item.value}
                                     </MenuItem>
