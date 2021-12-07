@@ -191,16 +191,11 @@ contract ProjectChain is UserChain {
             ) {
                 if (_projectAddress == projectRequests[index]._projectAddress) {
                     request = ProjectRequest(
-                        projectRequests[index]._index,
-                        projectRequests[index]._title,
-                        projectRequests[index]._comments,
+                        0, "", "",
                         projectRequests[index]._status,
                         projectRequests[index]._requestStatus,
                         projectRequests[index]._projectAddress,
-                        projectRequests[index]._signerAddress,
-                        projectRequests[index]._requestAddress,
-                        block.timestamp,
-                        projectRequests[index]._signature
+                        address(0), address(0), 0, ""
                     );
                     return request;
                 }
