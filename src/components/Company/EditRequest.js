@@ -23,25 +23,33 @@ export default function EditRequest(props) {
 
     useEffect(() => {
 		if (recordForEdit != null) {
-            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
-            setValues({
-				...values,
-                index: Number(recordForEdit.index),
-                title: recordForEdit.title,
-                projectStatus: projectStatus.id,
-                indexProjectRequest: Number(recordForEdit.indexProjectRequest),
-                comments: '',
-                projectAddress: recordForEdit.projectAddress,
-                signerAddress: recordForEdit.signerAddress,
-                requestAddress: recordForEdit.requestAddress
-			});
+            populateForm();
             setIsEdit(true);
         } else {
-            setValues({
-                ...values
-            });
+            emptyForm();
         }
 	}, [recordForEdit]);
+
+    const populateForm = () => {
+        let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
+        setValues({
+            ...values,
+            index: Number(recordForEdit.index),
+            title: recordForEdit.title,
+            projectStatus: projectStatus.id,
+            indexProjectRequest: Number(recordForEdit.indexProjectRequest),
+            comments: '',
+            projectAddress: recordForEdit.projectAddress,
+            signerAddress: recordForEdit.signerAddress,
+            requestAddress: recordForEdit.requestAddress
+        });
+    }
+
+    const emptyForm = () => {
+        setValues({
+            ...values
+        });
+    }
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;

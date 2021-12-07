@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import Loader from './components/Views/Loader';
+import * as roleService from './components/Services/roleService';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
@@ -24,7 +25,7 @@ class App extends Component {
 			web3: null,
             unAuthorisedUser: false,
             currentUsername: null,
-            userRole: null
+            currentUserRole: null,
         };
     }
 
@@ -121,6 +122,12 @@ class App extends Component {
 
         if (this.state.account === adminData._walletAddress) {
             this.setState({ loading: false, currentUsername: adminData._username });
+            const adminRole = roleService.getAdminRole();
+            if (adminData._role === adminRole) {
+                this.setState({ currentUserRole: roleService.getAdminRole() });
+            } else {
+                this.setState({ unAuthorisedUser: true });
+            }
             return;
         }
 
@@ -132,7 +139,7 @@ class App extends Component {
                 return { username: response._username, walletAddress: response._walletAddress };
             });
             if (userInfo.walletAddress === this.state.account) {
-                this.setState({ loading: false, currentUsername: userInfo.username });
+                this.setState({ loading: false, currentUserRole: userInfo.role, currentUsername: userInfo.username });
                 return;
             }
         }
@@ -149,6 +156,7 @@ class App extends Component {
                         serviceChain={this.state.serviceChain}
                         signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
+                        currentUserRole={this.state.currentUserRole}
                         loggedIn={this.state.loggedIn}
                         web3={this.state.web3}
                     />
