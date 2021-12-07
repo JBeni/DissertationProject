@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DefaultPage from '../NotFound/DefaultPage';
 import Projects from '../Projects/Projects';
@@ -8,20 +8,17 @@ import Company from './../Company/Company';
 import Supervisor from './../Supervisor/Supervisor';
 import ProjectRequests from '../ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
-import * as roleService from './../Services/roleService';
+import * as roleService from '../Services/roleService';
 
 function Routes(props) {
-    const [defaultRole, setDefaultRole] = useState('');
 
     useEffect(() => {
-        const role = roleService.getDefaultRole();
-        setDefaultRole(role);
     }, []);
 
 	return (
 		<Switch>
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole !== null &&
                     <Route
                         path="/" exact
                         render={() => (
@@ -34,7 +31,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole !== null &&
                     <Route
                         path="/dashboard" exact
                         render={() => (
@@ -47,7 +44,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole === roleService.getAdminRole() &&
                     <Route
                         path="/users"
                         render={() => (
@@ -60,7 +57,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole === roleService.getUserProjectRole() &&
                 <Route
                     path="/projects" exact
                     render={() => (
@@ -74,7 +71,7 @@ function Routes(props) {
                 />
             }
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole === roleService.getUserProjectRole() &&
                     <Route
                         path="/projects/:id"
                         render={() => (
@@ -87,20 +84,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
-                    <Route
-                        path="/project-initiator"
-                        render={() => (
-                            <DefaultPage
-                                account={props.account}
-                                project={props.project}
-                                web3={props.web3}
-                            />
-                        )}
-                    />
-            }
-            {
-                props.userRole === defaultRole &&
+                props.currentUserRole === roleService.getCompanyRole() &&
                     <Route
                         path="/company"
                         render={() => (
@@ -113,7 +97,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole === roleService.getSupervisorRole() &&
                     <Route
                         path="/supervisor"
                         render={() => (
@@ -126,7 +110,10 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
+                (
+                    props.currentUserRole === roleService.getCompanyRole() ||
+                    props.currentUserRole === roleService.getSupervisorRole()
+                ) &&
                     <Route
                         path="/requests"
                         render={() => (
@@ -139,7 +126,7 @@ function Routes(props) {
                     />
             }
             {
-                props.userRole === defaultRole &&
+                props.currentUserRole !== null &&
                     <Route
                         render={() => (
                             <DefaultPage
