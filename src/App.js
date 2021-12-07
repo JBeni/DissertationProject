@@ -3,6 +3,7 @@ import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import Loader from './components/Views/Loader';
 import * as roleService from './components/Services/roleService';
+import * as dropdownService from './components/Services/dropdownService';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
@@ -117,14 +118,19 @@ class App extends Component {
 
     async checkUserRole() {
         const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
-            return response;
+            let role = dropdownService.getAdminRoleById(response._role);
+            return {
+                username: response._username,
+                role: role.value,
+                walletAddress: response._walletAddress
+            };
         });
 
-        if (this.state.account === adminData._walletAddress) {
-            this.setState({ loading: false, currentUsername: adminData._username });
+        if (this.state.account === adminData.walletAddress) {
+            this.setState({ loading: false, currentUsername: adminData.username });
             const adminRole = roleService.getAdminRole();
-            if (adminData._role === adminRole) {
-                this.setState({ currentUserRole: roleService.getAdminRole() });
+            if (adminData.role === adminRole) {
+                this.setState({ currentUserRole: adminData.role });
             } else {
                 this.setState({ unAuthorisedUser: true });
             }
@@ -136,7 +142,8 @@ class App extends Component {
         });
         if (users.length > 0) {
             const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call().then((response) => {
-                return { username: response._username, walletAddress: response._walletAddress };
+                const role = dropdownService.getUserRoleById(response._role);
+                return { username: response._username, role: role.value, walletAddress: response._walletAddress };
             });
             if (userInfo.walletAddress === this.state.account) {
                 this.setState({ loading: false, currentUserRole: userInfo.role, currentUsername: userInfo.username });
