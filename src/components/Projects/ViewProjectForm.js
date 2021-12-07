@@ -9,7 +9,7 @@ export default function ViewProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = dropdownService.getProjectStatusByValue(recordForEdit.status);
+            const status = dropdownService.getProjectStatusByValue(recordForEdit.status);
 			const newData = {
 				name: recordForEdit.name,
 				status: status.value,

@@ -31,7 +31,7 @@ export default function EditRequest(props) {
 	}, [recordForEdit]);
 
     const populateForm = () => {
-        let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
+        const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
         setValues({
             ...values,
             index: Number(recordForEdit.index),

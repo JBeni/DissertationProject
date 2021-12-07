@@ -118,7 +118,7 @@ class App extends Component {
 
     async checkUserRole() {
         const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
-            let role = dropdownService.getAdminRoleById(response._role);
+            const role = dropdownService.getAdminRoleById(response._role);
             return {
                 username: response._username,
                 role: role.value,

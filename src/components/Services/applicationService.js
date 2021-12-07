@@ -8,7 +8,7 @@ export async function getAllUsers(props) {
     let dataArray = [];
     await props.project.methods.getAllUsers().call().then((result) => {
         result.map((result) => {
-            let role = dropdownService.getUserRoleById(result._role);
+            const role = dropdownService.getUserRoleById(result._role);
             const user = {
                 username: result._username,
                 email: props.web3.utils.hexToUtf8(result._email),
@@ -27,7 +27,7 @@ export async function getAllUsers(props) {
 
 export async function getUserInfo(props) {
     return await props.project.methods.getUserInfo(props.account).call().then((result) => {
-        let role = dropdownService.getUserRoleById(result._role);
+        const role = dropdownService.getUserRoleById(result._role);
         const user = {
             username: result._username,
             email: props.web3.utils.hexToUtf8(result._email),
@@ -45,7 +45,7 @@ export async function getAllProjects(props) {
     let dataArray = [];
     await props.project.methods.getAllProjects().call().then((result) => {
         result.map((result) => {
-            let status = dropdownService.getProjectStatusById(result._status);
+            const status = dropdownService.getProjectStatusById(result._status);
             const project = {
                 index: Number(result._index),
                 name: result._name,
@@ -64,7 +64,7 @@ export async function getAllProjects(props) {
 
 export async function getProjectInfo(props, projectAddress) {
     return await props.project.methods.getProjectInfo(projectAddress).call().then((result) => {
-        let status = dropdownService.getProjectStatusById(result._status);
+        const status = dropdownService.getProjectStatusById(result._status);
         const project = {
             index: Number(result._index),
             name: result._name,
@@ -79,15 +79,15 @@ export async function getProjectInfo(props, projectAddress) {
 }
 
 export async function getAllProjectRequests(props, projectAddress) {
-    let allProjectRequest = await props.project.methods.getAllProjectRequests().call().then((result) => {
+    const allProjectRequest = await props.project.methods.getAllProjectRequests().call().then((result) => {
         return result;
     }).catch(function (error) {});
 
     let dataArray = [];
     allProjectRequest.map((result) => {
         if (projectAddress === result._projectAddress) {
-            let status = dropdownService.getProjectStatusById(result._status);
-            let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+            const status = dropdownService.getProjectStatusById(result._status);
+            const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
             const project = {
                 index: Number(result._index),
                 title: result._title,
@@ -110,19 +110,19 @@ export async function getAllProjectRequests(props, projectAddress) {
 /********  Methods for Supervisor and Company  ***********/
 
 export async function getSupervisorRequests(props) {
-    let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+    const allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
     }).catch(function (error) {});
 
     let dataArray = [];
     allRequests.map((result) => {
-        let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
-        let unApproveStatus = dropdownService.getDefaultRequestStatus();
-        let requestType = dropdownService.getSupervisorRequestType(result._requestType);
+        const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        const unApproveStatus = dropdownService.getDefaultRequestStatus();
+        const requestType = dropdownService.getSupervisorRequestType(result._requestType);
 
         if (requestStatus.value === unApproveStatus.value) {
             if (Number(result._requestType) === Number(requestType.id)) {
-                let projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
+                const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
                 const project = {
                     index: Number(result._index),
                     title: result._title,
@@ -145,19 +145,19 @@ export async function getSupervisorRequests(props) {
 }
 
 export async function getCompanyRequests(props) {
-    let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+    const allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
     }).catch(function (error) {});
 
     let dataArray = [];
     allRequests.map((result) => {
-        let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
-        let unApproveStatus = dropdownService.getDefaultRequestStatus();
-        let requestType = dropdownService.getCompanyRequestType(result._requestType);
+        const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        const unApproveStatus = dropdownService.getDefaultRequestStatus();
+        const requestType = dropdownService.getCompanyRequestType(result._requestType);
 
         if (requestStatus.value === unApproveStatus.value) {
             if (Number(result._requestType) === Number(requestType.id)) {
-                let projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
+                const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
                 const project = {
                     index: Number(result._index),
                     title: result._title,
@@ -180,18 +180,18 @@ export async function getCompanyRequests(props) {
 }
 
 export async function getAllRequests(props) {
-    let allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+    const allRequests = await props.project.methods.getAllRequests().call().then((result) => {
         return result;
     }).catch(function (error) {});
 
-    let data = [];
+    let dataArray = [];
     allRequests.map((result) => {
-        let requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
-        let unApproveStatus = dropdownService.getDefaultRequestStatus();
+        const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        const unApproveStatus = dropdownService.getDefaultRequestStatus();
 
         if (requestStatus.value !== unApproveStatus.value) {
-            let requestType = dropdownService.getSupervisorRequestType(result._requestType);
-            let projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
+            const requestType = dropdownService.getSupervisorRequestType(result._requestType);
+            const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
             const project = {
                 index: Number(result._index),
                 title: result._title,
@@ -205,22 +205,22 @@ export async function getAllRequests(props) {
                 requestAddress: result._requestAddress,
                 timestamp: result._timestamp
             };
-            data.push(project);
+            dataArray.push(project);
         }
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 export async function getIpfsFileForRequest(props, _projectAddress) {
-    let projectData = await props.project.methods.getProjectInfo(_projectAddress).call().then((response) => {
+    const projectData = await props.project.methods.getProjectInfo(_projectAddress).call().then((response) => {
         return response;
     });
 
     let queryString = '?';
     queryString = queryString + `hashContains=${projectData._ipfsFileCID}&`;
     queryString = queryString + `status=pinned&`;
-    const url = `https://api.pinata.cloud/data/pinList${queryString}`;
+    const url = `https://api.pinata.cloud/dataArray/pinList${queryString}`;
     return axios.get(url, {
         headers: {
             pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
@@ -235,25 +235,25 @@ export async function getIpfsFileByCID(_ipfsFileCID) {
     let queryString = '?';
     queryString = queryString + `hashContains=${_ipfsFileCID}&`;
     queryString = queryString + `status=pinned&`;
-    const url = `https://api.pinata.cloud/data/pinList${queryString}`;
+    const url = `https://api.pinata.cloud/dataArray/pinList${queryString}`;
     return await axios.get(url, {
         headers: {
             pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
             pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
         },
     })
-    .then(function (response) { return response.data; })
+    .then(function (response) { return response.dataArray; })
     .catch(function (error) {});
 }
 
 export async function createUniqueProjectRequestAddress(props, _title, _index) {
-    let response = await props.project.methods.createUniqueProjectRequestAddress(_title, _index).call()
+    const response = await props.project.methods.createUniqueProjectRequestAddress(_title, _index).call()
         .catch(function (error) {});
     return response;
 }
 
 export async function createUniqueProjectAddress(props, _name, _index) {
-    let response = await props.project.methods.createUniqueProjectAddress(_name, _index).call()
+    const response = await props.project.methods.createUniqueProjectAddress(_name, _index).call()
         .catch(function (error) {});
     return response;
 }

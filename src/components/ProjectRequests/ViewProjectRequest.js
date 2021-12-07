@@ -9,7 +9,7 @@ export default function ViewProjectRequest(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let status = dropdownService.getProjectStatusByValue(recordForEdit.status);
+            const status = dropdownService.getProjectStatusByValue(recordForEdit.status);
 			const newData = {
 				title: recordForEdit.title,
 				comments: recordForEdit.comments,

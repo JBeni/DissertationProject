@@ -171,12 +171,12 @@ class ProjectRequests extends Component {
     }
 
     getProjectInfo = async () => {
-        let data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
+        const data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
         this.setState({ project: data });
     }
 
     getAllProjectRequests = async () => {
-        let data = await applicationService.getAllProjectRequests(this.props, this.props.match.params.id);
+        const data = await applicationService.getAllProjectRequests(this.props, this.props.match.params.id);
         this.setState({ projectRequests: data });
     }
 

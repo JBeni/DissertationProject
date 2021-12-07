@@ -41,7 +41,7 @@ class Projects extends Component {
     }
 
     getProjects = async () => {
-        let allProjects = await applicationService.getAllProjects(this.props);
+        const allProjects = await applicationService.getAllProjects(this.props);
         this.setState({ projects: allProjects });
     }
 
@@ -90,7 +90,7 @@ class Projects extends Component {
             const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
             const data = new FormData();
 
-            let blob = new Blob([file], { type: file.type });
+            const blob = new Blob([file], { type: file.type });
 
             data.append('file', blob, file.name);
             const metadata = JSON.stringify({
@@ -150,7 +150,7 @@ class Projects extends Component {
     }
 
     createProject = async (_name, _status, _fileData) => {
-        let _ipfsCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+        const _ipfsCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         const projectAddress = await this.createUniqueProjectAddress(_name, new Date().getTime());
         const signatureData = this.signCreateProject(projectAddress);
 
@@ -174,7 +174,7 @@ class Projects extends Component {
 	}
 
     updateProject = async (_projectAddress, _fileData) => {
-        let _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+        const _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
         const signatureData = this.signCreateProject(_projectAddress);
 
         if (signatureData !== null) {

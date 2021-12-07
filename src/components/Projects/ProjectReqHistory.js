@@ -21,15 +21,14 @@ export default function ProjectReqHistory(props) {
     }, [projectReqHistory])
 
     const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
-        let v = '0x' + _signature.slice(130, 132).toString();
-        let r = _signature.slice(0, 66).toString();
-        let s = '0x' + _signature.slice(66, 130).toString();
-        let messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
+        const v = '0x' + _signature.slice(130, 132).toString();
+        const r = _signature.slice(0, 66).toString();
+        const s = '0x' + _signature.slice(66, 130).toString();
+        const messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
 
-        let verificationOutput = await props.signatureChain.methods
+        const verificationOutput = await props.signatureChain.methods
             .verifySignature(_signerAddress, messageHash, v, r, s)
             .call();
-            //.call({ from: props.account });
         console.log(verificationOutput);
     }
 

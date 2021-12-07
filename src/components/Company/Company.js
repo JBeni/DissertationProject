@@ -29,7 +29,7 @@ class Company extends Component {
     }
 
     async getCompanyRequests() {
-        let data = await Promise.resolve(applicationService.getCompanyRequests(this.props));
+        const data = await Promise.resolve(applicationService.getCompanyRequests(this.props));
         this.setState({ requests: data });
     }
 

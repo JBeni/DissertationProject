@@ -25,8 +25,8 @@ export default function AddProjectForm(props) {
 
     useEffect(() => {
         if (recordForEdit != null) {
-            let status = dropdownService.getProjectStatusByValue(recordForEdit.status);
-            let newData = {
+            const status = dropdownService.getProjectStatusByValue(recordForEdit.status);
+            const newData = {
                 name: recordForEdit.name,
                 status: status.id,
                 'file': { name: '', type: '', size: '', lastModifiedDate: '' },

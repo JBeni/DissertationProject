@@ -30,7 +30,7 @@ class Supervisor extends Component {
     }
 
     async getSupervisorRequests() {
-        let data = await Promise.resolve(applicationService.getSupervisorRequests(this.props));
+        const data = await Promise.resolve(applicationService.getSupervisorRequests(this.props));
         this.setState({ requests: data });
     }
 
