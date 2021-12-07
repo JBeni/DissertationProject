@@ -1,8 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 function Sidebar(props) {
-	return (
+
+    const logout = () => {
+        props.setLoggedIn();
+    }
+
+    return (
 		<div className={props.isActive ? 'l-navbar show' : 'l-navbar'} id="nav-bar">
 			<nav className="nav">
 				<div>
@@ -99,10 +105,20 @@ function Sidebar(props) {
 					</div>
 				</div>
 
-				<p className="nav__link">
-					<i className="bx bx-copyright nav__icon"></i>
-					<span className="nav__name">Copyright {(new Date().getFullYear())}</span>
-				</p>
+                <div>
+
+                    {/* <p className="nav__link">
+                        <i className="bx bx-log-out nav__icon"></i>
+                        <span className="nav__name">
+                            <Button variant="contained" color="primary" onClick={ () => logout() }>Logout</Button>
+                        </span>
+                    </p> */}
+
+                    <p className="nav__link">
+                        <i className="bx bx-copyright nav__icon"></i>
+                        <span className="nav__name">Copyright {(new Date().getFullYear())}</span>
+                    </p>
+                </div>
 			</nav>
 		</div>
 	);
