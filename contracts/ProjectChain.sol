@@ -5,15 +5,15 @@ import "./UserChain.sol";
 import "./SharedChain.sol";
 
 contract ProjectChain is UserChain {
-    address _projectInitiator;
+    address _userAddress;
 
     constructor() {
-        _projectInitiator = msg.sender;
+        _userAddress = msg.sender;
     }
 
-    modifier onlyProjectInitiator() {
+    modifier onlyUserProject() {
         require(
-            users[_projectInitiator]._role == Roles.ProjectInitiator,
+            users[_userAddress]._role == Roles.UserProject,
             "You don't have the rights for this resources."
         );
         _;
@@ -26,7 +26,7 @@ contract ProjectChain is UserChain {
     address[] public projectsAddress;
 
     function createUniqueProjectAddress(string memory _name, uint _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_name,_projectInitiator,_index)))));
+        return address(uint160(uint256(keccak256(abi.encodePacked(_name, _userAddress, _index)))));
     }
 
     function createProject(
@@ -42,7 +42,7 @@ contract ProjectChain is UserChain {
             ProjectStatus(_status),
             _ipfsFileCID,
             _projectAddress,
-            _projectInitiator,
+            _userAddress,
             block.timestamp,
             _signature
         );
@@ -92,7 +92,7 @@ contract ProjectChain is UserChain {
     address[] public projectRequestsAddress;
 
     function createUniqueProjectRequestAddress(string memory _title, uint _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_title, _projectInitiator, _index)))));
+        return address(uint160(uint256(keccak256(abi.encodePacked(_title, _userAddress, _index)))));
     }
 
     function createProjectRequest(
@@ -110,7 +110,7 @@ contract ProjectChain is UserChain {
             ProjectStatus(_status),
             RequestStatus(_requestStatus),
             _projectAddress,
-            _projectInitiator,
+            _userAddress,
             _projectReqAddress,
             block.timestamp,
             _signature
@@ -227,7 +227,7 @@ contract ProjectChain is UserChain {
             ProjectStatus(_projectStatus),
             _requestType,
             _projectAddress,
-            _projectInitiator,
+            _userAddress,
             _requestAddress,
             block.timestamp,
             ""
