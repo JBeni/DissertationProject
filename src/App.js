@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import Loader from './components/Views/Loader';
+import SignIn from './components/Auth/SignIn';
+import { Toaster } from 'react-hot-toast';
+import * as toasterService from './components/Services/toasterService';
+import { DialogContent, Typography, DialogTitle, Dialog } from '@material-ui/core';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
@@ -13,15 +17,18 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
+            openSignIn: true,
 			account: null,
 			project: null,
             adminChain: null,
             serviceChain: null,
             signatureChain: null,
+            loggedIn: false,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
             currentUsername: null,
+            userRole: null
         };
     }
 
@@ -108,27 +115,64 @@ class App extends Component {
 			window.alert('Signature Chain contract not deployed to detected network.');
 		}
 
-        await this.checkUserRole(accounts[0], this.state.project, this.state.adminChain, web3);
+        //this.setState({ loading: false });
+
+        await this.checkUserRole();
 	}
 
-    async checkUserRole(_account, _project, _adminChain, _web) {
-        const adminData = await _adminChain.methods.getAdminInfo().call({ from: _account }).then((response) => {
+    setLoggedIn = () => {
+        this.setState({ loggedIn: false });
+    }
+
+    signInFunction = async (addressFromPrivateKey) => {
+        if (addressFromPrivateKey === null) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
+
+        const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
+            return response;
+        });
+        if (addressFromPrivateKey === adminData._walletAddress) {
+            this.setState({ loggedIn: true, loading: false, currentUsername: adminData._username });
+            return;
+        }
+
+        const users = await this.state.project.methods.getAllUsers().call().then((response) => {
+            return response;
+        });
+        if (users.length > 0) {
+            const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call().then((response) => {
+                return { username: response._username, walletAddress: response._walletAddress };
+            });
+            if (addressFromPrivateKey === userInfo.walletAddress) {
+                this.setState({ loggedIn: true, loading: false, currentUsername: userInfo.username });
+                return;
+            }
+        }
+
+        this.setState({ openSignIn: false });
+        //await this.checkUserRole();
+    }
+
+    async checkUserRole() {
+        const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
             return response;
         });
 
-        if (_account === adminData._walletAddress) {
+        if (this.state.account === adminData._walletAddress) {
             this.setState({ loading: false, currentUsername: adminData._username });
             return;
         }
 
-        const users = await _project.methods.getAllUsers().call().then((response) => {
+        const users = await this.state.project.methods.getAllUsers().call().then((response) => {
             return response;
         });
         if (users.length > 0) {
-            const userInfo = await _project.methods.getUserInfo(_account).call().then((response) => {
+            const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call().then((response) => {
                 return { username: response._username, walletAddress: response._walletAddress };
             });
-            if (userInfo.walletAddress === _account) {
+            if (userInfo.walletAddress === this.state.account) {
                 this.setState({ loading: false, currentUsername: userInfo.username });
                 return;
             }
@@ -136,22 +180,58 @@ class App extends Component {
         this.setState({ unAuthorisedUser: true });
     }
 
-	render() {
-		if (this.state.loading === false) {
+    render() {
+        if (this.state.loading === false) {
             return (
 				<React.Fragment>
-					<Navbar
-						account={this.state.account}
-						project={this.state.project}
+                    {/* {
+                        this.state.loggedIn === false
+                            ? <Dialog open={this.state.openSignIn} maxWidth="md">
+                                    <DialogTitle>
+                                        <div style={{ display: 'flex' }}>
+                                            <Typography variant="h6" component="div" style={{ flexGrow: 1, textAlign: 'center' }}>
+                                                Sign In To Get Access
+                                            </Typography>
+                                        </div>
+                                    </DialogTitle>
+                                    <DialogContent dividers style={{ width: '700px' }}>
+                                        <SignIn web3={this.state.web3} signInFunction={this.signInFunction} />
+                                    </DialogContent>
+                                </Dialog>
+                        : this.state.loggedIn === true
+                            ? <Navbar
+                                account={this.state.account}
+                                project={this.state.project}
+                                serviceChain={this.state.serviceChain}
+                                signatureChain={this.state.signatureChain}
+                                currentUsername={this.state.currentUsername}
+                                loggedIn={this.state.loggedIn}
+                                setLoggedIn={this.setLoggedIn}
+                                web3={this.state.web3}
+                            />
+                        : <></>
+                    } */}
+                    <Navbar
+                        account={this.state.account}
+                        project={this.state.project}
                         serviceChain={this.state.serviceChain}
                         signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
-						web3={this.state.web3}
-					/>
+                        loggedIn={this.state.loggedIn}
+                        setLoggedIn={this.setLoggedIn}
+                        web3={this.state.web3}
+                    />
+
+                    <Toaster position="bottom-center" reverseOrder={false} />
 				</React.Fragment>
 			);
 		} else {
-			return <Loader unAuthorisedUser={this.state.unAuthorisedUser}></Loader>;
+			return (
+                <>
+                    <Loader unAuthorisedUser={this.state.unAuthorisedUser}></Loader>
+                    <Toaster position="bottom-center" reverseOrder={false} />
+                </>
+            );
 		}
 	}
 }
