@@ -7,7 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
-import { getCompanyRequests } from '../Services/applicationService';
+import * as applicationService from '../Services/applicationService';
 import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
@@ -29,7 +29,7 @@ class Company extends Component {
     }
 
     async getCompanyRequests() {
-        let data = await Promise.resolve(getCompanyRequests(this.props));
+        let data = await Promise.resolve(applicationService.getCompanyRequests(this.props));
         this.setState({ requests: data });
     }
 
