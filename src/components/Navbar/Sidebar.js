@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import * as roleService from '../Services/roleService';
 
 function Sidebar(props) {
     return (
@@ -13,7 +14,7 @@ function Sidebar(props) {
 
 					<div className="nav__list">
                         {
-                            props.userRole &&
+                            props.currentUserRole !== null &&
                                 <Link
                                     to="/dashboard"
                                     className={
@@ -27,7 +28,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getAdminRole() &&
                                 <Link
                                     to="/users"
                                     className={
@@ -41,7 +42,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getUserProjectRole() &&
                                 <Link
                                     to="/projects"
                                     className={
@@ -55,7 +56,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getCompanyRole() &&
                                 <Link
                                     to="/company"
                                     className={
@@ -69,7 +70,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getSupervisorRole() &&
                                 <Link
                                     to="/supervisor"
                                     className={
@@ -83,7 +84,10 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            (
+                                props.currentUserRole === roleService.getCompanyRole() ||
+                                props.currentUserRole === roleService.getSupervisorRole()
+                            ) &&
                                 <Link
                                     to="/requests"
                                     className={
