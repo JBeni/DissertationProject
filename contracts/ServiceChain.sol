@@ -34,9 +34,9 @@ contract ServiceChain {
         projectStatus.push(Dropdown(4, 'Completed'));
 
         userRole.push(Dropdown(0, 'DefaultRole'));
-        userRole.push(Dropdown(1, 'ProjectInitiator'));
-        userRole.push(Dropdown(2, 'CompanyBuilder'));
-        userRole.push(Dropdown(3, 'ProjectSupervisor'));
+        userRole.push(Dropdown(1, 'UserProject'));
+        userRole.push(Dropdown(2, 'Company'));
+        userRole.push(Dropdown(3, 'Supervisor'));
     }
 
     /** Methods: Check if Dropdown option exists */
@@ -184,9 +184,9 @@ contract ServiceChain {
     function getUserRoleDropdown() public pure returns(Dropdown[] memory) {
         Dropdown[] memory data = new Dropdown[](4);
         data[0] = Dropdown(0, 'DefaultRole');
-        data[1] = Dropdown(1, 'ProjectInitiator');
-        data[2] = Dropdown(2, 'CompanyBuilder');
-        data[3] = Dropdown(3, 'ProjectSupervisor');
+        data[1] = Dropdown(1, 'UserProject');
+        data[2] = Dropdown(2, 'Company');
+        data[3] = Dropdown(3, 'Supervisor');
         return data;
     }
 }
