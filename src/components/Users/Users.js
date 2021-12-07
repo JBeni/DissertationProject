@@ -63,15 +63,35 @@ export default class Users extends Component {
         this.setState({ userHistory: data });
     }
 
+    signData = (_walletAddress) => {
+        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+
+        if (userPrivateKey === null) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
+
+        try {
+            return this.props.web3.eth.accounts.sign(_walletAddress, '0x' + userPrivateKey);
+        } catch (error) {
+            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+            return null;
+        }
+    }
+
     createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
-        await this.props.project.methods
+        const signatureData = this.signData(_walletAddress);
+
+        if (signatureData !== null) {
+            await this.props.project.methods
 			.registerUser(
                 _username,
                 this.props.web3.utils.utf8ToHex(_email),
                 this.props.web3.utils.utf8ToHex(_firstname),
                 this.props.web3.utils.utf8ToHex(_lastname),
                 Number(_role),
-                _walletAddress
+                _walletAddress,
+                signatureData.signature
 			).send({ from: this.props.account })
             .then((response) => {
                 toasterService.notifyToastSuccess('Create User operation was made successfully');
@@ -79,20 +99,26 @@ export default class Users extends Component {
             }).catch((error) => {
                 toasterService.notifyToastError('Create User operation has failed');
             });
+        }
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
-        await this.props.project.methods.changeUserRole(
-            Number(_role),
-            _walletAddress
-        ).send({ from: this.props.account })
-        .then((response) => {
-            toasterService.notifyToastSuccess('Update User Role operation was made successfully');
-            this.getUsers();
-        })
-        .catch((error) => {
-            toasterService.notifyToastError('Update User Role operation has failed');
-        });
+        const signatureData = this.signData(_walletAddress);
+
+        if (signatureData !== null) {
+            await this.props.project.methods.changeUserRole(
+                Number(_role),
+                _walletAddress,
+                signatureData.signature
+            ).send({ from: this.props.account })
+            .then((response) => {
+                toasterService.notifyToastSuccess('Update User Role operation was made successfully');
+                this.getUsers();
+            })
+            .catch((error) => {
+                toasterService.notifyToastError('Update User Role operation has failed');
+            });
+        }
 	}
 
     addOrEdit = (userData, resetForm) => {
