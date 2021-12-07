@@ -25,16 +25,11 @@ contract SharedChain {
         Roles _role;
         address _walletAddress;
         uint _timestamp;
+        string _signature;
     }
     event UserEvent(
-        uint _index,
-        string indexed _username,
-        bytes32 _email,
-        bytes32 _firstname,
-        bytes32 _lastname,
-        Roles indexed _role,
-        address indexed _walletAddress,
-        uint _timestamp
+        User _user,
+        address indexed _walletAddress
     );
 
 

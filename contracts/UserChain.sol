@@ -30,29 +30,25 @@ contract UserChain is SharedChain {
         bytes32 _firstname,
         bytes32 _lastname,
         uint256 _role,
-        address _walletAddress
+        address _walletAddress,
+        string memory _signature
     ) public onlyOwner {
         users[_walletAddress] = User(
             usersCounter, _username, _email, _firstname, _lastname,
-            Roles(_role), _walletAddress, block.timestamp
+            Roles(_role), _walletAddress, block.timestamp, _signature
         );
 
-        emit UserEvent(
-            usersCounter, _username, _email, _firstname,
-            _lastname, Roles(_role), _walletAddress, block.timestamp
-        );
+        emit UserEvent(users[_walletAddress], _walletAddress);
         usersAddress.push(_walletAddress);
         usersCounter++;
     }
 
-    function changeUserRole(uint _role, address _walletAddress) public {
+    function changeUserRole(uint _role, address _walletAddress, string memory _signature) public {
         users[_walletAddress]._role = Roles(_role);
 
-        emit UserEvent(
-            users[_walletAddress]._index, users[_walletAddress]._username,
-            users[_walletAddress]._email, users[_walletAddress]._firstname,
-            users[_walletAddress]._lastname, Roles(_role), _walletAddress, block.timestamp
-        );
+        users[_walletAddress]._timestamp = block.timestamp;
+        users[_walletAddress]._signature = _signature;
+        emit UserEvent(users[_walletAddress], _walletAddress);
     }
 
     function getAllUsers() public view returns(User[] memory) {
