@@ -2,10 +2,6 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import Loader from './components/Views/Loader';
-import SignIn from './components/Auth/SignIn';
-import { Toaster } from 'react-hot-toast';
-import * as toasterService from './components/Services/toasterService';
-import { DialogContent, Typography, DialogTitle, Dialog } from '@material-ui/core';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
@@ -115,45 +111,8 @@ class App extends Component {
 			window.alert('Signature Chain contract not deployed to detected network.');
 		}
 
-        //this.setState({ loading: false });
-
         await this.checkUserRole();
 	}
-
-    setLoggedIn = () => {
-        this.setState({ loggedIn: false });
-    }
-
-    signInFunction = async (addressFromPrivateKey) => {
-        if (addressFromPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
-            return response;
-        });
-        if (addressFromPrivateKey === adminData._walletAddress) {
-            this.setState({ loggedIn: true, loading: false, currentUsername: adminData._username });
-            return;
-        }
-
-        const users = await this.state.project.methods.getAllUsers().call().then((response) => {
-            return response;
-        });
-        if (users.length > 0) {
-            const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call().then((response) => {
-                return { username: response._username, walletAddress: response._walletAddress };
-            });
-            if (addressFromPrivateKey === userInfo.walletAddress) {
-                this.setState({ loggedIn: true, loading: false, currentUsername: userInfo.username });
-                return;
-            }
-        }
-
-        this.setState({ openSignIn: false });
-        //await this.checkUserRole();
-    }
 
     async checkUserRole() {
         const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
@@ -184,33 +143,6 @@ class App extends Component {
         if (this.state.loading === false) {
             return (
 				<React.Fragment>
-                    {/* {
-                        this.state.loggedIn === false
-                            ? <Dialog open={this.state.openSignIn} maxWidth="md">
-                                    <DialogTitle>
-                                        <div style={{ display: 'flex' }}>
-                                            <Typography variant="h6" component="div" style={{ flexGrow: 1, textAlign: 'center' }}>
-                                                Sign In To Get Access
-                                            </Typography>
-                                        </div>
-                                    </DialogTitle>
-                                    <DialogContent dividers style={{ width: '700px' }}>
-                                        <SignIn web3={this.state.web3} signInFunction={this.signInFunction} />
-                                    </DialogContent>
-                                </Dialog>
-                        : this.state.loggedIn === true
-                            ? <Navbar
-                                account={this.state.account}
-                                project={this.state.project}
-                                serviceChain={this.state.serviceChain}
-                                signatureChain={this.state.signatureChain}
-                                currentUsername={this.state.currentUsername}
-                                loggedIn={this.state.loggedIn}
-                                setLoggedIn={this.setLoggedIn}
-                                web3={this.state.web3}
-                            />
-                        : <></>
-                    } */}
                     <Navbar
                         account={this.state.account}
                         project={this.state.project}
@@ -218,18 +150,14 @@ class App extends Component {
                         signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
                         loggedIn={this.state.loggedIn}
-                        setLoggedIn={this.setLoggedIn}
                         web3={this.state.web3}
                     />
-
-                    <Toaster position="bottom-center" reverseOrder={false} />
 				</React.Fragment>
 			);
 		} else {
 			return (
                 <>
                     <Loader unAuthorisedUser={this.state.unAuthorisedUser}></Loader>
-                    <Toaster position="bottom-center" reverseOrder={false} />
                 </>
             );
 		}
