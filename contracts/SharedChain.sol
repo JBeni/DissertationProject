@@ -9,9 +9,9 @@ contract SharedChain {
 
     enum Roles {
         DefaultRole,
-        ProjectInitiator,
-        CompanyBuilder,
-        ProjectSupervisor
+        UserProject,
+        Company,
+        Supervisor
     }
 
 
