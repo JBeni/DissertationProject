@@ -50,6 +50,8 @@ function Navbar(props) {
                 userRole={currentUserRole}
                 isActive={isActive}
                 currentLocation={currentLocation}
+                setLoggedIn={props.setLoggedIn}
+                loggedIn={props.loggedIn}
             />
 
             <div className="main-section-container">
