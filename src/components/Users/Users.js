@@ -83,7 +83,7 @@ export default class Users extends Component {
         const signatureData = this.signData(_walletAddress);
 
         if (signatureData !== null) {
-            await this.props.project.methods
+            await this.props.userChain.methods
 			.registerUser(
                 _username,
                 this.props.web3.utils.utf8ToHex(_email),
@@ -106,7 +106,7 @@ export default class Users extends Component {
         const signatureData = this.signData(_walletAddress);
 
         if (signatureData !== null) {
-            await this.props.project.methods.changeUserRole(
+            await this.props.userChain.methods.changeUserRole(
                 Number(_role),
                 _walletAddress,
                 signatureData.signature
