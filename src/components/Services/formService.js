@@ -44,6 +44,7 @@ export const initialUserFormValues = {
 	lastname: '',
 	email: '',
 	role: '',
+    username: '',
 	walletAddress: '',
 };
 
@@ -57,14 +58,10 @@ export const initialUserFormValidity = {
 
 export const initialProjectFormValues = {
 	isEditForm: false,
-	name: '',
+	title: '',
+    comments: '',
 	status: '',
-    file: {
-        name: '',
-        type: '',
-        size: '',
-        lastModifiedDate: ''
-    },
+    requestStatus: '',
     ipfsFileCID: '',
     projectAddress: '',
     signerAddress: '',
