@@ -16,8 +16,12 @@ import HistoryIcon from '@mui/icons-material/History';
 import Edit from '@material-ui/icons/Edit';
 import ProjectHistory from './ProjectHistory';
 import ProjectReqHistory from './ProjectReqHistory';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import fileDownload from 'js-file-download';
+import { create } from 'ipfs-http-client';
 
 const axios = require('axios');
+const clientIpfs = create('https://ipfs.infura.io:5001/api/v0');
 
 class Projects extends Component {
 	constructor(props) {
@@ -29,7 +33,6 @@ class Projects extends Component {
             openProjectHistory: false,
             openProjectReqHistory: false,
             selectedProjectAddress: '',
-            
             projectReqHistory: [],
             projectHistory: [],
 			projects: [],
@@ -85,44 +88,16 @@ class Projects extends Component {
         this.setState({ selectedProjectAddress: value });
     }
 
-    uploadFileToPinata = async (file) => {
-        if (file.name?.length > 0) {
-            const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`;
-            const data = new FormData();
-
-            const blob = new Blob([file], { type: file.type });
-
-            data.append('file', blob, file.name);
-            const metadata = JSON.stringify({
-                name: file.name,
-                type: file.type,
-                size: file.size,
-                lastModifiedDate: file.lastModifiedDate
-            });
-            data.append('pinataMetadata', metadata);
-
-            return axios.post(url, data, {
-                maxBodyLength: 'Infinity',
-                headers: {
-                    'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-                    pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-                    pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET
-                }
-            }).then(function (response) {
-                return response.data.IpfsHash;
-            });
-        }
-    }
-
-    addOrEdit = (projectData, resetForm) => {
+    addOrEdit = (projectData, resetForm, bufferFile) => {
         if (projectData.isEditForm === false) {
             this.createProject(
 				projectData.name,
 				projectData.status,
-                projectData.file
+                projectData.file,
+                bufferFile
 			);
         } else {
-            this.updateProject(projectData.projectAddress, projectData.file);
+            this.updateProject(projectData.projectAddress, projectData.file, bufferFile);
         }
         resetForm();
         this.setRecordForEdit(null);
@@ -149,18 +124,34 @@ class Projects extends Component {
         }
     }
 
-    createProject = async (_name, _status, _fileData) => {
-        const _ipfsCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+    downloadIpfsFile = async (filename, ipfsCID) => {
+        const url = `https://ipfs.io/ipfs/${ipfsCID}`;
+        axios.get(url, {
+            responseType: 'blob',
+        })
+        .then((res) => {
+            fileDownload(res.data, filename + ".pdf");
+        });
+    }
+
+    uploadFileIpfs = async (buffer) => {
+        const ipfsResult = await clientIpfs.add(buffer);
+        console.log(ipfsResult);
+        return ipfsResult;
+    }
+
+    createProject = async (_name, _status, _fileData, _bufferFile) => {
         const projectAddress = await this.createUniqueProjectAddress(_name, new Date().getTime());
         const signatureData = this.signCreateProject(projectAddress);
 
         if (signatureData !== null) {
+            const _ipfsCID = await Promise.resolve(this.uploadFileIpfs(_bufferFile));
             await this.props.project.methods
                 .createProject(
                     projectAddress,
                     _name,
                     Number(_status),
-                    _ipfsCID,
+                    _ipfsCID.path,
                     signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
@@ -173,15 +164,15 @@ class Projects extends Component {
         }
 	}
 
-    updateProject = async (_projectAddress, _fileData) => {
-        const _ipfsFileCID = await Promise.resolve(this.uploadFileToPinata(_fileData));
+    updateProject = async (_projectAddress, _fileData, _bufferFile) => {
         const signatureData = this.signCreateProject(_projectAddress);
 
         if (signatureData !== null) {
+            const _ipfsCID = await Promise.resolve(this.uploadFileIpfs(_bufferFile));
             await this.props.project.methods
                 .updateProject(
                     _projectAddress,
-                    _ipfsFileCID,
+                    _ipfsCID.path,
                     signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
@@ -293,7 +284,14 @@ class Projects extends Component {
 					data={this.state.projects}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
-						{
+                        {
+							icon: PictureAsPdfIcon,
+							tooltip: 'Download File',
+							onClick: (event, rowData) => {
+                                this.downloadIpfsFile(rowData.name, rowData.ipfsFileCID);
+							},
+						},
+                        {
 							icon: HistoryIcon,
 							tooltip: 'Project History',
 							onClick: (event, rowData) => {
