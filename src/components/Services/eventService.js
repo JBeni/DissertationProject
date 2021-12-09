@@ -83,8 +83,6 @@ export async function getAllProjectEvents(props) {
         dataArray.push(project);
         return false;
     });
-
-    console.log(dataArray);
     return dataArray;
 }
 
