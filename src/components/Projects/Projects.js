@@ -136,7 +136,6 @@ class Projects extends Component {
 
     uploadFileIpfs = async (buffer) => {
         const ipfsResult = await clientIpfs.add(buffer);
-        console.log(ipfsResult);
         return ipfsResult;
     }
 
