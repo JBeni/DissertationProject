@@ -1,6 +1,5 @@
 
 import * as dropdownService from '../Services/dropdownService';
-const axios = require('axios');
 
 /*****************    *******/
 
@@ -210,40 +209,6 @@ export async function getAllRequests(props) {
         return false;
     });
     return dataArray;
-}
-
-export async function getIpfsFileForRequest(props, _projectAddress) {
-    const projectData = await props.project.methods.getProjectInfo(_projectAddress).call().then((response) => {
-        return response;
-    });
-
-    let queryString = '?';
-    queryString = queryString + `hashContains=${projectData._ipfsFileCID}&`;
-    queryString = queryString + `status=pinned&`;
-    const url = `https://api.pinata.cloud/dataArray/pinList${queryString}`;
-    return axios.get(url, {
-        headers: {
-            pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-            pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-        },
-    })
-    .then(function (response) {})
-    .catch(function (error) {});
-}
-
-export async function getIpfsFileByCID(_ipfsFileCID) {
-    let queryString = '?';
-    queryString = queryString + `hashContains=${_ipfsFileCID}&`;
-    queryString = queryString + `status=pinned&`;
-    const url = `https://api.pinata.cloud/dataArray/pinList${queryString}`;
-    return await axios.get(url, {
-        headers: {
-            pinata_api_key: process.env.REACT_APP_PINATA_API_KEY,
-            pinata_secret_api_key: process.env.REACT_APP_PINATA_API_SECRET,
-        },
-    })
-    .then(function (response) { return response.dataArray; })
-    .catch(function (error) {});
 }
 
 export async function createUniqueProjectRequestAddress(props, _title, _index) {
