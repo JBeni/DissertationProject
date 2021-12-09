@@ -9,9 +9,6 @@ export default function ProjectReqHistory(props) {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        console.log(projectReqHistory);
-
-
         if (projectReqHistory?.length > 0) {
             setLoading(true);
             setMessage('The data is loading. Wait a moment...');
@@ -29,7 +26,12 @@ export default function ProjectReqHistory(props) {
         const verificationOutput = await props.signatureChain.methods
             .verifySignature(_signerAddress, messageHash, v, r, s)
             .call();
-        console.log(verificationOutput);
+
+        if (verificationOutput) {
+            alert('Signer Address is verified successfully!');
+        } else {
+            alert('Signer Address is not verified!');
+        }
     }
 
     if (loading === false) return <WaitingLoader message={message} />
