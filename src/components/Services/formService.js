@@ -59,7 +59,9 @@ export const initialUserFormValidity = {
 export const initialProjectFormValues = {
 	isEditForm: false,
 	title: '',
+    name: '',
     comments: '',
+    file: { name: '', type: '', size: '', lastModifiedDate: '' },
 	status: '',
     requestStatus: '',
     ipfsFileCID: '',
