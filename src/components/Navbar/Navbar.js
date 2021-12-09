@@ -12,11 +12,6 @@ function Navbar(props) {
     const location = useLocation();
     const { pathname } = location;
     const currentLocation = pathname.split("/");
-
-    const [account] = useState(props.account);
-    const [project] = useState(props.project);
-    const [signatureChain] = useState(props.signatureChain);
-    const [web3] = useState(props.web3);
     const { currentUserRole } = props;
 
 	useEffect(() => {
@@ -27,7 +22,7 @@ function Navbar(props) {
             <Header
                 currentUsername={props.currentUsername}
                 currentUserRole={currentUserRole}
-                account={account}
+                account={props.account}
                 isActive={isActive}
                 changeMenuOption={changeMenuOption}
             />
@@ -42,10 +37,11 @@ function Navbar(props) {
             <div className="main-section-container">
                 <Routes
                     currentUserRole={currentUserRole}
-                    account={account}
-                    project={project}
-                    signatureChain={signatureChain}
-                    web3={web3}
+                    account={props.account}
+                    project={props.project}
+                    userChain={props.userChain}
+                    signatureChain={props.signatureChain}
+                    web3={props.web3}
                 />
             </div>
         </div>
