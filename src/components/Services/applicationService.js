@@ -5,7 +5,7 @@ import * as dropdownService from '../Services/dropdownService';
 
 export async function getAllUsers(props) {
     let dataArray = [];
-    await props.project.methods.getAllUsers().call().then((result) => {
+    await props.userChain.methods.getAllUsers().call().then((result) => {
         result.map((result) => {
             const role = dropdownService.getUserRoleById(result._role);
             const user = {
@@ -25,7 +25,7 @@ export async function getAllUsers(props) {
 }
 
 export async function getUserInfo(props) {
-    return await props.project.methods.getUserInfo(props.account).call().then((result) => {
+    return await props.userChain.methods.getUserInfo(props.account).call().then((result) => {
         const role = dropdownService.getUserRoleById(result._role);
         const user = {
             username: result._username,
@@ -202,7 +202,7 @@ export async function getAllRequests(props) {
                 indexProjectRequest: Number(result._indexProjectRequest),
                 signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
-                timestamp: result._timestamp
+                timestamp: result._timestamp,
             };
             dataArray.push(project);
         }
