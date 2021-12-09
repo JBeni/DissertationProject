@@ -7,18 +7,16 @@ import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
-import SinglePagePdf from '../PdfViewer/SinglePagePdf';
-import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
 import Edit from '@material-ui/icons/Edit';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 class Supervisor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             editRequest: false,
-            showPdf: false,
             viewRequest: false,
 			recordForEdit: null,
             requests: [],
@@ -36,10 +34,6 @@ class Supervisor extends Component {
 
     handleNewDataFromPopup(value) {
         this.setState({ editRequest: value });
-    }
-
-    setShowPdf = (value) => {
-        this.setState({ showPdf: value });
     }
 
     setEditRequest = (value) => {
@@ -184,9 +178,6 @@ class Supervisor extends Component {
 						},
 					]}
 				/>
-
-                <br/><br/>
-                <SinglePagePdf showPdf={this.state.showPdf} />
 
                 <Toaster position="bottom-center" reverseOrder={false} />
             </>
