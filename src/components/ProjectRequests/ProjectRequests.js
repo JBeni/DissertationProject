@@ -50,9 +50,6 @@ class ProjectRequests extends Component {
     }
 
     getLastProjectRequest = async (projectAddress) => {
-        const requests = await eventService.getProjectRequestEvents(this.props, projectAddress);
-        if (requests.length === 0) return;
-
         const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
             .then((result) => { return result; });
 
@@ -62,7 +59,6 @@ class ProjectRequests extends Component {
          * RETURN an array with an item initialized with default data
          */
         if (lastRequest._projectAddress === addressZero) {
-            // Project was Created
             const defProjectStatus = dropdownService.getDefaultProjectStatus();
             this.setState({ activeStep: Number(defProjectStatus.id) + 1 });
             this.setState({ currentStep: 'Project created', nextStep: 'Send approve request to Supervisor' });
