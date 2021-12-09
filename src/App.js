@@ -7,6 +7,7 @@ import * as dropdownService from './components/Services/dropdownService';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
+import UserChain from './abis/UserChain.json';
 import AdminChain from './abis/AdminChain.json';
 import ServiceChain from './abis/ServiceChain.json';
 import SignatureChain from './abis/SignatureChain.json';
@@ -18,6 +19,7 @@ class App extends Component {
             openSignIn: true,
 			account: null,
 			project: null,
+            userChain: null,
             adminChain: null,
             serviceChain: null,
             signatureChain: null,
@@ -80,6 +82,17 @@ class App extends Component {
 			window.alert('Project Chain contract not deployed to detected network.');
 		}
 
+        const networkUserChainData = UserChain.networks[networkId];
+        if (networkUserChainData) {
+            const userChain = new web3.eth.Contract(
+                UserChain.abi,
+                networkUserChainData.address
+            );
+            this.setState({ userChain: userChain });
+		} else {
+			window.alert('User Chain contract not deployed to detected network.');
+		}
+
         const networkAdminData = AdminChain.networks[networkId];
         if (networkAdminData) {
             const adminChain = new web3.eth.Contract(
@@ -137,11 +150,11 @@ class App extends Component {
             return;
         }
 
-        const users = await this.state.project.methods.getAllUsers().call().then((response) => {
+        const users = await this.state.userChain.methods.getAllUsers().call().then((response) => {
             return response;
         });
         if (users.length > 0) {
-            const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call().then((response) => {
+            const userInfo = await this.state.userChain.methods.getUserInfo(this.state.account).call().then((response) => {
                 const role = dropdownService.getUserRoleById(response._role);
                 return { username: response._username, role: role.value, walletAddress: response._walletAddress };
             });
@@ -160,6 +173,7 @@ class App extends Component {
                     <Navbar
                         account={this.state.account}
                         project={this.state.project}
+                        userChain={this.state.userChain}
                         serviceChain={this.state.serviceChain}
                         signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
