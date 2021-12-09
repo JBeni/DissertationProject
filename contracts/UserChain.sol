@@ -4,11 +4,14 @@ pragma solidity >=0.8.0 <0.9.0;
 import './SharedChain.sol';
 
 contract UserChain is SharedChain {
-    address public owner;
+    address owner;
 
-    mapping(address => User) public users;
-    address[] public usersAddress;
-    uint256 public usersCounter = 0;
+    mapping(address => User) users;
+    address[] usersAddress;
+    uint256 usersCounter = 0;
+
+    uint public valueTrend = 125;
+
 
     constructor() {
         owner = msg.sender;
@@ -63,5 +66,9 @@ contract UserChain is SharedChain {
 
     function getUserInfo(address _walletAddress) public view returns (User memory) {
         return users[_walletAddress];
+    }
+
+    function getA() public view returns (uint256) {
+        return usersCounter;
     }
 }
