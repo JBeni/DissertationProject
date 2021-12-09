@@ -7,6 +7,7 @@ export const initialRequestFormValues = {
 	requestStatus: '',
     projectAddress: '',
     indexProjectRequest: '',
+    timestamp: '',
     signerAddress: '',
 };
 
@@ -65,6 +66,9 @@ export const initialProjectFormValues = {
         lastModifiedDate: ''
     },
     ipfsFileCID: '',
+    projectAddress: '',
+    signerAddress: '',
+    timestamp: '',
 };
 
 export const initialProjectFormValidity = {
