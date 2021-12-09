@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
 import * as formService from '../Services/formService';
-import * as dropdownService from '../Services/dropdownService';
 
 export default function ViewProjectForm(props) {
 	const { recordForEdit } = props;
@@ -9,16 +8,10 @@ export default function ViewProjectForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            const status = dropdownService.getProjectStatusByValue(recordForEdit.status);
-			const newData = {
-				name: recordForEdit.name,
-				status: status.value,
-				ipfsFileCID: recordForEdit.ipfsFileCID,
-                projectAddress: recordForEdit.projectAddress
-			};
-			setValues({
-				...newData,
-			});
+            setValues(prev => ({
+				...recordForEdit,
+                timestamp: new Date(values.timestamp * 1000).toString()
+			}));
 		}
 	}, [recordForEdit]);
 
@@ -37,6 +30,12 @@ export default function ViewProjectForm(props) {
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Signer Address: {values.signerAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Timestamp: {values.timestamp}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>
