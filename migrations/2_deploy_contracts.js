@@ -1,11 +1,13 @@
 /* eslint-disable no-undef */
 var ProjectChain = artifacts.require('ProjectChain');
+var UserChain = artifacts.require('UserChain');
 var AdminChain = artifacts.require('AdminChain');
 var ServiceChain = artifacts.require('ServiceChain');
 var SignatureChain = artifacts.require('SignatureChain');
 
 module.exports = async function (deployer, network, accounts) {
     await deployer.deploy(ProjectChain);
+    await deployer.deploy(UserChain);
 
     const username = "Beniamin Jitca";
     const role = 0;
