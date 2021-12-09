@@ -23,9 +23,8 @@ export default function ProjectReqHistory(props) {
         const s = '0x' + _signature.slice(66, 130).toString();
         const messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
 
-        const verificationOutput = await props.signatureChain.methods
-            .verifySignature(_signerAddress, messageHash, v, r, s)
-            .call();
+        const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
+        const verificationOutput = _signerAddress === signer ? true : false;
 
         if (verificationOutput) {
             alert('Signer Address is verified successfully!');
