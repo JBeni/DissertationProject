@@ -33,7 +33,7 @@ export default function ViewProjectForm(props) {
 						<FormLabel>Status: {values.status}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Pinata File CID: {values.ipfsFileCID}</FormLabel>
+						<FormLabel>IPFS File CID: {values.ipfsFileCID}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
