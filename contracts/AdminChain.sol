@@ -15,12 +15,12 @@ contract AdminChain {
         AdminMighty
     }
 
+    constructor() {}
+
     modifier onlyAdmin() {
-        require(address(0xf08B741073b3Cb01ef6fB3B412E71C977F276fAa) == msg.sender, "You are not the right user");
+        require(address(0xf08B741073b3Cb01ef6fB3B412E71C977F276fAa) == msg.sender, "You are not the right user.");
         _;
     }
-
-    constructor() {}
 
     function createtAdmin(string memory _username, uint _role, address _wallet) public onlyAdmin returns (string memory) {
         require(adminNumbers == 0, "Access Denied!...");

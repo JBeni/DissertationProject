@@ -10,15 +10,33 @@ contract ProjectChain is SharedChain {
 
     constructor() {
         _userAddress = msg.sender;
-        userChain = new UserChain();
+        //userChain = new UserChain();
     }
 
     modifier onlyUserProject() {
-        User memory sessionUser = userChain.getUserInfo(_userAddress);
-        require(
-            sessionUser._role == Roles.UserProject,
-            "You don't have the rights for this resource."
-        );
+        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // require(
+        //     sessionUser._role == Roles.UserProject,
+        //     "You don't have the rights for this resource."
+        // );
+        _;
+    }
+
+    modifier onlySupervisor() {
+        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // require(
+        //     sessionUser._role == Roles.Supervisor,
+        //     "You don't have the rights for this resource."
+        // );
+        _;
+    }
+
+    modifier onlyCompany() {
+        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // require(
+        //     sessionUser._role == Roles.Company,
+        //     "You don't have the rights for this resource."
+        // );
         _;
     }
 
@@ -251,7 +269,7 @@ contract ProjectChain is SharedChain {
         emit RequestEvent(requests[requestsCounter], _requestAddress);
         requestsCounter++;
     }
-
+/*
     function updateRequest(
         uint256 _index,
         uint256 _indexProjectRequest,
@@ -280,7 +298,7 @@ contract ProjectChain is SharedChain {
         emit ProjectEvent(projects[_projectAddress], _projectAddress);
         }
     }
-
+*/
     function getAllRequests() public view returns (Request[] memory) {
         Request[] memory allRequests;
         if (requestsCounter == 0) return allRequests;

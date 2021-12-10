@@ -15,12 +15,12 @@ contract UserChain is SharedChain {
     }
 
     modifier onlyOwner() {
-        require(owner == msg.sender, "You are not an owner");
+        require(owner == msg.sender, "You are not an owner.");
         _;
     }
 
     modifier checkUser(address _address) {
-        require(_address == owner, "You are not an owner");
+        require(_address == owner, "You are not an owner.");
         _;
     }
 
