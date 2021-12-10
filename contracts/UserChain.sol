@@ -6,12 +6,9 @@ import './SharedChain.sol';
 contract UserChain is SharedChain {
     address owner;
 
-    mapping(address => User) users;
+    mapping(address => User) public users;
     address[] usersAddress;
     uint256 usersCounter = 0;
-
-    uint public valueTrend = 125;
-
 
     constructor() {
         owner = msg.sender;
@@ -23,7 +20,7 @@ contract UserChain is SharedChain {
     }
 
     modifier checkUser(address _address) {
-        require(_address == msg.sender, "Address");
+        require(_address == owner, "You are not an owner");
         _;
     }
 
@@ -46,7 +43,7 @@ contract UserChain is SharedChain {
         usersCounter++;
     }
 
-    function changeUserRole(uint _role, address _walletAddress, string memory _signature) public {
+    function changeUserRole(uint _role, address _walletAddress, string memory _signature) public onlyOwner {
         users[_walletAddress]._role = Roles(_role);
 
         users[_walletAddress]._timestamp = block.timestamp;
@@ -54,7 +51,7 @@ contract UserChain is SharedChain {
         emit UserEvent(users[_walletAddress], _walletAddress);
     }
 
-    function getAllUsers() public view returns(User[] memory) {
+    function getAllUsers() public view onlyOwner returns(User[] memory) {
         User[] memory allUsers = new User[](usersCounter);
         for (uint index = 0; index < usersCounter; index++) {
             address _walletAddress = usersAddress[index];
@@ -65,10 +62,7 @@ contract UserChain is SharedChain {
     }
 
     function getUserInfo(address _walletAddress) public view returns (User memory) {
+        require(msg.sender != address(0x0), "Address is not valid.");
         return users[_walletAddress];
-    }
-
-    function getA() public view returns (uint256) {
-        return usersCounter;
     }
 }
