@@ -14,14 +14,10 @@ module.exports = async function (deployer, network, accounts) {
     const walletAddress = accounts[0];
 
     await deployer.deploy(AdminChain);
-    await AdminChain.deployed().then(function(instance) {
-        return instance.createtAdmin(username, role, walletAddress);
+    await AdminChain.deployed().then(async function(instance) {
+        return await instance.createtAdmin(username, role, walletAddress);
     });
 
     await deployer.deploy(ServiceChain);
-    // await ServiceChain.deployed().then(function(instance) {
-    //     return instance.createDropdowns();
-    // });
-
     await deployer.deploy(SignatureChain);
 };
