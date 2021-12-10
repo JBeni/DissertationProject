@@ -18,6 +18,6 @@ module.exports = async function (deployer, network, accounts) {
         return await instance.createtAdmin(username, role, walletAddress);
     });
 
-    await deployer.deploy(ServiceChain);
-    await deployer.deploy(SignatureChain);
+//     await deployer.deploy(ServiceChain);
+//     await deployer.deploy(SignatureChain);
 };
