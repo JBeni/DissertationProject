@@ -93,6 +93,21 @@ contract ProjectChain is SharedChain {
         return projects[_address];
     }
 
+    function getUserProjects(address _signerAddress) public view returns (Project[] memory) {
+        Project[] memory allProjects;
+        if (projectsCounter == 0) return allProjects;
+
+        allProjects = new Project[](projectsCounter);
+        for (uint256 index = 0; index < projectsCounter; index++) {
+            address _projectAddress = projectsAddress[index];
+            if (_signerAddress == projects[_projectAddress]._signerAddress) {
+                Project storage project = projects[_projectAddress];
+                allProjects[index] = project;
+            }
+        }
+        return allProjects;
+    }
+
     function getAllProjects() public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
