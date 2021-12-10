@@ -129,7 +129,7 @@ class App extends Component {
 	}
 
     async checkUserRole() {
-        const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
+        const adminData = await this.state.adminChain.methods.getAdminInfo().call({ from: this.state.account }).then((response) => {
             const role = dropdownService.getAdminRoleById(response._role);
             return {
                 username: response._username,
@@ -149,11 +149,11 @@ class App extends Component {
             return;
         }
 
-        const users = await this.state.userChain.methods.getAllUsers().call().then((response) => {
+        const users = await this.state.userChain.methods.getAllUsers().call({ from: this.state.account }).then((response) => {
             return response;
         });
         if (users.length > 0) {
-            const userInfo = await this.state.userChain.methods.getUserInfo(this.state.account).call().then((response) => {
+            const userInfo = await this.state.userChain.methods.getUserInfo(this.state.account).call({ from: this.state.account }).then((response) => {
                 const role = dropdownService.getUserRoleById(response._role);
                 return { username: response._username, role: role.value, walletAddress: response._walletAddress };
             });

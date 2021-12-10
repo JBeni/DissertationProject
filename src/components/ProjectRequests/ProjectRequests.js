@@ -50,7 +50,7 @@ class ProjectRequests extends Component {
     }
 
     getLastProjectRequest = async (projectAddress) => {
-        const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call()
+        const lastRequest = await this.props.project.methods.getLastProjectRequest(projectAddress).call({ from: this.props.account })
             .then((result) => { return result; });
 
         const addressZero = roleService.getAddressZeroValue();

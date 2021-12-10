@@ -7,7 +7,7 @@ const verifySignatureTest = async (props, _projectAddress, _signerAddress, _sign
 
     const verificationOutput = await props.signatureChain.methods
         .verifySignature(_signerAddress, messageHash, v, r, s)
-        .call();
+        .call({ from: this.props.account });
 
     if (verificationOutput) {
         alert('Signer Address is verified successfully!');
