@@ -6,25 +6,20 @@ import "./SharedChain.sol";
 
 contract ProjectChain is SharedChain {
     address _userAddress;
-
     UserChain userChain;
 
     constructor() {
         _userAddress = msg.sender;
-
         userChain = new UserChain();
     }
 
     modifier onlyUserProject() {
-        // require(
-        //     users[_userAddress]._role == Roles.UserProject,
-        //     "You don't have the rights for this resources."
-        // );
+        User memory sessionUser = userChain.getUserInfo(_userAddress);
+        require(
+            sessionUser._role == Roles.UserProject,
+            "You don't have the rights for this resource."
+        );
         _;
-    }
-
-    function getUsersCounter() public view returns (uint) {
-        return userChain.valueTrend();
     }
 
     /**  PROJECT INITIATOR  */
@@ -43,7 +38,7 @@ contract ProjectChain is SharedChain {
         uint256 _status,
         string memory _ipfsFileCID,
         string memory _signature
-    ) public {
+    ) public onlyUserProject {
         projects[_projectAddress] = Project(
             projectsCounter,
             _name,
@@ -64,7 +59,7 @@ contract ProjectChain is SharedChain {
         address _projectAddress,
         string memory _ipfsFileCID,
         string memory _signature
-    ) public {
+    ) public onlyUserProject {
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._signature = _signature;
 
@@ -76,6 +71,7 @@ contract ProjectChain is SharedChain {
         view
         returns (Project memory)
     {
+        require(msg.sender != address(0x0), "Address is not valid.");
         return projects[_address];
     }
 
@@ -111,6 +107,13 @@ contract ProjectChain is SharedChain {
         address _projectReqAddress,
         string memory _signature
     ) public {
+        require(projects[_projectAddress]._status == ProjectStatus.Created, "Steps must follow accordingly");
+
+        //require(ProjectStatus.ToApprove == RequestStatus.UnApproved, "");
+        //require(ProjectStatus.ToApprove == RequestStatus.Rejected, "");
+
+
+
         projectRequests[projectRequestsCounter] = ProjectRequest(
             projectRequestsCounter,
             _title,
