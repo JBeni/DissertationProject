@@ -43,7 +43,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -77,7 +78,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     }
   ],
   "metadata": "{\"compiler\":{\"version\":\"0.8.10+commit.fc410830\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"p\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"hash\",\"type\":\"bytes32\"},{\"internalType\":\"uint8\",\"name\":\"v\",\"type\":\"uint8\"},{\"internalType\":\"bytes32\",\"name\":\"r\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"s\",\"type\":\"bytes32\"}],\"name\":\"verifySignature\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"hash\",\"type\":\"bytes32\"},{\"internalType\":\"uint8\",\"name\":\"v\",\"type\":\"uint8\"},{\"internalType\":\"bytes32\",\"name\":\"r\",\"type\":\"bytes32\"},{\"internalType\":\"bytes32\",\"name\":\"s\",\"type\":\"bytes32\"}],\"name\":\"verifyTest\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/SignatureChain.sol\":\"SignatureChain\"},\"evmVersion\":\"london\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/SignatureChain.sol\":{\"keccak256\":\"0xa22a4c70e6db7bd2f970d60dc18cda0518464dabebabcd7dd022cdc9278c78d7\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c67e1842d80f95ae136e9b9e7fa8083db7c7382a7c6addcdc45abde74ed57c88\",\"dweb:/ipfs/QmQx44jio7zvHmQrY2xXCvGdp45EN5UP6q3iXFppkbwfdj\"]}},\"version\":1}",
@@ -4913,12 +4915,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x95AE191D2CeDB79173f7DBa5EA01A2303848bd5c",
-      "transactionHash": "0x40bdd60a993c675b229bed349b119bed5fb8e0b82b04173fc4aa47442c7c7ffe"
+      "address": "0x43512E5178344027dC37b71ec158CF49e46a6997",
+      "transactionHash": "0x968e59deaca159c5727cddf5e3bb51f275d289862357af96860a48ecdf51419e"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-10T11:08:58.461Z",
+  "updatedAt": "2021-12-10T17:28:41.566Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
