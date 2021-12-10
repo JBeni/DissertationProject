@@ -57,21 +57,29 @@ function Routes(props) {
                     />
             }
             {
-                props.currentUserRole === roleService.getUserProjectRole() &&
-                <Route
-                    path="/projects" exact
-                    render={() => (
-                        <Projects
-                            account={props.account}
-                            project={props.project}
-                            signatureChain={props.signatureChain}
-                            web3={props.web3}
-                        />
-                    )}
-                />
+                (
+                    props.currentUserRole === roleService.getUserProjectRole() ||
+                    props.currentUserRole === roleService.getCompanyRole() ||
+                    props.currentUserRole === roleService.getSupervisorRole()
+                ) &&
+                    <Route
+                        path="/projects" exact
+                        render={() => (
+                            <Projects
+                                account={props.account}
+                                project={props.project}
+                                signatureChain={props.signatureChain}
+                                web3={props.web3}
+                            />
+                        )}
+                    />
             }
             {
-                props.currentUserRole === roleService.getUserProjectRole() &&
+                (
+                    props.currentUserRole === roleService.getUserProjectRole() ||
+                    props.currentUserRole === roleService.getCompanyRole() ||
+                    props.currentUserRole === roleService.getSupervisorRole()
+                ) &&
                     <Route
                         path="/projects/:id"
                         render={() => (

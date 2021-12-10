@@ -42,7 +42,11 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.currentUserRole === roleService.getUserProjectRole() &&
+                            (
+                                props.currentUserRole === roleService.getUserProjectRole() ||
+                                props.currentUserRole === roleService.getCompanyRole() ||
+                                props.currentUserRole === roleService.getSupervisorRole()
+                            ) &&
                                 <Link
                                     to="/projects"
                                     className={
