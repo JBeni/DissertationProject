@@ -50,7 +50,7 @@ function Routes(props) {
                         render={() => (
                             <Users
                                 account={props.account}
-                                project={props.project}
+                                userChain={props.userChain}
                                 web3={props.web3}
                             />
                         )}
