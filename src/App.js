@@ -54,7 +54,6 @@ class App extends Component {
 		}
 	}
 
-
     /**
      * eth.getAccounts() returns the address values in the format expected by the MetaMask
      * 
