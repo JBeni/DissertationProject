@@ -23,7 +23,7 @@ export default function EditRequest(props) {
 
     useEffect(() => {
 		if (recordForEdit != null) {
-            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
+            const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
             setValues({
 				...values,
                 index: Number(recordForEdit.index),

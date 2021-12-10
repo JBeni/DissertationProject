@@ -8,7 +8,6 @@ import ViewRequest from './ViewRequest';
 import EditRequest from './EditRequest';
 import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
-import AllPagesPdf from '../PdfViewer/AllPagesPdf';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
 
@@ -17,7 +16,6 @@ class Company extends Component {
         super(props);
         this.state = {
             editRequest: false,
-            showPdf: false,
             viewRequest: false,
 			recordForEdit: null,
             requests: [],
@@ -29,16 +27,12 @@ class Company extends Component {
     }
 
     async getCompanyRequests() {
-        let data = await Promise.resolve(applicationService.getCompanyRequests(this.props));
+        const data = await Promise.resolve(applicationService.getCompanyRequests(this.props));
         this.setState({ requests: data });
     }
 
     handleNewDataFromPopup(value) {
         this.setState({ editRequest: value });
-    }
-
-    setShowPdf = (value) => {
-        this.setState({ showPdf: value });
     }
 
     setEditRequest = (value) => {
@@ -175,9 +169,6 @@ class Company extends Component {
 						},
 					]}
 				/>
-
-                <br/><br/>
-                <AllPagesPdf showPdf={this.state.showPdf} />
 
                 <Toaster position="bottom-center" reverseOrder={false} />
             </>

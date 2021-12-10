@@ -7,6 +7,7 @@ export const initialRequestFormValues = {
 	requestStatus: '',
     projectAddress: '',
     indexProjectRequest: '',
+    timestamp: '',
     signerAddress: '',
 };
 
@@ -43,6 +44,7 @@ export const initialUserFormValues = {
 	lastname: '',
 	email: '',
 	role: '',
+    username: '',
 	walletAddress: '',
 };
 
@@ -56,15 +58,16 @@ export const initialUserFormValidity = {
 
 export const initialProjectFormValues = {
 	isEditForm: false,
-	name: '',
+	title: '',
+    name: '',
+    comments: '',
+    file: { name: '', type: '', size: '', lastModifiedDate: '' },
 	status: '',
-    file: {
-        name: '',
-        type: '',
-        size: '',
-        lastModifiedDate: ''
-    },
+    requestStatus: '',
     ipfsFileCID: '',
+    projectAddress: '',
+    signerAddress: '',
+    timestamp: '',
 };
 
 export const initialProjectFormValidity = {

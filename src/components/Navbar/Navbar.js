@@ -4,8 +4,6 @@ import { useLocation } from 'react-router-dom';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Routes from './Routes';
-import * as dropdownService from '../Services/dropdownService';
-import * as roleService from './../Services/roleService';
 
 function Navbar(props) {
     const [isActive, setIsActive] = useState(true);
@@ -14,40 +12,22 @@ function Navbar(props) {
     const location = useLocation();
     const { pathname } = location;
     const currentLocation = pathname.split("/");
-
-    const [account] = useState(props.account);
-    const [project] = useState(props.project);
-    const [signatureChain] = useState(props.signatureChain);
-    const [web3] = useState(props.web3);
-    const [currentUserRole, setCurrentUserRole] = useState(roleService.getDefaultRole());
+    const { currentUserRole } = props;
 
 	useEffect(() => {
-        // This is Admin - Owner Contract
-        if (props.account === "0xf08b741073b3cb01ef6fb3b412e71c977f276faa") {
-            //setCurrentUserRole('Admin');
-            setCurrentUserRole('DefaultRole');
-            //return;
-        }
-
-        (async () => {
-            let data = await props.project.methods.getUserInfo(props.account).call().then((result) => {
-                return result;
-            });
-            let role = dropdownService.getUserRoleById(data._role);
-            setCurrentUserRole(role.value);
-        })();
 	}, []);
 
     return (
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
             <Header
                 currentUsername={props.currentUsername}
-                account={account}
+                currentUserRole={currentUserRole}
+                account={props.account}
                 isActive={isActive}
                 changeMenuOption={changeMenuOption}
             />
             <Sidebar
-                userRole={currentUserRole}
+                currentUserRole={currentUserRole}
                 isActive={isActive}
                 currentLocation={currentLocation}
                 setLoggedIn={props.setLoggedIn}
@@ -56,11 +36,12 @@ function Navbar(props) {
 
             <div className="main-section-container">
                 <Routes
-                    userRole={currentUserRole}
-                    account={account}
-                    project={project}
-                    signatureChain={signatureChain}
-                    web3={web3}
+                    currentUserRole={currentUserRole}
+                    account={props.account}
+                    project={props.project}
+                    userChain={props.userChain}
+                    signatureChain={props.signatureChain}
+                    web3={props.web3}
                 />
             </div>
         </div>

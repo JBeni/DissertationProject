@@ -9,9 +9,6 @@ export default function ProjectReqHistory(props) {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        console.log(projectReqHistory);
-
-
         if (projectReqHistory?.length > 0) {
             setLoading(true);
             setMessage('The data is loading. Wait a moment...');
@@ -21,16 +18,19 @@ export default function ProjectReqHistory(props) {
     }, [projectReqHistory])
 
     const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
-        let v = '0x' + _signature.slice(130, 132).toString();
-        let r = _signature.slice(0, 66).toString();
-        let s = '0x' + _signature.slice(66, 130).toString();
-        let messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
+        const v = '0x' + _signature.slice(130, 132).toString();
+        const r = _signature.slice(0, 66).toString();
+        const s = '0x' + _signature.slice(66, 130).toString();
+        const messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
 
-        let verificationOutput = await props.signatureChain.methods
-            .verifySignature(_signerAddress, messageHash, v, r, s)
-            .call();
-            //.call({ from: props.account });
-        console.log(verificationOutput);
+        const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
+        const verificationOutput = _signerAddress === signer ? true : false;
+
+        if (verificationOutput) {
+            alert('Signer Address is verified successfully!');
+        } else {
+            alert('Signer Address is not verified!');
+        }
     }
 
     if (loading === false) return <WaitingLoader message={message} />

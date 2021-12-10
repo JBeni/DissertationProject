@@ -23,17 +23,11 @@ export default function AddForm(props) {
 
     useEffect(() => {
 		if (recordForEdit != null) {
-            let role = dropdownService.getUserRoleByValue(recordForEdit.role);
-            let newData = {
-                firstname: recordForEdit.firstname,
-                lastname: recordForEdit.lastname,
-                email: recordForEdit.email,
-                role: role.id,
-                walletAddress: recordForEdit.walletAddress,
-            };
-            setValues({
-				...newData,
-			});
+            const role = dropdownService.getUserRoleByValue(recordForEdit.role);
+            setValues(prev => ({
+				...recordForEdit,
+				role: role.id
+			}));
             setIsEdit(true);
         }
 	}, [recordForEdit]);

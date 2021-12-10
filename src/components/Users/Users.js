@@ -35,7 +35,7 @@ export default class Users extends Component {
     }
 
     getUsers = async () => {
-        let data = await applicationService.getAllUsers(this.props);
+        const data = await applicationService.getAllUsers(this.props);
         this.setState({ users: data });
     }
 
@@ -83,7 +83,7 @@ export default class Users extends Component {
         const signatureData = this.signData(_walletAddress);
 
         if (signatureData !== null) {
-            await this.props.project.methods
+            await this.props.userChain.methods
 			.registerUser(
                 _username,
                 this.props.web3.utils.utf8ToHex(_email),
@@ -106,7 +106,7 @@ export default class Users extends Component {
         const signatureData = this.signData(_walletAddress);
 
         if (signatureData !== null) {
-            await this.props.project.methods.changeUserRole(
+            await this.props.userChain.methods.changeUserRole(
                 Number(_role),
                 _walletAddress,
                 signatureData.signature

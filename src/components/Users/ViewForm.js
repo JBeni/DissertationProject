@@ -9,18 +9,11 @@ export default function ViewForm(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let role = dropdownService.getUserRoleByValue(recordForEdit.role);
-            let newData = {
-				username: recordForEdit.username,
-				firstname: recordForEdit.firstname,
-				lastname: recordForEdit.lastname,
-				email: recordForEdit.email,
-				role: role.value,
-				walletAddress: recordForEdit.walletAddress,
-			};
-			setValues({
-				...newData,
-			});
+            const role = dropdownService.getUserRoleByValue(recordForEdit.role);
+            setValues(prev => ({
+				...recordForEdit,
+                role: role.value
+			}));
 		}
 	}, [recordForEdit]);
 

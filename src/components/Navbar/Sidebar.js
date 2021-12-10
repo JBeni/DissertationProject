@@ -1,13 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import * as roleService from '../Services/roleService';
 
 function Sidebar(props) {
-
-    const logout = () => {
-        props.setLoggedIn();
-    }
-
     return (
 		<div className={props.isActive ? 'l-navbar show' : 'l-navbar'} id="nav-bar">
 			<nav className="nav">
@@ -19,7 +14,7 @@ function Sidebar(props) {
 
 					<div className="nav__list">
                         {
-                            props.userRole &&
+                            props.currentUserRole !== null &&
                                 <Link
                                     to="/dashboard"
                                     className={
@@ -33,7 +28,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getAdminRole() &&
                                 <Link
                                     to="/users"
                                     className={
@@ -47,7 +42,11 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            (
+                                props.currentUserRole === roleService.getUserProjectRole() ||
+                                props.currentUserRole === roleService.getCompanyRole() ||
+                                props.currentUserRole === roleService.getSupervisorRole()
+                            ) &&
                                 <Link
                                     to="/projects"
                                     className={
@@ -61,7 +60,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getCompanyRole() &&
                                 <Link
                                     to="/company"
                                     className={
@@ -75,7 +74,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            props.currentUserRole === roleService.getSupervisorRole() &&
                                 <Link
                                     to="/supervisor"
                                     className={
@@ -89,7 +88,10 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            props.userRole &&
+                            (
+                                props.currentUserRole === roleService.getCompanyRole() ||
+                                props.currentUserRole === roleService.getSupervisorRole()
+                            ) &&
                                 <Link
                                     to="/requests"
                                     className={
@@ -106,14 +108,6 @@ function Sidebar(props) {
 				</div>
 
                 <div>
-
-                    {/* <p className="nav__link">
-                        <i className="bx bx-log-out nav__icon"></i>
-                        <span className="nav__name">
-                            <Button variant="contained" color="primary" onClick={ () => logout() }>Logout</Button>
-                        </span>
-                    </p> */}
-
                     <p className="nav__link">
                         <i className="bx bx-copyright nav__icon"></i>
                         <span className="nav__name">Copyright {(new Date().getFullYear())}</span>

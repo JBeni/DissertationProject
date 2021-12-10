@@ -27,6 +27,7 @@ export default function UserHistory(props) {
 						<th>Role</th>
 						<th>Wallet Address</th>
 						<th>Timestamp</th>
+						<th>Signature</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -40,6 +41,7 @@ export default function UserHistory(props) {
                                 <td>{ item.role }</td>
                                 <td>{ item.walletAddress }</td>
                                 <td>{ item.timestamp }</td>
+                                <td>{ item.signature }</td>
                             </tr>
                         ))
                     }

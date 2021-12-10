@@ -13,9 +13,9 @@ export default function AddProjectRequest(props) {
 
     useEffect(() => {
         if (recordForEdit != null) {
-            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.status);
-            let nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
-            let requestStatus = dropdownService.getDefaultRequestStatus();
+            const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.status);
+            const nextStatus = projectStatus.id < 5 ? Number(projectStatus.id) + 1 : Number(projectStatus.id);
+            const requestStatus = dropdownService.getDefaultRequestStatus();
             setValues({
                 ...values,
                 status: nextStatus.toString(),

@@ -4,18 +4,39 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./UserChain.sol";
 import "./SharedChain.sol";
 
-contract ProjectChain is UserChain {
+contract ProjectChain is SharedChain {
     address _userAddress;
+    UserChain userChain;
 
     constructor() {
         _userAddress = msg.sender;
+        //userChain = new UserChain();
     }
 
     modifier onlyUserProject() {
-        require(
-            users[_userAddress]._role == Roles.UserProject,
-            "You don't have the rights for this resources."
-        );
+        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // require(
+        //     sessionUser._role == Roles.UserProject,
+        //     "You don't have the rights for this resource."
+        // );
+        _;
+    }
+
+    modifier onlySupervisor() {
+        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // require(
+        //     sessionUser._role == Roles.Supervisor,
+        //     "You don't have the rights for this resource."
+        // );
+        _;
+    }
+
+    modifier onlyCompany() {
+        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // require(
+        //     sessionUser._role == Roles.Company,
+        //     "You don't have the rights for this resource."
+        // );
         _;
     }
 
@@ -35,7 +56,7 @@ contract ProjectChain is UserChain {
         uint256 _status,
         string memory _ipfsFileCID,
         string memory _signature
-    ) public {
+    ) public onlyUserProject {
         projects[_projectAddress] = Project(
             projectsCounter,
             _name,
@@ -56,7 +77,7 @@ contract ProjectChain is UserChain {
         address _projectAddress,
         string memory _ipfsFileCID,
         string memory _signature
-    ) public {
+    ) public onlyUserProject {
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._signature = _signature;
 
@@ -68,6 +89,7 @@ contract ProjectChain is UserChain {
         view
         returns (Project memory)
     {
+        require(msg.sender != address(0x0), "Address is not valid.");
         return projects[_address];
     }
 
@@ -103,6 +125,13 @@ contract ProjectChain is UserChain {
         address _projectReqAddress,
         string memory _signature
     ) public {
+        require(projects[_projectAddress]._status == ProjectStatus.Created, "Steps must follow accordingly");
+
+        //require(ProjectStatus.ToApprove == RequestStatus.UnApproved, "");
+        //require(ProjectStatus.ToApprove == RequestStatus.Rejected, "");
+
+
+
         projectRequests[projectRequestsCounter] = ProjectRequest(
             projectRequestsCounter,
             _title,
@@ -122,7 +151,8 @@ contract ProjectChain is UserChain {
             _requestStatus,
             _status,
             _projectAddress,
-            _projectReqAddress
+            _projectReqAddress,
+            _signature
         );
 
         emit ProjectRequestEvent(projectRequests[projectRequestsCounter], _projectAddress);
@@ -136,7 +166,8 @@ contract ProjectChain is UserChain {
         uint256 _requestStatus,
         uint256 _projectStatus,
         address _projectAddress,
-        address _requestAddress
+        address _requestAddress,
+        string memory _signature
     ) internal {
         RequestType _requestType;
         if (
@@ -157,7 +188,8 @@ contract ProjectChain is UserChain {
             _projectStatus,
             _requestType,
             _projectAddress,
-            _requestAddress
+            _requestAddress,
+            _signature
         );
     }
 
@@ -217,7 +249,8 @@ contract ProjectChain is UserChain {
         uint256 _projectStatus,
         RequestType _requestType,
         address _projectAddress,
-        address _requestAddress
+        address _requestAddress,
+        string memory _signature
     ) internal {
         requests[requestsCounter] = Request(
             requestsCounter,
@@ -230,13 +263,13 @@ contract ProjectChain is UserChain {
             _userAddress,
             _requestAddress,
             block.timestamp,
-            ""
+            _signature
         );
 
-        emit RequestEvent(requests[requestsCounter]);
+        emit RequestEvent(requests[requestsCounter], _requestAddress);
         requestsCounter++;
     }
-
+/*
     function updateRequest(
         uint256 _index,
         uint256 _indexProjectRequest,
@@ -250,7 +283,7 @@ contract ProjectChain is UserChain {
         requests[_index]._requestStatus = RequestStatus(_requestStatus);
         requests[_index]._signature = _signature;
 
-        emit RequestEvent(requests[_index]);
+        emit RequestEvent(requests[_index], requests[_index]._requestAddress);
 
         // Update project request status in the Project Requests Mapping and Struct Array
         projectRequests[_indexProjectRequest]._comments = _comments;
@@ -265,7 +298,7 @@ contract ProjectChain is UserChain {
         emit ProjectEvent(projects[_projectAddress], _projectAddress);
         }
     }
-
+*/
     function getAllRequests() public view returns (Request[] memory) {
         Request[] memory allRequests;
         if (requestsCounter == 0) return allRequests;

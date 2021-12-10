@@ -81,6 +81,7 @@ contract SharedChain {
         string _signature;
     }
     event RequestEvent(
-        Request _request
+        Request _request,
+        address indexed _requestAddress
     );
 }

@@ -16,7 +16,12 @@ contract ServiceChain {
 
     constructor() {}
 
-    function createDropdowns() public {
+    modifier onlyOwner() {
+        require(address(0x0) == msg.sender, "The address is not valid.");
+        _;
+    }
+
+    function createDropdowns() public onlyOwner {
         requestType.push(Dropdown(0, 'SupervisorReq'));
         requestType.push(Dropdown(1, 'CompanyReq'));
 
@@ -41,7 +46,7 @@ contract ServiceChain {
 
     /** Methods: Check if Dropdown option exists */
 
-    function checkRequestTypeDropdown(uint _id) public view returns (bool) {
+    function checkRequestTypeDropdown(uint _id) public view onlyOwner returns (bool) {
         for (uint index = 0; index < requestType.length; index++) {
             if (requestType[index].id == _id) {
                 return true;
@@ -50,7 +55,7 @@ contract ServiceChain {
         return false;
     }
 
-    function checkRequestStatusFormDropdown(uint _id) public view returns (bool) {
+    function checkRequestStatusFormDropdown(uint _id) public view onlyOwner returns (bool) {
         for (uint index = 0; index < requestStatusForm.length; index++) {
             if (requestStatusForm[index].id == _id) {
                 return true;
@@ -59,7 +64,7 @@ contract ServiceChain {
         return false;
     }
 
-    function checkRequestStatusDropdown(uint _id) public view returns (bool) {
+    function checkRequestStatusDropdown(uint _id) public view onlyOwner returns (bool) {
         for (uint index = 0; index < requestStatus.length; index++) {
             if (requestStatus[index].id == _id) {
                 return true;
@@ -68,7 +73,7 @@ contract ServiceChain {
         return false;
     }
 
-    function checkProjectStatusDropdown(uint _id) public view returns (bool) {
+    function checkProjectStatusDropdown(uint _id) public view onlyOwner returns (bool) {
         for (uint index = 0; index < projectStatus.length; index++) {
             if (projectStatus[index].id == _id) {
                 return true;
@@ -77,7 +82,7 @@ contract ServiceChain {
         return false;
     }
 
-    function checkUserRoleDropdown(uint _id) public view returns (bool) {
+    function checkUserRoleDropdown(uint _id) public view onlyOwner returns (bool) {
         for (uint index = 0; index < userRole.length; index++) {
             if (userRole[index].id == _id) {
                 return true;
@@ -86,62 +91,61 @@ contract ServiceChain {
         return false;
     }
 
-
     /** Get Dropdown[] Array */
 
-    function getAllRequestTypeDropdown() public view returns (Dropdown[] memory) {
+    function getAllRequestTypeDropdown() public view onlyOwner returns (Dropdown[] memory) {
         return requestType;
     }
 
-    function getAllRequestStatusFormDropdown() public view returns (Dropdown[] memory) {
+    function getAllRequestStatusFormDropdown() public view onlyOwner returns (Dropdown[] memory) {
         return requestStatusForm;
     }
 
-    function getAllRequestStatusDropdown() public view returns (Dropdown[] memory) {
+    function getAllRequestStatusDropdown() public view onlyOwner returns (Dropdown[] memory) {
         return requestStatus;
     }
 
-    function getAllProjectStatusDropdown() public view returns (Dropdown[] memory) {
+    function getAllProjectStatusDropdown() public view onlyOwner returns (Dropdown[] memory) {
         return projectStatus;
     }
 
-    function getAllUserRoleDropdown() public view returns (Dropdown[] memory) {
+    function getAllUserRoleDropdown() public view onlyOwner returns (Dropdown[] memory) {
         return userRole;
     }
 
 
     /** Return Address with value 0 */
-    function getAddressZero() public pure returns(string memory) {
+    function getAddressZero() public view onlyOwner returns(string memory) {
         return "0x0000000000000000000000000000000000000000";
     }
 
     /*** Methods for Dropdowns */
 
-    function getCompletedProjectStatus() public pure returns(Dropdown memory) {
+    function getCompletedProjectStatus() public view onlyOwner returns(Dropdown memory) {
         Dropdown memory typeData;
         typeData = Dropdown(4, 'Completed');
         return typeData;
     }
 
-    function getSupervisorRequestType() public pure returns(Dropdown memory) {
+    function getSupervisorRequestType() public view onlyOwner returns(Dropdown memory) {
         Dropdown memory typeData;
         typeData = Dropdown(0, 'SupervisorReq');
         return typeData;
     }
 
-    function getCompanyRequestType() public pure returns(Dropdown memory) {
+    function getCompanyRequestType() public view onlyOwner returns(Dropdown memory) {
         Dropdown memory typeData;
         typeData = Dropdown(1, 'CompanyReq');
         return typeData;
     }
 
-    function getDefaultProjectStatus() public pure returns(Dropdown memory) {
+    function getDefaultProjectStatus() public view onlyOwner returns(Dropdown memory) {
         Dropdown memory typeData;
         typeData = Dropdown(0, 'Created');
         return typeData;
     }
 
-    function getDefaultRequestStatus() public pure returns(Dropdown memory) {
+    function getDefaultRequestStatus() public view onlyOwner returns(Dropdown memory) {
         Dropdown memory typeData;
         typeData = Dropdown(0, 'UnApproved');
         return typeData;
@@ -149,21 +153,21 @@ contract ServiceChain {
 
     /*** Dropdowns */
 
-    function getRequestTypeDropdown() public pure returns(Dropdown[] memory) {
+    function getRequestTypeDropdown() public view onlyOwner returns(Dropdown[] memory) {
         Dropdown[] memory data = new Dropdown[](2);
         data[0] = Dropdown(0, 'SupervisorReq');
         data[1] = Dropdown(1, 'CompanyReq');
         return data;
     }
 
-    function getRequestStatusFormDropdown() public pure returns(Dropdown[] memory) {
+    function getRequestStatusFormDropdown() public view onlyOwner returns(Dropdown[] memory) {
         Dropdown[] memory data = new Dropdown[](2);
         data[0] = Dropdown(1, 'Rejected');
         data[1] = Dropdown(2, 'Approved');
         return data;
     }
 
-    function getRequestStatusDropdown() public pure returns(Dropdown[] memory) {
+    function getRequestStatusDropdown() public view onlyOwner returns(Dropdown[] memory) {
         Dropdown[] memory data = new Dropdown[](3);
         data[0] = Dropdown(0, 'UnApproved');
         data[1] = Dropdown(1, 'Rejected');
@@ -171,7 +175,7 @@ contract ServiceChain {
         return data;
     }
 
-    function getProjectStatusDropdown() public pure returns(Dropdown[] memory) {
+    function getProjectStatusDropdown() public view onlyOwner returns(Dropdown[] memory) {
         Dropdown[] memory data = new Dropdown[](5);
         data[0] = Dropdown(0, 'Created');
         data[1] = Dropdown(1, 'ToApprove');
@@ -181,7 +185,7 @@ contract ServiceChain {
         return data;
     }
 
-    function getUserRoleDropdown() public pure returns(Dropdown[] memory) {
+    function getUserRoleDropdown() public view onlyOwner returns(Dropdown[] memory) {
         Dropdown[] memory data = new Dropdown[](4);
         data[0] = Dropdown(0, 'DefaultRole');
         data[1] = Dropdown(1, 'UserProject');

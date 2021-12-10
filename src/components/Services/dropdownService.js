@@ -109,3 +109,15 @@ export const userRoleDropdown = [
 	{ id: '2', value: 'Company' },
 	{ id: '3', value: 'Supervisor' },
 ];
+
+
+/** Admin Area */
+
+export function getAdminRoleById(role) {
+    return adminRoleDropdown.find((element) => {
+        return Number(element.id) === Number(role);
+    });
+}
+export const adminRoleDropdown = [
+	{ id: '0', value: 'AdminMighty' },
+];

@@ -3,73 +3,75 @@ import * as dropdownService from './dropdownService';
 /** User Events Methods */
 
 export async function getAllUserEvents(props) {
-    let events = await props.project.getPastEvents('UserEvent', {
+    const events = await props.userChain.getPastEvents('UserEvent', {
         fromBlock: 0,
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
 
-    let data = [];
+    let dataArray = [];
     events.map((result) => {
-        let role = dropdownService.getUserRoleById(result.returnValues._role);
+        const role = dropdownService.getUserRoleById(result.returnValues._user._role);
         const user = {
-            index: Number(result.returnValues._index),
-            username: result.returnValues._username,
-            email: props.web3.utils.hexToUtf8(result.returnValues._email),
-            firstname: props.web3.utils.hexToUtf8(result.returnValues._firstname),
-            lastname: props.web3.utils.hexToUtf8(result.returnValues._lastname),
+            index: Number(result.returnValues._user._index),
+            username: result.returnValues._user._username,
+            email: props.web3.utils.hexToUtf8(result.returnValues._user._email),
+            firstname: props.web3.utils.hexToUtf8(result.returnValues._user._firstname),
+            lastname: props.web3.utils.hexToUtf8(result.returnValues._user._lastname),
             role: role.value,
-            walletAddress: result.returnValues._walletAddress,
-            timestamp: new Date(result.returnValues._timestamp * 1000).toString()
+            walletAddress: result.returnValues._user._walletAddress,
+            timestamp: new Date(result.returnValues._user._timestamp * 1000).toString(),
+            signature: result.returnValues._user._signature
         };
-        data.push(user);
+        dataArray.push(user);
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 export async function getUserEvents(props, _walletAddress) {
-    let events = await props.project.getPastEvents('UserEvent', {
+    const events = await props.userChain.getPastEvents('UserEvent', {
         filter: { _walletAddress: _walletAddress },
         fromBlock: 0,
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
 
-    let data = [];
+    let dataArray = [];
     let indexLocal = 1;
     events.map((result) => {
-        let role = dropdownService.getUserRoleById(result.returnValues._role);
+        const role = dropdownService.getUserRoleById(result.returnValues._user._role);
         const user = {
             index: Number(result.returnValues._index) + indexLocal,
-            username: result.returnValues._username,
-            email: props.web3.utils.hexToUtf8(result.returnValues._email),
-            firstname: props.web3.utils.hexToUtf8(result.returnValues._firstname),
-            lastname: props.web3.utils.hexToUtf8(result.returnValues._lastname),
+            username: result.returnValues._user._username,
+            email: props.web3.utils.hexToUtf8(result.returnValues._user._email),
+            firstname: props.web3.utils.hexToUtf8(result.returnValues._user._firstname),
+            lastname: props.web3.utils.hexToUtf8(result.returnValues._user._lastname),
             role: role.value,
-            walletAddress: result.returnValues._walletAddress,
-            timestamp: new Date(result.returnValues._timestamp * 1000).toString()
+            walletAddress: result.returnValues._user._walletAddress,
+            timestamp: new Date(result.returnValues._user._timestamp * 1000).toString(),
+            signature: result.returnValues._user._signature
         };
-        data.push(user);
+        dataArray.push(user);
         indexLocal++;
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 
 /** Project Events Methods */
 
 export async function getAllProjectEvents(props) {
-    let events = await props.project.getPastEvents('ProjectEvent', {
+    const events = await props.project.getPastEvents('ProjectEvent', {
         fromBlock: 0,
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
 
-    let data = [];
+    let dataArray = [];
     events.map((result) => {
-        let status = dropdownService.getProjectStatusById(result.returnValues._project._status);
+        const status = dropdownService.getProjectStatusById(result.returnValues._project._status);
         const project = {
             index: Number(result.returnValues._project._index),
             name: result.returnValues._project._name,
@@ -80,26 +82,24 @@ export async function getAllProjectEvents(props) {
             timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
             signature: result.returnValues._project._signature
         };
-        data.push(project);
+        dataArray.push(project);
         return false;
     });
-
-    console.log(data);
-    return data;
+    return dataArray;
 }
 
 export async function getProjectEvents(props, _projectAddress) {
-    let events = await props.project.getPastEvents('ProjectEvent', {
+    const events = await props.project.getPastEvents('ProjectEvent', {
         filter: { _projectAddress: _projectAddress },
         fromBlock: 0,
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
 
-    let data = [];
+    let dataArray = [];
     let indexLocal = 1;
     events.map((result) => {
-        let status = dropdownService.getProjectStatusById(result.returnValues._project._status);
+        const status = dropdownService.getProjectStatusById(result.returnValues._project._status);
         const project = {
             index: Number(result.returnValues._project._index) + indexLocal,
             name: result.returnValues._project._name,
@@ -110,11 +110,11 @@ export async function getProjectEvents(props, _projectAddress) {
             timestamp: new Date(result.returnValues._project._timestamp * 1000).toString(),
             signature: result.returnValues._project._signature
         };
-        data.push(project);
+        dataArray.push(project);
         indexLocal++;
         return false;
     });
-    return data;
+    return dataArray;
 }
 
 export async function checkProjectInEvents(props, _projectAddress) {
@@ -132,18 +132,18 @@ export async function checkProjectInEvents(props, _projectAddress) {
 }
 
 export async function getProjectRequestEvents(props, _projectAddress) {
-    let events = await props.project.getPastEvents('ProjectRequestEvent', {
+    const events = await props.project.getPastEvents('ProjectRequestEvent', {
         filter: { _projectAddress: _projectAddress },
         fromBlock: 0,
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
 
-    let data = [];
+    let dataArray = [];
     let indexLocal = 1;
     events.map((result) => {
-        let projectStatus = dropdownService.getProjectStatusById(result.returnValues._projectRequest._status);
-        let requestStatus = dropdownService.getRequestStatusById(result.returnValues._projectRequest._requestStatus);
+        const projectStatus = dropdownService.getProjectStatusById(result.returnValues._projectRequest._status);
+        const requestStatus = dropdownService.getRequestStatusById(result.returnValues._projectRequest._requestStatus);
         const project = {
             index: Number(result.returnValues._projectRequest._index) + indexLocal,
             title: result.returnValues._projectRequest._title,
@@ -156,9 +156,45 @@ export async function getProjectRequestEvents(props, _projectAddress) {
             timestamp: new Date(result.returnValues._projectRequest._timestamp * 1000).toString(),
             signature: result.returnValues._projectRequest._signature
         };
-        data.push(project);
+        dataArray.push(project);
         indexLocal++;
         return false;
     });
-    return data;
+    return dataArray;
+}
+
+
+/*** REQUEST METHODS */
+
+export async function getRequestEvents(props, _requestAddress) {
+    const events = await props.project.getPastEvents('RequestEvent', {
+        filter: { _requestAddress: _requestAddress },
+        fromBlock: 0,
+        toBlock: 'latest'
+    });
+    if (events === undefined || events.length === 0) return [];
+
+    console.log(events)
+
+    let dataArray = [];
+    events.map((result) => {
+        const projectStatus = dropdownService.getProjectStatusById(result.returnValues._request._projectStatus);
+        const requestStatus = dropdownService.getRequestStatusById(result.returnValues._request._requestStatus);
+        const requestType = dropdownService.getRequestTypeById(result.returnValues._request._requestType);
+        const project = {
+            index: Number(result.returnValues._request._index),
+            title: result.returnValues._request._title,
+            projectStatus: projectStatus.value,
+            requestStatus: requestStatus.value,
+            requestType: requestType.value,
+            projectAddress: result.returnValues._request._projectAddress,
+            requestAddress: result.returnValues._request._requestAddress,
+            signerAddress: result.returnValues._request._signerAddress,
+            timestamp: new Date(result.returnValues._request._timestamp * 1000).toString(),
+            signature: result.returnValues._request._signature
+        };
+        dataArray.push(project);
+        return false;
+    });
+    return dataArray;
 }

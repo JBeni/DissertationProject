@@ -22,19 +22,18 @@ export default function AddProjectForm(props) {
 	const [values, setValues] = useState(formService.initialProjectFormValues);
 	const [errors, setErrors] = useState({});
     const [validity, setValidity] = useState(formService.initialProjectFormValidity);
+    const [buffer, setBuffer] = useState(null);
 
     useEffect(() => {
         if (recordForEdit != null) {
-            let status = dropdownService.getProjectStatusByValue(recordForEdit.status);
-            let newData = {
+            const status = dropdownService.getProjectStatusByValue(recordForEdit.status);
+            setValues(prev => ({
+				...recordForEdit,
                 name: recordForEdit.name,
                 status: status.id,
                 'file': { name: '', type: '', size: '', lastModifiedDate: '' },
                 projectAddress: recordForEdit.projectAddress
-            };
-            setValues({
-				...newData,
-			});
+            }));
             setIsEdit(true);
         } else {
             setValues({
@@ -63,6 +62,14 @@ export default function AddProjectForm(props) {
                 lastModifiedDate: event.target.files[0].lastModifiedDate
             }
 		});
+
+        const data = event.target.files[0];
+        const reader = new window.FileReader();
+        reader.readAsArrayBuffer(new Blob([data]));
+        reader.onloadend = () => {
+            setBuffer(Buffer(reader.result));
+        };
+
         validate({ 'file': {
             name: event.target.files[0].name,
             type: event.target.files[0].type,
@@ -105,10 +112,10 @@ export default function AddProjectForm(props) {
 		}
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
         if (validate()) {
-			addOrEdit(values, resetForm);
+			addOrEdit(values, resetForm, buffer);
             props.handleNewDataFromPopup(false);
 		}
 	};
@@ -155,6 +162,7 @@ export default function AddProjectForm(props) {
                                 <input
                                     style={{ display: "none" }}
                                     id="file" type="file"
+                                    accept="application/pdf"
                                     name="file"
                                     onChange={fileChangeHandler}
                                 />

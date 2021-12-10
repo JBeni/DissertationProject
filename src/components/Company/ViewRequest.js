@@ -9,18 +9,13 @@ export default function ViewRequest(props) {
 
 	useEffect(() => {
 		if (recordForEdit != null) {
-            let projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
-            let requestStatus = dropdownService.getRequestStatusByValue(recordForEdit.requestStatus);
-			const newData = {
-				title: recordForEdit.title,
+            const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
+            const requestStatus = dropdownService.getRequestStatusByValue(recordForEdit.requestStatus);
+            setValues(prev => ({
+				...recordForEdit,
 				projectStatus: projectStatus.value,
-                requestStatus: requestStatus.value,
-                projectAddress: recordForEdit.projectAddress,
-                signerAddress: recordForEdit.signerAddress
-			};
-			setValues({
-				...newData,
-			});
+                requestStatus: requestStatus.value
+			}));
 		}
 	}, [recordForEdit]);
 
@@ -41,7 +36,7 @@ export default function ViewRequest(props) {
 						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>User Status: {values.signerAddress}</FormLabel>
+						<FormLabel>Signer Address: {values.signerAddress}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>
