@@ -21,6 +21,31 @@ contract ServiceChain {
         _;
     }
 
+    function getAddressZeroValue() public pure returns (string memory) {
+        return "0x0000000000000000000000000000000000000000";
+    }
+
+    function getAdminRole() public pure returns (string memory) {
+        return "AdminMighty";
+    }
+
+    function getDefaultRole() public pure returns (string memory) {
+        return "DefaultRole";
+    }
+
+    function getUserProjectRole() public pure returns (string memory) {
+        return "UserProject";
+    }
+
+    function getCompanyRole() public pure returns (string memory) {
+        return "Company";
+    }
+
+    function getSupervisorRole() public pure returns (string memory) {
+        return "Supervisor";
+    }
+
+
     function createDropdowns() public onlyOwner {
         requestType.push(Dropdown(0, 'SupervisorReq'));
         requestType.push(Dropdown(1, 'CompanyReq'));
