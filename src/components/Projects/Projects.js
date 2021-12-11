@@ -199,16 +199,18 @@ class Projects extends Component {
 
 		return (
 			<div>
-				<Button
-					variant="outlined"
-					startIcon={<AddIcon />}
-					onClick={() => {
-						this.setOpenAddForm(true);
-						this.setRecordForEdit(null);
-					}}>Add New</Button>
-
                 {
-                    this.props.currentUserRole === roleService.getUserProjectRole() &&
+                    //this.props.currentUserRole === roleService.getUserProjectRole() &&
+                        <Button
+                            variant="outlined"
+                            startIcon={<AddIcon />}
+                            onClick={() => {
+                                this.setOpenAddForm(true);
+                                this.setRecordForEdit(null);
+                        }}>Add New</Button>
+                }
+                {
+                    //this.props.currentUserRole === roleService.getUserProjectRole() &&
                     <Dialog open={this.state.openAddForm} maxWidth="md">
                         <DialogTitle>
                             <div style={{ display: 'flex' }}>
