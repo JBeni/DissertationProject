@@ -39,7 +39,7 @@ export async function getUserEvents(props, _walletAddress) {
     events.map((result) => {
         const role = dropdownService.getUserRoleById(result.returnValues._user._role);
         const user = {
-            index: Number(result.returnValues._index) + indexLocal,
+            index: indexLocal,
             firstname: props.web3.utils.hexToUtf8(result.returnValues._user._firstname),
             lastname: props.web3.utils.hexToUtf8(result.returnValues._user._lastname),
             role: role.value,
