@@ -3,7 +3,7 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract AdminChain {
     Admin[] private admins;
-    uint private adminNumbers = 0;
+    uint256 private adminNumbers = 0;
 
     struct Admin {
         string _username;
@@ -22,7 +22,7 @@ contract AdminChain {
         _;
     }
 
-    function createtAdmin(string memory _username, uint _role, address _wallet) public onlyAdmin returns (string memory) {
+    function createtAdmin(string memory _username, uint256 _role, address _wallet) public onlyAdmin returns (string memory) {
         require(adminNumbers == 0, "Access Denied!...");
         if (adminNumbers == 0) {
             admins.push(Admin(_username, AdminRoles(_role), _wallet));

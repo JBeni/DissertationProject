@@ -47,7 +47,7 @@ contract ProjectChain is SharedChain {
     uint256 public projectsCounter = 0;
     address[] public projectsAddress;
 
-    function createUniqueProjectAddress(string memory _name, uint _index) public view returns (address) {
+    function createUniqueProjectAddress(string memory _name, uint256 _index) public view returns (address) {
         return address(uint160(uint256(keccak256(abi.encodePacked(_name, _currentUserAddress, _index)))));
     }
 
@@ -129,7 +129,7 @@ contract ProjectChain is SharedChain {
     uint256 public requestsCounter = 0;
     address[] public requestsAddress;
 
-    function createUniqueRequestAddress(string memory _title, uint _index) public view returns (address) {
+    function createUniqueRequestAddress(string memory _title, uint256 _index) public view returns (address) {
         return address(uint160(uint256(keccak256(abi.encodePacked(_title, _currentUserAddress, _index)))));
     }
 

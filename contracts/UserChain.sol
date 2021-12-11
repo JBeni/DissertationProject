@@ -43,7 +43,7 @@ contract UserChain is SharedChain {
         usersCounter++;
     }
 
-    function changeUserRole(uint _role, address _walletAddress, string memory _signature) public onlyOwner {
+    function changeUserRole(uint256 _role, address _walletAddress, string memory _signature) public onlyOwner {
         users[_walletAddress]._role = Roles(_role);
 
         users[_walletAddress]._timestamp = block.timestamp;
@@ -53,7 +53,7 @@ contract UserChain is SharedChain {
 
     function getAllUsers() public view onlyOwner returns(User[] memory) {
         User[] memory allUsers = new User[](usersCounter);
-        for (uint index = 0; index < usersCounter; index++) {
+        for (uint256 index = 0; index < usersCounter; index++) {
             address _walletAddress = usersAddress[index];
             User storage user = users[_walletAddress];
             allUsers[index] = user;

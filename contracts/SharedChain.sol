@@ -16,14 +16,14 @@ contract SharedChain {
 
 
     struct User {
-        uint _index;
+        uint256 _index;
         string _username;
         bytes32 _email;
         bytes32 _firstname;
         bytes32 _lastname;
         Roles _role;
         address _walletAddress;
-        uint _timestamp;
+        uint256 _timestamp;
         string _signature;
     }
     event UserEvent(
@@ -32,13 +32,13 @@ contract SharedChain {
     );
 
     struct Project {
-        uint _index;
+        uint256 _index;
         string _name;
         ProjectStatus _status;
         string _ipfsFileCID;
         address _projectAddress;
         address _signerAddress;
-        uint _timestamp;
+        uint256 _timestamp;
         string _signature;
     }
     event ProjectEvent(
@@ -48,7 +48,7 @@ contract SharedChain {
 
 
     struct Request {
-        uint _index;
+        uint256 _index;
         string _title;
         string _comments;
         ProjectStatus _projectStatus;
@@ -57,7 +57,7 @@ contract SharedChain {
         address _projectAddress;
         address _requestAddress;
         address _signerAddress;
-        uint _timestamp;
+        uint256 _timestamp;
         string _signature;
     }
     event RequestEvent(

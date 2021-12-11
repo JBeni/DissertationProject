@@ -4,7 +4,7 @@ pragma solidity >=0.8.0 <0.9.0;
 contract ServiceChain {
 
     struct Dropdown {
-        uint id;
+        uint256 id;
         string value;
     }
 
@@ -46,8 +46,8 @@ contract ServiceChain {
 
     /** Methods: Check if Dropdown option exists */
 
-    function checkRequestTypeDropdown(uint _id) public view onlyOwner returns (bool) {
-        for (uint index = 0; index < requestType.length; index++) {
+    function checkRequestTypeDropdown(uint256 _id) public view onlyOwner returns (bool) {
+        for (uint256 index = 0; index < requestType.length; index++) {
             if (requestType[index].id == _id) {
                 return true;
             }
@@ -55,8 +55,8 @@ contract ServiceChain {
         return false;
     }
 
-    function checkRequestStatusFormDropdown(uint _id) public view onlyOwner returns (bool) {
-        for (uint index = 0; index < requestStatusForm.length; index++) {
+    function checkRequestStatusFormDropdown(uint256 _id) public view onlyOwner returns (bool) {
+        for (uint256 index = 0; index < requestStatusForm.length; index++) {
             if (requestStatusForm[index].id == _id) {
                 return true;
             }
@@ -64,8 +64,8 @@ contract ServiceChain {
         return false;
     }
 
-    function checkRequestStatusDropdown(uint _id) public view onlyOwner returns (bool) {
-        for (uint index = 0; index < requestStatus.length; index++) {
+    function checkRequestStatusDropdown(uint256 _id) public view onlyOwner returns (bool) {
+        for (uint256 index = 0; index < requestStatus.length; index++) {
             if (requestStatus[index].id == _id) {
                 return true;
             }
@@ -73,8 +73,8 @@ contract ServiceChain {
         return false;
     }
 
-    function checkProjectStatusDropdown(uint _id) public view onlyOwner returns (bool) {
-        for (uint index = 0; index < projectStatus.length; index++) {
+    function checkProjectStatusDropdown(uint256 _id) public view onlyOwner returns (bool) {
+        for (uint256 index = 0; index < projectStatus.length; index++) {
             if (projectStatus[index].id == _id) {
                 return true;
             }
@@ -82,8 +82,8 @@ contract ServiceChain {
         return false;
     }
 
-    function checkUserRoleDropdown(uint _id) public view onlyOwner returns (bool) {
-        for (uint index = 0; index < userRole.length; index++) {
+    function checkUserRoleDropdown(uint256 _id) public view onlyOwner returns (bool) {
+        for (uint256 index = 0; index < userRole.length; index++) {
             if (userRole[index].id == _id) {
                 return true;
             }
