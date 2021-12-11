@@ -5,16 +5,14 @@ import "./UserChain.sol";
 import "./SharedChain.sol";
 
 contract ProjectChain is SharedChain {
-    address _currentUserAddress;
     UserChain userChain;
 
     constructor() {
-        _currentUserAddress = msg.sender;
         //userChain = new UserChain();
     }
 
     modifier onlyUserProject() {
-        // User memory sessionUser = userChain.getUserInfo(_currentUserAddress);
+        // User memory sessionUser = userChain.getUserInfo(msg.sender);
         // require(
         //     sessionUser._role == Roles.UserProject,
         //     "You don't have the rights for this resource."
@@ -23,7 +21,7 @@ contract ProjectChain is SharedChain {
     }
 
     modifier onlySupervisor() {
-        // User memory sessionUser = userChain.getUserInfo(_currentUserAddress);
+        // User memory sessionUser = userChain.getUserInfo(msg.sender);
         // require(
         //     sessionUser._role == Roles.Supervisor,
         //     "You don't have the rights for this resource."
@@ -32,7 +30,7 @@ contract ProjectChain is SharedChain {
     }
 
     modifier onlyCompany() {
-        // User memory sessionUser = userChain.getUserInfo(_currentUserAddress);
+        // User memory sessionUser = userChain.getUserInfo(msg.sender);
         // require(
         //     sessionUser._role == Roles.Company,
         //     "You don't have the rights for this resource."
@@ -48,7 +46,7 @@ contract ProjectChain is SharedChain {
     address[] public projectsAddress;
 
     function createUniqueProjectAddress(string memory _name, uint256 _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_name, _currentUserAddress, _index)))));
+        return address(uint160(uint256(keccak256(abi.encodePacked(_name, msg.sender, _index)))));
     }
 
     function createProject(
@@ -64,7 +62,7 @@ contract ProjectChain is SharedChain {
             ProjectStatus(_status),
             _ipfsFileCID,
             _projectAddress,
-            _currentUserAddress,
+            msg.sender,
             block.timestamp,
             _signature
         );
@@ -130,7 +128,7 @@ contract ProjectChain is SharedChain {
     address[] public requestsAddress;
 
     function createUniqueRequestAddress(string memory _title, uint256 _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_title, _currentUserAddress, _index)))));
+        return address(uint160(uint256(keccak256(abi.encodePacked(_title, msg.sender, _index)))));
     }
 
     function createRequest(
@@ -161,7 +159,7 @@ contract ProjectChain is SharedChain {
             RequestType(_requestType),
             _projectAddress,
             _requestAddress,
-            _currentUserAddress,
+            msg.sender,
             block.timestamp,
             _signature
         );
@@ -198,6 +196,18 @@ contract ProjectChain is SharedChain {
             address _requestAddress = requestsAddress[index];
             Request storage request = requests[_requestAddress];
             allRequests[index] = request;
+        }
+        return allRequests;
+    }
+
+    function getProjectRequests(address _projectAddress) public view returns (Request[] memory) {
+        Request[] memory allRequests;
+        for (uint256 index = 0; index < requestsCounter; index++) {
+            address _requestAddress = requestsAddress[index];
+            Request storage request = requests[_requestAddress];
+            if (_projectAddress == request._projectAddress) {
+                allRequests[index] = request;
+            }
         }
         return allRequests;
     }
