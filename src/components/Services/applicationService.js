@@ -77,8 +77,8 @@ export async function getProjectInfo(props, projectAddress) {
     }).catch(function (error) {});
 }
 
-export async function getAllProjectRequests(props, projectAddress) {
-    const allProjectRequest = await props.project.methods.getAllProjectRequests().call({ from: this.props.account }).then((result) => {
+export async function getAllRequests(props, projectAddress) {
+    const allProjectRequest = await props.project.methods.getAllRequests().call({ from: this.props.account }).then((result) => {
         return result;
     }).catch(function (error) {});
 
@@ -178,6 +178,7 @@ export async function getCompanyRequests(props) {
     return dataArray;
 }
 
+/*
 export async function getAllRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: this.props.account }).then((result) => {
         return result;
@@ -210,8 +211,11 @@ export async function getAllRequests(props) {
     });
     return dataArray;
 }
+*/
 
-export async function createUniqueProjectRequestAddress(props, _title, _index) {
+
+
+export async function createUniqueRequestAddress(props, _title, _index) {
     const response = await props.project.methods.createUniqueProjectRequestAddress(_title, _index).call({ from: this.props.account })
         .catch(function (error) {});
     return response;
