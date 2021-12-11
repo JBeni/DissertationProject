@@ -42,16 +42,13 @@ export const initialUserFormValues = {
 	isEditForm: false,
 	firstname: '',
 	lastname: '',
-	email: '',
 	role: '',
-    username: '',
 	walletAddress: '',
 };
 
 export const initialUserFormValidity = {
 	firstname: false,
 	lastname: false,
-	email: false,
 	role: false,
 	walletAddress: false,
 };
