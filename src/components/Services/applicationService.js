@@ -9,8 +9,6 @@ export async function getAllUsers(props) {
         result.map((result) => {
             const role = dropdownService.getUserRoleById(result._role);
             const user = {
-                username: result._username,
-                email: props.web3.utils.hexToUtf8(result._email),
                 firstname: props.web3.utils.hexToUtf8(result._firstname),
                 lastname: props.web3.utils.hexToUtf8(result._lastname),
                 role: role.value,
@@ -28,8 +26,6 @@ export async function getUserInfo(props) {
     return await props.userChain.methods.getUserInfo(props.account).call({ from: props.account }).then((result) => {
         const role = dropdownService.getUserRoleById(result._role);
         const user = {
-            username: result._username,
-            email: props.web3.utils.hexToUtf8(result._email),
             firstname: props.web3.utils.hexToUtf8(result._firstname),
             lastname: props.web3.utils.hexToUtf8(result._lastname),
             role: role.value,
