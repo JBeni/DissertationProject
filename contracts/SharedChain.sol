@@ -31,6 +31,7 @@ contract SharedChain {
         address indexed _walletAddress
     );
 
+
     struct Project {
         uint256 _index;
         string _name;
@@ -38,12 +39,15 @@ contract SharedChain {
         string _ipfsFileCID;
         address _projectAddress;
         address _signerAddress;
+        address _companyAddress;
+        bool _assigned;
         uint256 _timestamp;
         string _signature;
     }
     event ProjectEvent(
         Project _project,
-        address indexed _projectAddress
+        address indexed _projectAddress,
+        address indexed _companyAddress
     );
 
 
