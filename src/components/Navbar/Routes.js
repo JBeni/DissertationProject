@@ -59,13 +59,13 @@ function Routes(props) {
             {
                 (
                     props.currentUserRole === roleService.getUserProjectRole() ||
-                    props.currentUserRole === roleService.getCompanyRole() ||
-                    props.currentUserRole === roleService.getSupervisorRole()
+                    props.currentUserRole === roleService.getCompanyRole()
                 ) &&
                     <Route
                         path="/projects" exact
                         render={() => (
                             <Projects
+                                currentUserRole={props.currentUserRole}
                                 account={props.account}
                                 project={props.project}
                                 signatureChain={props.signatureChain}
