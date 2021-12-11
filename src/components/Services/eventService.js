@@ -14,14 +14,11 @@ export async function getAllUserEvents(props) {
         const role = dropdownService.getUserRoleById(result.returnValues._user._role);
         const user = {
             index: Number(result.returnValues._user._index),
-            username: result.returnValues._user._username,
-            email: props.web3.utils.hexToUtf8(result.returnValues._user._email),
             firstname: props.web3.utils.hexToUtf8(result.returnValues._user._firstname),
             lastname: props.web3.utils.hexToUtf8(result.returnValues._user._lastname),
             role: role.value,
             walletAddress: result.returnValues._user._walletAddress,
             timestamp: new Date(result.returnValues._user._timestamp * 1000).toString(),
-            signature: result.returnValues._user._signature
         };
         dataArray.push(user);
         return false;
@@ -43,14 +40,11 @@ export async function getUserEvents(props, _walletAddress) {
         const role = dropdownService.getUserRoleById(result.returnValues._user._role);
         const user = {
             index: Number(result.returnValues._index) + indexLocal,
-            username: result.returnValues._user._username,
-            email: props.web3.utils.hexToUtf8(result.returnValues._user._email),
             firstname: props.web3.utils.hexToUtf8(result.returnValues._user._firstname),
             lastname: props.web3.utils.hexToUtf8(result.returnValues._user._lastname),
             role: role.value,
             walletAddress: result.returnValues._user._walletAddress,
             timestamp: new Date(result.returnValues._user._timestamp * 1000).toString(),
-            signature: result.returnValues._user._signature
         };
         dataArray.push(user);
         indexLocal++;
