@@ -43,14 +43,14 @@ class Projects extends Component {
     }
 
     async componentDidMount() {
-        this.getProjects();
+        this.getProjectsByUser();
 
         const userProjectRole = await roleService.getUserProjectRole(this.props);
         this.setState({ userProjectRole: userProjectRole });
     }
 
-    getProjects = async () => {
-        const allProjects = await applicationService.getAllProjects(this.props);
+    getProjectsByUser = async () => {
+        const allProjects = await applicationService.getProjectsByUser(this.props);
         this.setState({ projects: allProjects });
     }
 
@@ -161,7 +161,7 @@ class Projects extends Component {
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Create Project operation was made successfully');
-                    this.getProjects();
+                    this.getProjectsByUser();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Create Project operation has failed');
@@ -182,7 +182,7 @@ class Projects extends Component {
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Project operation was made successfully');
-                    this.getProjects();
+                    this.getProjectsByUser();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Update Project operation has failed');
