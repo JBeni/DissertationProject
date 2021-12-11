@@ -3,7 +3,6 @@ const ProjectChain = artifacts.require('ProjectChain');
 const UserChain = artifacts.require('UserChain');
 const AdminChain = artifacts.require('AdminChain');
 const ServiceChain = artifacts.require('ServiceChain');
-const SignatureChain = artifacts.require('SignatureChain');
 
 module.exports = async function (deployer, network, accounts) {
     await deployer.deploy(ProjectChain);
@@ -20,5 +19,4 @@ module.exports = async function (deployer, network, accounts) {
     });
 
     await deployer.deploy(ServiceChain);
-    await deployer.deploy(SignatureChain);
 };
