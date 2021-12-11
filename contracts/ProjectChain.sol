@@ -2,13 +2,10 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 import "./UserChain.sol";
-import "./SharedChain.sol";
 
 contract ProjectChain is UserChain {
-    //UserChain userChain;
 
     constructor() {
-        //userChain = new UserChain();
     }
 
     modifier onlyUserProject() {
@@ -93,15 +90,15 @@ contract ProjectChain is UserChain {
         //require(msg.sender != address(0x0), "Address is not valid.");
         return projects[_address];
     }
-/*
-    function getProjectsByUser(address _signerAddress) public view returns (Project[] memory) {
+
+    function getProjectsByUser(address _walletAddress) public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
 
         allProjects = new Project[](projectsCounter);
         for (uint256 index = 0; index < projectsCounter; index++) {
             address _projectAddress = projectsAddress[index];
-            if (_signerAddress == projects[_projectAddress]._signerAddress) {
+            if (_walletAddress == projects[_projectAddress]._signerAddress) {
                 Project storage project = projects[_projectAddress];
                 allProjects[index] = project;
             }
@@ -124,7 +121,6 @@ contract ProjectChain is UserChain {
         return allProjects;
     }
 
-*/
 
 /*
     function getAllProjects() public view returns (Project[] memory) {
