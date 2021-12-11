@@ -1,9 +1,9 @@
 /* eslint-disable no-undef */
-var ProjectChain = artifacts.require('ProjectChain');
-var UserChain = artifacts.require('UserChain');
-var AdminChain = artifacts.require('AdminChain');
-var ServiceChain = artifacts.require('ServiceChain');
-var SignatureChain = artifacts.require('SignatureChain');
+const ProjectChain = artifacts.require('ProjectChain');
+const UserChain = artifacts.require('UserChain');
+const AdminChain = artifacts.require('AdminChain');
+const ServiceChain = artifacts.require('ServiceChain');
+const SignatureChain = artifacts.require('SignatureChain');
 
 module.exports = async function (deployer, network, accounts) {
     await deployer.deploy(ProjectChain);
@@ -18,6 +18,6 @@ module.exports = async function (deployer, network, accounts) {
         return await instance.createtAdmin(username, role, walletAddress);
     });
 
-//     await deployer.deploy(ServiceChain);
-//     await deployer.deploy(SignatureChain);
+    await deployer.deploy(ServiceChain);
+    await deployer.deploy(SignatureChain);
 };
