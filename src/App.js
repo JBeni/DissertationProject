@@ -131,7 +131,7 @@ class App extends Component {
         const adminData = await this.state.adminChain.methods.getAdminInfo().call({ from: this.state.account }).then((response) => {
             const role = dropdownService.getAdminRoleById(response._role);
             return {
-                username: response._username,
+                username: response._firstname + ' ' + response._lastname,
                 role: role.value,
                 walletAddress: response._walletAddress
             };
@@ -154,7 +154,11 @@ class App extends Component {
         if (users.length > 0) {
             const userInfo = await this.state.userChain.methods.getUserInfo(this.state.account).call({ from: this.state.account }).then((response) => {
                 const role = dropdownService.getUserRoleById(response._role);
-                return { username: response._username, role: role.value, walletAddress: response._walletAddress };
+                return {
+                    username: response._firstname + ' ' + response._lastname,
+                    role: role.value,
+                    walletAddress: response._walletAddress
+                };
             });
             if (userInfo.walletAddress === this.state.account) {
                 this.setState({ loading: false, currentUserRole: userInfo.role, currentUsername: userInfo.username });
