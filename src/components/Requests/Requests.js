@@ -23,7 +23,7 @@ class Requests extends Component {
     }
 
     componentDidMount() {
-        this.getAllRequests();
+        //this.getAllRequests();
     }
 
     async getAllRequests() {
