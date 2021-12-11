@@ -31,11 +31,10 @@ export default class Users extends Component {
 
     componentDidMount() {
         this.getUsers();
-        eventService.getAllUserEvents(this.props);
     }
 
     getUsers = async () => {
-        const data = await applicationService.getAllUsers(this.props);
+        const data = await eventService.getAllUserEvents(this.props);
         this.setState({ users: data });
     }
 
