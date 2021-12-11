@@ -58,16 +58,6 @@ export default function AddForm(props) {
 			temp.lastname = fieldValues.lastname.trim() ? '' : 'This field is required.';
             tempValidity.lastname = fieldValues.lastname?.length <= 0;
 		}
-        if ('email' in fieldValues) {
-			temp.email = fieldValues.email.trim() ? '' : 'This field is required.';
-            tempValidity.email = fieldValues.email?.length <= 0;
-		}
-        if (fieldValues.email?.length > 0) {
-			temp.email = /$^|.+@.+..+/.test(fieldValues.email)
-				? ''
-				: 'Email is not valid.';
-            tempValidity.email = !(/$^|.+@.+..+/.test(fieldValues.email));
-        }
 		if ('role' in fieldValues) {
 			temp.role = fieldValues.role.length > 0 ? '' : 'This field is required.';
             tempValidity.role = fieldValues.role?.length <= 0;
@@ -129,19 +119,6 @@ export default function AddForm(props) {
                                 disabled = {(isEdit === true) ? true : false}
                             />
 							{errors && <FormHelperText className="Mui-error">{errors.lastname}</FormHelperText>}
-						</FormControl>
-
-                        <FormControl style={{ width: '400px' }}>
-                            <TextField
-                                style={{ marginLeft: '3px', width: '400px' }}
-                                name="email"
-                                label="Email"
-                                value={values.email}
-                                onChange={handleInputChange}
-                                error={validity.email}
-                                disabled = {(isEdit === true) ? true : false}
-                            />
-							{errors && <FormHelperText className="Mui-error">{errors.email}</FormHelperText>}
 						</FormControl>
 
 						<FormControl style={{ width: '400px' }}>
