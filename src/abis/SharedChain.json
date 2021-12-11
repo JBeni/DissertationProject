@@ -213,23 +213,23 @@
   "immutableReferences": {},
   "generatedSources": [],
   "deployedGeneratedSources": [],
-  "sourceMap": "68:1592:1:-:0;;;;;;;;;;;;;;;;;;;",
-  "deployedSourceMap": "68:1592:1:-:0;;;;;",
+  "sourceMap": "68:1592:4:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "68:1592:4:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.8.0 <0.9.0;\r\n\r\ncontract SharedChain {\r\n\r\n    enum RequestType { SupervisorReq, CompanyReq }\r\n    enum RequestStatus { UnApproved, Rejected, Approved }\r\n    enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }\r\n\r\n    enum Roles {\r\n        DefaultRole,\r\n        UserProject,\r\n        Company,\r\n        Supervisor\r\n    }\r\n\r\n\r\n    struct User {\r\n        bytes32 _firstname;\r\n        bytes32 _lastname;\r\n        Roles _role;\r\n        address _walletAddress;\r\n        uint256 _timestamp;\r\n    }\r\n    event UserEvent(\r\n        User _user,\r\n        address indexed _walletAddress\r\n    );\r\n\r\n\r\n    struct Project {\r\n        uint256 _index;\r\n        string _name;\r\n        ProjectStatus _status;\r\n        string _ipfsFileCID;\r\n        address _projectAddress;\r\n        address _signerAddress;\r\n        address _companyAddress;\r\n        bool _assigned;\r\n        uint256 _timestamp;\r\n        string _signature;\r\n    }\r\n    event ProjectEvent(\r\n        Project _project,\r\n        address indexed _projectAddress,\r\n        address indexed _companyAddress\r\n    );\r\n\r\n\r\n    struct Request {\r\n        uint256 _index;\r\n        string _title;\r\n        string _comments;\r\n        ProjectStatus _projectStatus;\r\n        RequestStatus _requestStatus;\r\n        RequestType _requestType;\r\n        address _projectAddress;\r\n        address _requestAddress;\r\n        address _signerAddress;\r\n        uint256 _timestamp;\r\n        string _signature;\r\n    }\r\n    event RequestEvent(\r\n        Request _request,\r\n        address indexed _requestAddress,\r\n        address indexed _projectAddress\r\n    );\r\n}\r\n",
   "sourcePath": "/mnt/c/Users/Beniamin/source/repos/DissertationProject/contracts/SharedChain.sol",
   "ast": {
     "absolutePath": "project:/contracts/SharedChain.sol",
     "exportedSymbols": {
       "SharedChain": [
-        513
+        1498
       ]
     },
-    "id": 514,
+    "id": 1499,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 409,
+        "id": 1394,
         "literals": [
           "solidity",
           ">=",
@@ -240,7 +240,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:31:1"
+        "src": "33:31:4"
       },
       {
         "abstract": false,
@@ -249,165 +249,165 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 513,
+        "id": 1498,
         "linearizedBaseContracts": [
-          513
+          1498
         ],
         "name": "SharedChain",
-        "nameLocation": "77:11:1",
+        "nameLocation": "77:11:4",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "SharedChain.RequestType",
-            "id": 412,
+            "id": 1397,
             "members": [
               {
-                "id": 410,
+                "id": 1395,
                 "name": "SupervisorReq",
-                "nameLocation": "117:13:1",
+                "nameLocation": "117:13:4",
                 "nodeType": "EnumValue",
-                "src": "117:13:1"
+                "src": "117:13:4"
               },
               {
-                "id": 411,
+                "id": 1396,
                 "name": "CompanyReq",
-                "nameLocation": "132:10:1",
+                "nameLocation": "132:10:4",
                 "nodeType": "EnumValue",
-                "src": "132:10:1"
+                "src": "132:10:4"
               }
             ],
             "name": "RequestType",
-            "nameLocation": "103:11:1",
+            "nameLocation": "103:11:4",
             "nodeType": "EnumDefinition",
-            "src": "98:46:1"
+            "src": "98:46:4"
           },
           {
             "canonicalName": "SharedChain.RequestStatus",
-            "id": 416,
+            "id": 1401,
             "members": [
               {
-                "id": 413,
+                "id": 1398,
                 "name": "UnApproved",
-                "nameLocation": "171:10:1",
+                "nameLocation": "171:10:4",
                 "nodeType": "EnumValue",
-                "src": "171:10:1"
+                "src": "171:10:4"
               },
               {
-                "id": 414,
+                "id": 1399,
                 "name": "Rejected",
-                "nameLocation": "183:8:1",
+                "nameLocation": "183:8:4",
                 "nodeType": "EnumValue",
-                "src": "183:8:1"
+                "src": "183:8:4"
               },
               {
-                "id": 415,
+                "id": 1400,
                 "name": "Approved",
-                "nameLocation": "193:8:1",
+                "nameLocation": "193:8:4",
                 "nodeType": "EnumValue",
-                "src": "193:8:1"
+                "src": "193:8:4"
               }
             ],
             "name": "RequestStatus",
-            "nameLocation": "155:13:1",
+            "nameLocation": "155:13:4",
             "nodeType": "EnumDefinition",
-            "src": "150:53:1"
+            "src": "150:53:4"
           },
           {
             "canonicalName": "SharedChain.ProjectStatus",
-            "id": 422,
+            "id": 1407,
             "members": [
               {
-                "id": 417,
+                "id": 1402,
                 "name": "Created",
-                "nameLocation": "230:7:1",
+                "nameLocation": "230:7:4",
                 "nodeType": "EnumValue",
-                "src": "230:7:1"
+                "src": "230:7:4"
               },
               {
-                "id": 418,
+                "id": 1403,
                 "name": "ToApprove",
-                "nameLocation": "239:9:1",
+                "nameLocation": "239:9:4",
                 "nodeType": "EnumValue",
-                "src": "239:9:1"
+                "src": "239:9:4"
               },
               {
-                "id": 419,
+                "id": 1404,
                 "name": "StartProject",
-                "nameLocation": "250:12:1",
+                "nameLocation": "250:12:4",
                 "nodeType": "EnumValue",
-                "src": "250:12:1"
+                "src": "250:12:4"
               },
               {
-                "id": 420,
+                "id": 1405,
                 "name": "FinalizationCheck",
-                "nameLocation": "264:17:1",
+                "nameLocation": "264:17:4",
                 "nodeType": "EnumValue",
-                "src": "264:17:1"
+                "src": "264:17:4"
               },
               {
-                "id": 421,
+                "id": 1406,
                 "name": "Completed",
-                "nameLocation": "283:9:1",
+                "nameLocation": "283:9:4",
                 "nodeType": "EnumValue",
-                "src": "283:9:1"
+                "src": "283:9:4"
               }
             ],
             "name": "ProjectStatus",
-            "nameLocation": "214:13:1",
+            "nameLocation": "214:13:4",
             "nodeType": "EnumDefinition",
-            "src": "209:85:1"
+            "src": "209:85:4"
           },
           {
             "canonicalName": "SharedChain.Roles",
-            "id": 427,
+            "id": 1412,
             "members": [
               {
-                "id": 423,
+                "id": 1408,
                 "name": "DefaultRole",
-                "nameLocation": "324:11:1",
+                "nameLocation": "324:11:4",
                 "nodeType": "EnumValue",
-                "src": "324:11:1"
+                "src": "324:11:4"
               },
               {
-                "id": 424,
+                "id": 1409,
                 "name": "UserProject",
-                "nameLocation": "346:11:1",
+                "nameLocation": "346:11:4",
                 "nodeType": "EnumValue",
-                "src": "346:11:1"
+                "src": "346:11:4"
               },
               {
-                "id": 425,
+                "id": 1410,
                 "name": "Company",
-                "nameLocation": "368:7:1",
+                "nameLocation": "368:7:4",
                 "nodeType": "EnumValue",
-                "src": "368:7:1"
+                "src": "368:7:4"
               },
               {
-                "id": 426,
+                "id": 1411,
                 "name": "Supervisor",
-                "nameLocation": "386:10:1",
+                "nameLocation": "386:10:4",
                 "nodeType": "EnumValue",
-                "src": "386:10:1"
+                "src": "386:10:4"
               }
             ],
             "name": "Roles",
-            "nameLocation": "307:5:1",
+            "nameLocation": "307:5:4",
             "nodeType": "EnumDefinition",
-            "src": "302:101:1"
+            "src": "302:101:4"
           },
           {
             "canonicalName": "SharedChain.User",
-            "id": 439,
+            "id": 1424,
             "members": [
               {
                 "constant": false,
-                "id": 429,
+                "id": 1414,
                 "mutability": "mutable",
                 "name": "_firstname",
-                "nameLocation": "444:10:1",
+                "nameLocation": "444:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "436:18:1",
+                "scope": 1424,
+                "src": "436:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -415,10 +415,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 428,
+                  "id": 1413,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "436:7:1",
+                  "src": "436:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -428,13 +428,13 @@
               },
               {
                 "constant": false,
-                "id": 431,
+                "id": 1416,
                 "mutability": "mutable",
                 "name": "_lastname",
-                "nameLocation": "473:9:1",
+                "nameLocation": "473:9:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "465:17:1",
+                "scope": 1424,
+                "src": "465:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -442,10 +442,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 430,
+                  "id": 1415,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "465:7:1",
+                  "src": "465:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -455,33 +455,33 @@
               },
               {
                 "constant": false,
-                "id": 434,
+                "id": 1419,
                 "mutability": "mutable",
                 "name": "_role",
-                "nameLocation": "499:5:1",
+                "nameLocation": "499:5:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "493:11:1",
+                "scope": 1424,
+                "src": "493:11:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_Roles_$427",
+                  "typeIdentifier": "t_enum$_Roles_$1412",
                   "typeString": "enum SharedChain.Roles"
                 },
                 "typeName": {
-                  "id": 433,
+                  "id": 1418,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 432,
+                    "id": 1417,
                     "name": "Roles",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 427,
-                    "src": "493:5:1"
+                    "referencedDeclaration": 1412,
+                    "src": "493:5:4"
                   },
-                  "referencedDeclaration": 427,
-                  "src": "493:5:1",
+                  "referencedDeclaration": 1412,
+                  "src": "493:5:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Roles_$427",
+                    "typeIdentifier": "t_enum$_Roles_$1412",
                     "typeString": "enum SharedChain.Roles"
                   }
                 },
@@ -489,13 +489,13 @@
               },
               {
                 "constant": false,
-                "id": 436,
+                "id": 1421,
                 "mutability": "mutable",
                 "name": "_walletAddress",
-                "nameLocation": "523:14:1",
+                "nameLocation": "523:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "515:22:1",
+                "scope": 1424,
+                "src": "515:22:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -503,10 +503,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 435,
+                  "id": 1420,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "515:7:1",
+                  "src": "515:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -517,13 +517,13 @@
               },
               {
                 "constant": false,
-                "id": 438,
+                "id": 1423,
                 "mutability": "mutable",
                 "name": "_timestamp",
-                "nameLocation": "556:10:1",
+                "nameLocation": "556:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "548:18:1",
+                "scope": 1424,
+                "src": "548:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -531,10 +531,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 437,
+                  "id": 1422,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "548:7:1",
+                  "src": "548:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -544,52 +544,52 @@
               }
             ],
             "name": "User",
-            "nameLocation": "420:4:1",
+            "nameLocation": "420:4:4",
             "nodeType": "StructDefinition",
-            "scope": 513,
-            "src": "413:161:1",
+            "scope": 1498,
+            "src": "413:161:4",
             "visibility": "public"
           },
           {
             "anonymous": false,
-            "id": 446,
+            "id": 1431,
             "name": "UserEvent",
-            "nameLocation": "586:9:1",
+            "nameLocation": "586:9:4",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 445,
+              "id": 1430,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 442,
+                  "id": 1427,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_user",
-                  "nameLocation": "611:5:1",
+                  "nameLocation": "611:5:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 446,
-                  "src": "606:10:1",
+                  "scope": 1431,
+                  "src": "606:10:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_User_$439_memory_ptr",
+                    "typeIdentifier": "t_struct$_User_$1424_memory_ptr",
                     "typeString": "struct SharedChain.User"
                   },
                   "typeName": {
-                    "id": 441,
+                    "id": 1426,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 440,
+                      "id": 1425,
                       "name": "User",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 439,
-                      "src": "606:4:1"
+                      "referencedDeclaration": 1424,
+                      "src": "606:4:4"
                     },
-                    "referencedDeclaration": 439,
-                    "src": "606:4:1",
+                    "referencedDeclaration": 1424,
+                    "src": "606:4:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_User_$439_storage_ptr",
+                      "typeIdentifier": "t_struct$_User_$1424_storage_ptr",
                       "typeString": "struct SharedChain.User"
                     }
                   },
@@ -597,14 +597,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 444,
+                  "id": 1429,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_walletAddress",
-                  "nameLocation": "643:14:1",
+                  "nameLocation": "643:14:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 446,
-                  "src": "627:30:1",
+                  "scope": 1431,
+                  "src": "627:30:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -612,10 +612,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 443,
+                    "id": 1428,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "627:7:1",
+                    "src": "627:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -625,23 +625,23 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "595:69:1"
+              "src": "595:69:4"
             },
-            "src": "580:85:1"
+            "src": "580:85:4"
           },
           {
             "canonicalName": "SharedChain.Project",
-            "id": 468,
+            "id": 1453,
             "members": [
               {
                 "constant": false,
-                "id": 448,
+                "id": 1433,
                 "mutability": "mutable",
                 "name": "_index",
-                "nameLocation": "709:6:1",
+                "nameLocation": "709:6:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "701:14:1",
+                "scope": 1453,
+                "src": "701:14:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -649,10 +649,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 447,
+                  "id": 1432,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "701:7:1",
+                  "src": "701:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -662,13 +662,13 @@
               },
               {
                 "constant": false,
-                "id": 450,
+                "id": 1435,
                 "mutability": "mutable",
                 "name": "_name",
-                "nameLocation": "733:5:1",
+                "nameLocation": "733:5:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "726:12:1",
+                "scope": 1453,
+                "src": "726:12:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -676,10 +676,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 449,
+                  "id": 1434,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "726:6:1",
+                  "src": "726:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -689,33 +689,33 @@
               },
               {
                 "constant": false,
-                "id": 453,
+                "id": 1438,
                 "mutability": "mutable",
                 "name": "_status",
-                "nameLocation": "763:7:1",
+                "nameLocation": "763:7:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "749:21:1",
+                "scope": 1453,
+                "src": "749:21:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                  "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                   "typeString": "enum SharedChain.ProjectStatus"
                 },
                 "typeName": {
-                  "id": 452,
+                  "id": 1437,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 451,
+                    "id": 1436,
                     "name": "ProjectStatus",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 422,
-                    "src": "749:13:1"
+                    "referencedDeclaration": 1407,
+                    "src": "749:13:4"
                   },
-                  "referencedDeclaration": 422,
-                  "src": "749:13:1",
+                  "referencedDeclaration": 1407,
+                  "src": "749:13:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                    "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                     "typeString": "enum SharedChain.ProjectStatus"
                   }
                 },
@@ -723,13 +723,13 @@
               },
               {
                 "constant": false,
-                "id": 455,
+                "id": 1440,
                 "mutability": "mutable",
                 "name": "_ipfsFileCID",
-                "nameLocation": "788:12:1",
+                "nameLocation": "788:12:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "781:19:1",
+                "scope": 1453,
+                "src": "781:19:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -737,10 +737,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 454,
+                  "id": 1439,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "781:6:1",
+                  "src": "781:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -750,13 +750,13 @@
               },
               {
                 "constant": false,
-                "id": 457,
+                "id": 1442,
                 "mutability": "mutable",
                 "name": "_projectAddress",
-                "nameLocation": "819:15:1",
+                "nameLocation": "819:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "811:23:1",
+                "scope": 1453,
+                "src": "811:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -764,10 +764,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 456,
+                  "id": 1441,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "811:7:1",
+                  "src": "811:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -778,13 +778,13 @@
               },
               {
                 "constant": false,
-                "id": 459,
+                "id": 1444,
                 "mutability": "mutable",
                 "name": "_signerAddress",
-                "nameLocation": "853:14:1",
+                "nameLocation": "853:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "845:22:1",
+                "scope": 1453,
+                "src": "845:22:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -792,10 +792,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 458,
+                  "id": 1443,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "845:7:1",
+                  "src": "845:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -806,13 +806,13 @@
               },
               {
                 "constant": false,
-                "id": 461,
+                "id": 1446,
                 "mutability": "mutable",
                 "name": "_companyAddress",
-                "nameLocation": "886:15:1",
+                "nameLocation": "886:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "878:23:1",
+                "scope": 1453,
+                "src": "878:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -820,10 +820,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 460,
+                  "id": 1445,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "878:7:1",
+                  "src": "878:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -834,13 +834,13 @@
               },
               {
                 "constant": false,
-                "id": 463,
+                "id": 1448,
                 "mutability": "mutable",
                 "name": "_assigned",
-                "nameLocation": "917:9:1",
+                "nameLocation": "917:9:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "912:14:1",
+                "scope": 1453,
+                "src": "912:14:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -848,10 +848,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 462,
+                  "id": 1447,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "912:4:1",
+                  "src": "912:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -861,13 +861,13 @@
               },
               {
                 "constant": false,
-                "id": 465,
+                "id": 1450,
                 "mutability": "mutable",
                 "name": "_timestamp",
-                "nameLocation": "945:10:1",
+                "nameLocation": "945:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "937:18:1",
+                "scope": 1453,
+                "src": "937:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -875,10 +875,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 464,
+                  "id": 1449,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "937:7:1",
+                  "src": "937:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -888,13 +888,13 @@
               },
               {
                 "constant": false,
-                "id": 467,
+                "id": 1452,
                 "mutability": "mutable",
                 "name": "_signature",
-                "nameLocation": "973:10:1",
+                "nameLocation": "973:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "966:17:1",
+                "scope": 1453,
+                "src": "966:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -902,10 +902,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 466,
+                  "id": 1451,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "966:6:1",
+                  "src": "966:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -915,52 +915,52 @@
               }
             ],
             "name": "Project",
-            "nameLocation": "682:7:1",
+            "nameLocation": "682:7:4",
             "nodeType": "StructDefinition",
-            "scope": 513,
-            "src": "675:316:1",
+            "scope": 1498,
+            "src": "675:316:4",
             "visibility": "public"
           },
           {
             "anonymous": false,
-            "id": 477,
+            "id": 1462,
             "name": "ProjectEvent",
-            "nameLocation": "1003:12:1",
+            "nameLocation": "1003:12:4",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 476,
+              "id": 1461,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 471,
+                  "id": 1456,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_project",
-                  "nameLocation": "1034:8:1",
+                  "nameLocation": "1034:8:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 477,
-                  "src": "1026:16:1",
+                  "scope": 1462,
+                  "src": "1026:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Project_$468_memory_ptr",
+                    "typeIdentifier": "t_struct$_Project_$1453_memory_ptr",
                     "typeString": "struct SharedChain.Project"
                   },
                   "typeName": {
-                    "id": 470,
+                    "id": 1455,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 469,
+                      "id": 1454,
                       "name": "Project",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 468,
-                      "src": "1026:7:1"
+                      "referencedDeclaration": 1453,
+                      "src": "1026:7:4"
                     },
-                    "referencedDeclaration": 468,
-                    "src": "1026:7:1",
+                    "referencedDeclaration": 1453,
+                    "src": "1026:7:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Project_$468_storage_ptr",
+                      "typeIdentifier": "t_struct$_Project_$1453_storage_ptr",
                       "typeString": "struct SharedChain.Project"
                     }
                   },
@@ -968,14 +968,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 473,
+                  "id": 1458,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_projectAddress",
-                  "nameLocation": "1069:15:1",
+                  "nameLocation": "1069:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 477,
-                  "src": "1053:31:1",
+                  "scope": 1462,
+                  "src": "1053:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -983,10 +983,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 472,
+                    "id": 1457,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1053:7:1",
+                    "src": "1053:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -997,14 +997,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 475,
+                  "id": 1460,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_companyAddress",
-                  "nameLocation": "1111:15:1",
+                  "nameLocation": "1111:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 477,
-                  "src": "1095:31:1",
+                  "scope": 1462,
+                  "src": "1095:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1012,10 +1012,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 474,
+                    "id": 1459,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1095:7:1",
+                    "src": "1095:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1025,23 +1025,23 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1015:118:1"
+              "src": "1015:118:4"
             },
-            "src": "997:137:1"
+            "src": "997:137:4"
           },
           {
             "canonicalName": "SharedChain.Request",
-            "id": 503,
+            "id": 1488,
             "members": [
               {
                 "constant": false,
-                "id": 479,
+                "id": 1464,
                 "mutability": "mutable",
                 "name": "_index",
-                "nameLocation": "1178:6:1",
+                "nameLocation": "1178:6:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1170:14:1",
+                "scope": 1488,
+                "src": "1170:14:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1049,10 +1049,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 478,
+                  "id": 1463,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1170:7:1",
+                  "src": "1170:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1062,13 +1062,13 @@
               },
               {
                 "constant": false,
-                "id": 481,
+                "id": 1466,
                 "mutability": "mutable",
                 "name": "_title",
-                "nameLocation": "1202:6:1",
+                "nameLocation": "1202:6:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1195:13:1",
+                "scope": 1488,
+                "src": "1195:13:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1076,10 +1076,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 480,
+                  "id": 1465,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1195:6:1",
+                  "src": "1195:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1089,13 +1089,13 @@
               },
               {
                 "constant": false,
-                "id": 483,
+                "id": 1468,
                 "mutability": "mutable",
                 "name": "_comments",
-                "nameLocation": "1226:9:1",
+                "nameLocation": "1226:9:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1219:16:1",
+                "scope": 1488,
+                "src": "1219:16:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1103,10 +1103,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 482,
+                  "id": 1467,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1219:6:1",
+                  "src": "1219:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1116,33 +1116,33 @@
               },
               {
                 "constant": false,
-                "id": 486,
+                "id": 1471,
                 "mutability": "mutable",
                 "name": "_projectStatus",
-                "nameLocation": "1260:14:1",
+                "nameLocation": "1260:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1246:28:1",
+                "scope": 1488,
+                "src": "1246:28:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                  "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                   "typeString": "enum SharedChain.ProjectStatus"
                 },
                 "typeName": {
-                  "id": 485,
+                  "id": 1470,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 484,
+                    "id": 1469,
                     "name": "ProjectStatus",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 422,
-                    "src": "1246:13:1"
+                    "referencedDeclaration": 1407,
+                    "src": "1246:13:4"
                   },
-                  "referencedDeclaration": 422,
-                  "src": "1246:13:1",
+                  "referencedDeclaration": 1407,
+                  "src": "1246:13:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                    "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                     "typeString": "enum SharedChain.ProjectStatus"
                   }
                 },
@@ -1150,33 +1150,33 @@
               },
               {
                 "constant": false,
-                "id": 489,
+                "id": 1474,
                 "mutability": "mutable",
                 "name": "_requestStatus",
-                "nameLocation": "1299:14:1",
+                "nameLocation": "1299:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1285:28:1",
+                "scope": 1488,
+                "src": "1285:28:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_RequestStatus_$416",
+                  "typeIdentifier": "t_enum$_RequestStatus_$1401",
                   "typeString": "enum SharedChain.RequestStatus"
                 },
                 "typeName": {
-                  "id": 488,
+                  "id": 1473,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 487,
+                    "id": 1472,
                     "name": "RequestStatus",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 416,
-                    "src": "1285:13:1"
+                    "referencedDeclaration": 1401,
+                    "src": "1285:13:4"
                   },
-                  "referencedDeclaration": 416,
-                  "src": "1285:13:1",
+                  "referencedDeclaration": 1401,
+                  "src": "1285:13:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_RequestStatus_$416",
+                    "typeIdentifier": "t_enum$_RequestStatus_$1401",
                     "typeString": "enum SharedChain.RequestStatus"
                   }
                 },
@@ -1184,33 +1184,33 @@
               },
               {
                 "constant": false,
-                "id": 492,
+                "id": 1477,
                 "mutability": "mutable",
                 "name": "_requestType",
-                "nameLocation": "1336:12:1",
+                "nameLocation": "1336:12:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1324:24:1",
+                "scope": 1488,
+                "src": "1324:24:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_RequestType_$412",
+                  "typeIdentifier": "t_enum$_RequestType_$1397",
                   "typeString": "enum SharedChain.RequestType"
                 },
                 "typeName": {
-                  "id": 491,
+                  "id": 1476,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 490,
+                    "id": 1475,
                     "name": "RequestType",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 412,
-                    "src": "1324:11:1"
+                    "referencedDeclaration": 1397,
+                    "src": "1324:11:4"
                   },
-                  "referencedDeclaration": 412,
-                  "src": "1324:11:1",
+                  "referencedDeclaration": 1397,
+                  "src": "1324:11:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_RequestType_$412",
+                    "typeIdentifier": "t_enum$_RequestType_$1397",
                     "typeString": "enum SharedChain.RequestType"
                   }
                 },
@@ -1218,13 +1218,13 @@
               },
               {
                 "constant": false,
-                "id": 494,
+                "id": 1479,
                 "mutability": "mutable",
                 "name": "_projectAddress",
-                "nameLocation": "1367:15:1",
+                "nameLocation": "1367:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1359:23:1",
+                "scope": 1488,
+                "src": "1359:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1232,10 +1232,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 493,
+                  "id": 1478,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1359:7:1",
+                  "src": "1359:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -1246,13 +1246,13 @@
               },
               {
                 "constant": false,
-                "id": 496,
+                "id": 1481,
                 "mutability": "mutable",
                 "name": "_requestAddress",
-                "nameLocation": "1401:15:1",
+                "nameLocation": "1401:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1393:23:1",
+                "scope": 1488,
+                "src": "1393:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1260,10 +1260,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 495,
+                  "id": 1480,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1393:7:1",
+                  "src": "1393:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -1274,13 +1274,13 @@
               },
               {
                 "constant": false,
-                "id": 498,
+                "id": 1483,
                 "mutability": "mutable",
                 "name": "_signerAddress",
-                "nameLocation": "1435:14:1",
+                "nameLocation": "1435:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1427:22:1",
+                "scope": 1488,
+                "src": "1427:22:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1288,10 +1288,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 497,
+                  "id": 1482,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1427:7:1",
+                  "src": "1427:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -1302,13 +1302,13 @@
               },
               {
                 "constant": false,
-                "id": 500,
+                "id": 1485,
                 "mutability": "mutable",
                 "name": "_timestamp",
-                "nameLocation": "1468:10:1",
+                "nameLocation": "1468:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1460:18:1",
+                "scope": 1488,
+                "src": "1460:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1316,10 +1316,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 499,
+                  "id": 1484,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1460:7:1",
+                  "src": "1460:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1329,13 +1329,13 @@
               },
               {
                 "constant": false,
-                "id": 502,
+                "id": 1487,
                 "mutability": "mutable",
                 "name": "_signature",
-                "nameLocation": "1496:10:1",
+                "nameLocation": "1496:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1489:17:1",
+                "scope": 1488,
+                "src": "1489:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1343,10 +1343,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 501,
+                  "id": 1486,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1489:6:1",
+                  "src": "1489:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1356,52 +1356,52 @@
               }
             ],
             "name": "Request",
-            "nameLocation": "1151:7:1",
+            "nameLocation": "1151:7:4",
             "nodeType": "StructDefinition",
-            "scope": 513,
-            "src": "1144:370:1",
+            "scope": 1498,
+            "src": "1144:370:4",
             "visibility": "public"
           },
           {
             "anonymous": false,
-            "id": 512,
+            "id": 1497,
             "name": "RequestEvent",
-            "nameLocation": "1526:12:1",
+            "nameLocation": "1526:12:4",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 511,
+              "id": 1496,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 506,
+                  "id": 1491,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_request",
-                  "nameLocation": "1557:8:1",
+                  "nameLocation": "1557:8:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "1549:16:1",
+                  "scope": 1497,
+                  "src": "1549:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$503_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$1488_memory_ptr",
                     "typeString": "struct SharedChain.Request"
                   },
                   "typeName": {
-                    "id": 505,
+                    "id": 1490,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 504,
+                      "id": 1489,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 503,
-                      "src": "1549:7:1"
+                      "referencedDeclaration": 1488,
+                      "src": "1549:7:4"
                     },
-                    "referencedDeclaration": 503,
-                    "src": "1549:7:1",
+                    "referencedDeclaration": 1488,
+                    "src": "1549:7:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$503_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$1488_storage_ptr",
                       "typeString": "struct SharedChain.Request"
                     }
                   },
@@ -1409,14 +1409,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 508,
+                  "id": 1493,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_requestAddress",
-                  "nameLocation": "1592:15:1",
+                  "nameLocation": "1592:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "1576:31:1",
+                  "scope": 1497,
+                  "src": "1576:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1424,10 +1424,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 507,
+                    "id": 1492,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1576:7:1",
+                    "src": "1576:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1438,14 +1438,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 510,
+                  "id": 1495,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_projectAddress",
-                  "nameLocation": "1634:15:1",
+                  "nameLocation": "1634:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "1618:31:1",
+                  "scope": 1497,
+                  "src": "1618:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1453,10 +1453,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 509,
+                    "id": 1494,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1618:7:1",
+                    "src": "1618:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1466,31 +1466,31 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1538:118:1"
+              "src": "1538:118:4"
             },
-            "src": "1520:137:1"
+            "src": "1520:137:4"
           }
         ],
-        "scope": 514,
-        "src": "68:1592:1",
+        "scope": 1499,
+        "src": "68:1592:4",
         "usedErrors": []
       }
     ],
-    "src": "33:1629:1"
+    "src": "33:1629:4"
   },
   "legacyAST": {
     "absolutePath": "project:/contracts/SharedChain.sol",
     "exportedSymbols": {
       "SharedChain": [
-        513
+        1498
       ]
     },
-    "id": 514,
+    "id": 1499,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 409,
+        "id": 1394,
         "literals": [
           "solidity",
           ">=",
@@ -1501,7 +1501,7 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:31:1"
+        "src": "33:31:4"
       },
       {
         "abstract": false,
@@ -1510,165 +1510,165 @@
         "contractDependencies": [],
         "contractKind": "contract",
         "fullyImplemented": true,
-        "id": 513,
+        "id": 1498,
         "linearizedBaseContracts": [
-          513
+          1498
         ],
         "name": "SharedChain",
-        "nameLocation": "77:11:1",
+        "nameLocation": "77:11:4",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "SharedChain.RequestType",
-            "id": 412,
+            "id": 1397,
             "members": [
               {
-                "id": 410,
+                "id": 1395,
                 "name": "SupervisorReq",
-                "nameLocation": "117:13:1",
+                "nameLocation": "117:13:4",
                 "nodeType": "EnumValue",
-                "src": "117:13:1"
+                "src": "117:13:4"
               },
               {
-                "id": 411,
+                "id": 1396,
                 "name": "CompanyReq",
-                "nameLocation": "132:10:1",
+                "nameLocation": "132:10:4",
                 "nodeType": "EnumValue",
-                "src": "132:10:1"
+                "src": "132:10:4"
               }
             ],
             "name": "RequestType",
-            "nameLocation": "103:11:1",
+            "nameLocation": "103:11:4",
             "nodeType": "EnumDefinition",
-            "src": "98:46:1"
+            "src": "98:46:4"
           },
           {
             "canonicalName": "SharedChain.RequestStatus",
-            "id": 416,
+            "id": 1401,
             "members": [
               {
-                "id": 413,
+                "id": 1398,
                 "name": "UnApproved",
-                "nameLocation": "171:10:1",
+                "nameLocation": "171:10:4",
                 "nodeType": "EnumValue",
-                "src": "171:10:1"
+                "src": "171:10:4"
               },
               {
-                "id": 414,
+                "id": 1399,
                 "name": "Rejected",
-                "nameLocation": "183:8:1",
+                "nameLocation": "183:8:4",
                 "nodeType": "EnumValue",
-                "src": "183:8:1"
+                "src": "183:8:4"
               },
               {
-                "id": 415,
+                "id": 1400,
                 "name": "Approved",
-                "nameLocation": "193:8:1",
+                "nameLocation": "193:8:4",
                 "nodeType": "EnumValue",
-                "src": "193:8:1"
+                "src": "193:8:4"
               }
             ],
             "name": "RequestStatus",
-            "nameLocation": "155:13:1",
+            "nameLocation": "155:13:4",
             "nodeType": "EnumDefinition",
-            "src": "150:53:1"
+            "src": "150:53:4"
           },
           {
             "canonicalName": "SharedChain.ProjectStatus",
-            "id": 422,
+            "id": 1407,
             "members": [
               {
-                "id": 417,
+                "id": 1402,
                 "name": "Created",
-                "nameLocation": "230:7:1",
+                "nameLocation": "230:7:4",
                 "nodeType": "EnumValue",
-                "src": "230:7:1"
+                "src": "230:7:4"
               },
               {
-                "id": 418,
+                "id": 1403,
                 "name": "ToApprove",
-                "nameLocation": "239:9:1",
+                "nameLocation": "239:9:4",
                 "nodeType": "EnumValue",
-                "src": "239:9:1"
+                "src": "239:9:4"
               },
               {
-                "id": 419,
+                "id": 1404,
                 "name": "StartProject",
-                "nameLocation": "250:12:1",
+                "nameLocation": "250:12:4",
                 "nodeType": "EnumValue",
-                "src": "250:12:1"
+                "src": "250:12:4"
               },
               {
-                "id": 420,
+                "id": 1405,
                 "name": "FinalizationCheck",
-                "nameLocation": "264:17:1",
+                "nameLocation": "264:17:4",
                 "nodeType": "EnumValue",
-                "src": "264:17:1"
+                "src": "264:17:4"
               },
               {
-                "id": 421,
+                "id": 1406,
                 "name": "Completed",
-                "nameLocation": "283:9:1",
+                "nameLocation": "283:9:4",
                 "nodeType": "EnumValue",
-                "src": "283:9:1"
+                "src": "283:9:4"
               }
             ],
             "name": "ProjectStatus",
-            "nameLocation": "214:13:1",
+            "nameLocation": "214:13:4",
             "nodeType": "EnumDefinition",
-            "src": "209:85:1"
+            "src": "209:85:4"
           },
           {
             "canonicalName": "SharedChain.Roles",
-            "id": 427,
+            "id": 1412,
             "members": [
               {
-                "id": 423,
+                "id": 1408,
                 "name": "DefaultRole",
-                "nameLocation": "324:11:1",
+                "nameLocation": "324:11:4",
                 "nodeType": "EnumValue",
-                "src": "324:11:1"
+                "src": "324:11:4"
               },
               {
-                "id": 424,
+                "id": 1409,
                 "name": "UserProject",
-                "nameLocation": "346:11:1",
+                "nameLocation": "346:11:4",
                 "nodeType": "EnumValue",
-                "src": "346:11:1"
+                "src": "346:11:4"
               },
               {
-                "id": 425,
+                "id": 1410,
                 "name": "Company",
-                "nameLocation": "368:7:1",
+                "nameLocation": "368:7:4",
                 "nodeType": "EnumValue",
-                "src": "368:7:1"
+                "src": "368:7:4"
               },
               {
-                "id": 426,
+                "id": 1411,
                 "name": "Supervisor",
-                "nameLocation": "386:10:1",
+                "nameLocation": "386:10:4",
                 "nodeType": "EnumValue",
-                "src": "386:10:1"
+                "src": "386:10:4"
               }
             ],
             "name": "Roles",
-            "nameLocation": "307:5:1",
+            "nameLocation": "307:5:4",
             "nodeType": "EnumDefinition",
-            "src": "302:101:1"
+            "src": "302:101:4"
           },
           {
             "canonicalName": "SharedChain.User",
-            "id": 439,
+            "id": 1424,
             "members": [
               {
                 "constant": false,
-                "id": 429,
+                "id": 1414,
                 "mutability": "mutable",
                 "name": "_firstname",
-                "nameLocation": "444:10:1",
+                "nameLocation": "444:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "436:18:1",
+                "scope": 1424,
+                "src": "436:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1676,10 +1676,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 428,
+                  "id": 1413,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "436:7:1",
+                  "src": "436:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1689,13 +1689,13 @@
               },
               {
                 "constant": false,
-                "id": 431,
+                "id": 1416,
                 "mutability": "mutable",
                 "name": "_lastname",
-                "nameLocation": "473:9:1",
+                "nameLocation": "473:9:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "465:17:1",
+                "scope": 1424,
+                "src": "465:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1703,10 +1703,10 @@
                   "typeString": "bytes32"
                 },
                 "typeName": {
-                  "id": 430,
+                  "id": 1415,
                   "name": "bytes32",
                   "nodeType": "ElementaryTypeName",
-                  "src": "465:7:1",
+                  "src": "465:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bytes32",
                     "typeString": "bytes32"
@@ -1716,33 +1716,33 @@
               },
               {
                 "constant": false,
-                "id": 434,
+                "id": 1419,
                 "mutability": "mutable",
                 "name": "_role",
-                "nameLocation": "499:5:1",
+                "nameLocation": "499:5:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "493:11:1",
+                "scope": 1424,
+                "src": "493:11:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_Roles_$427",
+                  "typeIdentifier": "t_enum$_Roles_$1412",
                   "typeString": "enum SharedChain.Roles"
                 },
                 "typeName": {
-                  "id": 433,
+                  "id": 1418,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 432,
+                    "id": 1417,
                     "name": "Roles",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 427,
-                    "src": "493:5:1"
+                    "referencedDeclaration": 1412,
+                    "src": "493:5:4"
                   },
-                  "referencedDeclaration": 427,
-                  "src": "493:5:1",
+                  "referencedDeclaration": 1412,
+                  "src": "493:5:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Roles_$427",
+                    "typeIdentifier": "t_enum$_Roles_$1412",
                     "typeString": "enum SharedChain.Roles"
                   }
                 },
@@ -1750,13 +1750,13 @@
               },
               {
                 "constant": false,
-                "id": 436,
+                "id": 1421,
                 "mutability": "mutable",
                 "name": "_walletAddress",
-                "nameLocation": "523:14:1",
+                "nameLocation": "523:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "515:22:1",
+                "scope": 1424,
+                "src": "515:22:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1764,10 +1764,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 435,
+                  "id": 1420,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "515:7:1",
+                  "src": "515:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -1778,13 +1778,13 @@
               },
               {
                 "constant": false,
-                "id": 438,
+                "id": 1423,
                 "mutability": "mutable",
                 "name": "_timestamp",
-                "nameLocation": "556:10:1",
+                "nameLocation": "556:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 439,
-                "src": "548:18:1",
+                "scope": 1424,
+                "src": "548:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1792,10 +1792,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 437,
+                  "id": 1422,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "548:7:1",
+                  "src": "548:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1805,52 +1805,52 @@
               }
             ],
             "name": "User",
-            "nameLocation": "420:4:1",
+            "nameLocation": "420:4:4",
             "nodeType": "StructDefinition",
-            "scope": 513,
-            "src": "413:161:1",
+            "scope": 1498,
+            "src": "413:161:4",
             "visibility": "public"
           },
           {
             "anonymous": false,
-            "id": 446,
+            "id": 1431,
             "name": "UserEvent",
-            "nameLocation": "586:9:1",
+            "nameLocation": "586:9:4",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 445,
+              "id": 1430,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 442,
+                  "id": 1427,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_user",
-                  "nameLocation": "611:5:1",
+                  "nameLocation": "611:5:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 446,
-                  "src": "606:10:1",
+                  "scope": 1431,
+                  "src": "606:10:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_User_$439_memory_ptr",
+                    "typeIdentifier": "t_struct$_User_$1424_memory_ptr",
                     "typeString": "struct SharedChain.User"
                   },
                   "typeName": {
-                    "id": 441,
+                    "id": 1426,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 440,
+                      "id": 1425,
                       "name": "User",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 439,
-                      "src": "606:4:1"
+                      "referencedDeclaration": 1424,
+                      "src": "606:4:4"
                     },
-                    "referencedDeclaration": 439,
-                    "src": "606:4:1",
+                    "referencedDeclaration": 1424,
+                    "src": "606:4:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_User_$439_storage_ptr",
+                      "typeIdentifier": "t_struct$_User_$1424_storage_ptr",
                       "typeString": "struct SharedChain.User"
                     }
                   },
@@ -1858,14 +1858,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 444,
+                  "id": 1429,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_walletAddress",
-                  "nameLocation": "643:14:1",
+                  "nameLocation": "643:14:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 446,
-                  "src": "627:30:1",
+                  "scope": 1431,
+                  "src": "627:30:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1873,10 +1873,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 443,
+                    "id": 1428,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "627:7:1",
+                    "src": "627:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1886,23 +1886,23 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "595:69:1"
+              "src": "595:69:4"
             },
-            "src": "580:85:1"
+            "src": "580:85:4"
           },
           {
             "canonicalName": "SharedChain.Project",
-            "id": 468,
+            "id": 1453,
             "members": [
               {
                 "constant": false,
-                "id": 448,
+                "id": 1433,
                 "mutability": "mutable",
                 "name": "_index",
-                "nameLocation": "709:6:1",
+                "nameLocation": "709:6:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "701:14:1",
+                "scope": 1453,
+                "src": "701:14:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1910,10 +1910,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 447,
+                  "id": 1432,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "701:7:1",
+                  "src": "701:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1923,13 +1923,13 @@
               },
               {
                 "constant": false,
-                "id": 450,
+                "id": 1435,
                 "mutability": "mutable",
                 "name": "_name",
-                "nameLocation": "733:5:1",
+                "nameLocation": "733:5:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "726:12:1",
+                "scope": 1453,
+                "src": "726:12:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1937,10 +1937,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 449,
+                  "id": 1434,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "726:6:1",
+                  "src": "726:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1950,33 +1950,33 @@
               },
               {
                 "constant": false,
-                "id": 453,
+                "id": 1438,
                 "mutability": "mutable",
                 "name": "_status",
-                "nameLocation": "763:7:1",
+                "nameLocation": "763:7:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "749:21:1",
+                "scope": 1453,
+                "src": "749:21:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                  "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                   "typeString": "enum SharedChain.ProjectStatus"
                 },
                 "typeName": {
-                  "id": 452,
+                  "id": 1437,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 451,
+                    "id": 1436,
                     "name": "ProjectStatus",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 422,
-                    "src": "749:13:1"
+                    "referencedDeclaration": 1407,
+                    "src": "749:13:4"
                   },
-                  "referencedDeclaration": 422,
-                  "src": "749:13:1",
+                  "referencedDeclaration": 1407,
+                  "src": "749:13:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                    "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                     "typeString": "enum SharedChain.ProjectStatus"
                   }
                 },
@@ -1984,13 +1984,13 @@
               },
               {
                 "constant": false,
-                "id": 455,
+                "id": 1440,
                 "mutability": "mutable",
                 "name": "_ipfsFileCID",
-                "nameLocation": "788:12:1",
+                "nameLocation": "788:12:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "781:19:1",
+                "scope": 1453,
+                "src": "781:19:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1998,10 +1998,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 454,
+                  "id": 1439,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "781:6:1",
+                  "src": "781:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2011,13 +2011,13 @@
               },
               {
                 "constant": false,
-                "id": 457,
+                "id": 1442,
                 "mutability": "mutable",
                 "name": "_projectAddress",
-                "nameLocation": "819:15:1",
+                "nameLocation": "819:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "811:23:1",
+                "scope": 1453,
+                "src": "811:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2025,10 +2025,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 456,
+                  "id": 1441,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "811:7:1",
+                  "src": "811:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2039,13 +2039,13 @@
               },
               {
                 "constant": false,
-                "id": 459,
+                "id": 1444,
                 "mutability": "mutable",
                 "name": "_signerAddress",
-                "nameLocation": "853:14:1",
+                "nameLocation": "853:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "845:22:1",
+                "scope": 1453,
+                "src": "845:22:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2053,10 +2053,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 458,
+                  "id": 1443,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "845:7:1",
+                  "src": "845:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2067,13 +2067,13 @@
               },
               {
                 "constant": false,
-                "id": 461,
+                "id": 1446,
                 "mutability": "mutable",
                 "name": "_companyAddress",
-                "nameLocation": "886:15:1",
+                "nameLocation": "886:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "878:23:1",
+                "scope": 1453,
+                "src": "878:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2081,10 +2081,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 460,
+                  "id": 1445,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "878:7:1",
+                  "src": "878:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2095,13 +2095,13 @@
               },
               {
                 "constant": false,
-                "id": 463,
+                "id": 1448,
                 "mutability": "mutable",
                 "name": "_assigned",
-                "nameLocation": "917:9:1",
+                "nameLocation": "917:9:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "912:14:1",
+                "scope": 1453,
+                "src": "912:14:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2109,10 +2109,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 462,
+                  "id": 1447,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "912:4:1",
+                  "src": "912:4:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -2122,13 +2122,13 @@
               },
               {
                 "constant": false,
-                "id": 465,
+                "id": 1450,
                 "mutability": "mutable",
                 "name": "_timestamp",
-                "nameLocation": "945:10:1",
+                "nameLocation": "945:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "937:18:1",
+                "scope": 1453,
+                "src": "937:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2136,10 +2136,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 464,
+                  "id": 1449,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "937:7:1",
+                  "src": "937:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2149,13 +2149,13 @@
               },
               {
                 "constant": false,
-                "id": 467,
+                "id": 1452,
                 "mutability": "mutable",
                 "name": "_signature",
-                "nameLocation": "973:10:1",
+                "nameLocation": "973:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 468,
-                "src": "966:17:1",
+                "scope": 1453,
+                "src": "966:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2163,10 +2163,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 466,
+                  "id": 1451,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "966:6:1",
+                  "src": "966:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2176,52 +2176,52 @@
               }
             ],
             "name": "Project",
-            "nameLocation": "682:7:1",
+            "nameLocation": "682:7:4",
             "nodeType": "StructDefinition",
-            "scope": 513,
-            "src": "675:316:1",
+            "scope": 1498,
+            "src": "675:316:4",
             "visibility": "public"
           },
           {
             "anonymous": false,
-            "id": 477,
+            "id": 1462,
             "name": "ProjectEvent",
-            "nameLocation": "1003:12:1",
+            "nameLocation": "1003:12:4",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 476,
+              "id": 1461,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 471,
+                  "id": 1456,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_project",
-                  "nameLocation": "1034:8:1",
+                  "nameLocation": "1034:8:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 477,
-                  "src": "1026:16:1",
+                  "scope": 1462,
+                  "src": "1026:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Project_$468_memory_ptr",
+                    "typeIdentifier": "t_struct$_Project_$1453_memory_ptr",
                     "typeString": "struct SharedChain.Project"
                   },
                   "typeName": {
-                    "id": 470,
+                    "id": 1455,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 469,
+                      "id": 1454,
                       "name": "Project",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 468,
-                      "src": "1026:7:1"
+                      "referencedDeclaration": 1453,
+                      "src": "1026:7:4"
                     },
-                    "referencedDeclaration": 468,
-                    "src": "1026:7:1",
+                    "referencedDeclaration": 1453,
+                    "src": "1026:7:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Project_$468_storage_ptr",
+                      "typeIdentifier": "t_struct$_Project_$1453_storage_ptr",
                       "typeString": "struct SharedChain.Project"
                     }
                   },
@@ -2229,14 +2229,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 473,
+                  "id": 1458,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_projectAddress",
-                  "nameLocation": "1069:15:1",
+                  "nameLocation": "1069:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 477,
-                  "src": "1053:31:1",
+                  "scope": 1462,
+                  "src": "1053:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2244,10 +2244,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 472,
+                    "id": 1457,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1053:7:1",
+                    "src": "1053:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2258,14 +2258,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 475,
+                  "id": 1460,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_companyAddress",
-                  "nameLocation": "1111:15:1",
+                  "nameLocation": "1111:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 477,
-                  "src": "1095:31:1",
+                  "scope": 1462,
+                  "src": "1095:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2273,10 +2273,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 474,
+                    "id": 1459,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1095:7:1",
+                    "src": "1095:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2286,23 +2286,23 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1015:118:1"
+              "src": "1015:118:4"
             },
-            "src": "997:137:1"
+            "src": "997:137:4"
           },
           {
             "canonicalName": "SharedChain.Request",
-            "id": 503,
+            "id": 1488,
             "members": [
               {
                 "constant": false,
-                "id": 479,
+                "id": 1464,
                 "mutability": "mutable",
                 "name": "_index",
-                "nameLocation": "1178:6:1",
+                "nameLocation": "1178:6:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1170:14:1",
+                "scope": 1488,
+                "src": "1170:14:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2310,10 +2310,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 478,
+                  "id": 1463,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1170:7:1",
+                  "src": "1170:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2323,13 +2323,13 @@
               },
               {
                 "constant": false,
-                "id": 481,
+                "id": 1466,
                 "mutability": "mutable",
                 "name": "_title",
-                "nameLocation": "1202:6:1",
+                "nameLocation": "1202:6:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1195:13:1",
+                "scope": 1488,
+                "src": "1195:13:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2337,10 +2337,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 480,
+                  "id": 1465,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1195:6:1",
+                  "src": "1195:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2350,13 +2350,13 @@
               },
               {
                 "constant": false,
-                "id": 483,
+                "id": 1468,
                 "mutability": "mutable",
                 "name": "_comments",
-                "nameLocation": "1226:9:1",
+                "nameLocation": "1226:9:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1219:16:1",
+                "scope": 1488,
+                "src": "1219:16:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2364,10 +2364,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 482,
+                  "id": 1467,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1219:6:1",
+                  "src": "1219:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2377,33 +2377,33 @@
               },
               {
                 "constant": false,
-                "id": 486,
+                "id": 1471,
                 "mutability": "mutable",
                 "name": "_projectStatus",
-                "nameLocation": "1260:14:1",
+                "nameLocation": "1260:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1246:28:1",
+                "scope": 1488,
+                "src": "1246:28:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                  "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                   "typeString": "enum SharedChain.ProjectStatus"
                 },
                 "typeName": {
-                  "id": 485,
+                  "id": 1470,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 484,
+                    "id": 1469,
                     "name": "ProjectStatus",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 422,
-                    "src": "1246:13:1"
+                    "referencedDeclaration": 1407,
+                    "src": "1246:13:4"
                   },
-                  "referencedDeclaration": 422,
-                  "src": "1246:13:1",
+                  "referencedDeclaration": 1407,
+                  "src": "1246:13:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_ProjectStatus_$422",
+                    "typeIdentifier": "t_enum$_ProjectStatus_$1407",
                     "typeString": "enum SharedChain.ProjectStatus"
                   }
                 },
@@ -2411,33 +2411,33 @@
               },
               {
                 "constant": false,
-                "id": 489,
+                "id": 1474,
                 "mutability": "mutable",
                 "name": "_requestStatus",
-                "nameLocation": "1299:14:1",
+                "nameLocation": "1299:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1285:28:1",
+                "scope": 1488,
+                "src": "1285:28:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_RequestStatus_$416",
+                  "typeIdentifier": "t_enum$_RequestStatus_$1401",
                   "typeString": "enum SharedChain.RequestStatus"
                 },
                 "typeName": {
-                  "id": 488,
+                  "id": 1473,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 487,
+                    "id": 1472,
                     "name": "RequestStatus",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 416,
-                    "src": "1285:13:1"
+                    "referencedDeclaration": 1401,
+                    "src": "1285:13:4"
                   },
-                  "referencedDeclaration": 416,
-                  "src": "1285:13:1",
+                  "referencedDeclaration": 1401,
+                  "src": "1285:13:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_RequestStatus_$416",
+                    "typeIdentifier": "t_enum$_RequestStatus_$1401",
                     "typeString": "enum SharedChain.RequestStatus"
                   }
                 },
@@ -2445,33 +2445,33 @@
               },
               {
                 "constant": false,
-                "id": 492,
+                "id": 1477,
                 "mutability": "mutable",
                 "name": "_requestType",
-                "nameLocation": "1336:12:1",
+                "nameLocation": "1336:12:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1324:24:1",
+                "scope": 1488,
+                "src": "1324:24:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_RequestType_$412",
+                  "typeIdentifier": "t_enum$_RequestType_$1397",
                   "typeString": "enum SharedChain.RequestType"
                 },
                 "typeName": {
-                  "id": 491,
+                  "id": 1476,
                   "nodeType": "UserDefinedTypeName",
                   "pathNode": {
-                    "id": 490,
+                    "id": 1475,
                     "name": "RequestType",
                     "nodeType": "IdentifierPath",
-                    "referencedDeclaration": 412,
-                    "src": "1324:11:1"
+                    "referencedDeclaration": 1397,
+                    "src": "1324:11:4"
                   },
-                  "referencedDeclaration": 412,
-                  "src": "1324:11:1",
+                  "referencedDeclaration": 1397,
+                  "src": "1324:11:4",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_RequestType_$412",
+                    "typeIdentifier": "t_enum$_RequestType_$1397",
                     "typeString": "enum SharedChain.RequestType"
                   }
                 },
@@ -2479,13 +2479,13 @@
               },
               {
                 "constant": false,
-                "id": 494,
+                "id": 1479,
                 "mutability": "mutable",
                 "name": "_projectAddress",
-                "nameLocation": "1367:15:1",
+                "nameLocation": "1367:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1359:23:1",
+                "scope": 1488,
+                "src": "1359:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2493,10 +2493,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 493,
+                  "id": 1478,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1359:7:1",
+                  "src": "1359:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2507,13 +2507,13 @@
               },
               {
                 "constant": false,
-                "id": 496,
+                "id": 1481,
                 "mutability": "mutable",
                 "name": "_requestAddress",
-                "nameLocation": "1401:15:1",
+                "nameLocation": "1401:15:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1393:23:1",
+                "scope": 1488,
+                "src": "1393:23:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2521,10 +2521,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 495,
+                  "id": 1480,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1393:7:1",
+                  "src": "1393:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2535,13 +2535,13 @@
               },
               {
                 "constant": false,
-                "id": 498,
+                "id": 1483,
                 "mutability": "mutable",
                 "name": "_signerAddress",
-                "nameLocation": "1435:14:1",
+                "nameLocation": "1435:14:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1427:22:1",
+                "scope": 1488,
+                "src": "1427:22:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2549,10 +2549,10 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 497,
+                  "id": 1482,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1427:7:1",
+                  "src": "1427:7:4",
                   "stateMutability": "nonpayable",
                   "typeDescriptions": {
                     "typeIdentifier": "t_address",
@@ -2563,13 +2563,13 @@
               },
               {
                 "constant": false,
-                "id": 500,
+                "id": 1485,
                 "mutability": "mutable",
                 "name": "_timestamp",
-                "nameLocation": "1468:10:1",
+                "nameLocation": "1468:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1460:18:1",
+                "scope": 1488,
+                "src": "1460:18:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2577,10 +2577,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 499,
+                  "id": 1484,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1460:7:1",
+                  "src": "1460:7:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2590,13 +2590,13 @@
               },
               {
                 "constant": false,
-                "id": 502,
+                "id": 1487,
                 "mutability": "mutable",
                 "name": "_signature",
-                "nameLocation": "1496:10:1",
+                "nameLocation": "1496:10:4",
                 "nodeType": "VariableDeclaration",
-                "scope": 503,
-                "src": "1489:17:1",
+                "scope": 1488,
+                "src": "1489:17:4",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2604,10 +2604,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 501,
+                  "id": 1486,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1489:6:1",
+                  "src": "1489:6:4",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2617,52 +2617,52 @@
               }
             ],
             "name": "Request",
-            "nameLocation": "1151:7:1",
+            "nameLocation": "1151:7:4",
             "nodeType": "StructDefinition",
-            "scope": 513,
-            "src": "1144:370:1",
+            "scope": 1498,
+            "src": "1144:370:4",
             "visibility": "public"
           },
           {
             "anonymous": false,
-            "id": 512,
+            "id": 1497,
             "name": "RequestEvent",
-            "nameLocation": "1526:12:1",
+            "nameLocation": "1526:12:4",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 511,
+              "id": 1496,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 506,
+                  "id": 1491,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_request",
-                  "nameLocation": "1557:8:1",
+                  "nameLocation": "1557:8:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "1549:16:1",
+                  "scope": 1497,
+                  "src": "1549:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_Request_$503_memory_ptr",
+                    "typeIdentifier": "t_struct$_Request_$1488_memory_ptr",
                     "typeString": "struct SharedChain.Request"
                   },
                   "typeName": {
-                    "id": 505,
+                    "id": 1490,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 504,
+                      "id": 1489,
                       "name": "Request",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 503,
-                      "src": "1549:7:1"
+                      "referencedDeclaration": 1488,
+                      "src": "1549:7:4"
                     },
-                    "referencedDeclaration": 503,
-                    "src": "1549:7:1",
+                    "referencedDeclaration": 1488,
+                    "src": "1549:7:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_Request_$503_storage_ptr",
+                      "typeIdentifier": "t_struct$_Request_$1488_storage_ptr",
                       "typeString": "struct SharedChain.Request"
                     }
                   },
@@ -2670,14 +2670,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 508,
+                  "id": 1493,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_requestAddress",
-                  "nameLocation": "1592:15:1",
+                  "nameLocation": "1592:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "1576:31:1",
+                  "scope": 1497,
+                  "src": "1576:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2685,10 +2685,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 507,
+                    "id": 1492,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1576:7:1",
+                    "src": "1576:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2699,14 +2699,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 510,
+                  "id": 1495,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_projectAddress",
-                  "nameLocation": "1634:15:1",
+                  "nameLocation": "1634:15:4",
                   "nodeType": "VariableDeclaration",
-                  "scope": 512,
-                  "src": "1618:31:1",
+                  "scope": 1497,
+                  "src": "1618:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2714,10 +2714,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 509,
+                    "id": 1494,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1618:7:1",
+                    "src": "1618:7:4",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2727,17 +2727,17 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1538:118:1"
+              "src": "1538:118:4"
             },
-            "src": "1520:137:1"
+            "src": "1520:137:4"
           }
         ],
-        "scope": 514,
-        "src": "68:1592:1",
+        "scope": 1499,
+        "src": "68:1592:4",
         "usedErrors": []
       }
     ],
-    "src": "33:1629:1"
+    "src": "33:1629:4"
   },
   "compiler": {
     "name": "solc",
@@ -2745,7 +2745,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.3",
-  "updatedAt": "2021-12-11T18:44:04.369Z",
+  "updatedAt": "2021-12-11T18:49:50.926Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
