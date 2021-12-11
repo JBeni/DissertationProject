@@ -6,7 +6,7 @@ import Users from '../Users/Users';
 import Dashboard from '../Dashboard/Dashboard';
 import Company from './../Company/Company';
 import Supervisor from './../Supervisor/Supervisor';
-import ProjectRequests from '../ProjectRequests/Requests';
+import ProjectRequests from '../ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
 import * as roleService from '../Services/roleService';
 
