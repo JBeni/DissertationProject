@@ -30,8 +30,9 @@ class ProjectRequests extends Component {
 
             currentStep: '',
             nextStep: '',
-            lastProjectRequest: roleService.getAddressZeroValue(),
-            addPermission: null,
+            lastProjectRequest: null,
+            userProjectRole: null,
+            companyRole: null,
 
             project: { index: -1, name: '', status: '', ipfsFileCID: '', projectAddress: '', signerAddress: '' },
             requests: [],
@@ -45,6 +46,16 @@ class ProjectRequests extends Component {
             this.props.history.push('/projects');
             return;
         }
+
+        const addressZero = await roleService.getAddressZeroValue(this.props);
+        this.setState({ lastProjectRequest: addressZero });
+
+        const userProjectRole = await roleService.getUserProjectRole(this.props);
+        this.setState({ userProjectRole: userProjectRole });
+
+        const companyRole = await roleService.getCompanyRole(this.props);
+        this.setState({ userProjectRole: companyRole });
+
         this.getProjectInfo();
         this.getProjectRequests();
         this.getLastProjectRequest(this.props.match.params.id, this.state.lastProjectRequest);
@@ -54,8 +65,8 @@ class ProjectRequests extends Component {
         const lastRequest = await this.props.project.methods.getLastProjectRequest(_projectAddress, _requestAddress)
             .call({ from: this.props.account })
             .then((result) => { return result; });
+        const addressZero = await roleService.getAddressZeroValue(this.props.serviceChain);
 
-        const addressZero = roleService.getAddressZeroValue();
         /**
          * If at this time we don't have a request the method will
          * RETURN an array with an item initialized with default data
@@ -171,17 +182,6 @@ class ProjectRequests extends Component {
     getProjectInfo = async () => {
         const data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
         if (data?.length === 0) return;
-
-        const projectStatus = dropdownService.getProjectStatusByValue(data.status);
-        const permissionType = await this.props.project.methods.checkRequestPermission(projectStatus.id).call({ from: this.props.account });
-
-        if (permissionType === 0) {
-            this.setState({ addPermission: permissionType });
-        }
-        if (permissionType === 1) {
-            this.setState({ addPermission: permissionType });
-        }
-
         this.setState({ project: data });
     }
 
@@ -279,7 +279,7 @@ class ProjectRequests extends Component {
                 {
                     this.state.requestNextStep === true ?
                         (
-                            //this.props.currentUserRole === roleService.getUserProjectRole() &&
+                            //this.props.currentUserRole === this.state.userProjectRole &&
                             this.state.project.status === "Created" ?
                                 <Button
                                     variant="outlined"
@@ -289,7 +289,7 @@ class ProjectRequests extends Component {
                                         this.setCreateRequestForm(true);
                                 }}>Add Project Request</Button>
                             : this.state.project.status !== "Created" && this.state.project.status !== "ToApprove" &&
-                            this.props.currentUserRole === roleService.getCompanyRole() ?
+                            this.props.currentUserRole === this.state.companyRole ?
                                 <Button
                                     variant="outlined"
                                     startIcon={<AddIcon />}
