@@ -12,7 +12,6 @@ function Navbar(props) {
     const location = useLocation();
     const { pathname } = location;
     const currentLocation = pathname.split("/");
-    const { currentUserRole } = props;
 
 	useEffect(() => {
 	}, []);
@@ -21,25 +20,25 @@ function Navbar(props) {
         <div className={ isActive ? "body-container body-pd" : "body-container" } id="body-pd">
             <Header
                 currentUsername={props.currentUsername}
-                currentUserRole={currentUserRole}
+                currentUserRole={props.currentUserRole}
                 account={props.account}
                 isActive={isActive}
                 changeMenuOption={changeMenuOption}
             />
             <Sidebar
-                currentUserRole={currentUserRole}
+                currentUserRole={props.currentUserRole}
                 isActive={isActive}
                 currentLocation={currentLocation}
-                setLoggedIn={props.setLoggedIn}
-                loggedIn={props.loggedIn}
+                serviceChain={props.serviceChain}
             />
 
             <div className="main-section-container">
                 <Routes
-                    currentUserRole={currentUserRole}
+                    currentUserRole={props.currentUserRole}
                     account={props.account}
                     project={props.project}
                     userChain={props.userChain}
+                    serviceChain={props.serviceChain}
                     signatureChain={props.signatureChain}
                     web3={props.web3}
                 />
