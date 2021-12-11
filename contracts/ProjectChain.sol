@@ -5,16 +5,16 @@ import "./UserChain.sol";
 import "./SharedChain.sol";
 
 contract ProjectChain is SharedChain {
-    address _userAddress;
+    address _currentUserAddress;
     UserChain userChain;
 
     constructor() {
-        _userAddress = msg.sender;
+        _currentUserAddress = msg.sender;
         //userChain = new UserChain();
     }
 
     modifier onlyUserProject() {
-        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // User memory sessionUser = userChain.getUserInfo(_currentUserAddress);
         // require(
         //     sessionUser._role == Roles.UserProject,
         //     "You don't have the rights for this resource."
@@ -23,7 +23,7 @@ contract ProjectChain is SharedChain {
     }
 
     modifier onlySupervisor() {
-        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // User memory sessionUser = userChain.getUserInfo(_currentUserAddress);
         // require(
         //     sessionUser._role == Roles.Supervisor,
         //     "You don't have the rights for this resource."
@@ -32,13 +32,14 @@ contract ProjectChain is SharedChain {
     }
 
     modifier onlyCompany() {
-        // User memory sessionUser = userChain.getUserInfo(_userAddress);
+        // User memory sessionUser = userChain.getUserInfo(_currentUserAddress);
         // require(
         //     sessionUser._role == Roles.Company,
         //     "You don't have the rights for this resource."
         // );
         _;
     }
+
 
     /**  PROJECT INITIATOR  */
 
@@ -47,7 +48,7 @@ contract ProjectChain is SharedChain {
     address[] public projectsAddress;
 
     function createUniqueProjectAddress(string memory _name, uint _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_name, _userAddress, _index)))));
+        return address(uint160(uint256(keccak256(abi.encodePacked(_name, _currentUserAddress, _index)))));
     }
 
     function createProject(
@@ -63,7 +64,7 @@ contract ProjectChain is SharedChain {
             ProjectStatus(_status),
             _ipfsFileCID,
             _projectAddress,
-            _userAddress,
+            _currentUserAddress,
             block.timestamp,
             _signature
         );
@@ -122,207 +123,98 @@ contract ProjectChain is SharedChain {
     }
 
 
-    /**  Project Requests  */
+    /**  Requests  */
 
-    mapping(uint256 => ProjectRequest) public projectRequests;
-    uint256 public projectRequestsCounter = 0;
-    address[] public projectRequestsAddress;
+    mapping(address => Request) public requests;
+    uint256 public requestsCounter = 0;
+    address[] public requestsAddress;
 
-    function createUniqueProjectRequestAddress(string memory _title, uint _index) public view returns (address) {
-        return address(uint160(uint256(keccak256(abi.encodePacked(_title, _userAddress, _index)))));
+    function createUniqueRequestAddress(string memory _title, uint _index) public view returns (address) {
+        return address(uint160(uint256(keccak256(abi.encodePacked(_title, _currentUserAddress, _index)))));
     }
 
-    function createProjectRequest(
+    function createRequest(
         string memory _title,
-        uint256 _status,
+        uint256 _projectStatus,
         uint256 _requestStatus,
         address _projectAddress,
-        address _projectReqAddress,
+        address _requestAddress,
         string memory _signature
     ) public {
-        require(projects[_projectAddress]._status == ProjectStatus.Created, "Steps must follow accordingly");
-
+        //require(projects[_projectAddress]._status == ProjectStatus.Created, "Steps must follow accordingly");
         //require(ProjectStatus.ToApprove == RequestStatus.UnApproved, "");
         //require(ProjectStatus.ToApprove == RequestStatus.Rejected, "");
 
+        RequestType _requestType;
+        if (ProjectStatus(_projectStatus) == ProjectStatus.StartProject) {
+            _requestType = RequestType.CompanyReq;
+        } else {
+            _requestType = RequestType.SupervisorReq;
+        }
 
-
-        projectRequests[projectRequestsCounter] = ProjectRequest(
-            projectRequestsCounter,
+        requests[_requestAddress] = Request(
+            requestsCounter,
             _title,
             "",
-            ProjectStatus(_status),
+            ProjectStatus(_projectStatus),
             RequestStatus(_requestStatus),
+            RequestType(_requestType),
             _projectAddress,
-            _userAddress,
-            _projectReqAddress,
+            _requestAddress,
+            _currentUserAddress,
             block.timestamp,
             _signature
         );
 
-        filterRequests(
-            projectRequestsCounter,
-            _title,
-            _requestStatus,
-            _status,
-            _projectAddress,
-            _projectReqAddress,
-            _signature
-        );
-
-        emit ProjectRequestEvent(projectRequests[projectRequestsCounter], _projectAddress);
-        projectRequestsAddress.push(_projectReqAddress);
-        projectRequestsCounter++;
+        emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
+        requestsAddress.push(_requestAddress);
+        requestsCounter++;
     }
 
-    function filterRequests(
-        uint256 _indexProjectRequest,
-        string memory _title,
+    function updateRequest(
+        string memory _comments,
         uint256 _requestStatus,
         uint256 _projectStatus,
         address _projectAddress,
         address _requestAddress,
         string memory _signature
-    ) internal {
-        RequestType _requestType;
-        if (
-            ProjectStatus(_projectStatus) == ProjectStatus.ToApprove ||
-            ProjectStatus(_projectStatus) == ProjectStatus.FinalizationCheck ||
-            ProjectStatus(_projectStatus) == ProjectStatus.Completed
-        ) {
-            _requestType = RequestType.SupervisorReq;
-        } else if (
-            ProjectStatus(_projectStatus) == ProjectStatus.StartProject
-        ) {
-            _requestType = RequestType.CompanyReq;
+    ) public {
+        // Update Requests Mapping and Struct Array
+        requests[_requestAddress]._comments = _comments;
+        requests[_requestAddress]._requestStatus = RequestStatus(_requestStatus);
+        requests[_requestAddress]._signature = _signature;
+        emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
+
+        // Update Project Mapping and Struct Array
+        if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
+            projects[_projectAddress]._status = ProjectStatus(_projectStatus);
+            emit ProjectEvent(projects[_projectAddress], _projectAddress);
         }
-        createRequest(
-            _indexProjectRequest,
-            _title,
-            _requestStatus,
-            _projectStatus,
-            _requestType,
-            _projectAddress,
-            _requestAddress,
-            _signature
-        );
     }
 
-    function getAllProjectRequests()
-        public
-        view
-        returns (ProjectRequest[] memory)
-    {
-        ProjectRequest[] memory allProjectRequests;
-        if (projectRequestsCounter == 0) return allProjectRequests;
-
-        allProjectRequests = new ProjectRequest[](projectRequestsCounter);
-        for (uint256 index = 0; index < projectRequestsCounter; index++) {
-            ProjectRequest storage projectReq = projectRequests[index];
-            allProjectRequests[index] = projectReq;
+    function getAllRequests() public view returns (Request[] memory) {
+        Request[] memory allRequests = new Request[](requestsCounter);
+        for (uint256 index = 0; index < requestsCounter; index++) {
+            address _requestAddress = requestsAddress[index];
+            Request storage request = requests[_requestAddress];
+            allRequests[index] = request;
         }
-        return allProjectRequests;
+        return allRequests;
     }
 
-    function getLastProjectRequest(address _projectAddress)
-        public
-        view
-        returns (ProjectRequest memory)
+
+    function getLastProjectRequest(address _projectAddress, address _requestAddress)
+        public view returns (Request memory)
     {
-        ProjectRequest memory request;
-        if (projectRequestsCounter > 0) {
-            for (
-                uint256 index = projectRequestsCounter - 1;
-                index >= 0;
-                index--
-            ) {
-                if (_projectAddress == projectRequests[index]._projectAddress) {
-                    request = ProjectRequest(
-                        0, "", "",
-                        projectRequests[index]._status,
-                        projectRequests[index]._requestStatus,
-                        projectRequests[index]._projectAddress,
-                        address(0), address(0), 0, ""
-                    );
-                    return request;
-                }
+        Request memory request;
+        if (requestsCounter > 0) {
+            if (requests[_requestAddress]._projectAddress == _projectAddress) {
+                request = requests[_requestAddress];
             }
         }
         return request;
     }
 
 
-    /**  DATA FOR SUPERVISOR && COMPANY  */
 
-    mapping(uint256 => Request) public requests;
-    uint256 public requestsCounter = 0;
-
-    function createRequest(
-        uint256 _indexProjectRequest,
-        string memory _title,
-        uint256 _requestStatus,
-        uint256 _projectStatus,
-        RequestType _requestType,
-        address _projectAddress,
-        address _requestAddress,
-        string memory _signature
-    ) internal {
-        requests[requestsCounter] = Request(
-            requestsCounter,
-            _indexProjectRequest,
-            _title,
-            RequestStatus(_requestStatus),
-            ProjectStatus(_projectStatus),
-            _requestType,
-            _projectAddress,
-            _userAddress,
-            _requestAddress,
-            block.timestamp,
-            _signature
-        );
-
-        emit RequestEvent(requests[requestsCounter], _requestAddress);
-        requestsCounter++;
-    }
-/*
-    function updateRequest(
-        uint256 _index,
-        uint256 _indexProjectRequest,
-        string memory _comments,
-        uint256 _requestStatus,
-        uint256 _projectStatus,
-        address _projectAddress,
-        string memory _signature
-    ) public {
-        // Update request status in the Requests Mapping and Struct Array
-        requests[_index]._requestStatus = RequestStatus(_requestStatus);
-        requests[_index]._signature = _signature;
-
-        emit RequestEvent(requests[_index], requests[_index]._requestAddress);
-
-        // Update project request status in the Project Requests Mapping and Struct Array
-        projectRequests[_indexProjectRequest]._comments = _comments;
-        projectRequests[_indexProjectRequest]._requestStatus = RequestStatus(_requestStatus);
-        projectRequests[_indexProjectRequest]._signature = _signature;
-
-        emit ProjectRequestEvent(projectRequests[_indexProjectRequest], _projectAddress);
-
-        // Update ProjectStatus to the requested status - Porject Mapping and Struct Array
-        if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
-        projects[_projectAddress]._status = ProjectStatus(_projectStatus);
-        emit ProjectEvent(projects[_projectAddress], _projectAddress);
-        }
-    }
-*/
-    function getAllRequests() public view returns (Request[] memory) {
-        Request[] memory allRequests;
-        if (requestsCounter == 0) return allRequests;
-
-        allRequests = new Request[](requestsCounter);
-        for (uint256 index = 0; index < requestsCounter; index++) {
-            Request storage request = requests[index];
-            allRequests[index] = request;
-        }
-        return allRequests;
-    }
 }
