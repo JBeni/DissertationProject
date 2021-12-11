@@ -63,11 +63,13 @@ contract ProjectChain is SharedChain {
             _ipfsFileCID,
             _projectAddress,
             msg.sender,
+            address(0x0),
+            false,
             block.timestamp,
             _signature
         );
 
-        emit ProjectEvent(projects[_projectAddress], _projectAddress);
+        emit ProjectEvent(projects[_projectAddress], _projectAddress, address(0x0));
         projectsAddress.push(_projectAddress);
         projectsCounter++;
     }
@@ -80,7 +82,7 @@ contract ProjectChain is SharedChain {
         projects[_projectAddress]._ipfsFileCID = _ipfsFileCID;
         projects[_projectAddress]._signature = _signature;
 
-        emit ProjectEvent(projects[_projectAddress], _projectAddress);
+        emit ProjectEvent(projects[_projectAddress], _projectAddress, address(0x0));
     }
 
     function getProjectInfo(address _address)
@@ -186,7 +188,7 @@ contract ProjectChain is SharedChain {
         // Update Project Mapping and Struct Array
         if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
             projects[_projectAddress]._status = ProjectStatus(_projectStatus);
-            emit ProjectEvent(projects[_projectAddress], _projectAddress);
+            emit ProjectEvent(projects[_projectAddress], _projectAddress, address(0x0));
         }
     }
 
