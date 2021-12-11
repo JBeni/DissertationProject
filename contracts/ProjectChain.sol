@@ -4,8 +4,8 @@ pragma solidity >=0.8.0 <0.9.0;
 import "./UserChain.sol";
 import "./SharedChain.sol";
 
-contract ProjectChain is SharedChain {
-    UserChain userChain;
+contract ProjectChain is UserChain {
+    //UserChain userChain;
 
     constructor() {
         //userChain = new UserChain();
@@ -93,8 +93,8 @@ contract ProjectChain is SharedChain {
         //require(msg.sender != address(0x0), "Address is not valid.");
         return projects[_address];
     }
-
-    function getUserProjects(address _signerAddress) public view returns (Project[] memory) {
+/*
+    function getProjectsByUser(address _signerAddress) public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
 
@@ -109,6 +109,24 @@ contract ProjectChain is SharedChain {
         return allProjects;
     }
 
+    function getProjectsByCompany(address _companyAddress) public view returns (Project[] memory) {
+        Project[] memory allProjects;
+        if (projectsCounter == 0) return allProjects;
+
+        allProjects = new Project[](projectsCounter);
+        for (uint256 index = 0; index < projectsCounter; index++) {
+            address _projectAddress = projectsAddress[index];
+            if (_companyAddress == projects[_projectAddress]._companyAddress) {
+                Project storage project = projects[_projectAddress];
+                allProjects[index] = project;
+            }
+        }
+        return allProjects;
+    }
+
+*/
+
+/*
     function getAllProjects() public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
@@ -121,7 +139,7 @@ contract ProjectChain is SharedChain {
         }
         return allProjects;
     }
-
+*/
 
     /**  Requests  */
 
@@ -192,6 +210,7 @@ contract ProjectChain is SharedChain {
         }
     }
 
+/*
     function getAllRequests() public view returns (Request[] memory) {
         Request[] memory allRequests = new Request[](requestsCounter);
         for (uint256 index = 0; index < requestsCounter; index++) {
@@ -213,7 +232,7 @@ contract ProjectChain is SharedChain {
         }
         return allRequests;
     }
-
+*/
 
     function getLastProjectRequest(address _projectAddress, address _requestAddress)
         public view returns (Request memory)
