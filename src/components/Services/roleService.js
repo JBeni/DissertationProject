@@ -1,24 +1,24 @@
 
-export const getAddressZeroValue = () => {
-    return "0x0000000000000000000000000000000000000000";
+export async function getAddressZeroValue(props) {
+    return await props.serviceChain.methods.getAddressZeroValue().call();
 }
 
-export const getAdminRole = () => {
-    return "AdminMighty";
+export async function getAdminRole(props) {
+    return await props.serviceChain.methods.getAdminRole().call();
 }
 
-export const getDefaultRole = () => {
-    return "DefaultRole";
+export async function getDefaultRole(props) {
+    return await props.serviceChain.methods.getDefaultRole().call();
 }
 
-export const getUserProjectRole = () => {
-    return "UserProject";
+export async function getUserProjectRole(props) {
+    return await props.serviceChain.methods.getUserProjectRole().call();
 }
 
-export const getCompanyRole = () => {
-    return "Company";
+export async function getCompanyRole(props) {
+    return await props.serviceChain.methods.getCompanyRole().call();
 }
 
-export const getSupervisorRole = () => {
-    return "Supervisor";
+export async function getSupervisorRole(props) {
+    return await props.serviceChain.methods.getSupervisorRole().call();
 }
