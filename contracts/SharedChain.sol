@@ -16,15 +16,11 @@ contract SharedChain {
 
 
     struct User {
-        uint256 _index;
-        string _username;
-        bytes32 _email;
         bytes32 _firstname;
         bytes32 _lastname;
         Roles _role;
         address _walletAddress;
         uint256 _timestamp;
-        string _signature;
     }
     event UserEvent(
         User _user,
