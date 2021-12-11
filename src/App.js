@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import Loader from './components/Views/Loader';
-import * as roleService from './components/Services/roleService';
 import * as dropdownService from './components/Services/dropdownService';
 
 // ABI Folder to Interact with Smart Contracts
@@ -10,7 +9,6 @@ import ProjectChain from './abis/ProjectChain.json';
 import UserChain from './abis/UserChain.json';
 import AdminChain from './abis/AdminChain.json';
 import ServiceChain from './abis/ServiceChain.json';
-import SignatureChain from './abis/SignatureChain.json';
 
 class App extends Component {
 	constructor() {
@@ -22,7 +20,6 @@ class App extends Component {
             userChain: null,
             adminChain: null,
             serviceChain: null,
-            signatureChain: null,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
@@ -113,17 +110,6 @@ class App extends Component {
 			window.alert('Owner Chain contract not deployed to detected network.');
 		}
 
-        const networkSignatureChainData = SignatureChain.networks[networkId];
-        if (networkSignatureChainData) {
-            const signatureChain = new web3.eth.Contract(
-                SignatureChain.abi,
-                networkSignatureChainData.address
-            );
-            this.setState({ signatureChain: signatureChain });
-		} else {
-			window.alert('Signature Chain contract not deployed to detected network.');
-		}
-
         await this.checkUserRole();
 	}
 
@@ -177,7 +163,6 @@ class App extends Component {
                         project={this.state.project}
                         userChain={this.state.userChain}
                         serviceChain={this.state.serviceChain}
-                        signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
                         currentUserRole={this.state.currentUserRole}
                         web3={this.state.web3}
