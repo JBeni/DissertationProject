@@ -44,7 +44,7 @@ function Routes(props) {
                     />
             }
             {
-                props.currentUserRole === roleService.getAdminRole() &&
+                // props.currentUserRole === roleService.getAdminRole() &&
                     <Route
                         path="/users"
                         render={() => (
@@ -57,10 +57,10 @@ function Routes(props) {
                     />
             }
             {
-                (
-                    props.currentUserRole === roleService.getUserProjectRole() ||
-                    props.currentUserRole === roleService.getCompanyRole()
-                ) &&
+                // (
+                //     props.currentUserRole === roleService.getUserProjectRole() ||
+                //     props.currentUserRole === roleService.getCompanyRole()
+                // ) &&
                     <Route
                         path="/projects" exact
                         render={() => (
@@ -75,11 +75,11 @@ function Routes(props) {
                     />
             }
             {
-                (
-                    props.currentUserRole === roleService.getUserProjectRole() ||
-                    props.currentUserRole === roleService.getCompanyRole() ||
-                    props.currentUserRole === roleService.getSupervisorRole()
-                ) &&
+                // (
+                //     props.currentUserRole === roleService.getUserProjectRole() ||
+                //     props.currentUserRole === roleService.getCompanyRole() ||
+                //     props.currentUserRole === roleService.getSupervisorRole()
+                // ) &&
                     <Route
                         path="/projects/:id"
                         render={() => (
@@ -92,7 +92,7 @@ function Routes(props) {
                     />
             }
             {
-                props.currentUserRole === roleService.getCompanyRole() &&
+                // props.currentUserRole === roleService.getCompanyRole() &&
                     <Route
                         path="/company"
                         render={() => (
@@ -105,7 +105,7 @@ function Routes(props) {
                     />
             }
             {
-                props.currentUserRole === roleService.getSupervisorRole() &&
+                // props.currentUserRole === roleService.getSupervisorRole() &&
                     <Route
                         path="/supervisor"
                         render={() => (
@@ -118,10 +118,10 @@ function Routes(props) {
                     />
             }
             {
-                (
-                    props.currentUserRole === roleService.getCompanyRole() ||
-                    props.currentUserRole === roleService.getSupervisorRole()
-                ) &&
+                // (
+                //     props.currentUserRole === roleService.getCompanyRole() ||
+                //     props.currentUserRole === roleService.getSupervisorRole()
+                // ) &&
                     <Route
                         path="/requests"
                         render={() => (
