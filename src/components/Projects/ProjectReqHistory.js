@@ -64,7 +64,7 @@ export default function ProjectReqHistory(props) {
                                 <td>{ item.signerAddress }</td>
                                 <td>{ item.timestamp }</td>
                                 <td>
-                                    <Button variant="contained" color="secondary" onClick={ () =>
+                                    <Button color="secondary" onClick={ () =>
                                         verifySignature(item.projectAddress, item.signerAddress, item.signature)
                                     }>Verify Signature</Button>
                                 </td>
