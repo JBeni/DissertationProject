@@ -36,9 +36,9 @@ export async function getUserInfo(props) {
     }).catch(function (error) {});
 }
 
-export async function getAllProjects(props) {
+export async function getProjectsByUser(props) {
     let dataArray = [];
-    await props.project.methods.getAllProjects().call({ from: props.account }).then((result) => {
+    await props.project.methods.getProjectsByUser(props.account).call({ from: props.account }).then((result) => {
         result.map((result) => {
             const status = dropdownService.getProjectStatusById(result._status);
             const project = {
