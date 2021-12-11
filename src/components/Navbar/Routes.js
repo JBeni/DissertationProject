@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import DefaultPage from '../NotFound/DefaultPage';
 import Projects from '../Projects/Projects';
@@ -11,9 +11,21 @@ import Requests from './../Requests/Requests';
 import * as roleService from '../Services/roleService';
 
 function Routes(props) {
+    const [adminRole, setAdminRole] = useState(null);
+    const [userProjectRole, setUserProjectRole] = useState(null);
+    const [companyRole, setCompanyRole] = useState(null);
+    const [supervisorRole, setSupervisorRole] = useState(null);
 
     useEffect(() => {
+        setRoles()
     }, []);
+
+    const setRoles = async () => {
+        setAdminRole(await roleService.getAdminRole(props));
+        setUserProjectRole(await roleService.getUserProjectRole(props));
+        setCompanyRole(await roleService.getCompanyRole(props));
+        setSupervisorRole(await roleService.getSupervisorRole(props));
+    }
 
 	return (
 		<Switch>
@@ -44,7 +56,7 @@ function Routes(props) {
                     />
             }
             {
-                // props.currentUserRole === roleService.getAdminRole() &&
+                // props.currentUserRole === adminRole &&
                     <Route
                         path="/users"
                         render={() => (
@@ -58,8 +70,8 @@ function Routes(props) {
             }
             {
                 // (
-                //     props.currentUserRole === roleService.getUserProjectRole() ||
-                //     props.currentUserRole === roleService.getCompanyRole()
+                //     props.currentUserRole === userProjectRole ||
+                //     props.currentUserRole === companyRole
                 // ) &&
                     <Route
                         path="/projects" exact
@@ -68,6 +80,7 @@ function Routes(props) {
                                 currentUserRole={props.currentUserRole}
                                 account={props.account}
                                 project={props.project}
+                                serviceChain={props.serviceChain}
                                 signatureChain={props.signatureChain}
                                 web3={props.web3}
                             />
@@ -76,9 +89,9 @@ function Routes(props) {
             }
             {
                 // (
-                //     props.currentUserRole === roleService.getUserProjectRole() ||
-                //     props.currentUserRole === roleService.getCompanyRole() ||
-                //     props.currentUserRole === roleService.getSupervisorRole()
+                //     props.currentUserRole === userProjectRole ||
+                //     props.currentUserRole === companyRole ||
+                //     props.currentUserRole === supervisorRole
                 // ) &&
                     <Route
                         path="/projects/:id"
@@ -86,13 +99,14 @@ function Routes(props) {
                             <ProjectRequests
                                 account={props.account}
                                 project={props.project}
+                                serviceChain={props.serviceChain}
                                 web3={props.web3}
                             />
                         )}
                     />
             }
             {
-                // props.currentUserRole === roleService.getCompanyRole() &&
+                // props.currentUserRole === companyRole &&
                     <Route
                         path="/company"
                         render={() => (
@@ -105,7 +119,7 @@ function Routes(props) {
                     />
             }
             {
-                // props.currentUserRole === roleService.getSupervisorRole() &&
+                // props.currentUserRole === supervisorRole &&
                     <Route
                         path="/supervisor"
                         render={() => (
@@ -119,8 +133,8 @@ function Routes(props) {
             }
             {
                 // (
-                //     props.currentUserRole === roleService.getCompanyRole() ||
-                //     props.currentUserRole === roleService.getSupervisorRole()
+                //     props.currentUserRole === companyRole ||
+                //     props.currentUserRole === supervisorRole
                 // ) &&
                     <Route
                         path="/requests"
