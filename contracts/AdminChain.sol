@@ -6,7 +6,8 @@ contract AdminChain {
     uint256 private adminNumbers = 0;
 
     struct Admin {
-        string _username;
+        string _firstname;
+        string _lastname;
         AdminRoles _role;
         address _walletAddress;
     }
@@ -22,10 +23,10 @@ contract AdminChain {
         _;
     }
 
-    function createtAdmin(string memory _username, uint256 _role, address _wallet) public onlyAdmin returns (string memory) {
+    function createtAdmin(string memory _firstname, string memory _lastname, uint256 _role, address _wallet) public onlyAdmin returns (string memory) {
         //require(adminNumbers == 0, "Access Denied!...");
         if (adminNumbers == 0) {
-            admins.push(Admin(_username, AdminRoles(_role), _wallet));
+            admins.push(Admin(_firstname, _lastname, AdminRoles(_role), _wallet));
             adminNumbers += 102;
             return "Created...";
         }
