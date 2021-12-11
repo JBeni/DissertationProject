@@ -18,12 +18,12 @@ contract AdminChain {
     constructor() {}
 
     modifier onlyAdmin() {
-        require(address(0xf08B741073b3Cb01ef6fB3B412E71C977F276fAa) == msg.sender, "You are not the right user.");
+        //require(address(0xf08B741073b3Cb01ef6fB3B412E71C977F276fAa) == msg.sender, "You are not the right user.");
         _;
     }
 
     function createtAdmin(string memory _username, uint256 _role, address _wallet) public onlyAdmin returns (string memory) {
-        require(adminNumbers == 0, "Access Denied!...");
+        //require(adminNumbers == 0, "Access Denied!...");
         if (adminNumbers == 0) {
             admins.push(Admin(_username, AdminRoles(_role), _wallet));
             adminNumbers += 102;

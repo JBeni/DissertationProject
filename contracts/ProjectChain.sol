@@ -90,7 +90,7 @@ contract ProjectChain is SharedChain {
         view
         returns (Project memory)
     {
-        require(msg.sender != address(0x0), "Address is not valid.");
+        //require(msg.sender != address(0x0), "Address is not valid.");
         return projects[_address];
     }
 
