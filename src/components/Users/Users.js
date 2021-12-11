@@ -34,7 +34,7 @@ export default class Users extends Component {
     }
 
     getUsers = async () => {
-        const data = await eventService.getAllUserEvents(this.props);
+        const data = await applicationService.getAllUsers(this.props);
         this.setState({ users: data });
     }
 
