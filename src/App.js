@@ -23,7 +23,6 @@ class App extends Component {
             adminChain: null,
             serviceChain: null,
             signatureChain: null,
-            loggedIn: false,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
@@ -70,6 +69,17 @@ class App extends Component {
         }
         this.setState({ account: accounts[0], web3: web3 });
 
+        const networkServiceData = ServiceChain.networks[networkId];
+        if (networkServiceData) {
+            const serviceChain = new web3.eth.Contract(
+                ServiceChain.abi,
+                networkServiceData.address
+            );
+            this.setState({ serviceChain: serviceChain });
+		} else {
+			window.alert('Service Chain contract not deployed to detected network.');
+		}
+
         const networkProjectData = ProjectChain.networks[networkId];
 		if (networkProjectData) {
 			const project = new web3.eth.Contract(
@@ -103,17 +113,6 @@ class App extends Component {
 			window.alert('Owner Chain contract not deployed to detected network.');
 		}
 
-        const networkServiceData = ServiceChain.networks[networkId];
-        if (networkServiceData) {
-            const serviceChain = new web3.eth.Contract(
-                ServiceChain.abi,
-                networkServiceData.address
-            );
-            this.setState({ serviceChain: serviceChain });
-		} else {
-			window.alert('Service Chain contract not deployed to detected network.');
-		}
-
         const networkSignatureChainData = SignatureChain.networks[networkId];
         if (networkSignatureChainData) {
             const signatureChain = new web3.eth.Contract(
@@ -140,7 +139,7 @@ class App extends Component {
 
         if (this.state.account === adminData.walletAddress) {
             this.setState({ loading: false, currentUsername: adminData.username });
-            const adminRole = roleService.getAdminRole();
+            const adminRole = await this.state.serviceChain.methods.getAdminRole().call();
             if (adminData.role === adminRole) {
                 this.setState({ currentUserRole: adminData.role });
             } else {
@@ -177,7 +176,6 @@ class App extends Component {
                         signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
                         currentUserRole={this.state.currentUserRole}
-                        loggedIn={this.state.loggedIn}
                         web3={this.state.web3}
                     />
 				</React.Fragment>
