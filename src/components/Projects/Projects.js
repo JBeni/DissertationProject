@@ -34,14 +34,19 @@ class Projects extends Component {
             openProjectHistory: false,
             openProjectReqHistory: false,
             selectedProjectAddress: '',
+            userProjectRole: null,
+
             projectReqHistory: [],
             projectHistory: [],
 			projects: [],
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.getProjects();
+
+        const userProjectRole = await roleService.getUserProjectRole(this.props);
+        this.setState({ userProjectRole: userProjectRole });
     }
 
     getProjects = async () => {
@@ -200,7 +205,7 @@ class Projects extends Component {
 		return (
 			<div>
                 {
-                    //this.props.currentUserRole === roleService.getUserProjectRole() &&
+                    //this.props.currentUserRole === this.state.userProjectRole &&
                         <Button
                             variant="outlined"
                             startIcon={<AddIcon />}
@@ -210,7 +215,7 @@ class Projects extends Component {
                         }}>Add New</Button>
                 }
                 {
-                    //this.props.currentUserRole === roleService.getUserProjectRole() &&
+                    //this.props.currentUserRole === this.state.userProjectRole &&
                     <Dialog open={this.state.openAddForm} maxWidth="md">
                         <DialogTitle>
                             <div style={{ display: 'flex' }}>
