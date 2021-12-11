@@ -78,19 +78,16 @@ export default class Users extends Component {
         }
     }
 
-    createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
+    createUser = async (_firstname, _lastname, _role, _walletAddress) => {
         const signatureData = this.signData(_walletAddress);
 
         if (signatureData !== null) {
             await this.props.userChain.methods
 			.registerUser(
-                _username,
-                this.props.web3.utils.utf8ToHex(_email),
                 this.props.web3.utils.utf8ToHex(_firstname),
                 this.props.web3.utils.utf8ToHex(_lastname),
                 Number(_role),
-                _walletAddress,
-                signatureData.signature
+                _walletAddress
 			).send({ from: this.props.account })
             .then((response) => {
                 toasterService.notifyToastSuccess('Create User operation was made successfully');
@@ -107,8 +104,7 @@ export default class Users extends Component {
         if (signatureData !== null) {
             await this.props.userChain.methods.changeUserRole(
                 Number(_role),
-                _walletAddress,
-                signatureData.signature
+                _walletAddress
             ).send({ from: this.props.account })
             .then((response) => {
                 toasterService.notifyToastSuccess('Update User Role operation was made successfully');
@@ -123,8 +119,6 @@ export default class Users extends Component {
     addOrEdit = (userData, resetForm) => {
         if (userData.isEditForm === false) {
 			this.createUser(
-				userData.firstname + ' ' + userData.lastname,
-				userData.email,
 				userData.firstname,
 				userData.lastname,
 				userData.role,
@@ -144,8 +138,8 @@ export default class Users extends Component {
 	render() {
         const tableRef = React.createRef();
 		const columns = [
-			{ title: 'Username', field: 'username' },
-			{ title: 'Email', field: 'email' },
+			{ title: 'First Name', field: 'firstname' },
+			{ title: 'Last Name', field: 'lastname' },
 			{ title: 'Role', field: 'role' },
 		];
 
