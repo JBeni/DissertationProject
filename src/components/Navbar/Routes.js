@@ -4,11 +4,12 @@ import DefaultPage from '../NotFound/DefaultPage';
 import Projects from '../Projects/Projects';
 import Users from '../Users/Users';
 import Dashboard from '../Dashboard/Dashboard';
-import Company from './../Company/Company';
+import CompanyProjects from '../Company/CompanyProjects';
 import Supervisor from './../Supervisor/Supervisor';
 import ProjectRequests from '../ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
 import * as roleService from '../Services/roleService';
+import CompaniesProjects from '../CompaniesProjects/CompaniesProjects';
 
 function Routes(props) {
     const [adminRole, setAdminRole] = useState(null);
@@ -108,9 +109,9 @@ function Routes(props) {
             {
                 // props.currentUserRole === companyRole &&
                     <Route
-                        path="/company"
+                        path="/companies"
                         render={() => (
-                            <Company
+                            <CompaniesProjects
                                 account={props.account}
                                 project={props.project}
                                 web3={props.web3}
@@ -118,6 +119,20 @@ function Routes(props) {
                         )}
                     />
             }
+            {
+                // props.currentUserRole === companyRole &&
+                    <Route
+                        path="/company"
+                        render={() => (
+                            <CompanyProjects
+                                account={props.account}
+                                project={props.project}
+                                web3={props.web3}
+                            />
+                        )}
+                    />
+            }
+
             {
                 // props.currentUserRole === supervisorRole &&
                     <Route
