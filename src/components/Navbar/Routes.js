@@ -6,7 +6,7 @@ import Users from '../Users/Users';
 import Dashboard from '../Dashboard/Dashboard';
 import CompanyProjects from '../Company/CompanyProjects';
 import Supervisor from './../Supervisor/Supervisor';
-import ProjectRequests from '../ProjectRequests/ProjectRequests';
+import ProjectRequests from '../Projects/ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
 import * as roleService from '../Services/roleService';
 import CompaniesProjects from '../CompaniesProjects/CompaniesProjects';
@@ -98,6 +98,7 @@ function Routes(props) {
                         path="/projects/:id"
                         render={() => (
                             <ProjectRequests
+                                currentUserRole={props.currentUserRole}
                                 account={props.account}
                                 project={props.project}
                                 serviceChain={props.serviceChain}
@@ -123,6 +124,19 @@ function Routes(props) {
                 // props.currentUserRole === companyRole &&
                     <Route
                         path="/company"
+                        render={() => (
+                            <CompanyProjects
+                                account={props.account}
+                                project={props.project}
+                                web3={props.web3}
+                            />
+                        )}
+                    />
+            }
+            {
+                // props.currentUserRole === companyRole &&
+                    <Route
+                        path="/company/:id"
                         render={() => (
                             <CompanyProjects
                                 account={props.account}
