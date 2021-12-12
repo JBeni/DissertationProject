@@ -6,12 +6,17 @@ import { Button } from '@material-ui/core';
 export default function ProjectHistory(props) {
 	const { projectHistory } = props;
 	const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
-	useEffect(() => {
-		if (projectHistory?.length > 0) {
-			setLoading(true);
-		}
-	}, [projectHistory]);
+    useEffect(() => {
+        if (projectHistory?.length > 0) {
+            setLoading(true);
+            setMessage('The data is loading. Wait a moment...');
+            return;
+        } else {
+            setMessage('There are no data at the moment...');
+        }
+    }, [projectHistory]);
 
     const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
         const v = '0x' + _signature.slice(130, 132).toString();
@@ -29,7 +34,7 @@ export default function ProjectHistory(props) {
         }
     }
 
-	if (loading === false) return <WaitingLoader />;
+	if (loading === false) return <WaitingLoader message={message} />;
 
 	return (
 		<div className="container-body">
