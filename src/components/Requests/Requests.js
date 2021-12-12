@@ -27,7 +27,7 @@ class Requests extends Component {
     }
 
     async getAllRequests() {
-        const data = await Promise.resolve(applicationService.getAllRequests(this.props));
+        const data = await Promise.resolve(eventService.getAllRequestEvents(this.props));
         this.setState({ requests: data });
     }
 
