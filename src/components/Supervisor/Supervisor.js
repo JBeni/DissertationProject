@@ -49,7 +49,7 @@ class Supervisor extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.updateProjectRequest(
+        this.updateRequest(
             Number(data.index),
             data.comments,
             data.requestStatus,
@@ -78,15 +78,16 @@ class Supervisor extends Component {
         }
     }
 
-    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
+    updateRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
         const signatureData = this.signRequest(_requestAddress);
 
         if (signatureData !== null) {
             await this.props.project.methods
                 .updateRequest(
-                    Number(_index), Number(_indexProjectRequest), _comments,
+                    _comments,
                     _requestStatus, _projectStatus,
-                    _projectAddress, signatureData.signature
+                    _projectAddress, _requestAddress,
+                    signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Request operation was made successfully');
