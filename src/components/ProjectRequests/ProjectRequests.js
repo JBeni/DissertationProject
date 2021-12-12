@@ -47,6 +47,13 @@ class ProjectRequests extends Component {
             return;
         }
 
+        await this.initializeComponent();
+        await this.getProjectInfo();
+        await this.getProjectRequests();
+        await this.getLastProjectRequest(this.props.match.params.id, this.state.lastProjectRequest);
+    }
+
+    async initializeComponent()  {
         const addressZero = await roleService.getAddressZeroValue(this.props);
         this.setState({ lastProjectRequest: addressZero });
 
@@ -55,17 +62,25 @@ class ProjectRequests extends Component {
 
         const companyRole = await roleService.getCompanyRole(this.props);
         this.setState({ userProjectRole: companyRole });
+    }
 
-        this.getProjectInfo();
-        this.getProjectRequests();
-        this.getLastProjectRequest(this.props.match.params.id, this.state.lastProjectRequest);
+    getProjectInfo = async () => {
+        const data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
+        if (data?.length === 0) return;
+        this.setState({ project: data });
+    }
+
+    getProjectRequests = async () => {
+        const data = await applicationService.getProjectRequests(this.props, this.props.match.params.id);
+        if (data?.length === 0) return;
+        this.setState({ requests: data });
     }
 
     getLastProjectRequest = async (_projectAddress, _requestAddress) => {
         const lastRequest = await this.props.project.methods.getLastProjectRequest(_projectAddress, _requestAddress)
             .call({ from: this.props.account })
             .then((result) => { return result; });
-        const addressZero = await roleService.getAddressZeroValue(this.props.serviceChain);
+        const addressZero = await roleService.getAddressZeroValue(this.props);
 
         /**
          * If at this time we don't have a request the method will
@@ -179,20 +194,6 @@ class ProjectRequests extends Component {
         return [ 'Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
     }
 
-    getProjectInfo = async () => {
-        const data = await applicationService.getProjectInfo(this.props, this.props.match.params.id);
-        if (data?.length === 0) return;
-        this.setState({ project: data });
-    }
-
-    getProjectRequests = async () => {
-        const data = await applicationService.getProjectRequests(this.props, this.props.match.params.id);
-        if (data?.length === 0) return;
-
-        console.log(data[data.length - 1]);
-        this.setState({ requests: data });
-    }
-
     handleNewDataFromPopup(value) {
         this.setState({ createRequestForm: value });
     }
@@ -210,7 +211,7 @@ class ProjectRequests extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.createProjectRequest(
+        this.createRequest(
             data.title,
             data.status,
             data.requestStatus,
@@ -243,7 +244,7 @@ class ProjectRequests extends Component {
 
     createRequest = async (_title, _status, _requestStatus, _projectAddress) => {
         const requestAddress = await this.createUniqueRequestAddress(_title, new Date().getTime());
-        const signatureData = this.signProjectRequest(requestAddress);
+        const signatureData = this.signRequest(requestAddress);
 
         if (signatureData !== null) {
             await this.props.project.methods
@@ -253,7 +254,7 @@ class ProjectRequests extends Component {
                     requestAddress, signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
-                    this.getAllRequests();
+                    this.getProjectRequests();
                     this.getLastProjectRequest(this.props.match.params.id);
                     toasterService.notifyToastSuccess('Create Project Request operation was made successfully');
                 })
@@ -267,7 +268,7 @@ class ProjectRequests extends Component {
 		const tableRef = React.createRef();
 		const columns = [
 			{ title: 'Title', field: 'title' },
-			{ title: 'Project Status', field: 'status' },
+			{ title: 'Project Status', field: 'projectStatus' },
 			{ title: 'Request Status', field: 'requestStatus' },
 		];
 
@@ -343,7 +344,7 @@ class ProjectRequests extends Component {
 					tableRef={tableRef}
 					icons={materialTableIcons}
 					columns={columns}
-					data={this.state.projectRequests}
+					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
