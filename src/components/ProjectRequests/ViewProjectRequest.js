@@ -32,7 +32,7 @@ export default function ViewProjectRequest(props) {
 						<FormLabel>Request Status: {values.requestStatus}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Project Status: {values.status}</FormLabel>
+						<FormLabel>Project Status: {values.projectStatus}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
