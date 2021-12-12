@@ -36,9 +36,35 @@ export async function getUserInfo(props) {
     }).catch(function (error) {});
 }
 
+
+
+export async function getProjectsByCompany(props) {
+    let dataArray = [];
+    await props.project.methods.getProjectsForEntities(props.account).call({ from: props.account }).then((result) => {
+        result.map((result) => {
+            const status = dropdownService.getProjectStatusById(result._status);
+            const project = {
+                index: Number(result._index),
+                name: result._name,
+                status: status.value,
+                ipfsFileCID: result._ipfsFileCID,
+                projectAddress: result._projectAddress,
+                signerAddress: result._signerAddress,
+                companyAddress: result._companyAddress,
+                assigned: result._assigned,
+                timestamp: result._timestamp
+            };
+            dataArray.push(project);
+            return false;
+        });
+    }).catch(function (error) {});
+    return dataArray;
+}
+
+
 export async function getProjectsByUser(props) {
     let dataArray = [];
-    await props.project.methods.getProjectsByUser(props.account).call({ from: props.account }).then((result) => {
+    await props.project.methods.getProjectsForEntities(props.account).call({ from: props.account }).then((result) => {
         result.map((result) => {
             const status = dropdownService.getProjectStatusById(result._status);
             const project = {
