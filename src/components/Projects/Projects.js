@@ -44,7 +44,6 @@ class Projects extends Component {
 
     async componentDidMount() {
         this.getProjectsByUser();
-
         const userProjectRole = await roleService.getUserProjectRole(this.props);
         this.setState({ userProjectRole: userProjectRole });
     }
@@ -151,6 +150,7 @@ class Projects extends Component {
 
         if (signatureData !== null) {
             const _ipfsCID = await Promise.resolve(this.uploadFileIpfs(_bufferFile));
+
             await this.props.project.methods
                 .createProject(
                     projectAddress,
