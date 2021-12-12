@@ -3,6 +3,8 @@ pragma solidity >=0.8.0 <0.9.0;
 
 contract ServiceChain {
 
+    enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
+
     struct Dropdown {
         uint256 id;
         string value;
@@ -19,6 +21,30 @@ contract ServiceChain {
     modifier onlyOwner() {
         require(address(0x0) == msg.sender, "The address is not valid.");
         _;
+    }
+
+    function checkPermissionUserProject(uint256 _projectStatus) public view returns (bool) {
+        require(address(0x0) == msg.sender, "Address is not valid.");
+        if (
+            ProjectStatus(_projectStatus) == ProjectStatus.Created ||
+            ProjectStatus(_projectStatus) == ProjectStatus.ToApprove ||
+            ProjectStatus(_projectStatus) == ProjectStatus.StartProject
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    function checkPermissionCompany(uint256 _projectStatus) public view returns (bool) {
+        require(address(0x0) == msg.sender, "Address is not valid.");
+        if (
+            ProjectStatus(_projectStatus) != ProjectStatus.Created ||
+            ProjectStatus(_projectStatus) != ProjectStatus.ToApprove ||
+            ProjectStatus(_projectStatus) != ProjectStatus.StartProject
+        ) {
+            return true;
+        }
+        return false;
     }
 
     function getAddressZeroValue() public pure returns (string memory) {
