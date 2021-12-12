@@ -122,21 +122,6 @@ contract ProjectChain is UserChain {
     }
 
 
-/*
-    function getAllProjects() public view returns (Project[] memory) {
-        Project[] memory allProjects;
-        if (projectsCounter == 0) return allProjects;
-
-        allProjects = new Project[](projectsCounter);
-        for (uint256 index = 0; index < projectsCounter; index++) {
-            address _projectAddress = projectsAddress[index];
-            Project storage project = projects[_projectAddress];
-            allProjects[index] = project;
-        }
-        return allProjects;
-    }
-*/
-
     /**  Requests  */
 
     mapping(address => Request) public requests;
@@ -156,14 +141,10 @@ contract ProjectChain is UserChain {
         string memory _signature
     ) public {
         //require(projects[_projectAddress]._status == ProjectStatus.Created, "Steps must follow accordingly");
-        //require(ProjectStatus.ToApprove == RequestStatus.UnApproved, "");
-        //require(ProjectStatus.ToApprove == RequestStatus.Rejected, "");
 
-        RequestType _requestType;
+        RequestType _requestType = RequestType.SupervisorReq;
         if (ProjectStatus(_projectStatus) == ProjectStatus.StartProject) {
             _requestType = RequestType.CompanyReq;
-        } else {
-            _requestType = RequestType.SupervisorReq;
         }
 
         requests[_requestAddress] = Request(
@@ -200,13 +181,12 @@ contract ProjectChain is UserChain {
         emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
 
         // Update Project Mapping and Struct Array
-        if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
+        //if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
             projects[_projectAddress]._status = ProjectStatus(_projectStatus);
             emit ProjectEvent(projects[_projectAddress], _projectAddress, address(0x0));
-        }
+        //}
     }
 
-/*
     function getAllRequests() public view returns (Request[] memory) {
         Request[] memory allRequests = new Request[](requestsCounter);
         for (uint256 index = 0; index < requestsCounter; index++) {
@@ -217,6 +197,9 @@ contract ProjectChain is UserChain {
         return allRequests;
     }
 
+
+
+/*
     function getProjectRequests(address _projectAddress) public view returns (Request[] memory) {
         Request[] memory allRequests;
         for (uint256 index = 0; index < requestsCounter; index++) {
@@ -229,6 +212,8 @@ contract ProjectChain is UserChain {
         return allRequests;
     }
 */
+
+
 
     function getLastProjectRequest(address _projectAddress, address _requestAddress)
         public view returns (Request memory)
