@@ -192,3 +192,67 @@ export async function getRequestEvents(props, _requestAddress) {
     });
     return dataArray;
 }
+
+export async function getSupervisorRequestEvents(props, _requestAddress) {
+    const events = await props.project.getPastEvents('RequestEvent', {
+        filter: { _requestAddress: _requestAddress },
+        fromBlock: 0,
+        toBlock: 'latest'
+    });
+    if (events === undefined || events.length === 0) return [];
+
+    console.log(events)
+
+    let dataArray = [];
+    events.map((result) => {
+        const projectStatus = dropdownService.getProjectStatusById(result.returnValues._request._projectStatus);
+        const requestStatus = dropdownService.getRequestStatusById(result.returnValues._request._requestStatus);
+        const requestType = dropdownService.getRequestTypeById(result.returnValues._request._requestType);
+        const project = {
+            index: Number(result.returnValues._request._index),
+            title: result.returnValues._request._title,
+            projectStatus: projectStatus.value,
+            requestStatus: requestStatus.value,
+            requestType: requestType.value,
+            projectAddress: result.returnValues._request._projectAddress,
+            requestAddress: result.returnValues._request._requestAddress,
+            signerAddress: result.returnValues._request._signerAddress,
+            timestamp: new Date(result.returnValues._request._timestamp * 1000).toString(),
+            signature: result.returnValues._request._signature
+        };
+        dataArray.push(project);
+        return false;
+    });
+    return dataArray;
+}
+
+
+export async function getAllRequestEvents(props) {
+    const events = await props.project.getPastEvents('RequestEvent', {
+        fromBlock: 0,
+        toBlock: 'latest'
+    });
+    if (events === undefined || events.length === 0) return [];
+
+    let dataArray = [];
+    events.map((result) => {
+        const projectStatus = dropdownService.getProjectStatusById(result.returnValues._request._projectStatus);
+        const requestStatus = dropdownService.getRequestStatusById(result.returnValues._request._requestStatus);
+        const requestType = dropdownService.getRequestTypeById(result.returnValues._request._requestType);
+        const project = {
+            index: Number(result.returnValues._request._index),
+            title: result.returnValues._request._title,
+            projectStatus: projectStatus.value,
+            requestStatus: requestStatus.value,
+            requestType: requestType.value,
+            projectAddress: result.returnValues._request._projectAddress,
+            requestAddress: result.returnValues._request._requestAddress,
+            signerAddress: result.returnValues._request._signerAddress,
+            timestamp: new Date(result.returnValues._request._timestamp * 1000).toString(),
+            signature: result.returnValues._request._signature
+        };
+        dataArray.push(project);
+        return false;
+    });
+    return dataArray;
+}
