@@ -7,12 +7,13 @@ function Sidebar(props) {
     const [userProjectRole, setUserProjectRole] = useState(null);
     const [companyRole, setCompanyRole] = useState(null);
     const [supervisorRole, setSupervisorRole] = useState(null);
+    const [walletAddressBlockchain, setWalletAddressBlockchain] = useState(null);
 
     useEffect(() => {
-        setRoles()
+        initializeComponent();
     }, []);
 
-    const setRoles = async () => {
+    const initializeComponent = async () => {
         setAdminRole(await roleService.getAdminRole(props));
         setUserProjectRole(await roleService.getUserProjectRole(props));
         setCompanyRole(await roleService.getCompanyRole(props));
@@ -78,6 +79,23 @@ function Sidebar(props) {
                         {
                             //props.currentUserRole === companyRole &&
                                 <Link
+                                    to="/companies"
+                                    className={
+                                        props.currentLocation[1] === 'companies'
+                                            ? 'nav__link active'
+                                            : 'nav__link'
+                                    }
+                                >
+                                    <i className="bx bxs-buildings nav__icon"></i>
+                                    <span className="nav__name">Companies</span>
+                                </Link>
+                        }
+                        {
+                            //props.currentUserRole === companyRole &&
+                            // CHESTIA DE MAI JOS pare redundanta
+                            // adica contul din metamask sa fie egal cu contul din blockchain care are rolul de tip company
+                            //props.account === userInfo.role
+                                <Link
                                     to="/company"
                                     className={
                                         props.currentLocation[1] === 'company'
@@ -86,7 +104,7 @@ function Sidebar(props) {
                                     }
                                 >
                                     <i className="bx bxs-buildings nav__icon"></i>
-                                    <span className="nav__name">Company</span>
+                                    <span className="nav__name">Company Projects</span>
                                 </Link>
                         }
                         {
