@@ -64,6 +64,8 @@ export const initialProjectFormValues = {
     ipfsFileCID: '',
     projectAddress: '',
     signerAddress: '',
+    companyAddress: '',
+    assigned: '',
     timestamp: '',
 };
 
