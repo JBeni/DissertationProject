@@ -48,6 +48,8 @@ export async function getProjectsByUser(props) {
                 ipfsFileCID: result._ipfsFileCID,
                 projectAddress: result._projectAddress,
                 signerAddress: result._signerAddress,
+                companyAddress: result._companyAddress,
+                assigned: result._assigned,
                 timestamp: result._timestamp
             };
             dataArray.push(project);
@@ -74,25 +76,29 @@ export async function getProjectInfo(props, projectAddress) {
 }
 
 export async function getProjectRequests(props, _projectAddress) {
-    const allProjectRequest = await props.project.methods.getProjectRequests(_projectAddress).call({ from: props.account }).then((result) => {
+    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
     }).catch(function (error) {});
+    if (allRequests === undefined || allRequests?.length === 0) return [];
 
     let dataArray = [];
-    allProjectRequest.map((result) => {
+    allRequests.map((result) => {
         if (_projectAddress === result._projectAddress) {
-            const status = dropdownService.getProjectStatusById(result._status);
+            const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
             const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+            const requestType = dropdownService.getRequestTypeById(result._requestType);
             const project = {
                 index: Number(result._index),
                 title: result._title,
                 comments: result._comments,
-                status: status.value,
+                projectStatus: projectStatus.value,
                 requestStatus: requestStatus.value,
+                requestType: requestType.value,
                 projectAddress: result._projectAddress,
-                signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
-                timestamp: result._timestamp
+                signerAddress: result._signerAddress,
+                timestamp: result._timestamp,
+                signature: result._signature
             };
             dataArray.push(project);
         }
@@ -139,6 +145,44 @@ export async function getSupervisorRequests(props) {
     return dataArray;
 }
 
+
+
+export async function getAllCompanyTypeRequests(props) {
+    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
+        return result;
+    }).catch(function (error) {});
+
+    let dataArray = [];
+    allRequests.map((result) => {
+        const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+        const unApproveStatus = dropdownService.getDefaultRequestStatus();
+        const requestType = dropdownService.getCompanyRequestType(result._requestType);
+
+        if (requestStatus.value === unApproveStatus.value) {
+            if (Number(result._requestType) === Number(requestType.id)) {
+                const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
+                const project = {
+                    index: Number(result._index),
+                    title: result._title,
+                    comments: result._comments,
+                    projectStatus: projectStatus.value,
+                    requestStatus: requestStatus.value,
+                    requestType: requestType.value,
+                    projectAddress: result._projectAddress,
+                    indexProjectRequest: Number(result._indexProjectRequest),
+                    signerAddress: result._signerAddress,
+                    requestAddress: result._requestAddress,
+                    timestamp: result._timestamp
+                };
+                dataArray.push(project);
+            }
+        }
+        return false;
+    });
+    return dataArray;
+}
+
+
 export async function getCompanyRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
@@ -176,6 +220,9 @@ export async function getCompanyRequests(props) {
 
 
 
+
+
+
 export async function getAllRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
@@ -197,10 +244,10 @@ export async function getAllRequests(props) {
                 requestStatus: requestStatus.value,
                 requestType: requestType.value,
                 projectAddress: result._projectAddress,
-                indexProjectRequest: Number(result._indexProjectRequest),
-                signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
+                signerAddress: result._signerAddress,
                 timestamp: result._timestamp,
+                signature: result._signature
             };
             dataArray.push(project);
         }
@@ -213,7 +260,7 @@ export async function getAllRequests(props) {
 
 
 export async function createUniqueRequestAddress(props, _title, _index) {
-    const response = await props.project.methods.createUniqueProjectRequestAddress(_title, _index).call({ from: props.account })
+    const response = await props.project.methods.createUniqueRequestAddress(_title, _index).call({ from: props.account })
         .catch(function (error) {});
     return response;
 }
