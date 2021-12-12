@@ -7,7 +7,7 @@ export default function ViewProjectForm(props) {
 	const [values, setValues] = useState(formService.initialProjectFormValues);
 
 	useEffect(() => {
-		if (recordForEdit != null) {
+        if (recordForEdit != null) {
             setValues(prev => ({
 				...recordForEdit,
                 timestamp: new Date(values.timestamp * 1000).toString()
@@ -33,6 +33,12 @@ export default function ViewProjectForm(props) {
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Signer Address: {values.signerAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Company Address: {values.companyAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Assigned: {values.assigned.toString()}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Timestamp: {values.timestamp}</FormLabel>
