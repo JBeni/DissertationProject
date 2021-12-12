@@ -91,7 +91,7 @@ contract ProjectChain is UserChain {
         return projects[_address];
     }
 
-    function getProjectsByUser(address _walletAddress) public view returns (Project[] memory) {
+    function getProjectsForEntities(address _walletAddress) public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
 
@@ -106,6 +106,7 @@ contract ProjectChain is UserChain {
         return allProjects;
     }
 
+/*
     function getProjectsByCompany(address _companyAddress) public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
@@ -120,6 +121,7 @@ contract ProjectChain is UserChain {
         }
         return allProjects;
     }
+*/
 
 
     /**  Requests  */
