@@ -8,8 +8,6 @@ export default function ViewRequest(props) {
 	const [values, setValues] = useState(formService.initialProjectFormValues);
 
 	useEffect(() => {
-        console.log(recordForEdit);
-
 		if (recordForEdit != null) {
             setValues(prev => ({
 				...recordForEdit,
