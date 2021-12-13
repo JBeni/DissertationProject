@@ -18,11 +18,11 @@ export default function ProjectReqHistory(props) {
         }
     }, [projectReqHistory])
 
-    const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
+    const verifySignature = async (_requestAddress, _signerAddress, _signature) => {
         const v = '0x' + _signature.slice(130, 132).toString();
         const r = _signature.slice(0, 66).toString();
         const s = '0x' + _signature.slice(66, 130).toString();
-        const messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
+        const messageHash = props.web3.eth.accounts.hashMessage(_requestAddress);
 
         const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
         const verificationOutput = _signerAddress === signer ? true : false;
@@ -58,7 +58,7 @@ export default function ProjectReqHistory(props) {
                             <tr key={ item.index }>
                                 <td>{ item.title }</td>
                                 <td>{ item.comments }</td>
-                                <td>{ item.status }</td>
+                                <td>{ item.projectStatus }</td>
                                 <td>{ item.requestStatus }</td>
                                 <td>{ item.projectAddress }</td>
                                 <td>{ item.requestAddress }</td>
@@ -66,7 +66,7 @@ export default function ProjectReqHistory(props) {
                                 <td>{ item.timestamp }</td>
                                 <td>
                                     <Button color="secondary" onClick={ () =>
-                                        verifySignature(item.projectAddress, item.signerAddress, item.signature)
+                                        verifySignature(item.requestAddress, item.signerAddress, item.signature)
                                     }>Verify Signature</Button>
                                 </td>
                             </tr>
