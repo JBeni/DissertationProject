@@ -33,21 +33,24 @@ class App extends Component {
     }
 
     async initializeConnection() {
-        await this.loadWeb3();
-		await this.loadBlockChain();
+        const browser = await this.loadWeb3();
+        if (!browser) return;
+        await this.loadBlockChain();
     }
 
     async loadWeb3() {
-		if (window.ethereum) {
+        if (window.ethereum) {
             window.ethereum.on('accountsChanged', function (respAccounts) {
                 window.location.reload();
             });
             window.web3 = new Web3(window.ethereum);
-		} else if (window.web3) {
-			window.web3 = new Web3(window.web3.currentProvider);
-		} else {
-			window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-		}
+        } else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider);
+        } else {
+            window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+            return false;
+        }
+        return true;
 	}
 
     /**
