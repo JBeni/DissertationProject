@@ -1,42 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
 import * as formService from '../Services/formService';
-import * as dropdownService from '../Services/dropdownService';
 
 export default function ViewCompanyRequest(props) {
 	const { recordForEdit } = props;
 	const [values, setValues] = useState(formService.initialProjectFormValues);
 
 	useEffect(() => {
-		if (recordForEdit != null) {
-            const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
-            const requestStatus = dropdownService.getRequestStatusByValue(recordForEdit.requestStatus);
+        if (recordForEdit != null) {
             setValues(prev => ({
 				...recordForEdit,
-				projectStatus: projectStatus.value,
-                requestStatus: requestStatus.value
+                timestamp: new Date(values.timestamp * 1000).toString()
 			}));
 		}
-	}, [recordForEdit]);
+	}, []);
 
-	return (
+    return (
 		<>
 			<Grid container>
 				<Grid item xs={6}>
-					<p style={{ width: '670px' }}>
-						<FormLabel>Title: {values.title}</FormLabel>
+                <p style={{ width: '670px' }}>
+						<FormLabel>Name: {values.name}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Request Status: {values.requestStatus}</FormLabel>
+						<FormLabel>Status: {values.status}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
-						<FormLabel>Project Status: {values.projectStatus}</FormLabel>
+						<FormLabel>IPFS File CID: {values.ipfsFileCID}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Project Address: {values.projectAddress}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
 						<FormLabel>Signer Address: {values.signerAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Company Address: {values.companyAddress}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Assigned: {values.assigned.toString()}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>Timestamp: {values.timestamp}</FormLabel>
 					</p>
 				</Grid>
 			</Grid>
