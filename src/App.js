@@ -128,7 +128,7 @@ class App extends Component {
 
         if (this.state.account === adminData.walletAddress) {
             this.setState({ loading: false, currentUsername: adminData.username });
-            const adminRole = await this.state.serviceChain.methods.getAdminRole().call();
+            const adminRole = await this.state.serviceChain.methods.getAdminRole().call({ from: this.state.account });
             if (adminData.role === adminRole) {
                 this.setState({ currentUserRole: adminData.role });
             } else {
