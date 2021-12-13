@@ -9,7 +9,6 @@ contract ProjectChain is UserChain {
     }
 
     modifier onlyUserProject() {
-        // User memory sessionUser = userChain.getUserInfo(msg.sender);
         // require(
         //     sessionUser._role == Roles.UserProject,
         //     "You don't have the rights for this resource."
@@ -18,7 +17,6 @@ contract ProjectChain is UserChain {
     }
 
     modifier onlySupervisor() {
-        // User memory sessionUser = userChain.getUserInfo(msg.sender);
         // require(
         //     sessionUser._role == Roles.Supervisor,
         //     "You don't have the rights for this resource."
@@ -27,7 +25,6 @@ contract ProjectChain is UserChain {
     }
 
     modifier onlyCompany() {
-        // User memory sessionUser = userChain.getUserInfo(msg.sender);
         // require(
         //     sessionUser._role == Roles.Company,
         //     "You don't have the rights for this resource."
@@ -91,7 +88,7 @@ contract ProjectChain is UserChain {
         return projects[_address];
     }
 
-    function getProjectsForEntities(address _walletAddress) public view returns (Project[] memory) {
+    function getProjectsByUserAddress(address _walletAddress) public view returns (Project[] memory) {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
 
@@ -105,23 +102,6 @@ contract ProjectChain is UserChain {
         }
         return allProjects;
     }
-
-/*
-    function getProjectsByCompany(address _companyAddress) public view returns (Project[] memory) {
-        Project[] memory allProjects;
-        if (projectsCounter == 0) return allProjects;
-
-        allProjects = new Project[](projectsCounter);
-        for (uint256 index = 0; index < projectsCounter; index++) {
-            address _projectAddress = projectsAddress[index];
-            if (_companyAddress == projects[_projectAddress]._companyAddress) {
-                Project storage project = projects[_projectAddress];
-                allProjects[index] = project;
-            }
-        }
-        return allProjects;
-    }
-*/
 
 
     /**  Requests  */
@@ -199,24 +179,6 @@ contract ProjectChain is UserChain {
         return allRequests;
     }
 
-
-
-/*
-    function getProjectRequests(address _projectAddress) public view returns (Request[] memory) {
-        Request[] memory allRequests;
-        for (uint256 index = 0; index < requestsCounter; index++) {
-            address _requestAddress = requestsAddress[index];
-            Request storage request = requests[_requestAddress];
-            if (_projectAddress == request._projectAddress) {
-                allRequests[index] = request;
-            }
-        }
-        return allRequests;
-    }
-*/
-
-
-
     function getLastProjectRequest(address _projectAddress, address _requestAddress)
         public view returns (Request memory)
     {
@@ -228,7 +190,4 @@ contract ProjectChain is UserChain {
         }
         return request;
     }
-
-
-
 }
