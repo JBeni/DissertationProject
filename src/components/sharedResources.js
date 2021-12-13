@@ -79,3 +79,95 @@ export const useStylesLoader = makeStyles((theme) => ({
 		display: 'flex',
 	},
 }));
+
+
+/** Request related Project */
+
+export function setMessageNextStep(lastRequest) {
+    // Approve Request was Sent
+    if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 0) {
+        return { currentStep: 'Approve Request was Sent', nextStep: 'Wait for Supervisor response' };
+    }
+    // Approve Request was Rejected
+    if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 1) {
+        return { currentStep: 'Approve Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+    }
+    // Approve Request was Approved
+    if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 2) {
+        return { currentStep: 'Approve Request was Approved', nextStep: 'Send start project request to company.' };
+    }
+
+    // StartProject Request was Sent
+    if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 0) {
+        return { currentStep: 'StartProject Request was Sent', nextStep: 'Wait for Company response' };
+    }
+    // StartProject Request was Rejected
+    if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 1) {
+        this.setState({ currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' });
+        return { currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+    }
+    // StartProject Request was Approved
+    if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 2) {
+        return { currentStep: 'StartProject Request was Approved', nextStep: 'Send check the progress before finalization request to Supervisor' };
+    }
+
+    // FinalizationCheck Request was Sent
+    if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 0) {
+        return { currentStep: 'FinalizationCheck Request was Sent', nextStep: 'Wait for Supervisor response' };
+    }
+    // FinalizationCheck Request was Rejected
+    if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 1) {
+        return { currentStep: 'FinalizationCheck Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+    }
+    // FinalizationCheck Request was Approved
+    if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 2) {
+        return { currentStep: 'FinalizationCheck Request was Approved', nextStep: 'Send completed project request to Supervisor' };
+    }
+
+    // Completed Request was Sent
+    if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 0) {
+        return { currentStep: 'Completed Request was Sent', nextStep: 'Wait for Supervisor response' };
+    }
+    // Completed Request was Rejected
+    if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 1) {
+        return { currentStep: 'Completed Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+    }
+    // Completed Request was Approved
+    if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 2) {
+        return { currentStep: 'Project Completed', nextStep: 'All steps completed.' };
+    }
+}
+
+export function setActiveStep(lastRequest) {
+    // Status with Approve Consent
+    if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) < 2) {
+        return { activeStep: Number(lastRequest._projectStatus), projectCompleted: false };
+    }
+    if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) === 2) {
+        return { activeStep: Number(lastRequest._projectStatus) + 1, projectCompleted: false };
+    }
+    // Last Project Status
+    if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 2) {
+        return { activeStep: Number(lastRequest._projectStatus) + 1, projectCompleted: true };
+    }
+}
+
+export function getProjectStatusSteps() {
+    return [ 'Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
+}
+
+export async function verifySignatureRequest(props, _requestAddress, _signerAddress, _signature) {
+    const v = '0x' + _signature.slice(130, 132).toString();
+    const r = _signature.slice(0, 66).toString();
+    const s = '0x' + _signature.slice(66, 130).toString();
+    const messageHash = props.web3.eth.accounts.hashMessage(_requestAddress);
+
+    const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
+    const verificationOutput = _signerAddress === signer ? true : false;
+
+    if (verificationOutput) {
+        alert('Signer Address is verified successfully!');
+    } else {
+        alert('Signer Address is not verified!');
+    }
+}
