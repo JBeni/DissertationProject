@@ -5,6 +5,7 @@ import Projects from '../Projects/Projects';
 import Users from '../Users/Users';
 import Dashboard from '../Dashboard/Dashboard';
 import CompanyProjects from '../Company/CompanyProjects';
+import CompanyProjectRequests from '../Company/CompanyProjectRequests/CompanyProjectRequests';
 import Supervisor from './../Supervisor/Supervisor';
 import ProjectRequests from '../Projects/ProjectRequests/ProjectRequests';
 import Requests from './../Requests/Requests';
@@ -70,10 +71,7 @@ function Routes(props) {
                     />
             }
             {
-                // (
-                //     props.currentUserRole === userProjectRole ||
-                //     props.currentUserRole === companyRole
-                // ) &&
+                //props.currentUserRole === userProjectRole &&
                     <Route
                         path="/projects" exact
                         render={() => (
@@ -89,11 +87,7 @@ function Routes(props) {
                     />
             }
             {
-                // (
-                //     props.currentUserRole === userProjectRole ||
-                //     props.currentUserRole === companyRole ||
-                //     props.currentUserRole === supervisorRole
-                // ) &&
+                //props.currentUserRole === userProjectRole &&
                     <Route
                         path="/projects/:id"
                         render={() => (
@@ -123,11 +117,12 @@ function Routes(props) {
             {
                 // props.currentUserRole === companyRole &&
                     <Route
-                        path="/company"
+                        path="/company" exact
                         render={() => (
                             <CompanyProjects
                                 account={props.account}
                                 project={props.project}
+                                serviceChain={props.serviceChain}
                                 web3={props.web3}
                             />
                         )}
@@ -138,9 +133,10 @@ function Routes(props) {
                     <Route
                         path="/company/:id"
                         render={() => (
-                            <CompanyProjects
+                            <CompanyProjectRequests
                                 account={props.account}
                                 project={props.project}
+                                serviceChain={props.serviceChain}
                                 web3={props.web3}
                             />
                         )}
