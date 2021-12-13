@@ -33,8 +33,6 @@ class Projects extends Component {
 			recordForEdit: null,
             openProjectHistory: false,
             openProjectReqHistory: false,
-            selectedProjectAddress: '',
-            userProjectRole: null,
 
             projectReqHistory: [],
             projectHistory: [],
@@ -44,8 +42,6 @@ class Projects extends Component {
 
     async componentDidMount() {
         this.getProjectsByUser();
-        const userProjectRole = await roleService.getUserProjectRole(this.props);
-        this.setState({ userProjectRole: userProjectRole });
     }
 
     getProjectsByUser = async () => {
@@ -89,10 +85,6 @@ class Projects extends Component {
 		this.setState({ recordForEdit: data });
 	}
 
-    setSelectedProjectAddress = (value) => {
-        this.setState({ selectedProjectAddress: value });
-    }
-
     addOrEdit = (projectData, resetForm, bufferFile) => {
         if (projectData.isEditForm === false) {
             this.createProject(
@@ -122,7 +114,7 @@ class Projects extends Component {
         }
 
         try {
-            return this.props.web3.eth.accounts.sign(_projectAddress, '0x' + userPrivateKey);
+            return this.props.web3.eth.accounts.sign(_projectAddress, '0x' + userPrivateKey.trim());
         } catch (error) {
             toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
             return null;
@@ -204,35 +196,30 @@ class Projects extends Component {
 
 		return (
 			<div>
-                {
-                    //this.props.currentUserRole === this.state.userProjectRole &&
-                        <Button
-                            variant="outlined"
-                            startIcon={<AddIcon />}
-                            onClick={() => {
-                                this.setOpenAddForm(true);
-                                this.setRecordForEdit(null);
-                        }}>Add New</Button>
-                }
-                {
-                    //this.props.currentUserRole === this.state.userProjectRole &&
-                    <Dialog open={this.state.openAddForm} maxWidth="md">
-                        <DialogTitle>
-                            <div style={{ display: 'flex' }}>
-                                <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
-                                    Add Project Form
-                                </Typography>
-                                <Button color="secondary" onClick={() => {
-                                        this.setOpenAddForm(false);
-                                    }}><CloseIcon />
-                                </Button>
-                            </div>
-                        </DialogTitle>
-                        <DialogContent dividers style={{ width: '700px' }}>
-                            <AddProjectForm handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
-                        </DialogContent>
-                    </Dialog>
-                }
+                <Button
+                    variant="outlined"
+                    startIcon={<AddIcon />}
+                    onClick={() => {
+                        this.setOpenAddForm(true);
+                        this.setRecordForEdit(null);
+                }}>Add New</Button>
+
+                <Dialog open={this.state.openAddForm} maxWidth="md">
+                    <DialogTitle>
+                        <div style={{ display: 'flex' }}>
+                            <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+                                Add Project Form
+                            </Typography>
+                            <Button color="secondary" onClick={() => {
+                                    this.setOpenAddForm(false);
+                                }}><CloseIcon />
+                            </Button>
+                        </div>
+                    </DialogTitle>
+                    <DialogContent dividers style={{ width: '700px' }}>
+                        <AddProjectForm handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+                    </DialogContent>
+                </Dialog>
 
 				<Dialog open={this.state.openViewForm} maxWidth="md">
 					<DialogTitle>
@@ -329,7 +316,6 @@ class Projects extends Component {
 							icon: AddIcon,
 							tooltip: 'Go to Project Requests',
 							onClick: (event, rowData) => {
-                                //this.setSelectedProjectAddress(rowData.projectAddress);
                                 this.props.history.push(`/projects/${rowData.projectAddress}`);
 							},
 						},
