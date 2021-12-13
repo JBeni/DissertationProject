@@ -50,10 +50,8 @@ class Supervisor extends Component {
 
     addOrEdit = async (data, resetForm) => {
         this.updateRequest(
-            Number(data.index),
             data.comments,
             data.requestStatus,
-            Number(data.indexProjectRequest),
             data.projectStatus,
             data.projectAddress,
             data.requestAddress
@@ -71,19 +69,19 @@ class Supervisor extends Component {
         }
 
         try {
-            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
+            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey.trim());
         } catch (error) {
             toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
             return null;
         }
     }
 
-    updateRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
+    updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
         const signatureData = this.signRequest(_requestAddress);
 
         if (signatureData !== null) {
             await this.props.project.methods
-                .updateRequest(
+                .updateSupervisorRequest(
                     _comments,
                     _requestStatus, _projectStatus,
                     _projectAddress, _requestAddress,
