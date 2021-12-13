@@ -24,7 +24,7 @@ contract ServiceChain {
     }
 
     function checkPermissionUserProject(uint256 _projectStatus) public view returns (bool) {
-        require(address(0x0) == msg.sender, "Address is not valid.");
+        require(address(0x0) != msg.sender, "Address is not valid.");
         if (
             ProjectStatus(_projectStatus) == ProjectStatus.Created ||
             ProjectStatus(_projectStatus) == ProjectStatus.ToApprove ||
@@ -36,7 +36,7 @@ contract ServiceChain {
     }
 
     function checkPermissionCompany(uint256 _projectStatus) public view returns (bool) {
-        require(address(0x0) == msg.sender, "Address is not valid.");
+        require(address(0x0) != msg.sender, "Address is not valid.");
         if (
             ProjectStatus(_projectStatus) != ProjectStatus.Created ||
             ProjectStatus(_projectStatus) != ProjectStatus.ToApprove ||
