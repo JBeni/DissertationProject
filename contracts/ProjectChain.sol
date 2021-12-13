@@ -5,8 +5,7 @@ import "./UserChain.sol";
 
 contract ProjectChain is UserChain {
 
-    constructor() {
-    }
+    constructor() {}
 
     modifier onlyUserProject() {
         // require(
@@ -148,7 +147,7 @@ contract ProjectChain is UserChain {
         requestsCounter++;
     }
 
-    function updateRequest(
+    function updateSupervisorRequest(
         string memory _comments,
         uint256 _requestStatus,
         uint256 _projectStatus,
@@ -163,10 +162,32 @@ contract ProjectChain is UserChain {
         emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
 
         // Update Project Mapping and Struct Array
-        //if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
+        if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
             projects[_projectAddress]._status = ProjectStatus(_projectStatus);
             emit ProjectEvent(projects[_projectAddress], _projectAddress, address(0x0));
-        //}
+        }
+    }
+
+    function updateCompanyRequest(
+        string memory _comments,
+        uint256 _requestStatus,
+        uint256 _projectStatus,
+        address _projectAddress,
+        address _requestAddress,
+        string memory _signature
+    ) public {
+        // Update Requests Mapping and Struct Array
+        requests[_requestAddress]._comments = _comments;
+        requests[_requestAddress]._requestStatus = RequestStatus(_requestStatus);
+        requests[_requestAddress]._signature = _signature;
+        emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
+
+        // Update Project Mapping and Struct Array
+        if (RequestStatus.Approved == RequestStatus(_requestStatus)) {
+            projects[_projectAddress]._status = ProjectStatus(_projectStatus);
+            projects[_projectAddress]._companyAddress = msg.sender;
+            emit ProjectEvent(projects[_projectAddress], _projectAddress, msg.sender);
+        }
     }
 
     function getAllRequests() public view returns (Request[] memory) {
