@@ -40,21 +40,23 @@ export async function getUserInfo(props) {
 
 export async function getProjectsByCompany(props) {
     let dataArray = [];
-    await props.project.methods.getProjectsForEntities(props.account).call({ from: props.account }).then((result) => {
+    await props.project.methods.getProjectsByUserAddress(props.account).call({ from: props.account }).then((result) => {
         result.map((result) => {
-            const status = dropdownService.getProjectStatusById(result._status);
-            const project = {
-                index: Number(result._index),
-                name: result._name,
-                status: status.value,
-                ipfsFileCID: result._ipfsFileCID,
-                projectAddress: result._projectAddress,
-                signerAddress: result._signerAddress,
-                companyAddress: result._companyAddress,
-                assigned: result._assigned,
-                timestamp: result._timestamp
-            };
-            dataArray.push(project);
+            if (props.account === result._companyAddress && props.account === result._signerAddress) {
+                const status = dropdownService.getProjectStatusById(result._status);
+                const project = {
+                    index: Number(result._index),
+                    name: result._name,
+                    status: status.value,
+                    ipfsFileCID: result._ipfsFileCID,
+                    projectAddress: result._projectAddress,
+                    signerAddress: result._signerAddress,
+                    companyAddress: result._companyAddress,
+                    assigned: result._assigned,
+                    timestamp: result._timestamp
+                };
+                dataArray.push(project);
+            }
             return false;
         });
     }).catch(function (error) {});
@@ -64,21 +66,23 @@ export async function getProjectsByCompany(props) {
 
 export async function getProjectsByUser(props) {
     let dataArray = [];
-    await props.project.methods.getProjectsForEntities(props.account).call({ from: props.account }).then((result) => {
+    await props.project.methods.getProjectsByUserAddress(props.account).call({ from: props.account }).then((result) => {
         result.map((result) => {
-            const status = dropdownService.getProjectStatusById(result._status);
-            const project = {
-                index: Number(result._index),
-                name: result._name,
-                status: status.value,
-                ipfsFileCID: result._ipfsFileCID,
-                projectAddress: result._projectAddress,
-                signerAddress: result._signerAddress,
-                companyAddress: result._companyAddress,
-                assigned: result._assigned,
-                timestamp: result._timestamp
-            };
-            dataArray.push(project);
+            if (props.account === result._signerAddress) {
+                const status = dropdownService.getProjectStatusById(result._status);
+                const project = {
+                    index: Number(result._index),
+                    name: result._name,
+                    status: status.value,
+                    ipfsFileCID: result._ipfsFileCID,
+                    projectAddress: result._projectAddress,
+                    signerAddress: result._signerAddress,
+                    companyAddress: result._companyAddress,
+                    assigned: result._assigned,
+                    timestamp: result._timestamp
+                };
+                dataArray.push(project);
+            }
             return false;
         });
     }).catch(function (error) {});
@@ -134,7 +138,7 @@ export async function getProjectRequests(props, _projectAddress) {
 }
 
 
-/********  Methods for Supervisor and Company  ***********/
+/******** ***********/
 
 export async function getSupervisorRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
@@ -148,6 +152,7 @@ export async function getSupervisorRequests(props) {
         const requestType = dropdownService.getSupervisorRequestType(result._requestType);
 
         if (requestStatus.value === unApproveStatus.value) {
+            // Supervisor Request Type
             if (Number(result._requestType) === Number(requestType.id)) {
                 const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
                 const project = {
@@ -245,10 +250,6 @@ export async function getCompanyRequests(props) {
 }
 
 
-
-
-
-
 export async function getAllRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
@@ -281,8 +282,6 @@ export async function getAllRequests(props) {
     });
     return dataArray;
 }
-
-
 
 
 export async function createUniqueRequestAddress(props, _title, _index) {
