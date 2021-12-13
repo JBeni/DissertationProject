@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons } from '../sharedResources';
+import { materialTableIcons, signEntityByUser } from '../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import Edit from '@material-ui/icons/Edit';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
@@ -59,24 +59,8 @@ class CompaniesProjects extends Component {
         this.setRecordForEdit(null);
     }
 
-    signRequest = (_requestAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey.trim());
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
     updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
-        const signatureData = this.signRequest(_requestAddress);
+        const signatureData = signEntityByUser(_requestAddress, this.props);
 
         if (signatureData !== null) {
             await this.props.project.methods

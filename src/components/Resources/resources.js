@@ -1,5 +1,5 @@
 
-const verifySignatureTest = async (props, _projectAddress, _signerAddress, _signature) => {
+export const verifyTestSignature = async (props, _projectAddress, _signerAddress, _signature) => {
     const v = '0x' + _signature.slice(130, 132).toString();
     const r = _signature.slice(0, 66).toString();
     const s = '0x' + _signature.slice(66, 130).toString();
@@ -15,4 +15,3 @@ const verifySignatureTest = async (props, _projectAddress, _signerAddress, _sign
         alert('Signer Address is not verified!');
     }
 }
-

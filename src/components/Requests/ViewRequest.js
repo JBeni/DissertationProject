@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel, Button } from '@material-ui/core';
 import * as formService from '../Services/formService';
+import { verifySignatureRequest } from '../../components/sharedResources';
 
 export default function ViewRequest(props) {
 	const { recordForView } = props;
@@ -16,19 +17,7 @@ export default function ViewRequest(props) {
 	}, []);
 
     const verifySignature = async (_requestAddress, _signerAddress, _signature) => {
-        const v = '0x' + _signature.slice(130, 132).toString();
-        const r = _signature.slice(0, 66).toString();
-        const s = '0x' + _signature.slice(66, 130).toString();
-        const messageHash = props.web3.eth.accounts.hashMessage(_requestAddress);
-
-        const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
-        const verificationOutput = _signerAddress === signer ? true : false;
-
-        if (verificationOutput) {
-            alert('Signer Address is verified successfully!');
-        } else {
-            alert('Signer Address is not verified!');
-        }
+        await verifySignatureRequest(props, _requestAddress, _signerAddress, _signature);
     }
 
     return (

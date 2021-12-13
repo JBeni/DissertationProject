@@ -5,7 +5,6 @@ import { DialogContent, Typography, DialogTitle, Dialog, Button } from '@materia
 import CloseIcon from '@material-ui/icons/Close';
 import AddIcon from '@material-ui/icons/Add';
 import Visibility from '@material-ui/icons/Visibility';
-import { materialTableIcons } from '../../sharedResources';
 import { Link } from 'react-router-dom';
 import { withRouter } from "react-router";
 import AddCompanyProjectRequest from './AddCompanyProjectRequest';
@@ -16,6 +15,7 @@ import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../../Services/toasterService';
 import * as eventService from '../../Services/eventService';
 import * as roleService from '../../Services/roleService';
+import { materialTableIcons, setMessageNextStep, getProjectStatusSteps, setActiveStep, signEntityByUser } from './../../sharedResources';
 
 class CompanyProjectRequests extends Component {
 	constructor(props) {
@@ -106,88 +106,17 @@ class CompanyProjectRequests extends Component {
     }
 
     setMessageNextStep = (lastRequest) => {
-        // Approve Request was Sent
-        if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'Approve Request was Sent', nextStep: 'Wait for Supervisor response' });
-            return;
-        }
-        // Approve Request was Rejected
-        if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'Approve Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // Approve Request was Approved
-        if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'Approve Request was Approved', nextStep: 'Send start project request to company.' });
-            return;
-        }
-
-        // StartProject Request was Sent
-        if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'StartProject Request was Sent', nextStep: 'Wait for Company response' });
-            return;
-        }
-        // StartProject Request was Rejected
-        if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // StartProject Request was Approved
-        if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'StartProject Request was Approved', nextStep: 'Send check the progress before finalization request to Supervisor' });
-            return;
-        }
-
-        // FinalizationCheck Request was Sent
-        if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'FinalizationCheck Request was Sent', nextStep: 'Wait for Supervisor response' });
-            return;
-        }
-        // FinalizationCheck Request was Rejected
-        if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'FinalizationCheck Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // FinalizationCheck Request was Approved
-        if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'FinalizationCheck Request was Approved', nextStep: 'Send completed project request to Supervisor' });
-            return;
-        }
-
-        // Completed Request was Sent
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'Completed Request was Sent', nextStep: 'Wait for Supervisor response' });
-            return;
-        }
-        // Completed Request was Rejected
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'Completed Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // Completed Request was Approved
-        if (Number(lastRequest._status) === 4 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'Project Completed', nextStep: 'All steps completed.' });
-            return;
-        }
+        const result = setMessageNextStep(lastRequest);
+        this.setState({ currentStep: result.currentStep, nextStep: result.nextStep });
     }
 
     setActiveStep = (lastRequest) => {
-        // Status with Approve Consent
-        if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) < 2) {
-            this.setState({ activeStep: Number(lastRequest._projectStatus) });
-        }
-        if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ activeStep: Number(lastRequest._projectStatus) + 1 });
-        }
-        // Last Project Status
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ activeStep: Number(lastRequest._projectStatus) + 1 });
-            this.setState({ projectCompleted: true })
-        }
+        const result = setActiveStep(lastRequest);
+        this.setState({ activeStep: result.activeStep, projectCompleted: result.projectCompleted });
     }
 
-    getProjectStatusSteps() {
-        return [ 'Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
+    getProjectStatusSteps = () => {
+        return getProjectStatusSteps();
     }
 
     handleNewDataFromPopup(value) {
@@ -217,30 +146,9 @@ class CompanyProjectRequests extends Component {
         this.setRecordForEdit(null);
     }
 
-    signRequest = (_requestAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey.trim());
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
-    createUniqueRequestAddress = async (_title, _index) => {
-        const data = await Promise.resolve(applicationService.createUniqueRequestAddress(this.props, _title, _index));
-        return data;
-    }
-
     createRequest = async (_title, _projectStatus, _requestStatus, _projectAddress) => {
         const requestAddress = await this.createUniqueRequestAddress(_title, new Date().getTime());
-        const signatureData = this.signRequest(requestAddress);
+        const signatureData = signEntityByUser(requestAddress, this.props);
 
         if (signatureData !== null) {
             await this.props.project.methods

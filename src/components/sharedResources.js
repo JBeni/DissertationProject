@@ -17,6 +17,8 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
+import * as toasterService from '../../Services/toasterService';
+
 export const materialTableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
 	Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -169,5 +171,21 @@ export async function verifySignatureRequest(props, _requestAddress, _signerAddr
         alert('Signer Address is verified successfully!');
     } else {
         alert('Signer Address is not verified!');
+    }
+}
+
+export function signEntityByUser(_entityAddress, props) {
+    const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+
+    if (userPrivateKey === null) {
+        toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+        return null;
+    }
+
+    try {
+        return props.web3.eth.accounts.sign(_entityAddress, '0x' + userPrivateKey.trim());
+    } catch (error) {
+        toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
+        return null;
     }
 }

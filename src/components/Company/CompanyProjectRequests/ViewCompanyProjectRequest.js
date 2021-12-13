@@ -13,7 +13,7 @@ export default function ViewCompanyProjectRequest(props) {
                 timestamp: new Date(values.timestamp * 1000).toString()
 			}));
         }
-	}, [recordForEdit]);
+	}, []);
 
 	return (
 		<>

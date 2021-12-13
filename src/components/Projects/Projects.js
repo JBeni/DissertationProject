@@ -7,12 +7,11 @@ import AddIcon from '@material-ui/icons/Add';
 import ViewProjectForm from './ViewProjectForm';
 import AddProjectForm from './AddProjectForm';
 import Visibility from '@material-ui/icons/Visibility';
-import { materialTableIcons } from './../sharedResources';
+import { materialTableIcons, signEntityByUser } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import * as eventService from '../Services/eventService';
 import * as toasterService from '../Services/toasterService';
-import * as roleService from '../Services/roleService';
 import HistoryIcon from '@mui/icons-material/History';
 import Edit from '@material-ui/icons/Edit';
 import ProjectHistory from './ProjectHistory';
@@ -105,22 +104,6 @@ class Projects extends Component {
         return data;
     }
 
-    signCreateProject = (_projectAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_projectAddress, '0x' + userPrivateKey.trim());
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
     downloadIpfsFile = async (filename, ipfsCID) => {
         const url = `https://ipfs.io/ipfs/${ipfsCID}`;
         axios.get(url, {
@@ -138,7 +121,7 @@ class Projects extends Component {
 
     createProject = async (_name, _status, _fileData, _bufferFile) => {
         const projectAddress = await this.createUniqueProjectAddress(_name, new Date().getTime());
-        const signatureData = this.signCreateProject(projectAddress);
+        const signatureData = signEntityByUser(projectAddress, this.props);
 
         if (signatureData !== null) {
             const _ipfsCID = await Promise.resolve(this.uploadFileIpfs(_bufferFile));

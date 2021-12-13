@@ -7,7 +7,7 @@ import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@materia
 import AddForm from './AddForm';
 import * as applicationService from '../Services/applicationService';
 import ViewForm from './ViewForm';
-import { materialTableIcons } from './../sharedResources';
+import { materialTableIcons, signEntityByUser } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import { Toaster } from 'react-hot-toast';
 import * as eventService from '../Services/eventService';
@@ -62,24 +62,8 @@ export default class Users extends Component {
         this.setState({ userHistory: data });
     }
 
-    signData = (_walletAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
-
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_walletAddress, '0x' + userPrivateKey.trim());
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
     createUser = async (_firstname, _lastname, _role, _walletAddress) => {
-        const signatureData = this.signData(_walletAddress);
+        const signatureData = signEntityByUser(_walletAddress, this.props);
 
         if (signatureData !== null) {
             await this.props.userChain.methods
@@ -99,7 +83,7 @@ export default class Users extends Component {
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
-        const signatureData = this.signData(_walletAddress);
+        const signatureData = signEntityByUser(_walletAddress, this.props);
 
         if (signatureData !== null) {
             await this.props.userChain.methods.changeUserRole(
