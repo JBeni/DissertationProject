@@ -18,11 +18,11 @@ export default function AddProjectRequest(props) {
             const requestStatus = dropdownService.getDefaultRequestStatus();
             setValues({
                 ...values,
-                status: nextStatus.toString(),
+                projectStatus: nextStatus.toString(),
                 requestStatus: requestStatus.id,
             });
         }
-	}, [recordForEdit]);
+	}, []);
 
 	const handleInputChange = (e) => {
 		const { name, value } = e.target;
@@ -37,6 +37,7 @@ export default function AddProjectRequest(props) {
 		setValues(formService.initialProjectRequestFormValues);
 		setValues({
 			...values,
+            title: '',
 		});
 		setErrors({});
         setValidity(formService.initialProjectRequestFormValidity);
@@ -49,9 +50,9 @@ export default function AddProjectRequest(props) {
 			temp.title = fieldValues.title ? '' : 'This field is required.';
             tempValidity.title = fieldValues.title?.length <= 0;
         }
-		if ('status' in fieldValues) {
-			temp.status = fieldValues.status.length > 0 ? '' : 'This field is required.';
-            tempValidity.status = fieldValues.status?.length <= 0;
+		if ('projectStatus' in fieldValues) {
+			temp.projectStatus = fieldValues.projectStatus.length > 0 ? '' : 'This field is required.';
+            tempValidity.projectStatus = fieldValues.projectStatus?.length <= 0;
 		}
 		if ('requestStatus' in fieldValues) {
 			temp.requestStatus = fieldValues.requestStatus?.length > 0 ? '' : 'This field is required.';
@@ -112,11 +113,11 @@ export default function AddProjectRequest(props) {
 						<FormControl style={{ width: '400px' }}>
 							<InputLabel>Project Status</InputLabel>
 							<Select
-								name="status"
+								name="projectStatus"
 								label="ProjectStatus"
-								value={values.status}
+								value={values.projectStatus}
 								onChange={handleInputChange}
-                                error={validity.status}
+                                error={validity.projectStatus}
                                 disabled={true}
 							>
 								{dropdownService.projectStatusDropdown.map((item) => (
@@ -125,7 +126,7 @@ export default function AddProjectRequest(props) {
 									</MenuItem>
 								))}
 							</Select>
-							{errors && <FormHelperText className="Mui-error">{errors.status}</FormHelperText>}
+							{errors && <FormHelperText className="Mui-error">{errors.projectStatus}</FormHelperText>}
 						</FormControl>
 
 						<div>
