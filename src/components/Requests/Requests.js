@@ -23,7 +23,7 @@ class Requests extends Component {
     }
 
     componentDidMount() {
-        //this.getAllRequests();
+        this.getAllRequests();
     }
 
     async getAllRequests() {
@@ -75,7 +75,7 @@ class Requests extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <ViewRequest recordForView={this.state.recordForView} />
+                        <ViewRequest web3={this.props.web3} recordForView={this.state.recordForView} />
                     </DialogContent>
 				</Dialog>
 
@@ -109,14 +109,14 @@ class Requests extends Component {
                         pageSize: 10,
                     }}
 					actions={[
-                        {
-							icon: HistoryIcon,
-							tooltip: 'View Request History',
-							onClick: (event, rowData) => {
-                                this.setOpenRequestHistory(true);
-                                this.setRequestHistory(rowData);
-							},
-						},
+                        // {
+						// 	icon: HistoryIcon,
+						// 	tooltip: 'View Request History',
+						// 	onClick: (event, rowData) => {
+                        //         this.setOpenRequestHistory(true);
+                        //         this.setRequestHistory(rowData);
+						// 	},
+						// },
                         {
 							icon: Visibility,
 							tooltip: 'View Request',
