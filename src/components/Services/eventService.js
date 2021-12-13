@@ -126,7 +126,7 @@ export async function checkProjectInEvents(props, _projectAddress) {
 }
 
 export async function getProjectRequestEvents(props, _projectAddress) {
-    const events = await props.project.getPastEvents('ProjectRequestEvent', {
+    const events = await props.project.getPastEvents('RequestEvent', {
         filter: { _projectAddress: _projectAddress },
         fromBlock: 0,
         toBlock: 'latest'
@@ -136,19 +136,19 @@ export async function getProjectRequestEvents(props, _projectAddress) {
     let dataArray = [];
     let indexLocal = 1;
     events.map((result) => {
-        const projectStatus = dropdownService.getProjectStatusById(result.returnValues._projectRequest._status);
-        const requestStatus = dropdownService.getRequestStatusById(result.returnValues._projectRequest._requestStatus);
+        const projectStatus = dropdownService.getProjectStatusById(result.returnValues._request._projectStatus);
+        const requestStatus = dropdownService.getRequestStatusById(result.returnValues._request._requestStatus);
         const project = {
-            index: Number(result.returnValues._projectRequest._index) + indexLocal,
-            title: result.returnValues._projectRequest._title,
-            ticommentstle: result.returnValues._projectRequest._comments,
-            status: projectStatus.value,
+            index: Number(result.returnValues._request._index) + indexLocal,
+            title: result.returnValues._request._title,
+            ticommentstle: result.returnValues._request._comments,
+            projectStatus: projectStatus.value,
             requestStatus: requestStatus.value,
-            projectAddress: result.returnValues._projectRequest._projectAddress,
-            requestAddress: result.returnValues._projectRequest._requestAddress,
-            signerAddress: result.returnValues._projectRequest._signerAddress,
-            timestamp: new Date(result.returnValues._projectRequest._timestamp * 1000).toString(),
-            signature: result.returnValues._projectRequest._signature
+            projectAddress: result.returnValues._request._projectAddress,
+            requestAddress: result.returnValues._request._requestAddress,
+            signerAddress: result.returnValues._request._signerAddress,
+            timestamp: new Date(result.returnValues._request._timestamp * 1000).toString(),
+            signature: result.returnValues._request._signature
         };
         dataArray.push(project);
         indexLocal++;
@@ -167,8 +167,6 @@ export async function getRequestEvents(props, _requestAddress) {
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
-
-    console.log(events)
 
     let dataArray = [];
     events.map((result) => {
@@ -200,8 +198,6 @@ export async function getSupervisorRequestEvents(props, _requestAddress) {
         toBlock: 'latest'
     });
     if (events === undefined || events.length === 0) return [];
-
-    console.log(events)
 
     let dataArray = [];
     events.map((result) => {
@@ -235,12 +231,13 @@ export async function getAllRequestEvents(props) {
     if (events === undefined || events.length === 0) return [];
 
     let dataArray = [];
+    let indexLocal = 1;
     events.map((result) => {
         const projectStatus = dropdownService.getProjectStatusById(result.returnValues._request._projectStatus);
         const requestStatus = dropdownService.getRequestStatusById(result.returnValues._request._requestStatus);
         const requestType = dropdownService.getRequestTypeById(result.returnValues._request._requestType);
         const project = {
-            index: Number(result.returnValues._request._index),
+            index: indexLocal,
             title: result.returnValues._request._title,
             projectStatus: projectStatus.value,
             requestStatus: requestStatus.value,
@@ -252,6 +249,7 @@ export async function getAllRequestEvents(props) {
             signature: result.returnValues._request._signature
         };
         dataArray.push(project);
+        indexLocal++;
         return false;
     });
     return dataArray;
