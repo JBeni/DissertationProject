@@ -71,7 +71,7 @@ export default class Users extends Component {
         }
 
         try {
-            return this.props.web3.eth.accounts.sign(_walletAddress, '0x' + userPrivateKey);
+            return this.props.web3.eth.accounts.sign(_walletAddress, '0x' + userPrivateKey.trim());
         } catch (error) {
             toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
             return null;
