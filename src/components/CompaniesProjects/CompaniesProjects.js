@@ -48,11 +48,9 @@ class CompaniesProjects extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.updateProjectRequest(
-            Number(data.index),
+        this.updateRequest(
             data.comments,
             data.requestStatus,
-            Number(data.indexProjectRequest),
             data.projectStatus,
             data.projectAddress,
             data.requestAddress
@@ -70,32 +68,33 @@ class CompaniesProjects extends Component {
         }
 
         try {
-            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
+            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey.trim());
         } catch (error) {
             toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
             return null;
         }
     }
 
-    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
+    updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
         const signatureData = this.signRequest(_requestAddress);
 
         if (signatureData !== null) {
             await this.props.project.methods
-                .updateRequest(
-                    Number(_index), Number(_indexProjectRequest), _comments,
+                .updateCompanyRequest(
+                    _comments,
                     _requestStatus, _projectStatus,
-                    _projectAddress, signatureData.signature
+                    _projectAddress, _requestAddress,
+                    signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Request operation was made successfully');
-                    this.getCompanyRequests();
+                    this.getAllCompanyTypeRequests();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Update Request operation has failed');
                 });
         }
-    }
+	}
 
     render() {
         const tableRef = React.createRef();
