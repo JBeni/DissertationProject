@@ -146,6 +146,11 @@ class CompanyProjectRequests extends Component {
         this.setRecordForEdit(null);
     }
 
+    createUniqueRequestAddress = async (_title, _index) => {
+        const data = await Promise.resolve(applicationService.createUniqueRequestAddress(this.props, _title, _index));
+        return data;
+    }
+
     createRequest = async (_title, _projectStatus, _requestStatus, _projectAddress) => {
         const requestAddress = await this.createUniqueRequestAddress(_title, new Date().getTime());
         const signatureData = signEntityByUser(requestAddress, this.props);
