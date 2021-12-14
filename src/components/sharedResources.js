@@ -145,7 +145,7 @@ export function setActiveStep(lastRequest) {
     if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) < 2) {
         return { activeStep: Number(lastRequest._projectStatus), projectCompleted: false };
     }
-    if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) === 2) {
+    if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._projectStatus) < 4 && Number(lastRequest._requestStatus) === 2) {
         return { activeStep: Number(lastRequest._projectStatus) + 1, projectCompleted: false };
     }
     // Last Project Status
