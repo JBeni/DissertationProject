@@ -17,7 +17,7 @@ import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
-import * as toasterService from '../../Services/toasterService';
+import * as toasterService from './Services//toasterService';
 
 export const materialTableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
