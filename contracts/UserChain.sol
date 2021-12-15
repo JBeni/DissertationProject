@@ -4,27 +4,20 @@ pragma solidity >=0.8.0 <0.9.0;
 import './SharedChain.sol';
 
 contract UserChain is SharedChain {
-    address owner;
+    address public owner = msg.sender;
 
     mapping(address => User) public users;
     uint256 public usersCounter = 0;
     address[] usersAddress;
 
-    constructor() {
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner() {
-        require(address(0xf08B741073b3Cb01ef6fB3B412E71C977F276fAa) == msg.sender, "You are not the right user.");
-        _;
-    }
+    constructor() {}
 
     function registerUser(
         bytes32 _firstname,
         bytes32 _lastname,
         uint256 _role,
         address _walletAddress
-    ) public onlyOwner {
+    ) public {
         require(address(0x0) != _walletAddress, "Address is not valid.");
         if (owner != msg.sender) revert("You are not the right user.");
 
@@ -38,7 +31,7 @@ contract UserChain is SharedChain {
         usersCounter++;
     }
 
-    function changeUserRole(uint256 _role, address _walletAddress) public onlyOwner {
+    function changeUserRole(uint256 _role, address _walletAddress) public {
         if (owner != msg.sender) revert("You are not the right user.");
 
         users[_walletAddress]._role = Roles(_role);
@@ -46,7 +39,9 @@ contract UserChain is SharedChain {
         emit UserEvent(users[_walletAddress], _walletAddress);
     }
 
-    function getAllUsers() public view onlyOwner returns(User[] memory) {
+    function getAllUsers() public view returns(User[] memory) {
+        if (address(0x0) == msg.sender || owner != msg.sender) revert("You are not the right user.");
+
         User[] memory allUsers = new User[](usersCounter);
         for (uint256 index = 0; index < usersCounter; index++) {
             address _walletAddress = usersAddress[index];
@@ -56,7 +51,8 @@ contract UserChain is SharedChain {
         return allUsers;
     }
 
-    function getUserInfo(address _walletAddress) public view onlyOwner returns (User memory) {
+    function getUserInfo(address _walletAddress) public view returns (User memory) {
+        if (users[msg.sender]._walletAddress != msg.sender) revert("You are not the right user.");
         return users[_walletAddress];
     }
 }
