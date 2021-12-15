@@ -36,8 +36,6 @@ export async function getUserInfo(props) {
     }).catch(function (error) {});
 }
 
-
-
 export async function getProjectsByCompany(props) {
     let dataArray = [];
     await props.project.methods.getProjectsByUserAddress(props.account).call({ from: props.account }).then((result) => {
@@ -63,8 +61,7 @@ export async function getProjectsByCompany(props) {
     return dataArray;
 }
 
-
-export async function getProjectsByUser(props) {
+export async function getProjectsByUserProject(props) {
     let dataArray = [];
     await props.project.methods.getProjectsByUserAddress(props.account).call({ from: props.account }).then((result) => {
         result.map((result) => {
@@ -176,8 +173,6 @@ export async function getSupervisorRequests(props) {
     return dataArray;
 }
 
-
-
 export async function getAllCompanyTypeRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
@@ -213,43 +208,6 @@ export async function getAllCompanyTypeRequests(props) {
     return dataArray;
 }
 
-
-export async function getCompanyRequests(props) {
-    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
-        return result;
-    }).catch(function (error) {});
-
-    let dataArray = [];
-    allRequests.map((result) => {
-        const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
-        const unApproveStatus = dropdownService.getDefaultRequestStatus();
-        const requestType = dropdownService.getCompanyRequestType(result._requestType);
-
-        if (requestStatus.value === unApproveStatus.value) {
-            if (Number(result._requestType) === Number(requestType.id)) {
-                const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
-                const project = {
-                    index: Number(result._index),
-                    title: result._title,
-                    comments: result._comments,
-                    projectStatus: projectStatus.value,
-                    requestStatus: requestStatus.value,
-                    requestType: requestType.value,
-                    projectAddress: result._projectAddress,
-                    indexProjectRequest: Number(result._indexProjectRequest),
-                    signerAddress: result._signerAddress,
-                    requestAddress: result._requestAddress,
-                    timestamp: result._timestamp
-                };
-                dataArray.push(project);
-            }
-        }
-        return false;
-    });
-    return dataArray;
-}
-
-
 export async function getAllRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
@@ -282,7 +240,6 @@ export async function getAllRequests(props) {
     });
     return dataArray;
 }
-
 
 export async function createUniqueRequestAddress(props, _title, _index) {
     const response = await props.project.methods.createUniqueRequestAddress(_title, _index).call({ from: props.account })
