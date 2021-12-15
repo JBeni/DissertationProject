@@ -1,14 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-contract ServiceChain {
+import './UserChain.sol';
 
-    enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
-
-    struct Dropdown {
-        uint256 id;
-        string value;
-    }
+contract ServiceChain is UserChain {
 
     Dropdown[] public requestType;
     Dropdown[] public requestStatusForm;
@@ -18,13 +13,12 @@ contract ServiceChain {
 
     constructor() {}
 
-    modifier onlyOwner() {
-        require(address(0x0) == msg.sender, "The address is not valid.");
+    modifier onlySystemUsers() {
+        require(users[msg.sender]._walletAddress == msg.sender, "You are not the right user.");
         _;
     }
 
-    function checkPermissionUserProject(uint256 _projectStatus) public view returns (bool) {
-        require(address(0x0) != msg.sender, "Address is not valid.");
+    function checkPermissionUserProject(uint256 _projectStatus) public view onlySystemUsers returns (bool) {
         if (
             ProjectStatus(_projectStatus) == ProjectStatus.Created ||
             ProjectStatus(_projectStatus) == ProjectStatus.ToApprove
@@ -34,8 +28,7 @@ contract ServiceChain {
         return false;
     }
 
-    function checkPermissionCompany(uint256 _projectStatus) public view returns (bool) {
-        require(address(0x0) != msg.sender, "Address is not valid.");
+    function checkPermissionCompany(uint256 _projectStatus) public view onlySystemUsers returns (bool) {
         if (
             ProjectStatus(_projectStatus) != ProjectStatus.Created ||
             ProjectStatus(_projectStatus) != ProjectStatus.ToApprove
@@ -45,27 +38,27 @@ contract ServiceChain {
         return false;
     }
 
-    function getAddressZeroValue() public pure returns (string memory) {
+    function getAddressZeroValue() public view onlySystemUsers returns (string memory) {
         return "0x0000000000000000000000000000000000000000";
     }
 
-    function getAdminRole() public pure returns (string memory) {
+    function getAdminRole() public view onlySystemUsers returns (string memory) {
         return "AdminMighty";
     }
 
-    function getDefaultRole() public pure returns (string memory) {
+    function getDefaultRole() public view onlySystemUsers returns (string memory) {
         return "DefaultRole";
     }
 
-    function getUserProjectRole() public pure returns (string memory) {
+    function getUserProjectRole() public view onlySystemUsers returns (string memory) {
         return "UserProject";
     }
 
-    function getCompanyRole() public pure returns (string memory) {
+    function getCompanyRole() public view onlySystemUsers returns (string memory) {
         return "Company";
     }
 
-    function getSupervisorRole() public pure returns (string memory) {
+    function getSupervisorRole() public view onlySystemUsers returns (string memory) {
         return "Supervisor";
     }
 
