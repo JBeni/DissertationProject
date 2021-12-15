@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../Styles/TableHistory.css';
 import WaitingLoader from '../Views/WaitingLoader';
 import { Button } from '@material-ui/core';
-import { verifySignatureRequest } from '../../components/sharedResources';
+import { verifySignatureEntity } from '../../components/sharedResources';
 
 export default function ProjectReqHistory(props) {
 	const { projectReqHistory } = props;
@@ -20,7 +20,7 @@ export default function ProjectReqHistory(props) {
     }, [projectReqHistory])
 
     const verifySignature = async (_requestAddress, _signerAddress, _signature) => {
-        await verifySignatureRequest(props, _requestAddress, _signerAddress, _signature);
+        await verifySignatureEntity(props, _requestAddress, _signerAddress, _signature);
     }
 
     if (loading === false) return <WaitingLoader message={message} />
