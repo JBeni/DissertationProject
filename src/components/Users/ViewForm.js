@@ -15,7 +15,7 @@ export default function ViewForm(props) {
                 role: role.value
 			}));
 		}
-	}, []);
+	}, [recordForEdit]);
 
 	return (
 		<>
