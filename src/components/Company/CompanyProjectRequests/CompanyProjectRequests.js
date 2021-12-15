@@ -101,25 +101,18 @@ class CompanyProjectRequests extends Component {
             this.setState({ requestNextStep: false });
         }
 
-        this.setActiveStep(lastRequest);
-        this.setMessageNextStep(lastRequest);
-    }
+        const activeStep = setActiveStep(lastRequest);
+        this.setState({ activeStep: activeStep.activeStep, projectCompleted: activeStep.projectCompleted });
 
-    setMessageNextStep = (lastRequest) => {
-        const result = setMessageNextStep(lastRequest);
-        this.setState({ currentStep: result.currentStep, nextStep: result.nextStep });
-    }
-
-    setActiveStep = (lastRequest) => {
-        const result = setActiveStep(lastRequest);
-        this.setState({ activeStep: result.activeStep, projectCompleted: result.projectCompleted });
+        const messageStep = setMessageNextStep(lastRequest);
+        this.setState({ currentStep: messageStep.currentStep, nextStep: messageStep.nextStep });
     }
 
     getProjectStatusSteps = () => {
         return getProjectStatusSteps();
     }
 
-    handleNewDataFromPopup(value) {
+    handleNewDataFromPopup = (value) => {
         this.setState({ createRequestForm: value });
     }
 
