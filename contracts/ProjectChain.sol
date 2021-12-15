@@ -8,37 +8,26 @@ contract ProjectChain is UserChain {
     constructor() {}
 
     modifier onlyUserProject() {
-        // require(
-        //     sessionUser._role == Roles.UserProject,
-        //     "You don't have the rights for this resource."
-        // );
+        require(users[msg.sender]._role == Roles.UserProject, "You are not the right user.");
         _;
     }
 
-    modifier onlySupervisor() {
-        // require(
-        //     sessionUser._role == Roles.Supervisor,
-        //     "You don't have the rights for this resource."
-        // );
+    modifier onlyUserProjectAndCompany() {
+        require(
+            users[msg.sender]._role == Roles.UserProject || users[msg.sender]._role == Roles.Company,
+            "You are not the right user."
+        );
         _;
     }
 
-    modifier onlyCompany() {
-        // require(
-        //     sessionUser._role == Roles.Company,
-        //     "You don't have the rights for this resource."
-        // );
-        _;
-    }
-
-
-    /**  PROJECT INITIATOR  */
 
     mapping(address => Project) public projects;
     uint256 public projectsCounter = 0;
     address[] public projectsAddress;
 
-    function createUniqueProjectAddress(string memory _name, uint256 _index) public view returns (address) {
+    function createUniqueProjectAddress(string memory _name, uint256 _index)
+        public view onlyUserProject returns (address)
+    {
         return address(uint160(uint256(keccak256(abi.encodePacked(_name, msg.sender, _index)))));
     }
 
@@ -79,15 +68,14 @@ contract ProjectChain is UserChain {
     }
 
     function getProjectInfo(address _address)
-        public
-        view
-        returns (Project memory)
+        public view onlyUserProjectAndCompany returns (Project memory)
     {
-        //require(msg.sender != address(0x0), "Address is not valid.");
         return projects[_address];
     }
 
-    function getProjectsByUserAddress(address _walletAddress) public view returns (Project[] memory) {
+    function getProjectsByUserAddress(address _walletAddress)
+        public view onlyUserProjectAndCompany returns (Project[] memory)
+    {
         Project[] memory allProjects;
         if (projectsCounter == 0) return allProjects;
 
@@ -103,13 +91,14 @@ contract ProjectChain is UserChain {
     }
 
 
-    /**  Requests  */
-
     mapping(address => Request) public requests;
     uint256 public requestsCounter = 0;
     address[] public requestsAddress;
 
-    function createUniqueRequestAddress(string memory _title, uint256 _index) public view returns (address) {
+    function createUniqueRequestAddress(string memory _title, uint256 _index)
+        public view returns (address)
+    {
+        require(users[msg.sender]._walletAddress == msg.sender, "Address is not valid.");
         return address(uint160(uint256(keccak256(abi.encodePacked(_title, msg.sender, _index)))));
     }
 
@@ -120,9 +109,7 @@ contract ProjectChain is UserChain {
         address _projectAddress,
         address _requestAddress,
         string memory _signature
-    ) public {
-        //require(projects[_projectAddress]._status == ProjectStatus.Created, "Steps must follow accordingly");
-
+    ) public onlyUserProjectAndCompany {
         RequestType _requestType = RequestType.SupervisorReq;
         if (ProjectStatus(_projectStatus) == ProjectStatus.StartProject) {
             _requestType = RequestType.CompanyReq;
@@ -155,6 +142,8 @@ contract ProjectChain is UserChain {
         address _requestAddress,
         string memory _signature
     ) public {
+        require(users[msg.sender]._role == Roles.Supervisor, "You are not the right user.");
+
         // Update Requests Mapping and Struct Array
         requests[_requestAddress]._comments = _comments;
         requests[_requestAddress]._requestStatus = RequestStatus(_requestStatus);
@@ -176,6 +165,8 @@ contract ProjectChain is UserChain {
         address _requestAddress,
         string memory _signature
     ) public {
+        require(users[msg.sender]._role == Roles.Company, "You are not the right user.");
+
         // Update Requests Mapping and Struct Array
         requests[_requestAddress]._comments = _comments;
         requests[_requestAddress]._requestStatus = RequestStatus(_requestStatus);
@@ -191,6 +182,8 @@ contract ProjectChain is UserChain {
     }
 
     function getAllRequests() public view returns (Request[] memory) {
+        require(users[msg.sender]._walletAddress == msg.sender, "Address is not valid.");
+
         Request[] memory allRequests = new Request[](requestsCounter);
         for (uint256 index = 0; index < requestsCounter; index++) {
             address _requestAddress = requestsAddress[index];
@@ -200,8 +193,8 @@ contract ProjectChain is UserChain {
         return allRequests;
     }
 
-    function getLastProjectRequest(address _projectAddress, address _requestAddress)
-        public view returns (Request memory)
+    function getLastProjectRequest(address _projectAddress, address _requestAddress) 
+        public view onlyUserProjectAndCompany returns (Request memory)
     {
         Request memory request;
         if (requestsCounter > 0) {
