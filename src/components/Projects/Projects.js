@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ViewProjectForm from './ViewProjectForm';
 import AddProjectForm from './AddProjectForm';
 import Visibility from '@material-ui/icons/Visibility';
-import { materialTableIcons, signEntityByUser } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import * as eventService from '../Services/eventService';
@@ -17,10 +17,8 @@ import Edit from '@material-ui/icons/Edit';
 import ProjectHistory from './ProjectHistory';
 import ProjectReqHistory from './ProjectReqHistory';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-import fileDownload from 'js-file-download';
 import { create } from 'ipfs-http-client';
 
-const axios = require('axios');
 const clientIpfs = create('https://ipfs.infura.io:5001/api/v0');
 
 class Projects extends Component {
@@ -40,11 +38,11 @@ class Projects extends Component {
     }
 
     async componentDidMount() {
-        this.getProjectsByUser();
+        this.getProjectsByUserProject();
     }
 
-    getProjectsByUser = async () => {
-        const allProjects = await applicationService.getProjectsByUser(this.props);
+    getProjectsByUserProject = async () => {
+        const allProjects = await applicationService.getProjectsByUserProject(this.props);
         this.setState({ projects: allProjects });
     }
 
@@ -104,14 +102,8 @@ class Projects extends Component {
         return data;
     }
 
-    downloadIpfsFile = async (filename, ipfsCID) => {
-        const url = `https://ipfs.io/ipfs/${ipfsCID}`;
-        axios.get(url, {
-            responseType: 'blob',
-        })
-        .then((res) => {
-            fileDownload(res.data, filename + ".pdf");
-        });
+    downloadFile = (filename, ipfsCID) => {
+        downloadIpfsFile(filename, ipfsCID);
     }
 
     uploadFileIpfs = async (buffer) => {
@@ -136,7 +128,7 @@ class Projects extends Component {
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Create Project operation was made successfully');
-                    this.getProjectsByUser();
+                    this.getProjectsByUserProject();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Create Project operation has failed');
@@ -157,7 +149,7 @@ class Projects extends Component {
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Project operation was made successfully');
-                    this.getProjectsByUser();
+                    this.getProjectsByUserProject();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Update Project operation has failed');
@@ -165,7 +157,7 @@ class Projects extends Component {
         }
 	}
 
-    handleNewDataFromPopup(value) {
+    handleNewDataFromPopup = (value) => {
         this.setState({ openAddForm: value });
     }
 
@@ -266,9 +258,9 @@ class Projects extends Component {
 					actions={[
                         {
 							icon: PictureAsPdfIcon,
-							tooltip: 'Download File',
+							tooltip: 'Download Project File',
 							onClick: (event, rowData) => {
-                                this.downloadIpfsFile(rowData.name, rowData.ipfsFileCID);
+                                this.downloadFile(rowData.name, rowData.ipfsFileCID);
 							},
 						},
                         {
