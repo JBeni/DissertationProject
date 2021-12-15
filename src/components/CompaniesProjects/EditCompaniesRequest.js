@@ -30,6 +30,12 @@ export default function EditCompaniesRequest(props) {
         }
 	}, [recordForEdit]);
 
+    const emptyForm = () => {
+        setValues({
+            ...values
+        });
+    }
+
     const populateForm = () => {
         const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
         setValues({
@@ -42,12 +48,6 @@ export default function EditCompaniesRequest(props) {
             projectAddress: recordForEdit.projectAddress,
             signerAddress: recordForEdit.signerAddress,
             requestAddress: recordForEdit.requestAddress
-        });
-    }
-
-    const emptyForm = () => {
-        setValues({
-            ...values
         });
     }
 
