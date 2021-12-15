@@ -120,7 +120,7 @@ class ProjectRequests extends Component {
         return getProjectStatusSteps();
     }
 
-    handleNewDataFromPopup(value) {
+    handleNewDataFromPopup = (value) => {
         this.setState({ createRequestForm: value });
     }
 
