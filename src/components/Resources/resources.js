@@ -22,7 +22,7 @@ export const verifyTestSignature = async (props, _projectAddress, _signerAddress
 export async function getCompanyRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {

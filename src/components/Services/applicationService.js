@@ -18,7 +18,7 @@ export async function getAllUsers(props) {
             dataArray.push(user);
             return false;
         });
-    }).catch(function (error) {});
+    }).catch((error) => {});
     return dataArray;
 }
 
@@ -33,7 +33,7 @@ export async function getUserInfo(props) {
             timestamp: result._timestamp
         };
         return user;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 }
 
 export async function getProjectsByCompany(props) {
@@ -57,7 +57,7 @@ export async function getProjectsByCompany(props) {
             }
             return false;
         });
-    }).catch(function (error) {});
+    }).catch((error) => {});
     return dataArray;
 }
 
@@ -82,7 +82,7 @@ export async function getProjectsByUserProject(props) {
             }
             return false;
         });
-    }).catch(function (error) {});
+    }).catch((error) => {});
     return dataArray;
 }
 
@@ -99,13 +99,13 @@ export async function getProjectInfo(props, projectAddress) {
             timestamp: result._timestamp
         };
         return project;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 }
 
 export async function getProjectRequests(props, _projectAddress) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
     if (allRequests === undefined || allRequests?.length === 0) return [];
 
     let dataArray = [];
@@ -140,7 +140,7 @@ export async function getProjectRequests(props, _projectAddress) {
 export async function getSupervisorRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -176,7 +176,7 @@ export async function getSupervisorRequests(props) {
 export async function getAllCompanyTypeRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -211,7 +211,7 @@ export async function getAllCompanyTypeRequests(props) {
 export async function getAllRequests(props) {
     const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -243,12 +243,12 @@ export async function getAllRequests(props) {
 
 export async function createUniqueRequestAddress(props, _title, _index) {
     const response = await props.project.methods.createUniqueRequestAddress(_title, _index).call({ from: props.account })
-        .catch(function (error) {});
+        .catch((error) => {});
     return response;
 }
 
 export async function createUniqueProjectAddress(props, _name, _index) {
     const response = await props.project.methods.createUniqueProjectAddress(_name, _index).call({ from: props.account })
-        .catch(function (error) {});
+        .catch((error) => {});
     return response;
 }
