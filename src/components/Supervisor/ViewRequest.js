@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
 import * as formService from '../Services/formService';
-import * as dropdownService from '../Services/dropdownService';
 
 export default function ViewRequest(props) {
 	const { recordForEdit } = props;
