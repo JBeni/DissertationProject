@@ -58,7 +58,7 @@ function Routes(props) {
                     />
             }
             {
-                // props.currentUserRole === adminRole &&
+                props.currentUserRole === adminRole &&
                     <Route
                         path="/users"
                         render={() => (
@@ -71,7 +71,7 @@ function Routes(props) {
                     />
             }
             {
-                //props.currentUserRole === userProjectRole &&
+                props.currentUserRole === userProjectRole &&
                     <Route
                         path="/projects" exact
                         render={() => (
@@ -87,7 +87,7 @@ function Routes(props) {
                     />
             }
             {
-                //props.currentUserRole === userProjectRole &&
+                props.currentUserRole === userProjectRole &&
                     <Route
                         path="/projects/:id"
                         render={() => (
@@ -102,7 +102,7 @@ function Routes(props) {
                     />
             }
             {
-                // props.currentUserRole === companyRole &&
+                props.currentUserRole === companyRole &&
                     <Route
                         path="/companies"
                         render={() => (
@@ -115,7 +115,7 @@ function Routes(props) {
                     />
             }
             {
-                // props.currentUserRole === companyRole &&
+                props.currentUserRole === companyRole &&
                     <Route
                         path="/company" exact
                         render={() => (
@@ -129,7 +129,7 @@ function Routes(props) {
                     />
             }
             {
-                // props.currentUserRole === companyRole &&
+                props.currentUserRole === companyRole &&
                     <Route
                         path="/company/:id"
                         render={() => (
@@ -144,7 +144,7 @@ function Routes(props) {
             }
 
             {
-                // props.currentUserRole === supervisorRole &&
+                props.currentUserRole === supervisorRole &&
                     <Route
                         path="/supervisor"
                         render={() => (
@@ -157,10 +157,10 @@ function Routes(props) {
                     />
             }
             {
-                // (
-                //     props.currentUserRole === companyRole ||
-                //     props.currentUserRole === supervisorRole
-                // ) &&
+                (
+                    props.currentUserRole === companyRole ||
+                    props.currentUserRole === supervisorRole
+                ) &&
                     <Route
                         path="/requests"
                         render={() => (
