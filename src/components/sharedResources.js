@@ -200,5 +200,5 @@ export function downloadIpfsFile(filename, ipfsCID) {
     })
     .then((res) => {
         fileDownload(res.data, filename + ".pdf");
-    });
+    }).catch((error) => {});
 }
