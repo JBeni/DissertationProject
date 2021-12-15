@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons, signEntityByUser } from '../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile } from '../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import Edit from '@material-ui/icons/Edit';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
@@ -10,6 +10,7 @@ import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
+import { PictureAsPdfIcon } from '@mui/icons-material/PictureAsPdf';
 
 class CompaniesProjects extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class CompaniesProjects extends Component {
         this.getAllCompanyTypeRequests();
     }
 
-    async getAllCompanyTypeRequests() {
+    getAllCompanyTypeRequests = async () => {
         const data = await Promise.resolve(applicationService.getAllCompanyTypeRequests(this.props));
         this.setState({ requests: data });
     }
@@ -79,6 +80,10 @@ class CompaniesProjects extends Component {
                 });
         }
 	}
+
+    downloadFile = async (filename, ipfsCID) => {
+        downloadIpfsFile(filename, ipfsCID);
+    }
 
     render() {
         const tableRef = React.createRef();
@@ -134,6 +139,13 @@ class CompaniesProjects extends Component {
 					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
+                        {
+							icon: PictureAsPdfIcon,
+							tooltip: 'Download Project File',
+							onClick: (event, rowData) => {
+                                this.downloadFile(rowData.name, rowData.ipfsFileCID);
+							},
+						},
                         {
                             icon: Edit,
                             tooltip: 'Edit Request',
