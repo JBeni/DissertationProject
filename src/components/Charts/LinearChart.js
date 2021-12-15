@@ -41,21 +41,35 @@ class LineChart extends Component {
 					borderColor: '#01b6f5',
 					values: [18, 39, 15, 38, 15, 35],
 				},
+				{
+					title: 'Data-Dark',
+					borderColor: '#01G2f5',
+					values: [11, 19, 11, 58, 25, 45],
+				},
 			],
 		};
 	}
 
+    async componentDidMount() {
+    }
+
 	renderDatasets() {
 		const { datasets } = this.state;
-		return datasets.map(({ title, values, borderColor }) => (
-			<Dataset
-				key={title}
-				title={title}
-				values={values}
-				borderColor={borderColor}
-				backgroundColor={borderColor}
-			/>
-		));
+        if (datasets?.length === 0) {
+            return <div>Empty Dataset</div>;
+        }
+
+        if (datasets?.length > 0) {
+            return datasets.map(({ title, values, borderColor }) => (
+                <Dataset
+                    key={title}
+                    title={title}
+                    values={values}
+                    borderColor={borderColor}
+                    backgroundColor={borderColor}
+                />
+            ));
+        }
 	}
 
 	render() {
