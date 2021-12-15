@@ -11,10 +11,15 @@ contract ServiceChain is UserChain {
     Dropdown[] public projectStatus;
     Dropdown[] public userRole;
 
-    constructor() {}
+    constructor() {
+        owner = msg.sender;
+    }
 
     modifier onlySystemUsers() {
-        require(users[msg.sender]._walletAddress == msg.sender, "You are not the right user.");
+        require(
+            owner == msg.sender || users[msg.sender]._walletAddress == msg.sender,
+            "You are not the right user."
+        );
         _;
     }
 
