@@ -18,6 +18,9 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 
 import * as toasterService from './Services//toasterService';
+import fileDownload from 'js-file-download';
+
+const axios = require('axios');
 
 export const materialTableIcons = {
 	Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -158,11 +161,11 @@ export function getProjectStatusSteps() {
     return [ 'Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
 }
 
-export async function verifySignatureRequest(props, _requestAddress, _signerAddress, _signature) {
+export async function verifySignatureEntity(props, _addressToVerify, _signerAddress, _signature) {
     const v = '0x' + _signature.slice(130, 132).toString();
     const r = _signature.slice(0, 66).toString();
     const s = '0x' + _signature.slice(66, 130).toString();
-    const messageHash = props.web3.eth.accounts.hashMessage(_requestAddress);
+    const messageHash = props.web3.eth.accounts.hashMessage(_addressToVerify);
 
     const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
     const verificationOutput = _signerAddress === signer ? true : false;
@@ -188,4 +191,14 @@ export function signEntityByUser(_entityAddress, props) {
         toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
         return null;
     }
+}
+
+export function downloadIpfsFile(filename, ipfsCID) {
+    const url = `https://ipfs.io/ipfs/${ipfsCID}`;
+    axios.get(url, {
+        responseType: 'blob',
+    })
+    .then((res) => {
+        fileDownload(res.data, filename + ".pdf");
+    });
 }
