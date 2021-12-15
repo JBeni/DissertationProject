@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons } from '../sharedResources';
+import { materialTableIcons, downloadIpfsFile } from '../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -7,12 +7,9 @@ import ViewCompanyProject from './ViewCompanyProject';
 import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
 import { Toaster } from 'react-hot-toast';
-import fileDownload from 'js-file-download';
 import { withRouter } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
-
-const axios = require('axios');
 
 class CompanyProjects extends Component {
 	constructor(props) {
@@ -41,14 +38,8 @@ class CompanyProjects extends Component {
 		this.setState({ recordForEdit: data });
 	}
 
-    downloadIpfsFile = async (filename, ipfsCID) => {
-        const url = `https://ipfs.io/ipfs/${ipfsCID}`;
-        axios.get(url, {
-            responseType: 'blob',
-        })
-        .then((res) => {
-            fileDownload(res.data, filename + ".pdf");
-        });
+    downloadFile = (filename, ipfsCID) => {
+        downloadIpfsFile(filename, ipfsCID);
     }
 
 	render() {
