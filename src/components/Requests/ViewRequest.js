@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel, Button } from '@material-ui/core';
 import * as formService from '../Services/formService';
-import { verifySignatureRequest } from '../../components/sharedResources';
+import { verifySignatureEntity } from '../../components/sharedResources';
 
 export default function ViewRequest(props) {
 	const { recordForView } = props;
@@ -17,7 +17,7 @@ export default function ViewRequest(props) {
 	}, []);
 
     const verifySignature = async (_requestAddress, _signerAddress, _signature) => {
-        await verifySignatureRequest(props, _requestAddress, _signerAddress, _signature);
+        await verifySignatureEntity(props, _requestAddress, _signerAddress, _signature);
     }
 
     return (
