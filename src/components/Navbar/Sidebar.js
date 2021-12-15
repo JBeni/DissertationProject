@@ -7,7 +7,6 @@ function Sidebar(props) {
     const [userProjectRole, setUserProjectRole] = useState(null);
     const [companyRole, setCompanyRole] = useState(null);
     const [supervisorRole, setSupervisorRole] = useState(null);
-    const [walletAddressBlockchain, setWalletAddressBlockchain] = useState(null);
 
     useEffect(() => {
         initializeComponent();
@@ -31,7 +30,7 @@ function Sidebar(props) {
 
 					<div className="nav__list">
                         {
-                            //props.currentUserRole !== null &&
+                            props.currentUserRole !== null &&
                                 <Link
                                     to="/dashboard"
                                     className={
@@ -45,7 +44,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            //props.currentUserRole === adminRole &&
+                            props.currentUserRole === adminRole &&
                                 <Link
                                     to="/users"
                                     className={
@@ -59,11 +58,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            // (
-                            //     props.currentUserRole === userProjectRole ||
-                            //     props.currentUserRole === companyRole ||
-                            //     props.currentUserRole === supervisorRole
-                            // ) &&
+                            props.currentUserRole === userProjectRole &&
                                 <Link
                                     to="/projects"
                                     className={
@@ -77,7 +72,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            //props.currentUserRole === companyRole &&
+                            props.currentUserRole === companyRole &&
                                 <Link
                                     to="/companies"
                                     className={
@@ -91,10 +86,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            //props.currentUserRole === companyRole &&
-                            // CHESTIA DE MAI JOS pare redundanta
-                            // adica contul din metamask sa fie egal cu contul din blockchain care are rolul de tip company
-                            //props.account === userInfo.role
+                            props.currentUserRole === companyRole &&
                                 <Link
                                     to="/company"
                                     className={
@@ -108,7 +100,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            //props.currentUserRole === supervisorRole &&
+                            props.currentUserRole === supervisorRole &&
                                 <Link
                                     to="/supervisor"
                                     className={
@@ -122,10 +114,10 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            // (
-                            //     props.currentUserRole === companyRole ||
-                            //     props.currentUserRole === supervisorRole
-                            // ) &&
+                            (
+                                props.currentUserRole === companyRole ||
+                                props.currentUserRole === supervisorRole
+                            ) &&
                                 <Link
                                     to="/requests"
                                     className={
