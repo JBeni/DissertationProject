@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons, signEntityByUser } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -27,12 +27,12 @@ class Supervisor extends Component {
         this.getSupervisorRequests();
     }
 
-    async getSupervisorRequests() {
+    getSupervisorRequests = async () => {
         const data = await Promise.resolve(applicationService.getSupervisorRequests(this.props));
         this.setState({ requests: data });
     }
 
-    handleNewDataFromPopup(value) {
+    handleNewDataFromPopup = (value) => {
         this.setState({ editRequest: value });
     }
 
@@ -80,6 +80,10 @@ class Supervisor extends Component {
                 });
         }
 	}
+
+    downloadFile = (filename, ipfsCID) => {
+        downloadIpfsFile(filename, ipfsCID);
+    }
 
     render() {
         const tableRef = React.createRef();
@@ -136,12 +140,11 @@ class Supervisor extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-                            icon: PictureAsPdfIcon,
-                            tooltip: 'View Project File',
-                            onClick: (event, rowData) => {
-                                this.setEditRequest(true);
-                                this.setRecordForEdit(rowData);
-                            }
+							icon: PictureAsPdfIcon,
+							tooltip: 'Download Project File',
+							onClick: (event, rowData) => {
+                                this.downloadFile(rowData.name, rowData.ipfsFileCID);
+							},
 						},
                         {
                             icon: Edit,
