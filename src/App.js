@@ -14,7 +14,6 @@ class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-            openSignIn: true,
 			account: null,
 			project: null,
             userChain: null,
