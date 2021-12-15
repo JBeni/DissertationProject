@@ -4,7 +4,6 @@ import WaitingLoader from '../Views/WaitingLoader';
 
 export default function UserHistory(props) {
 	const { userHistory } = props;
-
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
