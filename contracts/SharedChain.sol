@@ -2,7 +2,6 @@
 pragma solidity >=0.8.0 <0.9.0;
 
 contract SharedChain {
-
     enum RequestType { SupervisorReq, CompanyReq }
     enum RequestStatus { UnApproved, Rejected, Approved }
     enum ProjectStatus { Created, ToApprove, StartProject, FinalizationCheck, Completed }
@@ -14,6 +13,10 @@ contract SharedChain {
         Supervisor
     }
 
+    struct Dropdown {
+        uint256 id;
+        string value;
+    }
 
     struct User {
         bytes32 _firstname;
@@ -26,7 +29,6 @@ contract SharedChain {
         User _user,
         address indexed _walletAddress
     );
-
 
     struct Project {
         uint256 _index;
@@ -45,7 +47,6 @@ contract SharedChain {
         address indexed _projectAddress,
         address indexed _companyAddress
     );
-
 
     struct Request {
         uint256 _index;
