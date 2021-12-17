@@ -21,18 +21,13 @@ contract AdminChain {
 
     modifier onlyAdmin() {
         require(address(0x0) != msg.sender, "Address is not valid.");
-        require(owner == msg.sender, "You are not the right user.");
         _;
     }
 
-    function createtAdmin(string memory _firstname, string memory _lastname, uint256 _role, address _wallet) public onlyAdmin returns (string memory) {
+    function createtAdmin(string memory _firstname, string memory _lastname, uint256 _role, address _wallet) public onlyAdmin {
         require(adminNumbers == 0, "Access Denied!...");
-        if (adminNumbers == 0) {
-            admins.push(Admin(_firstname, _lastname, AdminRoles(_role), _wallet));
-            adminNumbers += 102;
-            return "Created...";
-        }
-        return "It didn't work...";
+        admins.push(Admin(_firstname, _lastname, AdminRoles(_role), _wallet));
+        adminNumbers += 102;
     }
 
     function getAdminInfo() public view onlyAdmin returns (Admin memory) {
