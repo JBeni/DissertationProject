@@ -19,10 +19,13 @@ function Routes(props) {
     const [supervisorRole, setSupervisorRole] = useState(null);
 
     useEffect(() => {
-        setRoles()
+        async function loadContent() {
+            await initializeComponent();
+        }
+        loadContent();
     }, []);
 
-    const setRoles = async () => {
+    const initializeComponent = async () => {
         setAdminRole(await roleService.getAdminRole(props));
         setUserProjectRole(await roleService.getUserProjectRole(props));
         setCompanyRole(await roleService.getCompanyRole(props));
@@ -64,7 +67,7 @@ function Routes(props) {
                         render={() => (
                             <Users
                                 account={props.account}
-                                userChain={props.userChain}
+                                project={props.project}
                                 web3={props.web3}
                             />
                         )}
@@ -80,7 +83,6 @@ function Routes(props) {
                                 account={props.account}
                                 project={props.project}
                                 serviceChain={props.serviceChain}
-                                signatureChain={props.signatureChain}
                                 web3={props.web3}
                             />
                         )}
