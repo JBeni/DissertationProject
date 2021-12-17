@@ -10,7 +10,7 @@ import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
-import { PictureAsPdfIcon } from '@mui/icons-material/PictureAsPdf';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 class CompaniesProjects extends Component {
     constructor(props) {
@@ -81,8 +81,9 @@ class CompaniesProjects extends Component {
         }
 	}
 
-    downloadFile = async (filename, ipfsCID) => {
-        downloadIpfsFile(filename, ipfsCID);
+    downloadFile = async (_projectAddress) => {
+        const project = await applicationService.getProjectInfo(this.props, _projectAddress)
+        downloadIpfsFile(project.name, project.ipfsFileCID);
     }
 
     render() {
@@ -143,7 +144,7 @@ class CompaniesProjects extends Component {
 							icon: PictureAsPdfIcon,
 							tooltip: 'Download Project File',
 							onClick: (event, rowData) => {
-                                this.downloadFile(rowData.name, rowData.ipfsFileCID);
+                                this.downloadFile(rowData.projectAddress);
 							},
 						},
                         {
