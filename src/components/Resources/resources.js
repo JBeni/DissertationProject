@@ -143,7 +143,7 @@ export async function getAllProjectEvents(props) {
 }
 
 export async function getAllUserEvents(props) {
-    const events = await props.userChain.getPastEvents('UserEvent', {
+    const events = await props.project.getPastEvents('UserEvent', {
         fromBlock: 0,
         toBlock: 'latest'
     });
