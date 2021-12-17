@@ -11,11 +11,10 @@ export default function ProjectReqHistory(props) {
 
     useEffect(() => {
         if (projectReqHistory?.length > 0) {
+            setMessage('The data is loading. Wait a moment.');
             setLoading(true);
-            setMessage('The data is loading. Wait a moment...');
-            return;
         } else {
-            setMessage('There are no data at the moment...');
+            setMessage('There are no data at the moment.');
         }
     }, [projectReqHistory])
 
