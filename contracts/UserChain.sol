@@ -40,7 +40,7 @@ contract UserChain is SharedChain {
     }
 
     function getAllUsers() public view returns(User[] memory) {
-        if (address(0x0) == msg.sender || owner != msg.sender) revert("You are not the right user.");
+        if (address(0x0) != msg.sender || owner != msg.sender) revert("You are not the right user.");
 
         User[] memory allUsers = new User[](usersCounter);
         for (uint256 index = 0; index < usersCounter; index++) {
