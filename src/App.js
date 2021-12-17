@@ -6,7 +6,6 @@ import * as dropdownService from './components/Services/dropdownService';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
-import UserChain from './abis/UserChain.json';
 import AdminChain from './abis/AdminChain.json';
 import ServiceChain from './abis/ServiceChain.json';
 
@@ -16,7 +15,6 @@ class App extends Component {
 		this.state = {
 			account: null,
 			project: null,
-            userChain: null,
             adminChain: null,
             serviceChain: null,
 			loading: true,
@@ -90,17 +88,6 @@ class App extends Component {
 			window.alert('Project Chain contract not deployed to detected network.');
 		}
 
-        const networkUserChainData = UserChain.networks[networkId];
-        if (networkUserChainData) {
-            const userChain = new web3.eth.Contract(
-                UserChain.abi,
-                networkUserChainData.address
-            );
-            this.setState({ userChain: userChain });
-		} else {
-			window.alert('User Chain contract not deployed to detected network.');
-		}
-
         const networkAdminData = AdminChain.networks[networkId];
         if (networkAdminData) {
             const adminChain = new web3.eth.Contract(
@@ -145,10 +132,10 @@ class App extends Component {
     async checkUserRole() {
         if (this.state.currentUsername !== null && this.state.loading === false) return;
 
-        const userInfo = await this.state.userChain.methods.getUserInfo(this.state.account).call({ from: this.state.account }).then((response) => {
+        const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call({ from: this.state.account }).then((response) => {
             const role = dropdownService.getUserRoleById(response._role);
             return {
-                username: response._firstname + ' ' + response._lastname,
+                username: this.state.web3.utils.hexToUtf8(response._firstname) + ' ' + this.state.web3.utils.hexToUtf8(response._lastname),
                 role: role.value,
                 walletAddress: response._walletAddress
             };
@@ -168,7 +155,6 @@ class App extends Component {
                     <Navbar
                         account={this.state.account}
                         project={this.state.project}
-                        userChain={this.state.userChain}
                         serviceChain={this.state.serviceChain}
                         currentUsername={this.state.currentUsername}
                         currentUserRole={this.state.currentUserRole}
