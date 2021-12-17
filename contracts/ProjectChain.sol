@@ -8,13 +8,13 @@ contract ProjectChain is UserChain {
     constructor() {}
 
     modifier onlyUserProject() {
-        require(users[msg.sender]._role == Roles.UserProject, "You are not the right user.");
+        require(Roles(users[msg.sender]._role) == Roles.UserProject, "You are not the right user.");
         _;
     }
 
     modifier onlyUserProjectAndCompany() {
         require(
-            users[msg.sender]._role == Roles.UserProject || users[msg.sender]._role == Roles.Company,
+            Roles(users[msg.sender]._role) == Roles.UserProject || Roles(users[msg.sender]._role) == Roles.Company,
             "You are not the right user."
         );
         _;
@@ -142,7 +142,7 @@ contract ProjectChain is UserChain {
         address _requestAddress,
         string memory _signature
     ) public {
-        require(users[msg.sender]._role == Roles.Supervisor, "You are not the right user.");
+        require(Roles(users[msg.sender]._role) == Roles.Supervisor, "You are not the right user.");
 
         // Update Requests Mapping and Struct Array
         requests[_requestAddress]._comments = _comments;
@@ -165,7 +165,7 @@ contract ProjectChain is UserChain {
         address _requestAddress,
         string memory _signature
     ) public {
-        require(users[msg.sender]._role == Roles.Company, "You are not the right user.");
+        require(Roles(users[msg.sender]._role) == Roles.Company, "You are not the right user.");
 
         // Update Requests Mapping and Struct Array
         requests[_requestAddress]._comments = _comments;
