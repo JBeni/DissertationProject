@@ -82,7 +82,10 @@ contract ProjectChain is UserChain {
         allProjects = new Project[](projectsCounter);
         for (uint256 index = 0; index < projectsCounter; index++) {
             address _projectAddress = projectsAddress[index];
-            if (_walletAddress == projects[_projectAddress]._signerAddress) {
+            if (
+                _walletAddress == projects[_projectAddress]._signerAddress ||
+                _walletAddress == projects[_projectAddress]._companyAddress
+            ) {
                 Project storage project = projects[_projectAddress];
                 allProjects[index] = project;
             }
