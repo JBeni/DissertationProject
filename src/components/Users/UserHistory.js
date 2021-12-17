@@ -3,16 +3,19 @@ import '../Styles/TableHistory.css';
 import WaitingLoader from '../Views/WaitingLoader';
 
 export default function UserHistory(props) {
-	const { userHistory } = props;
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
-        if (userHistory?.length > 0) {
+        if (props.userHistory?.length > 0) {
+            setMessage('The data is loading. Wait a moment.');
             setLoading(true);
+        } else {
+            setMessage('There are no data at the moment.');
         }
-    }, [userHistory])
+    }, [props.userHistory]);
 
-    if (loading === false) return <WaitingLoader />
+	if (loading === false) return <WaitingLoader message={message} />;
 
     return (
 		<div className="container-body">
@@ -28,7 +31,7 @@ export default function UserHistory(props) {
 				</thead>
 				<tbody>
                     {
-                        userHistory.map((item) => (
+                        props?.userHistory.map((item) => (
                             <tr key={ item.index }>
                                 <td>{ item.firstname }</td>
                                 <td>{ item.lastname }</td>
