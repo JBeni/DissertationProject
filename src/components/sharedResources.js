@@ -108,7 +108,6 @@ export function setMessageNextStep(lastRequest) {
     }
     // StartProject Request was Rejected
     if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 1) {
-        this.setState({ currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' });
         return { currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' };
     }
     // StartProject Request was Approved
