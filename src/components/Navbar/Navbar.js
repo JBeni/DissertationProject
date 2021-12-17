@@ -37,9 +37,7 @@ function Navbar(props) {
                     currentUserRole={props.currentUserRole}
                     account={props.account}
                     project={props.project}
-                    userChain={props.userChain}
                     serviceChain={props.serviceChain}
-                    signatureChain={props.signatureChain}
                     web3={props.web3}
                 />
             </div>
