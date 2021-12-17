@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
-import './UserChain.sol';
+import './SharedChain.sol';
 
-contract ServiceChain is UserChain {
+contract ServiceChain is SharedChain {
 
     Dropdown[] public requestType;
     Dropdown[] public requestStatusForm;
@@ -11,19 +11,18 @@ contract ServiceChain is UserChain {
     Dropdown[] public projectStatus;
     Dropdown[] public userRole;
 
-    constructor() {
-        owner = msg.sender;
-    }
+    constructor() {}
 
-    modifier onlySystemUsers() {
-        require(
-            owner == msg.sender || users[msg.sender]._walletAddress == msg.sender,
-            "You are not the right user."
-        );
+    modifier onlyValidAddress() {
+        require(address(0x0) != msg.sender, "Address is not valid.");
         _;
     }
 
-    function checkPermissionUserProject(uint256 _projectStatus) public view onlySystemUsers returns (bool) {
+    function checkPermissionUserProject(uint256 _projectStatus, uint _roleId) public pure returns (bool) {
+        if (Roles(_roleId) != Roles.UserProject || Roles(_roleId) != Roles.Company) {
+            revert ("The adress is not valid.");
+        }
+
         if (
             ProjectStatus(_projectStatus) == ProjectStatus.Created ||
             ProjectStatus(_projectStatus) == ProjectStatus.ToApprove
@@ -33,7 +32,11 @@ contract ServiceChain is UserChain {
         return false;
     }
 
-    function checkPermissionCompany(uint256 _projectStatus) public view onlySystemUsers returns (bool) {
+    function checkPermissionCompany(uint256 _projectStatus, uint _roleId) public pure returns (bool) {
+        if (Roles(_roleId) != Roles.UserProject || Roles(_roleId) != Roles.Company) {
+            revert ("The adress is not valid.");
+        }
+
         if (
             ProjectStatus(_projectStatus) != ProjectStatus.Created ||
             ProjectStatus(_projectStatus) != ProjectStatus.ToApprove
@@ -43,27 +46,27 @@ contract ServiceChain is UserChain {
         return false;
     }
 
-    function getAddressZeroValue() public view onlySystemUsers returns (string memory) {
+    function getAddressZeroValue() public view onlyValidAddress returns (string memory) {
         return "0x0000000000000000000000000000000000000000";
     }
 
-    function getAdminRole() public view onlySystemUsers returns (string memory) {
+    function getAdminRole() public view onlyValidAddress returns (string memory) {
         return "AdminMighty";
     }
 
-    function getDefaultRole() public view onlySystemUsers returns (string memory) {
+    function getDefaultRole() public view onlyValidAddress returns (string memory) {
         return "DefaultRole";
     }
 
-    function getUserProjectRole() public view onlySystemUsers returns (string memory) {
+    function getUserProjectRole() public view onlyValidAddress returns (string memory) {
         return "UserProject";
     }
 
-    function getCompanyRole() public view onlySystemUsers returns (string memory) {
+    function getCompanyRole() public view onlyValidAddress returns (string memory) {
         return "Company";
     }
 
-    function getSupervisorRole() public view onlySystemUsers returns (string memory) {
+    function getSupervisorRole() public view onlyValidAddress returns (string memory) {
         return "Supervisor";
     }
 
