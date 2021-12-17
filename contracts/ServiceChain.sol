@@ -19,7 +19,7 @@ contract ServiceChain is SharedChain {
     }
 
     function checkPermissionUserProject(uint256 _projectStatus, uint _roleId) public pure returns (bool) {
-        if (Roles(_roleId) != Roles.UserProject || Roles(_roleId) != Roles.Company) {
+        if (Roles(_roleId) != Roles.UserProject && Roles(_roleId) != Roles.Company) {
             revert ("The adress is not valid.");
         }
 
@@ -33,7 +33,7 @@ contract ServiceChain is SharedChain {
     }
 
     function checkPermissionCompany(uint256 _projectStatus, uint _roleId) public pure returns (bool) {
-        if (Roles(_roleId) != Roles.UserProject || Roles(_roleId) != Roles.Company) {
+        if (Roles(_roleId) != Roles.UserProject && Roles(_roleId) != Roles.Company) {
             revert ("The adress is not valid.");
         }
 
