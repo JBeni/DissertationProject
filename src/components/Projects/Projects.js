@@ -38,7 +38,7 @@ class Projects extends Component {
     }
 
     async componentDidMount() {
-        this.getProjectsByUserProject();
+        await this.getProjectsByUserProject();
     }
 
     getProjectsByUserProject = async () => {
@@ -226,7 +226,7 @@ class Projects extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers>
-                        <ProjectHistory web3={this.props.web3} signatureChain={this.props.signatureChain}  projectHistory={this.state.projectHistory} />
+                        <ProjectHistory web3={this.props.web3} projectHistory={this.state.projectHistory} />
                     </DialogContent>
 				</Dialog>
 
@@ -243,7 +243,7 @@ class Projects extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers>
-                        <ProjectReqHistory web3={this.props.web3} signatureChain={this.props.signatureChain} projectReqHistory={this.state.projectReqHistory} />
+                        <ProjectReqHistory web3={this.props.web3} projectReqHistory={this.state.projectReqHistory} />
                     </DialogContent>
 				</Dialog>
 
