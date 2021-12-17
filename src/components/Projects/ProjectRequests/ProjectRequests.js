@@ -49,8 +49,9 @@ class ProjectRequests extends Component {
         await this.getProjectRequests();
 
         const projectStatusId = dropdownService.getProjectStatusByValue(this.state.project.status);
+        const roleId = dropdownService.getUserRoleByValue(this.props.currentUserRole);
         const permission = await this.props.serviceChain.methods
-            .checkPermissionUserProject(Number(projectStatusId.id)).call({ from: this.props.account });
+            .checkPermissionUserProject(Number(projectStatusId.id), Number(roleId.id)).call({ from: this.props.account });
         this.setState({ permission: permission });
 
         if (this.state.requests?.length === 0) {
@@ -269,99 +270,3 @@ class ProjectRequests extends Component {
 }
 
 export default withRouter(ProjectRequests);
-
-
-
-
-/*
-
-
-    setMessageNextStep = (lastRequest) => {
-        // Approve Request was Sent
-        if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'Approve Request was Sent', nextStep: 'Wait for Supervisor response' });
-            return;
-        }
-        // Approve Request was Rejected
-        if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'Approve Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // Approve Request was Approved
-        if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'Approve Request was Approved', nextStep: 'Send start project request to company.' });
-            return;
-        }
-
-        // StartProject Request was Sent
-        if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'StartProject Request was Sent', nextStep: 'Wait for Company response' });
-            return;
-        }
-        // StartProject Request was Rejected
-        if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // StartProject Request was Approved
-        if (Number(lastRequest._projectStatus) === 2 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'StartProject Request was Approved', nextStep: 'Send check the progress before finalization request to Supervisor' });
-            return;
-        }
-
-        // FinalizationCheck Request was Sent
-        if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'FinalizationCheck Request was Sent', nextStep: 'Wait for Supervisor response' });
-            return;
-        }
-        // FinalizationCheck Request was Rejected
-        if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'FinalizationCheck Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // FinalizationCheck Request was Approved
-        if (Number(lastRequest._projectStatus) === 3 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'FinalizationCheck Request was Approved', nextStep: 'Send completed project request to Supervisor' });
-            return;
-        }
-
-        // Completed Request was Sent
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 0) {
-            this.setState({ currentStep: 'Completed Request was Sent', nextStep: 'Wait for Supervisor response' });
-            return;
-        }
-        // Completed Request was Rejected
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 1) {
-            this.setState({ currentStep: 'Completed Request was Rejected', nextStep: 'See the reason and make the adjustment' });
-            return;
-        }
-        // Completed Request was Approved
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ currentStep: 'Project Completed', nextStep: 'All steps completed.' });
-            return;
-        }
-    }
-
-    setActiveStep = (lastRequest) => {
-        // Status with Approve Consent
-        if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) < 2) {
-            this.setState({ activeStep: Number(lastRequest._projectStatus) });
-        }
-        if (Number(lastRequest._projectStatus) > 0 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ activeStep: Number(lastRequest._projectStatus) + 1 });
-        }
-        // Last Project Status
-        if (Number(lastRequest._projectStatus) === 4 && Number(lastRequest._requestStatus) === 2) {
-            this.setState({ activeStep: Number(lastRequest._projectStatus) + 1 });
-            this.setState({ projectCompleted: true })
-        }
-    }
-
-    getProjectStatusSteps() {
-        return [ 'Created', 'ToApprove', 'StartProject', 'FinalizationCheck', 'Completed'];
-    }
-
-
-
-*/
-
