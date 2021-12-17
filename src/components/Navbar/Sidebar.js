@@ -9,7 +9,10 @@ function Sidebar(props) {
     const [supervisorRole, setSupervisorRole] = useState(null);
 
     useEffect(() => {
-        initializeComponent();
+        async function loadContent() {
+            await initializeComponent();
+        }
+        loadContent();
     }, []);
 
     const initializeComponent = async () => {
