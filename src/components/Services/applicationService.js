@@ -5,7 +5,7 @@ import * as dropdownService from '../Services/dropdownService';
 
 export async function getAllUsers(props) {
     let dataArray = [];
-    await props.userChain.methods.getAllUsers().call({ from: props.account }).then((result) => {
+    await props.project.methods.getAllUsers().call({ from: props.account }).then((result) => {
         result.map((result) => {
             const role = dropdownService.getUserRoleById(result._role);
             const user = {
@@ -23,7 +23,7 @@ export async function getAllUsers(props) {
 }
 
 export async function getUserInfo(props) {
-    return await props.userChain.methods.getUserInfo(props.account).call({ from: props.account }).then((result) => {
+    return await props.project.methods.getUserInfo(props.account).call({ from: props.account }).then((result) => {
         const role = dropdownService.getUserRoleById(result._role);
         const user = {
             firstname: props.web3.utils.hexToUtf8(result._firstname),
@@ -38,9 +38,9 @@ export async function getUserInfo(props) {
 
 export async function getProjectsByCompany(props) {
     let dataArray = [];
-    await props.project.methods.getProjectsByUserAddress(props.account).call({ from: props.account }).then((result) => {
+    await props.project.methods.getProjects().call({ from: props.account }).then((result) => {
         result.map((result) => {
-            if (props.account === result._companyAddress && props.account === result._signerAddress) {
+            if (props.account === result._companyAddress) {
                 const status = dropdownService.getProjectStatusById(result._status);
                 const project = {
                     index: Number(result._index),
@@ -63,7 +63,7 @@ export async function getProjectsByCompany(props) {
 
 export async function getProjectsByUserProject(props) {
     let dataArray = [];
-    await props.project.methods.getProjectsByUserAddress(props.account).call({ from: props.account }).then((result) => {
+    await props.project.methods.getProjects().call({ from: props.account }).then((result) => {
         result.map((result) => {
             if (props.account === result._signerAddress) {
                 const status = dropdownService.getProjectStatusById(result._status);
