@@ -49,8 +49,9 @@ class CompanyProjectRequests extends Component {
         await this.getProjectRequests();
 
         const projectStatusId = dropdownService.getProjectStatusByValue(this.state.project.status);
+        const roleId = dropdownService.getUserRoleByValue(this.props.currentUserRole);
         const permission = await this.props.serviceChain.methods
-            .checkPermissionCompany(Number(projectStatusId.id)).call({ from: this.props.account });
+            .checkPermissionCompany(Number(projectStatusId.id), Number(roleId.id)).call({ from: this.props.account });
         this.setState({ permission: permission });
 
         if (this.state.requests?.length === 0) {
