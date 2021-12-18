@@ -162,10 +162,7 @@ function Routes(props) {
                     />
             }
             {
-                (
-                    props.currentUserRole === companyRole ||
-                    props.currentUserRole === supervisorRole
-                ) &&
+                props.currentUserRole === supervisorRole &&
                     <Route
                         path="/requests"
                         render={() => (
