@@ -109,6 +109,7 @@ function Routes(props) {
                         path="/companies"
                         render={() => (
                             <CompaniesProjects
+                                currentUserRole={props.currentUserRole}
                                 account={props.account}
                                 project={props.project}
                                 web3={props.web3}
@@ -122,6 +123,7 @@ function Routes(props) {
                         path="/company" exact
                         render={() => (
                             <CompanyProjects
+                                currentUserRole={props.currentUserRole}
                                 account={props.account}
                                 project={props.project}
                                 serviceChain={props.serviceChain}
@@ -136,6 +138,7 @@ function Routes(props) {
                         path="/company/:id"
                         render={() => (
                             <CompanyProjectRequests
+                                currentUserRole={props.currentUserRole}
                                 account={props.account}
                                 project={props.project}
                                 serviceChain={props.serviceChain}
