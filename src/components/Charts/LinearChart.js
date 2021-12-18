@@ -50,7 +50,7 @@ class LineChart extends Component {
 		};
 	}
 
-    async componentDidMount() {
+    componentDidMount() {
     }
 
 	renderDatasets() {
