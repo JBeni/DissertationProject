@@ -6,10 +6,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import ViewCompanyProject from './ViewCompanyProject';
 import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
+import * as eventService from '../Services/eventService';
 import { Toaster } from 'react-hot-toast';
 import { withRouter } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import HistoryIcon from '@mui/icons-material/History';
+import CompanyReqHistory from './CompanyReqHistory';
 
 class CompanyProjects extends Component {
 	constructor(props) {
@@ -17,6 +20,9 @@ class CompanyProjects extends Component {
 		this.state = {
             openViewForm: false,
 			recordForEdit: null,
+            openProjectReqHistory: false,
+
+            projectReqHistory: [],
 			projects: [],
         };
     }
@@ -40,6 +46,18 @@ class CompanyProjects extends Component {
 
     downloadFile = (filename, ipfsCID) => {
         downloadIpfsFile(filename, ipfsCID);
+    }
+
+    setOpenProjectReqHistory = (value) => {
+        this.setState({ openProjectReqHistory: value });
+        if (value === false) {
+            this.setState({ projectReqHistory: [] });
+        }
+    }
+
+    setProjectReqHistory = async (rowData) => {
+        const data = await eventService.getProjectRequestEvents(this.props, rowData.projectAddress);
+        this.setState({ projectReqHistory: data });
     }
 
 	render() {
@@ -69,6 +87,23 @@ class CompanyProjects extends Component {
                     </DialogContent>
 				</Dialog>
 
+				<Dialog open={this.state.openProjectReqHistory} fullWidth maxWidth="xl">
+					<DialogTitle>
+						<div style={{ display: 'flex' }}>
+							<Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
+								View Project Request Changes
+							</Typography>
+							<Button color="secondary" onClick={() => {
+									this.setOpenProjectReqHistory(false);
+								}}><CloseIcon />
+							</Button>
+						</div>
+					</DialogTitle>
+					<DialogContent dividers>
+                        <CompanyReqHistory web3={this.props.web3} projectReqHistory={this.state.projectReqHistory} />
+                    </DialogContent>
+				</Dialog>
+
 				<br /><br />
 				<MaterialTable
 					title="Projects"
@@ -83,6 +118,14 @@ class CompanyProjects extends Component {
 							tooltip: 'Download File',
 							onClick: (event, rowData) => {
                                 this.downloadIpfsFile(rowData.name, rowData.ipfsFileCID);
+							},
+						},
+						{
+							icon: HistoryIcon,
+							tooltip: 'Project Req History',
+							onClick: (event, rowData) => {
+                                this.setOpenProjectReqHistory(true);
+                                this.setProjectReqHistory(rowData);
 							},
 						},
                         {
