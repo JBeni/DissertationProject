@@ -17,8 +17,8 @@ class Requests extends Component {
         };
     }
 
-    componentDidMount() {
-        this.getAllRequests();
+    async componentDidMount() {
+        await this.getAllRequests();
     }
 
     async getAllRequests() {
