@@ -21,7 +21,7 @@ class CompanyProjects extends Component {
         };
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         this.getProjectsByCompany();
     }
 
