@@ -38,7 +38,11 @@ class CompanyProjectRequests extends Component {
 		};
     }
 
-    async componentDidMount() {
+    componentDidMount() {
+        this.initialize();
+    }
+
+    initialize = async () => {
         // Accessing path without the existence of the project
         const data = await eventService.checkProjectInEvents(this.props, this.props.match.params.id);
         if (data?.length === 0) {
