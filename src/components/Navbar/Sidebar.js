@@ -117,10 +117,7 @@ function Sidebar(props) {
                                 </Link>
                         }
                         {
-                            (
-                                props.currentUserRole === companyRole ||
-                                props.currentUserRole === supervisorRole
-                            ) &&
+                            props.currentUserRole === supervisorRole &&
                                 <Link
                                     to="/requests"
                                     className={
