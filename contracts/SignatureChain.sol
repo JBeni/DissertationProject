@@ -3,6 +3,10 @@ pragma solidity ^0.8.3 <0.9.0;
 
 contract SignatureChain {
 
+    /**
+     * Address 0 from solidity is address(0x0)
+     */
+
     constructor() {}
 
     modifier onlyValidAddress() {
