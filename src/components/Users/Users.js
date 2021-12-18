@@ -66,7 +66,7 @@ export default class Users extends Component {
         const signatureData = signEntityByUser(_walletAddress, this.props);
 
         if (signatureData !== null) {
-            await this.props.userChain.methods
+            await this.props.project.methods
 			.registerUser(
                 this.props.web3.utils.utf8ToHex(_firstname),
                 this.props.web3.utils.utf8ToHex(_lastname),
@@ -86,7 +86,7 @@ export default class Users extends Component {
         const signatureData = signEntityByUser(_walletAddress, this.props);
 
         if (signatureData !== null) {
-            await this.props.userChain.methods.changeUserRole(
+            await this.props.project.methods.changeUserRole(
                 Number(_role),
                 _walletAddress
             ).send({ from: this.props.account })
