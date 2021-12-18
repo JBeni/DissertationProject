@@ -37,8 +37,8 @@ class Projects extends Component {
         };
     }
 
-    async componentDidMount() {
-        await this.getProjectsByUserProject();
+    componentDidMount() {
+        this.getProjectsByUserProject();
     }
 
     getProjectsByUserProject = async () => {
