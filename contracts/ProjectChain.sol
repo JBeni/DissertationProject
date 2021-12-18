@@ -68,12 +68,15 @@ contract ProjectChain is UserChain {
     }
 
     function getProjectInfo(address _address)
-        public view onlyUserProjectAndCompany returns (Project memory)
+        public view returns (Project memory)
     {
+        if (users[msg.sender]._walletAddress != msg.sender) {
+            revert("You are not the right user.");
+        }
         return projects[_address];
     }
 
-    function getProjectsByUserAddress(address _walletAddress)
+    function getProjects()
         public view onlyUserProjectAndCompany returns (Project[] memory)
     {
         Project[] memory allProjects;
@@ -82,13 +85,8 @@ contract ProjectChain is UserChain {
         allProjects = new Project[](projectsCounter);
         for (uint256 index = 0; index < projectsCounter; index++) {
             address _projectAddress = projectsAddress[index];
-            if (
-                _walletAddress == projects[_projectAddress]._signerAddress ||
-                _walletAddress == projects[_projectAddress]._companyAddress
-            ) {
-                Project storage project = projects[_projectAddress];
-                allProjects[index] = project;
-            }
+            Project storage project = projects[_projectAddress];
+            allProjects[index] = project;
         }
         return allProjects;
     }
