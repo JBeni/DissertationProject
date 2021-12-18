@@ -81,8 +81,9 @@ class Supervisor extends Component {
         }
 	}
 
-    downloadFile = (filename, ipfsCID) => {
-        downloadIpfsFile(filename, ipfsCID);
+    downloadFile = async (_projectAddress) => {
+        const project = await applicationService.getProjectInfo(this.props, _projectAddress)
+        downloadIpfsFile(project.name, project.ipfsFileCID);
     }
 
     render() {
@@ -143,7 +144,7 @@ class Supervisor extends Component {
 							icon: PictureAsPdfIcon,
 							tooltip: 'Download Project File',
 							onClick: (event, rowData) => {
-                                this.downloadFile(rowData.name, rowData.ipfsFileCID);
+                                this.downloadFile(rowData.projectAddress);
 							},
 						},
                         {
