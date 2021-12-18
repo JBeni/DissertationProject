@@ -4,7 +4,7 @@ import * as dropdownService from './dropdownService';
 /*****************/
 
 export async function getUserEvents(props, _walletAddress) {
-    const events = await props.userChain.getPastEvents('UserEvent', {
+    const events = await props.project.getPastEvents('UserEvent', {
         filter: { _walletAddress: _walletAddress },
         fromBlock: 0,
         toBlock: 'latest'
