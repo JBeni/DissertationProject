@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons, signEntityByUser, downloadIpfsFile } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile, testUserPrivateKey } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -62,8 +62,9 @@ class Supervisor extends Component {
 
     updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
         const signatureData = signEntityByUser(_requestStatus, this.props);
+        const verification = await testUserPrivateKey(this.props, _projectAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods
                 .updateSupervisorRequest(
                     _comments,
