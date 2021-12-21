@@ -15,7 +15,7 @@ import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../../Services/toasterService';
 import * as eventService from '../../Services/eventService';
 import * as roleService from '../../Services/roleService';
-import { materialTableIcons, setMessageNextStep, getProjectStatusSteps, setActiveStep, signEntityByUser } from './../../sharedResources';
+import { materialTableIcons, setMessageNextStep, getProjectStatusSteps, setActiveStep, signEntityByUser, testUserPrivateKey } from './../../sharedResources';
 
 class CompanyProjectRequests extends Component {
 	constructor(props) {
@@ -152,8 +152,9 @@ class CompanyProjectRequests extends Component {
     createRequest = async (_title, _projectStatus, _requestStatus, _projectAddress) => {
         const requestAddress = await this.createUniqueRequestAddress(_title, new Date().getTime());
         const signatureData = signEntityByUser(requestAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _projectAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods
                 .createRequest(
                     _title, Number(_projectStatus),
