@@ -171,8 +171,27 @@ export async function verifySignatureEntity(props, _addressToVerify, _signerAddr
 
     if (verificationOutput) {
         alert('Signer Address is verified successfully!');
+        return true;
     } else {
         alert('Signer Address is not verified!');
+        return false;
+    }
+}
+
+export async function testUserPrivateKey(props, _addressToVerify, _signerAddress, _signature) {
+    const v = '0x' + _signature.slice(130, 132).toString();
+    const r = _signature.slice(0, 66).toString();
+    const s = '0x' + _signature.slice(66, 130).toString();
+    const messageHash = props.web3.eth.accounts.hashMessage(_addressToVerify);
+
+    const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
+    const verificationOutput = _signerAddress === signer ? true : false;
+
+    if (verificationOutput) {
+        return true;
+    } else {
+        alert('The Signer Private Key is not valid. Enter your real private key.');
+        return false;
     }
 }
 
