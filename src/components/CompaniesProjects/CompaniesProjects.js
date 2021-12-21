@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons, signEntityByUser, downloadIpfsFile } from '../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile, testUserPrivateKey } from '../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import Edit from '@material-ui/icons/Edit';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
@@ -62,8 +62,9 @@ class CompaniesProjects extends Component {
 
     updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
         const signatureData = signEntityByUser(_requestAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _requestAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods
                 .updateCompanyRequest(
                     _comments,
