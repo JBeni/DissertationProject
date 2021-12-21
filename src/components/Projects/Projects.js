@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import ViewProjectForm from './ViewProjectForm';
 import AddProjectForm from './AddProjectForm';
 import Visibility from '@material-ui/icons/Visibility';
-import { materialTableIcons, signEntityByUser, downloadIpfsFile } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile, testUserPrivateKey } from './../sharedResources';
 import { withRouter } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import * as eventService from '../Services/eventService';
@@ -114,8 +114,9 @@ class Projects extends Component {
     createProject = async (_name, _status, _fileData, _bufferFile) => {
         const projectAddress = await this.createUniqueProjectAddress(_name, new Date().getTime());
         const signatureData = signEntityByUser(projectAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, projectAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             const _ipfsCID = await Promise.resolve(this.uploadFileIpfs(_bufferFile));
 
             await this.props.project.methods
@@ -137,9 +138,10 @@ class Projects extends Component {
 	}
 
     updateProject = async (_projectAddress, _fileData, _bufferFile) => {
-        const signatureData = this.signCreateProject(_projectAddress);
+        const signatureData = signEntityByUser(_projectAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _projectAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             const _ipfsCID = await Promise.resolve(this.uploadFileIpfs(_bufferFile));
             await this.props.project.methods
                 .updateProject(
