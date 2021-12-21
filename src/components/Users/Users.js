@@ -7,7 +7,7 @@ import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@materia
 import AddForm from './AddForm';
 import * as applicationService from '../Services/applicationService';
 import ViewForm from './ViewForm';
-import { materialTableIcons, signEntityByUser } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, testUserPrivateKey } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import { Toaster } from 'react-hot-toast';
 import * as eventService from '../Services/eventService';
@@ -64,8 +64,9 @@ export default class Users extends Component {
 
     createUser = async (_firstname, _lastname, _role, _walletAddress) => {
         const signatureData = signEntityByUser(_walletAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _walletAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods
 			.registerUser(
                 this.props.web3.utils.utf8ToHex(_firstname),
@@ -84,8 +85,9 @@ export default class Users extends Component {
 
     changeUserRole = async (_role, _walletAddress) => {
         const signatureData = signEntityByUser(_walletAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _walletAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods.changeUserRole(
                 Number(_role),
                 _walletAddress
