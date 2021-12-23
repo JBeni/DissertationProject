@@ -2,28 +2,21 @@ import React, { Component } from 'react';
 import Navbar from './components/Navbar/Navbar';
 import Web3 from 'web3';
 import Loader from './components/Views/Loader';
-import * as roleService from './components/Services/roleService';
 import * as dropdownService from './components/Services/dropdownService';
 
 // ABI Folder to Interact with Smart Contracts
 import ProjectChain from './abis/ProjectChain.json';
-import UserChain from './abis/UserChain.json';
 import AdminChain from './abis/AdminChain.json';
 import ServiceChain from './abis/ServiceChain.json';
-import SignatureChain from './abis/SignatureChain.json';
 
 class App extends Component {
 	constructor() {
 		super();
 		this.state = {
-            openSignIn: true,
 			account: null,
 			project: null,
-            userChain: null,
             adminChain: null,
             serviceChain: null,
-            signatureChain: null,
-            loggedIn: false,
 			loading: true,
 			web3: null,
             unAuthorisedUser: false,
@@ -37,23 +30,25 @@ class App extends Component {
     }
 
     async initializeConnection() {
-        await this.loadWeb3();
-		await this.loadBlockChain();
+        const browser = await this.loadWeb3();
+        if (!browser) return;
+        await this.loadBlockChain();
     }
 
     async loadWeb3() {
-		if (window.ethereum) {
+        if (window.ethereum) {
             window.ethereum.on('accountsChanged', function (respAccounts) {
                 window.location.reload();
             });
             window.web3 = new Web3(window.ethereum);
-		} else if (window.web3) {
-			window.web3 = new Web3(window.web3.currentProvider);
-		} else {
-			window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
-		}
+        } else if (window.web3) {
+            window.web3 = new Web3(window.web3.currentProvider);
+        } else {
+            window.alert('Non-Ethereum browser detected. You should consider trying MetaMask!');
+            return false;
+        }
+        return true;
 	}
-
 
     /**
      * eth.getAccounts() returns the address values in the format expected by the MetaMask
@@ -71,6 +66,17 @@ class App extends Component {
         }
         this.setState({ account: accounts[0], web3: web3 });
 
+        const networkServiceData = ServiceChain.networks[networkId];
+        if (networkServiceData) {
+            const serviceChain = new web3.eth.Contract(
+                ServiceChain.abi,
+                networkServiceData.address
+            );
+            this.setState({ serviceChain: serviceChain });
+		} else {
+			window.alert('Service Chain contract not deployed to detected network.');
+		}
+
         const networkProjectData = ProjectChain.networks[networkId];
 		if (networkProjectData) {
 			const project = new web3.eth.Contract(
@@ -80,17 +86,6 @@ class App extends Component {
             this.setState({ project: project });
 		} else {
 			window.alert('Project Chain contract not deployed to detected network.');
-		}
-
-        const networkUserChainData = UserChain.networks[networkId];
-        if (networkUserChainData) {
-            const userChain = new web3.eth.Contract(
-                UserChain.abi,
-                networkUserChainData.address
-            );
-            this.setState({ userChain: userChain });
-		} else {
-			window.alert('User Chain contract not deployed to detected network.');
 		}
 
         const networkAdminData = AdminChain.networks[networkId];
@@ -104,44 +99,27 @@ class App extends Component {
 			window.alert('Owner Chain contract not deployed to detected network.');
 		}
 
-        const networkServiceData = ServiceChain.networks[networkId];
-        if (networkServiceData) {
-            const serviceChain = new web3.eth.Contract(
-                ServiceChain.abi,
-                networkServiceData.address
-            );
-            this.setState({ serviceChain: serviceChain });
-		} else {
-			window.alert('Service Chain contract not deployed to detected network.');
-		}
-
-        const networkSignatureChainData = SignatureChain.networks[networkId];
-        if (networkSignatureChainData) {
-            const signatureChain = new web3.eth.Contract(
-                SignatureChain.abi,
-                networkSignatureChainData.address
-            );
-            this.setState({ signatureChain: signatureChain });
-		} else {
-			window.alert('Signature Chain contract not deployed to detected network.');
-		}
-
+        await this.checkAdminRole();
         await this.checkUserRole();
 	}
 
-    async checkUserRole() {
-        const adminData = await this.state.adminChain.methods.getAdminInfo().call().then((response) => {
+    async checkAdminRole() {
+        const adminData = await this.state.adminChain.methods.getAdminInfo().call({ from: this.state.account }).then((response) => {
             const role = dropdownService.getAdminRoleById(response._role);
             return {
-                username: response._username,
+                username: response._firstname + ' ' + response._lastname,
                 role: role.value,
                 walletAddress: response._walletAddress
             };
-        });
+        }).catch((error) => {});
+
+        if (adminData === undefined || adminData?.role === 0) {
+            return;
+        }
 
         if (this.state.account === adminData.walletAddress) {
             this.setState({ loading: false, currentUsername: adminData.username });
-            const adminRole = roleService.getAdminRole();
+            const adminRole = await this.state.serviceChain.methods.getAdminRole().call({ from: this.state.account });
             if (adminData.role === adminRole) {
                 this.setState({ currentUserRole: adminData.role });
             } else {
@@ -149,21 +127,25 @@ class App extends Component {
             }
             return;
         }
+    }
 
-        const users = await this.state.userChain.methods.getAllUsers().call().then((response) => {
-            return response;
-        });
-        if (users.length > 0) {
-            const userInfo = await this.state.userChain.methods.getUserInfo(this.state.account).call().then((response) => {
-                const role = dropdownService.getUserRoleById(response._role);
-                return { username: response._username, role: role.value, walletAddress: response._walletAddress };
-            });
-            if (userInfo.walletAddress === this.state.account) {
-                this.setState({ loading: false, currentUserRole: userInfo.role, currentUsername: userInfo.username });
-                return;
-            }
+    async checkUserRole() {
+        if (this.state.currentUsername !== null && this.state.loading === false) return;
+
+        const userInfo = await this.state.project.methods.getUserInfo(this.state.account).call({ from: this.state.account }).then((response) => {
+            const role = dropdownService.getUserRoleById(response._role);
+            return {
+                username: this.state.web3.utils.hexToUtf8(response._firstname) + ' ' + this.state.web3.utils.hexToUtf8(response._lastname),
+                role: role.value,
+                walletAddress: response._walletAddress
+            };
+        }).catch((error) => {});
+        if (userInfo === undefined) { this.setState({ unAuthorisedUser: true }); return; }
+
+        if (userInfo.walletAddress === this.state.account) {
+            this.setState({ loading: false, currentUserRole: userInfo.role, currentUsername: userInfo.username });
+            return;
         }
-        this.setState({ unAuthorisedUser: true });
     }
 
     render() {
@@ -173,12 +155,9 @@ class App extends Component {
                     <Navbar
                         account={this.state.account}
                         project={this.state.project}
-                        userChain={this.state.userChain}
                         serviceChain={this.state.serviceChain}
-                        signatureChain={this.state.signatureChain}
                         currentUsername={this.state.currentUsername}
                         currentUserRole={this.state.currentUserRole}
-                        loggedIn={this.state.loggedIn}
                         web3={this.state.web3}
                     />
 				</React.Fragment>

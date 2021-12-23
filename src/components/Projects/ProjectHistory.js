@@ -2,34 +2,27 @@ import React, { useState, useEffect } from 'react';
 import '../Styles/TableHistory.css';
 import WaitingLoader from '../Views/WaitingLoader';
 import { Button } from '@material-ui/core';
+import { verifySignatureEntity } from '../sharedResources';
 
 export default function ProjectHistory(props) {
 	const { projectHistory } = props;
 	const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
-	useEffect(() => {
-		if (projectHistory?.length > 0) {
-			setLoading(true);
-		}
-	}, [projectHistory]);
+    useEffect(() => {
+        if (projectHistory?.length > 0) {
+            setMessage('The data is loading. Wait a moment.');
+            setLoading(true);
+        } else {
+            setMessage('There are no data at the moment.');
+        }
+    }, [projectHistory]);
 
     const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
-        const v = '0x' + _signature.slice(130, 132).toString();
-        const r = _signature.slice(0, 66).toString();
-        const s = '0x' + _signature.slice(66, 130).toString();
-        const messageHash = props.web3.eth.accounts.hashMessage(_projectAddress);
-
-        const signer = await props.web3.eth.accounts.recover(messageHash, v, r, s, true);
-        const verificationOutput = _signerAddress === signer ? true : false;
-
-        if (verificationOutput) {
-            alert('Signer Address is verified successfully!');
-        } else {
-            alert('Signer Address is not verified!');
-        }
+        await verifySignatureEntity(props, _projectAddress, _signerAddress, _signature);
     }
 
-	if (loading === false) return <WaitingLoader />;
+	if (loading === false) return <WaitingLoader message={message} />;
 
 	return (
 		<div className="container-body">
@@ -57,7 +50,7 @@ export default function ProjectHistory(props) {
 							<td>{item.timestamp}</td>
 							<td>{item.signature}</td>
 							<td>
-                                <Button variant="contained" color="secondary" onClick={ () =>
+                                <Button color="secondary" onClick={ () =>
                                     verifySignature(item.projectAddress, item.signerAddress, item.signature)
                                 }>Verify Signature</Button>
                             </td>

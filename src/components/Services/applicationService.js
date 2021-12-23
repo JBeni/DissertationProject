@@ -5,12 +5,10 @@ import * as dropdownService from '../Services/dropdownService';
 
 export async function getAllUsers(props) {
     let dataArray = [];
-    await props.userChain.methods.getAllUsers().call().then((result) => {
+    await props.project.methods.getAllUsers().call({ from: props.account }).then((result) => {
         result.map((result) => {
             const role = dropdownService.getUserRoleById(result._role);
             const user = {
-                username: result._username,
-                email: props.web3.utils.hexToUtf8(result._email),
                 firstname: props.web3.utils.hexToUtf8(result._firstname),
                 lastname: props.web3.utils.hexToUtf8(result._lastname),
                 role: role.value,
@@ -20,16 +18,14 @@ export async function getAllUsers(props) {
             dataArray.push(user);
             return false;
         });
-    }).catch(function (error) {});
+    }).catch((error) => {});
     return dataArray;
 }
 
 export async function getUserInfo(props) {
-    return await props.userChain.methods.getUserInfo(props.account).call().then((result) => {
+    return await props.project.methods.getUserInfo(props.account).call({ from: props.account }).then((result) => {
         const role = dropdownService.getUserRoleById(result._role);
         const user = {
-            username: result._username,
-            email: props.web3.utils.hexToUtf8(result._email),
             firstname: props.web3.utils.hexToUtf8(result._firstname),
             lastname: props.web3.utils.hexToUtf8(result._lastname),
             role: role.value,
@@ -37,32 +33,61 @@ export async function getUserInfo(props) {
             timestamp: result._timestamp
         };
         return user;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 }
 
-export async function getAllProjects(props) {
+export async function getProjectsByCompany(props) {
     let dataArray = [];
-    await props.project.methods.getAllProjects().call().then((result) => {
+    await props.project.methods.getProjects().call({ from: props.account }).then((result) => {
         result.map((result) => {
-            const status = dropdownService.getProjectStatusById(result._status);
-            const project = {
-                index: Number(result._index),
-                name: result._name,
-                status: status.value,
-                ipfsFileCID: result._ipfsFileCID,
-                projectAddress: result._projectAddress,
-                signerAddress: result._signerAddress,
-                timestamp: result._timestamp
-            };
-            dataArray.push(project);
+            if (props.account === result._companyAddress) {
+                const status = dropdownService.getProjectStatusById(result._status);
+                const project = {
+                    index: Number(result._index),
+                    name: result._name,
+                    status: status.value,
+                    ipfsFileCID: result._ipfsFileCID,
+                    projectAddress: result._projectAddress,
+                    signerAddress: result._signerAddress,
+                    companyAddress: result._companyAddress,
+                    assigned: result._assigned,
+                    timestamp: result._timestamp
+                };
+                dataArray.push(project);
+            }
             return false;
         });
-    }).catch(function (error) {});
+    }).catch((error) => {});
+    return dataArray;
+}
+
+export async function getProjectsByUserProject(props) {
+    let dataArray = [];
+    await props.project.methods.getProjects().call({ from: props.account }).then((result) => {
+        result.map((result) => {
+            if (props.account === result._signerAddress) {
+                const status = dropdownService.getProjectStatusById(result._status);
+                const project = {
+                    index: Number(result._index),
+                    name: result._name,
+                    status: status.value,
+                    ipfsFileCID: result._ipfsFileCID,
+                    projectAddress: result._projectAddress,
+                    signerAddress: result._signerAddress,
+                    companyAddress: result._companyAddress,
+                    assigned: result._assigned,
+                    timestamp: result._timestamp
+                };
+                dataArray.push(project);
+            }
+            return false;
+        });
+    }).catch((error) => {});
     return dataArray;
 }
 
 export async function getProjectInfo(props, projectAddress) {
-    return await props.project.methods.getProjectInfo(projectAddress).call().then((result) => {
+    return await props.project.methods.getProjectInfo(projectAddress).call({ from: props.account }).then((result) => {
         const status = dropdownService.getProjectStatusById(result._status);
         const project = {
             index: Number(result._index),
@@ -74,29 +99,33 @@ export async function getProjectInfo(props, projectAddress) {
             timestamp: result._timestamp
         };
         return project;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 }
 
-export async function getAllProjectRequests(props, projectAddress) {
-    const allProjectRequest = await props.project.methods.getAllProjectRequests().call().then((result) => {
+export async function getProjectRequests(props, _projectAddress) {
+    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
+    if (allRequests === undefined || allRequests?.length === 0) return [];
 
     let dataArray = [];
-    allProjectRequest.map((result) => {
-        if (projectAddress === result._projectAddress) {
-            const status = dropdownService.getProjectStatusById(result._status);
+    allRequests.map((result) => {
+        if (_projectAddress === result._projectAddress) {
+            const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
             const requestStatus = dropdownService.getRequestStatusById(result._requestStatus);
+            const requestType = dropdownService.getRequestTypeById(result._requestType);
             const project = {
                 index: Number(result._index),
                 title: result._title,
                 comments: result._comments,
-                status: status.value,
+                projectStatus: projectStatus.value,
                 requestStatus: requestStatus.value,
+                requestType: requestType.value,
                 projectAddress: result._projectAddress,
-                signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
-                timestamp: result._timestamp
+                signerAddress: result._signerAddress,
+                timestamp: result._timestamp,
+                signature: result._signature
             };
             dataArray.push(project);
         }
@@ -106,12 +135,12 @@ export async function getAllProjectRequests(props, projectAddress) {
 }
 
 
-/********  Methods for Supervisor and Company  ***********/
+/******** ***********/
 
 export async function getSupervisorRequests(props) {
-    const allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -120,6 +149,7 @@ export async function getSupervisorRequests(props) {
         const requestType = dropdownService.getSupervisorRequestType(result._requestType);
 
         if (requestStatus.value === unApproveStatus.value) {
+            // Supervisor Request Type
             if (Number(result._requestType) === Number(requestType.id)) {
                 const projectStatus = dropdownService.getProjectStatusById(result._projectStatus);
                 const project = {
@@ -143,10 +173,10 @@ export async function getSupervisorRequests(props) {
     return dataArray;
 }
 
-export async function getCompanyRequests(props) {
-    const allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+export async function getAllCompanyTypeRequests(props) {
+    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -179,9 +209,9 @@ export async function getCompanyRequests(props) {
 }
 
 export async function getAllRequests(props) {
-    const allRequests = await props.project.methods.getAllRequests().call().then((result) => {
+    const allRequests = await props.project.methods.getAllRequests().call({ from: props.account }).then((result) => {
         return result;
-    }).catch(function (error) {});
+    }).catch((error) => {});
 
     let dataArray = [];
     allRequests.map((result) => {
@@ -199,10 +229,10 @@ export async function getAllRequests(props) {
                 requestStatus: requestStatus.value,
                 requestType: requestType.value,
                 projectAddress: result._projectAddress,
-                indexProjectRequest: Number(result._indexProjectRequest),
-                signerAddress: result._signerAddress,
                 requestAddress: result._requestAddress,
+                signerAddress: result._signerAddress,
                 timestamp: result._timestamp,
+                signature: result._signature
             };
             dataArray.push(project);
         }
@@ -211,14 +241,14 @@ export async function getAllRequests(props) {
     return dataArray;
 }
 
-export async function createUniqueProjectRequestAddress(props, _title, _index) {
-    const response = await props.project.methods.createUniqueProjectRequestAddress(_title, _index).call()
-        .catch(function (error) {});
+export async function createUniqueRequestAddress(props, _title, _index) {
+    const response = await props.project.methods.createUniqueRequestAddress(_title, _index).call({ from: props.account })
+        .catch((error) => {});
     return response;
 }
 
 export async function createUniqueProjectAddress(props, _name, _index) {
-    const response = await props.project.methods.createUniqueProjectAddress(_name, _index).call()
-        .catch(function (error) {});
+    const response = await props.project.methods.createUniqueProjectAddress(_name, _index).call({ from: props.account })
+        .catch((error) => {});
     return response;
 }

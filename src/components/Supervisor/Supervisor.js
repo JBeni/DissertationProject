@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { materialTableIcons } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile, testUserPrivateKey } from './../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
@@ -27,12 +27,12 @@ class Supervisor extends Component {
         this.getSupervisorRequests();
     }
 
-    async getSupervisorRequests() {
+    getSupervisorRequests = async () => {
         const data = await Promise.resolve(applicationService.getSupervisorRequests(this.props));
         this.setState({ requests: data });
     }
 
-    handleNewDataFromPopup(value) {
+    handleNewDataFromPopup = (value) => {
         this.setState({ editRequest: value });
     }
 
@@ -49,11 +49,9 @@ class Supervisor extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.updateProjectRequest(
-            Number(data.index),
+        this.updateRequest(
             data.comments,
             data.requestStatus,
-            Number(data.indexProjectRequest),
             data.projectStatus,
             data.projectAddress,
             data.requestAddress
@@ -62,31 +60,17 @@ class Supervisor extends Component {
         this.setRecordForEdit(null);
     }
 
-    signRequest = (_requestAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+    updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
+        const signatureData = signEntityByUser(_requestStatus, this.props);
+        const verification = await testUserPrivateKey(this.props, _projectAddress, this.props.account, signatureData.signature);
 
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
-    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
-        const signatureData = this.signRequest(_requestAddress);
-
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods
-                .updateRequest(
-                    Number(_index), Number(_indexProjectRequest), _comments,
+                .updateSupervisorRequest(
+                    _comments,
                     _requestStatus, _projectStatus,
-                    _projectAddress, signatureData.signature
+                    _projectAddress, _requestAddress,
+                    signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Request operation was made successfully');
@@ -97,6 +81,11 @@ class Supervisor extends Component {
                 });
         }
 	}
+
+    downloadFile = async (_projectAddress) => {
+        const project = await applicationService.getProjectInfo(this.props, _projectAddress)
+        downloadIpfsFile(project.name, project.ipfsFileCID);
+    }
 
     render() {
         const tableRef = React.createRef();
@@ -153,12 +142,11 @@ class Supervisor extends Component {
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
                         {
-                            icon: PictureAsPdfIcon,
-                            tooltip: 'View Project File',
-                            onClick: (event, rowData) => {
-                                this.setEditRequest(true);
-                                this.setRecordForEdit(rowData);
-                            }
+							icon: PictureAsPdfIcon,
+							tooltip: 'Download Project File',
+							onClick: (event, rowData) => {
+                                this.downloadFile(rowData.projectAddress);
+							},
 						},
                         {
                             icon: Edit,

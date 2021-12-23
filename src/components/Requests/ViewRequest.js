@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel, Button } from '@material-ui/core';
 import * as formService from '../Services/formService';
+import { verifySignatureEntity } from '../../components/sharedResources';
 
 export default function ViewRequest(props) {
 	const { recordForView } = props;
@@ -13,7 +14,11 @@ export default function ViewRequest(props) {
                 timestamp: new Date(values.timestamp * 1000).toString()
 			}));
 		}
-	}, [recordForView]);
+	}, []);
+
+    const verifySignature = async (_requestAddress, _signerAddress, _signature) => {
+        await verifySignatureEntity(props, _requestAddress, _signerAddress, _signature);
+    }
 
     return (
 		<>
@@ -40,8 +45,18 @@ export default function ViewRequest(props) {
 					<p style={{ width: '670px' }}>
 						<FormLabel>Signer Address: {values.signerAddress}</FormLabel>
 					</p>
-					<p style={{ width: '670px' }}>
+					<p style={{ width: '670px', wordBreak: 'break-word' }}>
 						<FormLabel>Timestamp: {values.timestamp}</FormLabel>
+					</p>
+					<p style={{ width: '670px', wordBreak: 'break-word' }}>
+						<FormLabel>Signature: {values.signature}</FormLabel>
+					</p>
+					<p style={{ width: '670px' }}>
+						<FormLabel>
+                            <Button variant="contained" color="secondary" onClick={ () =>
+                                verifySignature(values.requestAddress, values.signerAddress, values.signature)
+                            }>Verify Signature</Button>
+                        </FormLabel>
 					</p>
 				</Grid>
 			</Grid>

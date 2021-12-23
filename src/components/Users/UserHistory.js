@@ -3,45 +3,41 @@ import '../Styles/TableHistory.css';
 import WaitingLoader from '../Views/WaitingLoader';
 
 export default function UserHistory(props) {
-	const { userHistory } = props;
-
     const [loading, setLoading] = useState(false);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
-        if (userHistory?.length > 0) {
+        if (props.userHistory?.length > 0) {
+            setMessage('The data is loading. Wait a moment.');
             setLoading(true);
+        } else {
+            setMessage('There are no data at the moment.');
         }
-    }, [userHistory])
+    }, [props.userHistory]);
 
-    if (loading === false) return <WaitingLoader />
+	if (loading === false) return <WaitingLoader message={message} />;
 
     return (
 		<div className="container-body">
 			<table>
 				<thead>
 					<tr>
-						<th>User Name</th>
-						<th>Email</th>
 						<th>First Name</th>
 						<th>Last Name</th>
 						<th>Role</th>
 						<th>Wallet Address</th>
 						<th>Timestamp</th>
-						<th>Signature</th>
 					</tr>
 				</thead>
 				<tbody>
                     {
-                        userHistory.map((item) => (
+                        props?.userHistory.map((item) => (
                             <tr key={ item.index }>
-                                <td>{ item.username }</td>
-                                <td>{ item.email }</td>
                                 <td>{ item.firstname }</td>
                                 <td>{ item.lastname }</td>
                                 <td>{ item.role }</td>
                                 <td>{ item.walletAddress }</td>
                                 <td>{ item.timestamp }</td>
-                                <td>{ item.signature }</td>
                             </tr>
                         ))
                     }

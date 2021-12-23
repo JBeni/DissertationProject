@@ -7,7 +7,7 @@ import { Button, Dialog, Typography, DialogTitle, DialogContent } from '@materia
 import AddForm from './AddForm';
 import * as applicationService from '../Services/applicationService';
 import ViewForm from './ViewForm';
-import { materialTableIcons } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, testUserPrivateKey } from './../sharedResources';
 import Edit from '@material-ui/icons/Edit';
 import { Toaster } from 'react-hot-toast';
 import * as eventService from '../Services/eventService';
@@ -31,7 +31,6 @@ export default class Users extends Component {
 
     componentDidMount() {
         this.getUsers();
-        eventService.getAllUserEvents(this.props);
     }
 
     getUsers = async () => {
@@ -63,35 +62,17 @@ export default class Users extends Component {
         this.setState({ userHistory: data });
     }
 
-    signData = (_walletAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+    createUser = async (_firstname, _lastname, _role, _walletAddress) => {
+        const signatureData = signEntityByUser(_walletAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _walletAddress, this.props.account, signatureData.signature);
 
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_walletAddress, '0x' + userPrivateKey);
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
-    createUser = async (_username, _email, _firstname, _lastname, _role, _walletAddress) => {
-        const signatureData = this.signData(_walletAddress);
-
-        if (signatureData !== null) {
-            await this.props.userChain.methods
+        if (signatureData !== null && verification === true) {
+            await this.props.project.methods
 			.registerUser(
-                _username,
-                this.props.web3.utils.utf8ToHex(_email),
                 this.props.web3.utils.utf8ToHex(_firstname),
                 this.props.web3.utils.utf8ToHex(_lastname),
                 Number(_role),
-                _walletAddress,
-                signatureData.signature
+                _walletAddress
 			).send({ from: this.props.account })
             .then((response) => {
                 toasterService.notifyToastSuccess('Create User operation was made successfully');
@@ -103,13 +84,13 @@ export default class Users extends Component {
 	}
 
     changeUserRole = async (_role, _walletAddress) => {
-        const signatureData = this.signData(_walletAddress);
+        const signatureData = signEntityByUser(_walletAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _walletAddress, this.props.account, signatureData.signature);
 
-        if (signatureData !== null) {
-            await this.props.userChain.methods.changeUserRole(
+        if (signatureData !== null && verification === true) {
+            await this.props.project.methods.changeUserRole(
                 Number(_role),
-                _walletAddress,
-                signatureData.signature
+                _walletAddress
             ).send({ from: this.props.account })
             .then((response) => {
                 toasterService.notifyToastSuccess('Update User Role operation was made successfully');
@@ -124,8 +105,6 @@ export default class Users extends Component {
     addOrEdit = (userData, resetForm) => {
         if (userData.isEditForm === false) {
 			this.createUser(
-				userData.firstname + ' ' + userData.lastname,
-				userData.email,
 				userData.firstname,
 				userData.lastname,
 				userData.role,
@@ -145,8 +124,8 @@ export default class Users extends Component {
 	render() {
         const tableRef = React.createRef();
 		const columns = [
-			{ title: 'Username', field: 'username' },
-			{ title: 'Email', field: 'email' },
+			{ title: 'First Name', field: 'firstname' },
+			{ title: 'Last Name', field: 'lastname' },
 			{ title: 'Role', field: 'role' },
 		];
 

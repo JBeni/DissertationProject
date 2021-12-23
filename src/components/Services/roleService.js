@@ -1,24 +1,30 @@
 
-export const getAddressZeroValue = () => {
-    return "0x0000000000000000000000000000000000000000";
+export async function getAddressZeroValue(props) {
+    return await props.serviceChain.methods.getAddressZeroValue().call({ from: props.account })
+        .then((response) => { return response; }).catch((error) => {});
 }
 
-export const getAdminRole = () => {
-    return "AdminMighty";
+export async function getAdminRole(props) {
+    return await props.serviceChain.methods.getAdminRole().call({ from: props.account })
+        .then((response) => { return response; }).catch((error) => {});
 }
 
-export const getDefaultRole = () => {
-    return "DefaultRole";
+export async function getDefaultRole(props) {
+    return await props.serviceChain.methods.getDefaultRole().call({ from: props.account })
+        .then((response) => { return response; }).catch((error) => {});
 }
 
-export const getUserProjectRole = () => {
-    return "UserProject";
+export async function getUserProjectRole(props) {
+    return await props.serviceChain.methods.getUserProjectRole().call({ from: props.account })
+        .then((response) => { return response; }).catch((error) => {});
 }
 
-export const getCompanyRole = () => {
-    return "Company";
+export async function getCompanyRole(props) {
+    return await props.serviceChain.methods.getCompanyRole().call({ from: props.account })
+        .then((response) => { return response; }).catch((error) => {});
 }
 
-export const getSupervisorRole = () => {
-    return "Supervisor";
+export async function getSupervisorRole(props) {
+    return await props.serviceChain.methods.getSupervisorRole().call({ from: props.account })
+        .then((response) => { return response; }).catch((error) => {});
 }

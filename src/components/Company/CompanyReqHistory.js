@@ -4,7 +4,7 @@ import WaitingLoader from '../Views/WaitingLoader';
 import { Button } from '@material-ui/core';
 import { verifySignatureEntity } from '../../components/sharedResources';
 
-export default function ProjectReqHistory(props) {
+export default function CompanyReqHistory(props) {
 	const { projectReqHistory } = props;
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');

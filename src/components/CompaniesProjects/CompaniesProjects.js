@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
-import { materialTableIcons } from './../sharedResources';
+import { materialTableIcons, signEntityByUser, downloadIpfsFile, testUserPrivateKey } from '../sharedResources';
 import Visibility from '@material-ui/icons/Visibility';
 import Edit from '@material-ui/icons/Edit';
 import { Typography, Button, Dialog, DialogTitle, DialogContent } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import ViewRequest from './ViewRequest';
-import EditRequest from './EditRequest';
+import ViewCompaniesRequest from './ViewCompaniesRequest';
+import EditCompaniesRequest from './EditCompaniesRequest';
 import MaterialTable from '@material-table/core';
 import * as applicationService from '../Services/applicationService';
 import { Toaster } from 'react-hot-toast';
 import * as toasterService from '../Services/toasterService';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
-class Company extends Component {
+class CompaniesProjects extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,11 +24,11 @@ class Company extends Component {
     }
 
     componentDidMount() {
-        this.getCompanyRequests();
+        this.getAllCompanyTypeRequests();
     }
 
-    async getCompanyRequests() {
-        const data = await Promise.resolve(applicationService.getCompanyRequests(this.props));
+    getAllCompanyTypeRequests = async () => {
+        const data = await Promise.resolve(applicationService.getAllCompanyTypeRequests(this.props));
         this.setState({ requests: data });
     }
 
@@ -48,11 +49,9 @@ class Company extends Component {
 	}
 
     addOrEdit = async (data, resetForm) => {
-        this.updateProjectRequest(
-            Number(data.index),
+        this.updateRequest(
             data.comments,
             data.requestStatus,
-            Number(data.indexProjectRequest),
             data.projectStatus,
             data.projectAddress,
             data.requestAddress
@@ -61,40 +60,31 @@ class Company extends Component {
         this.setRecordForEdit(null);
     }
 
-    signRequest = (_requestAddress) => {
-        const userPrivateKey = prompt('Please enter your private key to sign the transaction....');
+    updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
+        const signatureData = signEntityByUser(_requestAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _requestAddress, this.props.account, signatureData.signature);
 
-        if (userPrivateKey === null) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-
-        try {
-            return this.props.web3.eth.accounts.sign(_requestAddress, '0x' + userPrivateKey);
-        } catch (error) {
-            toasterService.notifyToastError('Valid Private KEY required to sign the transaction.');
-            return null;
-        }
-    }
-
-    updateProjectRequest = async (_index, _comments, _requestStatus, _indexProjectRequest, _projectStatus, _projectAddress, _requestAddress) => {
-        const signatureData = this.signRequest(_requestAddress);
-
-        if (signatureData !== null) {
+        if (signatureData !== null && verification === true) {
             await this.props.project.methods
-                .updateRequest(
-                    Number(_index), Number(_indexProjectRequest), _comments,
+                .updateCompanyRequest(
+                    _comments,
                     _requestStatus, _projectStatus,
-                    _projectAddress, signatureData.signature
+                    _projectAddress, _requestAddress,
+                    signatureData.signature
                 ).send({ from: this.props.account })
                 .then((response) => {
                     toasterService.notifyToastSuccess('Update Request operation was made successfully');
-                    this.getCompanyRequests();
+                    this.getAllCompanyTypeRequests();
                 })
                 .catch((error) => {
                     toasterService.notifyToastError('Update Request operation has failed');
                 });
         }
+	}
+
+    downloadFile = async (_projectAddress) => {
+        const project = await applicationService.getProjectInfo(this.props, _projectAddress)
+        downloadIpfsFile(project.name, project.ipfsFileCID);
     }
 
     render() {
@@ -121,7 +111,7 @@ class Company extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <EditRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
+                        <EditCompaniesRequest handleNewDataFromPopup={this.handleNewDataFromPopup.bind(this)} recordForEdit={this.state.recordForEdit} addOrEdit={this.addOrEdit} />
                     </DialogContent>
 				</Dialog>
 
@@ -138,19 +128,26 @@ class Company extends Component {
 						</div>
 					</DialogTitle>
 					<DialogContent dividers style={{ width: '700px' }}>
-                        <ViewRequest recordForEdit={this.state.recordForEdit} />
+                        <ViewCompaniesRequest recordForEdit={this.state.recordForEdit} />
                     </DialogContent>
 				</Dialog>
 
                 <br />
 				<MaterialTable
-					title="Requests For Company"
+					title="Requests For All Companies"
 					tableRef={tableRef}
 					icons={materialTableIcons}
 					columns={columns}
 					data={this.state.requests}
 					options={{ exportButton: true, actionsColumnIndex: -1 }}
 					actions={[
+                        {
+							icon: PictureAsPdfIcon,
+							tooltip: 'Download Project File',
+							onClick: (event, rowData) => {
+                                this.downloadFile(rowData.projectAddress);
+							},
+						},
                         {
                             icon: Edit,
                             tooltip: 'Edit Request',
@@ -176,4 +173,4 @@ class Company extends Component {
     }
 }
 
-export default Company;
+export default CompaniesProjects;

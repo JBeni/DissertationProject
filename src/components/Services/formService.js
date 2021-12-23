@@ -5,10 +5,12 @@ export const initialRequestFormValues = {
     comments: '',
 	projectStatus: '',
 	requestStatus: '',
+    requestType: '',
     projectAddress: '',
-    indexProjectRequest: '',
-    timestamp: '',
+    requestAddress: '',
     signerAddress: '',
+    timestamp: '',
+    signature: ''
 };
 
 export const initialRequestFormValidity = {
@@ -17,15 +19,18 @@ export const initialRequestFormValidity = {
     comments: false,
 	projectStatus: false,
 	requestStatus: false,
+    requestType: false,
     projectAddress: false,
-    indexProjectRequest: false,
+    requestAddress: false,
     signerAddress: false,
+    timestamp: false,
+    signature: false
 };
 
 export const initialProjectRequestFormValues = {
 	title: '',
     comments: '',
-	status: '',
+	projectStatus: '',
 	requestStatus: '',
     projectAddress: '',
 };
@@ -33,7 +38,7 @@ export const initialProjectRequestFormValues = {
 export const initialProjectRequestFormValidity = {
 	title: false,
     comments: false,
-	status: false,
+	projectStatus: false,
 	requestStatus: false,
     projectAddress: false,
 };
@@ -42,16 +47,13 @@ export const initialUserFormValues = {
 	isEditForm: false,
 	firstname: '',
 	lastname: '',
-	email: '',
 	role: '',
-    username: '',
 	walletAddress: '',
 };
 
 export const initialUserFormValidity = {
 	firstname: false,
 	lastname: false,
-	email: false,
 	role: false,
 	walletAddress: false,
 };
@@ -67,6 +69,8 @@ export const initialProjectFormValues = {
     ipfsFileCID: '',
     projectAddress: '',
     signerAddress: '',
+    companyAddress: '',
+    assigned: '',
     timestamp: '',
 };
 

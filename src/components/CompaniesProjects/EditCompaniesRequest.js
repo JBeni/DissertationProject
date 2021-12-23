@@ -11,9 +11,9 @@ import {
 } from '@material-ui/core';
 import * as formService from '../Services/formService';
 import * as dropdownService from '../Services/dropdownService';
-import { useStylesForm } from './../sharedResources';
+import { useStylesForm } from '../sharedResources';
 
-export default function EditRequest(props) {
+export default function EditCompaniesRequest(props) {
 	const classes = useStylesForm();
 	const {addOrEdit, recordForEdit} = props;
     const [isEdit, setIsEdit] = useState(false);
@@ -30,6 +30,12 @@ export default function EditRequest(props) {
         }
 	}, [recordForEdit]);
 
+    const emptyForm = () => {
+        setValues({
+            ...values
+        });
+    }
+
     const populateForm = () => {
         const projectStatus = dropdownService.getProjectStatusByValue(recordForEdit.projectStatus);
         setValues({
@@ -42,12 +48,6 @@ export default function EditRequest(props) {
             projectAddress: recordForEdit.projectAddress,
             signerAddress: recordForEdit.signerAddress,
             requestAddress: recordForEdit.requestAddress
-        });
-    }
-
-    const emptyForm = () => {
-        setValues({
-            ...values
         });
     }
 

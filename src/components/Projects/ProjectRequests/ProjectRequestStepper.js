@@ -3,9 +3,9 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import { Typography } from '@material-ui/core';
-import { useStylesCustomStepper } from '../sharedResources';
+import { useStylesCustomStepper } from '../../sharedResources';
 
-export default function ProjectReqStepper(props) {
+export default function ProjectRequestStepper(props) {
     const classes = useStylesCustomStepper();
     const { currentStep, nextStep } = props;
 

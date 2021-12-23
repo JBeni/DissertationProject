@@ -22,16 +22,10 @@ export default function ViewForm(props) {
 			<Grid container>
 				<Grid item xs={6}>
 					<p style={{ width: '650px' }}>
-						<FormLabel>User Name: {values.username}</FormLabel>
-					</p>
-					<p style={{ width: '650px' }}>
 						<FormLabel>First Name: {values.firstname}</FormLabel>
 					</p>
 					<p style={{ width: '650px' }}>
 						<FormLabel>Last Name: {values.lastname}</FormLabel>
-					</p>
-					<p style={{ width: '650px' }}>
-						<FormLabel>Email: {values.email}</FormLabel>
 					</p>
 					<p style={{ width: '650px' }}>
 						<FormLabel>Role: {values.role}</FormLabel>

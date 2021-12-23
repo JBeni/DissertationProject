@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Grid, FormLabel } from '@material-ui/core';
 import * as formService from '../Services/formService';
 
-export default function ViewProjectForm(props) {
+export default function ViewCompanyRequest(props) {
 	const { recordForEdit } = props;
 	const [values, setValues] = useState(formService.initialProjectFormValues);
 
@@ -15,11 +15,11 @@ export default function ViewProjectForm(props) {
 		}
 	}, []);
 
-	return (
+    return (
 		<>
 			<Grid container>
 				<Grid item xs={6}>
-					<p style={{ width: '670px' }}>
+                <p style={{ width: '670px' }}>
 						<FormLabel>Name: {values.name}</FormLabel>
 					</p>
 					<p style={{ width: '670px' }}>
