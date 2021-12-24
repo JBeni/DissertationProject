@@ -1,4 +1,12 @@
 # MSc Computer Science - Dissertation Project
+ 
+<hr/>
+
+<p align="center">
+  <img src="./images/project_dashboard.PNG" width="650" title="project dashboard">
+</p>
+
+<hr/>
 
 * `This repository does not have a license. EDUCATION USE ONLY`
 
