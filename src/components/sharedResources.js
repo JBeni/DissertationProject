@@ -88,6 +88,53 @@ export const useStylesLoader = makeStyles((theme) => ({
 
 /** Request related Project */
 
+export function setMessageNextStepImprovedMethod(lastRequest) {
+    switch(Number(lastRequest._projectStatus)) {
+        case 1: switch (Number(lastRequest._requestStatus)) {
+                case 0:
+                    return { currentStep: 'Approve Request was Sent', nextStep: 'Wait for Supervisor response' };
+                case 1:
+                    return { currentStep: 'Approve Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+                case 2:
+                    return { currentStep: 'Approve Request was Approved', nextStep: 'Send start project request to company.' };
+                default:
+                    return { currentStep: 'Unknown', nextStep: 'Unknown.' };
+            }
+        case 2: switch (Number(lastRequest._requestStatus)) {
+                case 0:
+                    return { currentStep: 'StartProject Request was Sent', nextStep: 'Wait for Company response' };
+                case 1:
+                    return { currentStep: 'StartProject Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+                case 2:
+                    return { currentStep: 'StartProject Request was Approved', nextStep: 'Send check the progress before finalization request to Supervisor' };
+                default:
+                    return { currentStep: 'Unknown', nextStep: 'Unknown.' };
+            }
+        case 3: switch (Number(lastRequest._requestStatus)) {
+                case 0:
+                    return { currentStep: 'FinalizationCheck Request was Sent', nextStep: 'Wait for Supervisor response' };
+                case 1:
+                    return { currentStep: 'FinalizationCheck Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+                case 2:
+                    return { currentStep: 'FinalizationCheck Request was Approved', nextStep: 'Send completed project request to Supervisor' };
+                default:
+                    return { currentStep: 'Unknown', nextStep: 'Unknown.' };
+            }
+        case 4: switch (Number(lastRequest._requestStatus)) {
+                case 0:
+                    return { currentStep: 'Completed Request was Sent', nextStep: 'Wait for Supervisor response' };
+                case 1:
+                    return { currentStep: 'Completed Request was Rejected', nextStep: 'See the reason and make the adjustment' };
+                case 2:
+                    return { currentStep: 'Project Completed', nextStep: 'All steps completed.' };
+                default:
+                    return { currentStep: 'Unknown', nextStep: 'Unknown.' };
+            }
+        default:
+            return { currentStep: 'Unknown', nextStep: 'Unknown.' };
+    }
+}
+
 export function setMessageNextStep(lastRequest) {
     // Approve Request was Sent
     if (Number(lastRequest._projectStatus) === 1 && Number(lastRequest._requestStatus) === 0) {
