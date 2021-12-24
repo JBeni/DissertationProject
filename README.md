@@ -3,7 +3,7 @@
 <hr/>
 
 <p align="center">
-  <img src="./images/project_dashboard.PNG" width="650" title="project dashboard">
+  <img src="./images/project_dashboard.PNG" width="850" title="project dashboard">
 </p>
 
 <hr/>
