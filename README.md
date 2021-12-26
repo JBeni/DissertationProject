@@ -18,10 +18,24 @@
 <hr/>
 
 * Features
-    * Users Manager
+  * Users Manager
       * Create, List, Change User Role
       * Sign Transaction with Private Key
       * Verify Signature Transaction
       * Check Private Key before signing the transaction
       * Functionalities available only for the Admin
+   * Projects Manager
+      * Create, List, Change Project File
+      * Create, List Projects Requests
+      * Sign Transaction with Private Key
+      * Verify Signature Transaction
+      * Check Private Key before signing the transaction
+      * Get only the Projects signed by the currently logged user
+    * Supervisors Manager
+      * Approve or Reject Project Request
+      * Sign Transaction with Private Key
+      * Verify Signature Transaction
+      * Check Private Key before signing the transaction
+
+
 
