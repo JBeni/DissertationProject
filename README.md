@@ -24,26 +24,29 @@
       * Verify Signature Transaction
       * Check Private Key before signing the transaction
       * Functionalities available only for the Admin
-   * Projects Manager
+  * Projects Manager
       * Create, List, Change Project File
       * Create, List Projects Requests
       * Sign Transaction with Private Key
       * Verify Signature Transaction
       * Check Private Key before signing the transaction
       * Get only the Projects signed by the currently logged user
-    * Supervisors Manager
+  * Supervisors Manager
       * Approve or Reject Project Request
       * Sign Transaction with Private Key
       * Verify Signature Transaction
       * Check Private Key before signing the transaction
-    * Companies Manager
+  * Companies Manager
       * Approve or Reject Project Request
       * Sign Transaction with Private Key
       * Verify Signature Transaction
       * Check Private Key before signing the transaction
       * List only the projects signed by the company 
-    * Requests Manager
+  * Requests Manager
       * See all the projects requests
-	
 
-
+  * Safely work with Private Key without storing it
+  * Only authorized users have access to the application
+  * Show the traceability of a request, project, user (shows all the modifications made with the related entities)
+  * Show the status of a project with additional information
+  * Using IPFS to store the project details (file storage)
