@@ -14,3 +14,14 @@
 
 * File storage was moved to Ipfs Infura using ipfs-http-client.
 * The files stored in IPFS are public. The security of the files is not important, they represent mainly public project files. (For a security approach - the files can be encrypted before pinning it to the IPFS Service)
+
+<hr/>
+
+* Features
+    * Users Manager
+      * Create, List, Change User Role
+      * Sign Transaction with Private Key
+      * Verify Signature Transaction
+      * Check Private Key before signing the transaction
+      * Functionalities available only for the Admin
+
