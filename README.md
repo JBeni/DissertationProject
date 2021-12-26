@@ -36,6 +36,14 @@
       * Sign Transaction with Private Key
       * Verify Signature Transaction
       * Check Private Key before signing the transaction
-
+    * Companies Manager
+      * Approve or Reject Project Request
+      * Sign Transaction with Private Key
+      * Verify Signature Transaction
+      * Check Private Key before signing the transaction
+      * List only the projects signed by the company 
+    * Requests Manager
+      * See all the projects requests
+	
 
 
