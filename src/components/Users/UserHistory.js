@@ -7,12 +7,8 @@ export default function UserHistory(props) {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        if (props.userHistory?.length > 0) {
-            setMessage('The data is loading. Wait a moment.');
-            setLoading(true);
-        } else {
-            setMessage('There are no data at the moment.');
-        }
+        setMessage('The data is loading. Wait a moment.');
+        setLoading(true);
     }, [props.userHistory]);
 
 	if (loading === false) return <WaitingLoader message={message} />;
