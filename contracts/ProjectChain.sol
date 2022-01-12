@@ -76,17 +76,32 @@ contract ProjectChain is UserChain {
         return projects[_address];
     }
 
+    function countUserProjects() internal view returns (uint256) {
+        uint256 numbers = 0;
+        for (uint256 index = 0; index < projectsCounter; index++) {
+            address _projectAddress = projectsAddress[index];
+            Project storage project = projects[_projectAddress];
+            if (users[msg.sender]._walletAddress == project._signerAddress) {
+                numbers += 1;
+            }
+        }
+        return numbers;
+    }
+
     function getProjects()
         public view onlyUserProjectAndCompany returns (Project[] memory)
     {
         Project[] memory allProjects;
-        if (projectsCounter == 0) return allProjects;
+        //uint256 projectsNumber = countUserProjects();
+        //if (projectsNumber == 0) return allProjects;
 
         allProjects = new Project[](projectsCounter);
         for (uint256 index = 0; index < projectsCounter; index++) {
             address _projectAddress = projectsAddress[index];
             Project storage project = projects[_projectAddress];
-            allProjects[index] = project;
+            if (users[msg.sender]._walletAddress == project._signerAddress || users[msg.sender]._walletAddress == project._companyAddress) {
+                allProjects[index] = project;
+            }
         }
         return allProjects;
     }
@@ -148,6 +163,7 @@ contract ProjectChain is UserChain {
         // Update Requests Mapping and Struct Array
         requests[_requestAddress]._comments = _comments;
         requests[_requestAddress]._requestStatus = RequestStatus(_requestStatus);
+        requests[_requestAddress]._signerAddress = msg.sender;
         requests[_requestAddress]._signature = _signature;
         emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
 
@@ -171,6 +187,7 @@ contract ProjectChain is UserChain {
         // Update Requests Mapping and Struct Array
         requests[_requestAddress]._comments = _comments;
         requests[_requestAddress]._requestStatus = RequestStatus(_requestStatus);
+        requests[_requestAddress]._signerAddress = msg.sender;
         requests[_requestAddress]._signature = _signature;
         emit RequestEvent(requests[_requestAddress], _requestAddress, _projectAddress);
 
