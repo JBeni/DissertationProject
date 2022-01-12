@@ -8526,12 +8526,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x9389C84718b988AcCAaf12A5C46cD9E051090D7e",
-      "transactionHash": "0xc19e9582bcc953d1d92ecba2736bdaeab6d92af2c276701aa4acc34fb127e718"
+      "address": "0x2EF44d0caC577855ef97a3d8de2aB6A74620aD48",
+      "transactionHash": "0xc3250becbb7f2398431bb67eefafc817e5154cd49d563d16c1f4d1e688532c51"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-01-10T16:31:43.721Z",
+  "updatedAt": "2022-01-12T08:32:47.382Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
