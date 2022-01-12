@@ -152,7 +152,7 @@ class CompanyProjectRequests extends Component {
     createRequest = async (_title, _projectStatus, _requestStatus, _projectAddress) => {
         const requestAddress = await this.createUniqueRequestAddress(_title, new Date().getTime());
         const signatureData = signEntityByUser(requestAddress, this.props);
-        const verification = await testUserPrivateKey(this.props, _projectAddress, this.props.account, signatureData.signature);
+        const verification = await testUserPrivateKey(this.props, requestAddress, this.props.account, signatureData.signature);
 
         if (signatureData !== null && verification === true) {
             await this.props.project.methods

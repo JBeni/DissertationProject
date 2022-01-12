@@ -61,8 +61,8 @@ class Supervisor extends Component {
     }
 
     updateRequest = async (_comments, _requestStatus, _projectStatus, _projectAddress, _requestAddress) => {
-        const signatureData = signEntityByUser(_requestStatus, this.props);
-        const verification = await testUserPrivateKey(this.props, _projectAddress, this.props.account, signatureData.signature);
+        const signatureData = signEntityByUser(_requestAddress, this.props);
+        const verification = await testUserPrivateKey(this.props, _requestAddress, this.props.account, signatureData.signature);
 
         if (signatureData !== null && verification === true) {
             await this.props.project.methods
