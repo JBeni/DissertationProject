@@ -10,12 +10,8 @@ export default function CompanyReqHistory(props) {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        if (projectReqHistory?.length > 0) {
-            setMessage('The data is loading. Wait a moment.');
-            setLoading(true);
-        } else {
-            setMessage('There are no data at the moment.');
-        }
+        setMessage('The data is loading. Wait a moment.');
+        setLoading(true);
     }, [projectReqHistory])
 
     const verifySignature = async (_requestAddress, _signerAddress, _signature) => {

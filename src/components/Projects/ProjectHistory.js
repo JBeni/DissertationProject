@@ -10,12 +10,8 @@ export default function ProjectHistory(props) {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        if (projectHistory?.length > 0) {
-            setMessage('The data is loading. Wait a moment.');
-            setLoading(true);
-        } else {
-            setMessage('There are no data at the moment.');
-        }
+        setMessage('The data is loading. Wait a moment.');
+        setLoading(true);
     }, [projectHistory]);
 
     const verifySignature = async (_projectAddress, _signerAddress, _signature) => {
